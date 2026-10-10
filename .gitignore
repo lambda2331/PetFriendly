@@ -77,3 +77,5 @@ config/ci/
 
 # Local console and review screenshots can include account information
 docs/screenshots/
+
+/android/build/
