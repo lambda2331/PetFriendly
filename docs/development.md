@@ -228,3 +228,11 @@ Cloud SQL 019–021 теперь применён пользователем и 
 `python3 scripts/verify_staging_media.py` — 19 облачных smoke-проверок. Скрипт допускает только project cbkmxtplhcdomyeyrwyi, использует ignored config/staging-backend.local.json, создаёт synthetic @example.test аккаунты и удаляет их в finally. Он не создаёт реальные чаты и не читает данные существующих пользователей. Полный media-сценарий `python3 scripts/verify_chat_media.py` остаётся local-only: 28 проверок прошли повторно. Прямой service Data API INSERT conversations в staging запрещён; ради fixtures дополнительные grants не выдавались.
 
 Следующая приёмка: два участника создают чат штатным путём в приложении, отправляют фото/видео, проверяют повторную отправку, блокировку и восстановление после сети. Облачные smoke-проверки не заменяют эту приёмку. После серверного обновления можно использовать уже установленную сборку iPhone; если capability был закэширован до миграции, перезапустить приложение.
+
+### Бесплатные сервисы и media policy 022
+
+Новые chat uploads: только PNG на входе (5 MiB), сервер JPEG до 1 MiB, не больше 1200 px. SDK и SQL также отвергают новые видео. Прочтение ранее сохранённых видео поддерживается. Cloud SQL 022 и Edge опубликованы; повторно миграцию не запускать.
+
+CI: private https://github.com/lambda2331/PetFriendly, workflow .github/workflows/checks.yml. В CI нет серверных/подписывающих ключей; screenshot outputs создаются локально на runner и не публикуются. Первая подписанная сборка с Crashlytics установлена на iPhone. Для отправки технических отчётов пользователь включает «Отчёты об ошибках» в настройках. Analytics не добавлен. Получение первого cloud report и symbols требуется отдельно проверить.
+
+Backup: заполнить DB_PASSWORD в config/backup.local.json, затем `python3 scripts/backup_staging.py`. Config и закрытый ключ config/signing/backup.agekey имеют права 600 и исключены из Git. Архив шифруется age на публичный recipient config/backup.recipient.txt и сохраняется в config/backups/. Для восстановления хранить приватный ключ отдельно от копии. Дамп и Storage не являются единым атомарным snapshot: перед экспортом требуется окно без записей, затем восстановление в изолированное окружение и применение записей удаления. Ротация/retention и внешний адрес хранения пока не определены.

@@ -36,11 +36,18 @@ def main():
     parser.add_argument('--config', default='config/backup.local.json')
     args = parser.parse_args()
     cfg = json.loads(Path(args.config).read_text())
-    base = cfg['API_URL'].rstrip('/')
+    backend = json.loads(Path('config/staging-backend.local.json').read_text())
+    base = backend['API_URL'].rstrip('/')
     if base != 'https://' + PROJECT + '.supabase.co':
         raise ValueError('Only PetFriendly staging is allowed')
-    uri = validate_database_url(cfg.get('DB_URL') or '')
-    key = cfg['SERVICE_ROLE_KEY']
+    database_url = cfg.get('DB_URL') or ''
+    if '[YOUR-PASSWORD]' in database_url:
+        password = cfg.get('DB_PASSWORD')
+        if not password:
+            raise ValueError('Fill DB_PASSWORD in the local backup config')
+        database_url = database_url.replace('[YOUR-PASSWORD]', urllib.parse.quote(password, safe=''))
+    uri = validate_database_url(database_url)
+    key = backend['SERVICE_ROLE_KEY']
     recipient = Path('config/backup.recipient.txt').read_text().strip()
     if not recipient.startswith('age1'):
         raise ValueError('An age recipient is required')
