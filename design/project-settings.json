@@ -1,0 +1,162 @@
+{
+  "launchCity": {
+    "name": "Минск",
+    "countryCode": "BY",
+    "timeZone": "Europe/Minsk"
+  },
+  "maps": {
+    "provider": "mapbox",
+    "budgetMode": "free-tier-only",
+    "paidUsageAuthorized": false
+  },
+  "authentication": {
+    "providers": [
+      "email_password",
+      "google",
+      "apple",
+      "telegram"
+    ],
+    "emailConfirmationRequired": true,
+    "telegramIntegration": "supabase-custom-oidc",
+    "telegramEmailOptional": true
+  },
+  "pendingDecisions": [
+    "cancellation_and_dispute_rules",
+    "personal_data_retention_periods"
+  ],
+  "status": "planned_configuration",
+  "location": {
+    "initialMode": "device-location-with-permission",
+    "manualCitySelection": true,
+    "fallbackCity": "Минск",
+    "persistManualCitySelection": true,
+    "backgroundTracking": false,
+    "cityAutocomplete": {
+      "source": "offline-belarus-russia-city-directory",
+      "languages": [
+        "ru",
+        "be",
+        "en"
+      ],
+      "freeTextAllowed": true
+    },
+    "supportedCountries": [
+      "BY",
+      "RU"
+    ]
+  },
+  "places": {
+    "initialCatalogSource": "openstreetmap",
+    "importStatus": "minsk_imported",
+    "petAccessConfirmation": [
+      "community",
+      "venue_owner"
+    ],
+    "unknownPetAccessLabel": "Допуск питомцев не уточнён",
+    "googleAndYandexImportInMvp": false,
+    "automaticCategories": [
+      "park",
+      "dog_park",
+      "pet_shop",
+      "veterinary"
+    ],
+    "communityOnlyCategories": [
+      "cafe",
+      "restaurant"
+    ],
+    "cityCatalog": {
+      "trigger": "selected-or-detected-city",
+      "source": "openstreetmap-overpass",
+      "radiusMeters": 15000,
+      "serverCacheDays": 7,
+      "exactUserLocationSent": false
+    },
+    "bundledCatalogCount": 130
+  },
+  "navigation": {
+    "nearbyDefault": "nearby-event-header-and-map",
+    "placesList": "separate-screen",
+    "placeFilters": [
+      "query",
+      "category",
+      "pet_access",
+      "favorites",
+      "name_or_distance_sort"
+    ],
+    "placeMarkers": "category-icons-and-cluster-counts",
+    "nearbyMapLayout": {
+      "horizontalInset": 24,
+      "bottomInset": 16,
+      "cornerRadius": 24,
+      "cityPicker": "above-map",
+      "navigationActions": "above-map",
+      "mapControls": "fullscreen-only",
+      "gestures": "both-modes"
+    },
+    "placesFilterControls": "material-select",
+    "peopleModes": [
+      "nearby-people",
+      "communities"
+    ],
+    "profileSettings": "separate-screen-header-gear",
+    "placesBatchSize": 40,
+    "mapLocation": {
+      "display": "foreground-with-permission",
+      "preserveManualCity": true,
+      "userMarker": "custom-location-icon",
+      "placeFocus": "stable-initial-camera-and-map-ready",
+      "positionPicker": "minimal-pin"
+    }
+  },
+  "designScreenUpdates": {
+    "profile": "compact-identity-and-pet-cards",
+    "walks": "pet-time-duration-district-status-applications",
+    "communities": "cover-detail-members-opt-in-join-invitation-draft",
+    "chat": "sender-date-time-delivery",
+    "photos": "session-memory-preview-only",
+    "calendar": "russian-monday-first-high-contrast-24h",
+    "login": "compact-email-form-and-provider-icons",
+    "profileFavorites": "inline-place-list",
+    "placeDetails": "compact-sheet-inline-stars-and-review-map-focus",
+    "placeRating": "hide-unrated-show-server-average-and-star"
+  },
+  "placeContributions": {
+    "position": "explicit-map-center-selection",
+    "pendingVisibility": "author-only",
+    "publication": "moderator-with-mfa",
+    "defaultPetAccess": "unknown"
+  },
+  "chat": {
+    "attachments": {
+      "kinds": [
+        "image"
+      ],
+      "perMessage": 1,
+      "imageMaxBytes": 5242880,
+      "storage": "private-authenticated-function",
+      "cloudStatus": "photos_only_deployed_staging_smoke_passed",
+      "videoEnabled": false,
+      "imageMaxInputBytes": 5242880,
+      "imageMaxStoredBytes": 1048576
+    }
+  },
+  "profileProviderData": {
+    "providers": [
+      "google",
+      "custom:telegram"
+    ],
+    "fields": [
+      "name",
+      "picture"
+    ],
+    "telegramScopes": [
+      "openid",
+      "profile"
+    ],
+    "namePolicy": "prefill-only-when-unset",
+    "telegramPhotoPolicy": "preview-on-first-onboarding-if-no-saved-photo; explicit-import-in-edit-profile",
+    "persistPolicy": "save-after-profile-confirmation",
+    "phoneCollected": false,
+    "identityPolicy": "internal-Supabase-user-id; never display name or username"
+  }
+}

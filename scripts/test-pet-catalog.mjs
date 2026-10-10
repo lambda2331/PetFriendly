@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {parsePlaces} from '../supabase/functions/city-catalog/osm.ts';
+import {cityGeocodingQuery} from '../supabase/functions/city-catalog/geocoding.ts';
+const venue = (id, tags) => ({type:'node', id, lat:55.75, lon:37.6, tags:{name:`Place ${id}`, ...tags}});
+const raw = {elements:[venue(1,{shop:'pet'}),venue(1,{shop:'pet'}),venue(2,{amenity:'veterinary'}),venue(3,{amenity:'clinic'}),venue(4,{amenity:'cafe'}),venue(5,{amenity:'restaurant'})]};
+const places = parsePlaces(raw,'Москва');
+assert.equal(places.length,2);
+assert.deepEqual(places.map(p=>p.category),['Зоомагазин','Ветклиника']);
+assert.equal(places[0].source_id,'node/1');
+assert.equal(places[1].pet_access,'unknown');
+assert.throws(()=>parsePlaces({...raw,remark:'timeout'},'Москва'));
+assert.equal(cityGeocodingQuery('Москва'),'Москва, Россия');
+assert.equal(cityGeocodingQuery('Новосибирск'),'Новосибирск, Россия');
+assert.equal(cityGeocodingQuery('Минск'),'Минск, Беларусь');
+assert.equal(cityGeocodingQuery('Тверь, Россия'),'Тверь, Россия');
+console.log('Pet services / country resolution: 9 checks passed');

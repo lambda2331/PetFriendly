@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant A as Отправитель Flutter
+  participant API as Supabase API
+  participant DB as PostgreSQL
+  participant RT as Realtime
+  participant B as Получатель Flutter
+  participant W as Push worker
+  A->>A: Локальное сообщение pending и client_message_id
+  A->>API: Отправить сообщение с JWT
+  API->>DB: Проверить членство, блокировки и сохранить
+  DB-->>API: id и created_at
+  API-->>A: Подтверждение
+  A->>A: Статус sent
+  DB-->>RT: Событие изменения
+  RT-->>B: Сигнал нового сообщения
+  B->>API: Догрузить доступные сообщения после курсора
+  API-->>B: Сообщения с проверкой RLS
+  DB-->>W: Outbox событие
+  W-->>B: Push через FCM и APNs

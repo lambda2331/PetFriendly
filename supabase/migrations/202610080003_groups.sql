@@ -1,0 +1,14 @@
+alter table public.conversations drop constraint conversations_kind_check;
+alter table public.conversations add constraint conversations_kind_check check(kind in('direct','event','walk','group'));
+create table public.groups(id uuid primary key default gen_random_uuid(),owner_id uuid not null references public.profiles on delete cascade,title text not null check(char_length(title) between 1 and 120),description text not null default '' check(char_length(description)<=1000));
+create table public.group_members(group_id uuid references public.groups on delete cascade,user_id uuid references public.profiles on delete cascade,primary key(group_id,user_id));
+alter table public.groups enable row level security;alter table public.group_members enable row level security;
+revoke all on public.groups,public.group_members from anon,authenticated;
+grant select on public.groups,public.group_members to authenticated;
+create policy group_read on public.groups for select using(private.actor() is not null);
+create policy group_members_read on public.group_members for select using(private.actor() is not null);
+create function public.create_group(title_in text,description_in text default '') returns uuid language plpgsql security definer set search_path='' as $$ declare actor uuid:=private.require_actor();gid uuid;begin insert into public.groups(owner_id,title,description) values(actor,title_in,description_in) returning id into gid;insert into public.group_members values(gid,actor);perform private.chat('group',gid,array[actor]);return gid;end $$;
+create function public.join_group(group_in uuid) returns void language plpgsql security definer set search_path='' as $$ declare actor uuid:=private.require_actor();begin if not exists(select 1 from public.groups where id=group_in and not private.blocked(actor,owner_id)) then raise exception 'Group unavailable';end if;insert into public.group_members values(group_in,actor) on conflict do nothing;perform private.chat('group',group_in,array[actor]);end $$;
+create function public.leave_group(group_in uuid) returns void language plpgsql security definer set search_path='' as $$ declare actor uuid:=private.require_actor();begin if exists(select 1 from public.groups where id=group_in and owner_id=actor)then raise exception 'Organizer cannot leave their group';end if;delete from public.group_members where group_id=group_in and user_id=actor;delete from public.conversation_members where user_id=actor and conversation_id in(select id from public.conversations where kind='group' and context_id=group_in);end $$;
+revoke all on function public.create_group(text,text),public.join_group(uuid),public.leave_group(uuid) from public,anon;
+grant execute on function public.create_group(text,text),public.join_group(uuid),public.leave_group(uuid) to authenticated;

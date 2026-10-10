@@ -1,0 +1,2 @@
+create function public.my_sessions() returns table(id uuid,created_at timestamptz,current_session boolean) language plpgsql stable security definer set search_path='' as $$declare actor uuid:=private.require_actor();begin return query select s.id,s.created_at,s.id=(auth.jwt()->>'session_id')::uuid from auth.sessions s where s.user_id=actor and not exists(select 1 from private.revoked_sessions r where r.id=s.id);end $$;
+revoke all on function public.my_sessions() from public,anon;grant execute on function public.my_sessions() to authenticated;

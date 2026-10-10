@@ -1,0 +1,28 @@
+flowchart LR
+  App[Flutter iOS и Android]
+  Mapbox[Mapbox]
+  subgraph Backend[Supabase]
+    Auth[Auth]
+    API[Data API и SQL RPC]
+    DB[(PostgreSQL и PostGIS)]
+    Realtime[Realtime]
+    Storage[Storage]
+    Edge[Edge Functions]
+    Outbox[(Очередь уведомлений)]
+  end
+  Push[FCM и APNs]
+  Admin[Интерфейс модератора]
+  App --> Auth
+  App -->|JWT и RLS| API
+  API --> DB
+  App --> Realtime
+  DB -->|События изменений| Realtime
+  App -->|Разрешённые медиа| Storage
+  App -->|Проверяемые команды| Edge
+  Edge --> API
+  App --> Mapbox
+  DB -->|В той же транзакции| Outbox
+  Edge -->|Worker с повтором| Outbox
+  Edge --> Push
+  Push --> App
+  Admin -->|Роль модератора| Edge

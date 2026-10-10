@@ -1,0 +1,23 @@
+erDiagram
+  PROFILES ||--o{ PETS : owns
+  PROFILES ||--o{ GROUP_MEMBERS : joins
+  GROUPS ||--o{ GROUP_MEMBERS : contains
+  PROFILES ||--o{ EVENTS : organizes
+  GROUPS o|--o{ EVENTS : hosts
+  PLACES o|--o{ EVENTS : locates
+  EVENTS ||--o{ EVENT_MEMBERS : contains
+  PROFILES ||--o{ EVENT_MEMBERS : attends
+  PROFILES ||--o{ WALK_REQUESTS : creates
+  PETS ||--o{ WALK_REQUESTS : needs
+  WALK_REQUESTS ||--o{ WALK_APPLICATIONS : receives
+  PROFILES ||--o{ WALK_APPLICATIONS : applies
+  WALK_REQUESTS ||--o| WALK_AGREEMENTS : assigns
+  PROFILES ||--o{ WALK_AGREEMENTS : helps
+  WALK_AGREEMENTS ||--o| WALK_REVIEWS : receives
+  PROFILES ||--o{ WALK_REVIEWS : writes
+  PLACES ||--o{ PLACE_REVIEWS : receives
+  PROFILES ||--o{ PLACE_REVIEWS : writes
+  CONVERSATIONS ||--o{ CONVERSATION_MEMBERS : contains
+  PROFILES ||--o{ CONVERSATION_MEMBERS : joins
+  CONVERSATIONS ||--o{ MESSAGES : contains
+  PROFILES ||--o{ MESSAGES : sends

@@ -1,0 +1,11 @@
+flowchart TD
+  View[Экран и компоненты] -->|Действие пользователя| Controller[Riverpod Controller]
+  Controller --> Repo[Repository interface]
+  Repo --> Remote[Supabase service]
+  Repo --> Cache[Drift cache]
+  Remote --> Repo
+  Cache --> Repo
+  Repo -->|Модель и состояние| Controller
+  Controller -->|Данные, loading, error| View
+  Theme[ThemeController и токены] --> View
+  Router[go_router] --> View

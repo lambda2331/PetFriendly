@@ -1,0 +1,20 @@
+flowchart TD
+  Launch[Запуск] --> Session{Есть сессия}
+  Session -->|Нет| Auth[Вход и регистрация]
+  Auth --> Onboarding[Владелец, питомец, интересы, район]
+  Session -->|Да| Shell[Основная навигация]
+  Onboarding --> Shell
+  Shell --> Nearby[Рядом]
+  Shell --> People[Люди]
+  Shell --> Walk[Выгул]
+  Shell --> Chats[Чаты]
+  Shell --> Profile[Профиль]
+  Nearby --> Map[Карта и список]
+  Map --> Place[Место и отзывы]
+  Nearby --> Event[Встреча и участники]
+  People --> Person[Владелец и питомцы]
+  People --> Group[Сообщество и события]
+  Walk --> Request[Заявка и отклики]
+  Request --> Agreement[Договорённость]
+  Chats --> Thread[Переписка]
+  Profile --> Settings[Темы и приватность]

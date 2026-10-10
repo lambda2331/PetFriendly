@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {sanitizeVideo} from '../supabase/functions/chat-media/video.ts';
+const original=new Uint8Array(readFileSync('test/fixtures/chat-video.mp4'));
+assert.ok(Buffer.from(original).includes('PRIVATE_VIDEO_TEST'));
+const clean=sanitizeVideo(original);
+assert.equal(clean.bytes.length,original.length);
+assert.ok(!Buffer.from(clean.bytes).includes('PRIVATE_VIDEO_TEST'));
+assert.ok(clean.duration>0&&clean.duration<2);
+assert.deepEqual(sanitizeVideo(clean.bytes).bytes,clean.bytes);
+assert.throws(()=>sanitizeVideo(original.slice(0,300)));
+const oversized=original.slice(),view=new DataView(oversized.buffer);
+const mvhd=Buffer.from(oversized).indexOf('mvhd')-4;
+view.setUint32(mvhd+24,view.getUint32(mvhd+20)*61);
+assert.throws(()=>sanitizeVideo(oversized));
+writeFileSync('tooling/.logs/chat-video-clean.mp4',clean.bytes);
+console.log('Native H.264 / metadata / invalid video: 7 checks passed');

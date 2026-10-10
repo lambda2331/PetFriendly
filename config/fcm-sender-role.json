@@ -1,0 +1,8 @@
+{
+  "title": "PetFriendly Push Sender",
+  "description": "Send PetFriendly staging push notifications from the server.",
+  "stage": "GA",
+  "includedPermissions": [
+    "cloudmessaging.messages.create"
+  ]
+}

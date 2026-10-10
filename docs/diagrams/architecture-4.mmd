@@ -1,0 +1,16 @@
+stateDiagram-v2
+  [*] --> Open: владелец создаёт заявку
+  Open --> Assigned: владелец выбирает помощника
+  Open --> Cancelled: владелец отменяет
+  Open --> Expired: время истекло
+  Assigned --> InProgress: помощник начинает
+  Assigned --> Cancelled: отмена до начала
+  InProgress --> AwaitingConfirmation: помощник завершает
+  AwaitingConfirmation --> Completed: владелец подтверждает
+  InProgress --> NeedsReview: проблема или спор
+  AwaitingConfirmation --> NeedsReview: спор или истёк срок подтверждения
+  NeedsReview --> Completed: решение модератора
+  NeedsReview --> Cancelled: решение модератора
+  Completed --> [*]
+  Cancelled --> [*]
+  Expired --> [*]
