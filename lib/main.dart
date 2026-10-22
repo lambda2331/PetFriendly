@@ -1,3 +1,4 @@
+import 'core/location/city_directory.dart';
 import 'core/diagnostics/crash_reporting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,6 +58,11 @@ Future<void> main() async {
         iosBundleId: 'com.petfriendly.petfriendly',
       ),
     );
+  }
+  try {
+    await loadWorldCities();
+  } catch (_) {
+    /* Offline launch cities remain available. */
   }
   final catalog = await OsmPlaceRepository.load();
   if (AppConfig.mapboxToken.isNotEmpty) {

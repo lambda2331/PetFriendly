@@ -44,7 +44,9 @@ def validate(data, platform, release=False):
         errors.append('Значения dart-define должны быть строками.')
         return errors
     for flag in FLAGS:
-        if data.get(flag, 'false') not in ('true', 'false'):
+        if flag not in data:
+            errors.append(f'{flag}: укажите true/false явно; отсутствующий флаг меняет режим сборки и отключает вход.')
+        elif data[flag] not in ('true', 'false'):
             errors.append(f'{flag}: допустимы только true/false.')
     key = data.get('SUPABASE_PUBLISHABLE_KEY', '')
     if server_key(key):

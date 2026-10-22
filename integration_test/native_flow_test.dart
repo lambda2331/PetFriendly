@@ -11,7 +11,12 @@ void main() {
   testWidgets('Local email login, own pets and server-backed editing', (
     tester,
   ) async {
-    SharedPreferences.setMockInitialValues({'locationPrompted': 'yes'});
+    SharedPreferences.setMockInitialValues({
+      'language': 'ru',
+      'locationPrompted': 'yes',
+      'manualCity': 'true',
+      'city': 'Минск',
+    });
     await secureStorage.delete(key: SecureSessionStorage.key);
     await app.main();
     await tester.pumpAndSettle();
@@ -26,9 +31,9 @@ void main() {
       EnginePhase.sendSemanticsUpdate,
       const Duration(seconds: 30),
     );
-    await waitFor(tester, find.byTooltip('Список мест'));
-    expect(find.byTooltip('Список мест'), findsOneWidget);
-    await tester.tap(find.byTooltip('Список мест'));
+    await waitFor(tester, find.byKey(const Key('nearby-places-list')));
+    expect(find.byKey(const Key('nearby-places-list')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('nearby-places-list')));
     await tester.pumpAndSettle();
     for (
       var attempt = 0;
@@ -45,16 +50,16 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
     for (
       var attempt = 0;
-      attempt < 100 && find.text('1 мест').evaluate().isEmpty;
+      attempt < 100 && find.byType(PlaceRow).evaluate().length != 1;
       attempt++
     ) {
       await tester.pump(const Duration(milliseconds: 100));
     }
-    expect(find.text('1 мест'), findsOneWidget);
+    expect(find.byType(PlaceRow), findsOneWidget);
     expect(find.text('Александровский сквер'), findsWidgets);
     await tester.tap(find.byType(BackButton).hitTestable().last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Я'));
+    await tester.tap(find.byKey(const ValueKey('nav-4')));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.byTooltip('Добавить питомца').hitTestable(),

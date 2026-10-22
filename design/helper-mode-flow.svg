@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1050" viewBox="0 0 760 1050" role="img" aria-labelledby="title desc">
+<title id="title">PetFriendly: от запроса до взаимных отзывов</title><desc id="desc">Помощник откликается. Владелец выбирает его. Участники координируются в приватном чате. Помощник начинает и завершает прогулку, владелец подтверждает. Каждый может оставить один отзыв о другом.</desc>
+<style>@font-face{font-family:Manrope;src:url('/assets/fonts/Manrope.ttf')}@font-face{font-family:Golos;src:url('/assets/fonts/GolosText.ttf')}text{fill:#20251e;font-family:Golos,sans-serif;font-size:16px}.heading{font-family:Manrope,sans-serif;font-weight:700;font-size:26px}.label{font-weight:600;font-size:18px}.caption{font-size:14px;fill:#62695c}.node{fill:white;stroke:#e4e7dd;stroke-width:1.5}.helper{fill:#eef1e7}.arrow{fill:none;stroke:#62695c;stroke-width:1.5;marker-end:url(#tip)}</style>
+<defs><marker id="tip" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 7 4 1 7" fill="none" stroke="#62695c" stroke-width="1.5"/></marker></defs>
+<rect width="760" height="1050" fill="#f9f9f6"/>
+<text x="40" y="50" class="heading">Прогулка: от отклика до отзыва</text><text x="40" y="82" class="caption">Один аккаунт. Режимы меняют задачи, а не личность.</text>
+<text x="64" y="128" class="label">Помощник</text><text x="436" y="128" class="label">Владелец питомца</text>
+<rect class="node helper" x="40" y="150" width="310" height="90" rx="14"/><text x="60" y="184">Выбирает роль и знакомится</text><text x="60" y="212">Короткий профиль, без питомца</text>
+<rect class="node" x="410" y="150" width="310" height="90" rx="14"/><text x="430" y="184">Создаёт запрос на прогулку</text><text x="430" y="212">Питомец, время, публичный район</text>
+<path class="arrow" d="M195 240V280"/><path class="arrow" d="M565 240V260H195V280"/>
+<rect class="node helper" x="40" y="280" width="310" height="90" rx="14"/><text x="60" y="314">Находит запрос и откликается</text><text x="60" y="342" class="caption">Отклик ещё не означает назначение</text>
+<path class="arrow" d="M350 325H410"/>
+<rect class="node" x="410" y="280" width="310" height="90" rx="14"/><text x="430" y="314">Читает профиль и отзывы</text><text x="430" y="342">Выбирает одного помощника</text>
+<path class="arrow" d="M565 370V415"/>
+<rect class="node" x="40" y="415" width="680" height="90" rx="14"/><text x="60" y="449" class="label">Договорённость и приватный чат</text><text x="60" y="477">Детали передачи доступны только назначенным участникам</text>
+<path class="arrow" d="M195 505V550"/>
+<rect class="node helper" x="40" y="550" width="310" height="110" rx="14"/><text x="60" y="584">Начинает прогулку</text><text x="60" y="614">Затем отмечает завершение</text><text x="60" y="642" class="caption">Ждёт подтверждения владельца</text>
+<path class="arrow" d="M350 605H410"/>
+<rect class="node" x="410" y="550" width="310" height="110" rx="14"/><text x="430" y="584">Подтверждает завершение</text><text x="430" y="614">Только владелец этого запроса</text><text x="430" y="642" class="caption">Это открывает возможность отзывов</text>
+<path class="arrow" d="M565 660V690H195V725"/><path class="arrow" d="M565 690V725"/>
+<rect class="node helper" x="40" y="725" width="310" height="90" rx="14"/><text x="60" y="759">Отзыв о владельце</text><text x="60" y="787" class="caption">Предлагаемая новая функция</text>
+<rect class="node" x="410" y="725" width="310" height="90" rx="14"/><text x="430" y="759">Отзыв о помощнике</text><text x="430" y="787" class="caption">Существующее правило</text>
+<path class="arrow" d="M195 815V860"/><path class="arrow" d="M565 815V860"/>
+<rect class="node" x="40" y="860" width="680" height="100" rx="14"/><text x="60" y="896" class="label">Репутация отдельно для каждой роли</text><text x="60" y="925">Опубликованные отзывы · ответы · возможность пожаловаться</text>
+<text x="40" y="1002" class="caption">Один отзыв от участника о другом после подтверждённого завершения.</text><text x="40" y="1027" class="caption">Оценки помогают принять решение, но не гарантируют безопасность.</text>
+</svg>

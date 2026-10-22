@@ -1,3 +1,7 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../core/ui/studio_review.dart';
+import '../../core/media/preview_photos.dart';
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,28 +9,63 @@ import '../../core/ui/components.dart';
 import '../community/data/community_repository.dart';
 
 class NewChatScreen extends ConsumerStatefulWidget {
-  const NewChatScreen({super.key});
+  const NewChatScreen({
+    this.embedded = false,
+    this.initialQuery = '',
+    this.onQueryChanged,
+    super.key,
+  });
+  final bool embedded;
+  final String initialQuery;
+  final ValueChanged<String>? onQueryChanged;
   @override
   ConsumerState<NewChatScreen> createState() => _NewChatState();
 }
 
 class _NewChatState extends ConsumerState<NewChatScreen> {
-  String query = '';
+  late final TextEditingController search;
+  late String query;
+  @override
+  void initState() {
+    super.initState();
+    query = widget.initialQuery;
+    search = TextEditingController(text: query);
+  }
+
+  @override
+  void dispose() {
+    search.dispose();
+    super.dispose();
+  }
+
   String? opening;
   Future<void> open(String id) async {
     if (opening != null) return;
     setState(() => opening = id);
+    final repository = ref.read(communityRepositoryProvider);
+    final uid = repository.userId;
     try {
       final chat = await ref.read(communityProvider.notifier).command(
         'direct',
         {'target': id},
       );
-      if (mounted && chat != null) {
-        context.pushReplacement('/chat/$chat');
+      if (mounted &&
+          chat != null &&
+          identical(repository, ref.read(communityRepositoryProvider)) &&
+          uid == repository.userId) {
+        final router = GoRouter.of(context);
+        if (widget.embedded) {
+          Navigator.pop(context, chat);
+        } else {
+          await router.push('/chat/$chat');
+        }
       }
     } catch (_) {
       if (mounted) {
-        notice(context, 'Не удалось открыть переписку. Повторите попытку.');
+        notice(
+          context,
+          "Не удалось открыть переписку. Повторите попытку.".tr(context),
+        );
       }
     } finally {
       if (mounted) setState(() => opening = null);
@@ -34,16 +73,31 @@ class _NewChatState extends ConsumerState<NewChatScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Новая переписка')),
-    body: ref
+  Widget build(BuildContext context) {
+    final searchField = TextField(
+      key: const Key('new-chat-search'),
+      controller: search,
+      onChanged: (value) {
+        setState(() => query = value);
+        widget.onQueryChanged?.call(value);
+      },
+      decoration: InputDecoration(
+        hintText: 'Поиск по имени'.tr(context),
+        prefixIcon: const Icon(LucideIcons.search),
+      ),
+    );
+    final body = ref
         .watch(communityProvider)
         .when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (_, _) => Center(
-            child: TextButton(
+          loading: () => StudioReviewState(
+            title: 'Загружаем профиль…'.tr(context),
+            loading: true,
+          ),
+          error: (_, _) => StudioReviewState(
+            title: 'Не удалось загрузить'.tr(context),
+            action: OutlinedButton(
               onPressed: () => ref.invalidate(communityProvider),
-              child: const Text('Повторить загрузку'),
+              child: Text('Повторить загрузку'.tr(context)),
             ),
           ),
           data: (data) {
@@ -62,50 +116,102 @@ class _NewChatState extends ConsumerState<NewChatScreen> {
                           .contains(query.trim().toLowerCase()),
                 )
                 .toList();
-            return PageBody(
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextField(
-                  onChanged: (value) => setState(() => query = value),
-                  decoration: const InputDecoration(
-                    labelText: 'Поиск по имени',
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-                const SizedBox(height: 20),
                 if (people.isEmpty)
-                  const Text(
-                    'Пока некого выбрать. Другой участник появится здесь после регистрации.',
+                  StudioReviewState(
+                    title: 'Ничего не найдено'.tr(context),
+                    message: 'Попробуйте другое имя.'.tr(context),
                   ),
-                for (final person in people)
-                  ListTile(
-                    leading: const Icon(Icons.person_outline),
-                    title: Text(
-                      person['display_name'] as String? ?? 'Участник',
-                    ),
-                    subtitle: (person['district'] as String? ?? '').isEmpty
+                for (var i = 0; i < people.length; i++) ...[
+                  if (i > 0)
+                    const Divider(height: 1, indent: 12, endIndent: 12),
+                  StudioReviewRow(
+                    key: ValueKey('new-chat-${people[i]['id']}'),
+                    title:
+                        people[i]['display_name'] as String? ??
+                        'Участник'.tr(context),
+                    subtitle: (people[i]['district'] as String? ?? '').isEmpty
                         ? null
-                        : Text(person['district'] as String),
-                    trailing: opening == person['id']
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
+                        : people[i]['district'] as String,
+                    leading: IdentityPicture(
+                      id: 'profile:${people[i]['id']}',
+                      name: people[i]['display_name'],
+                      icon: LucideIcons.user,
+                      size: 56,
+                    ),
+                    trailing: opening == people[i]['id']
+                        ? const SizedBox.square(
+                            dimension: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Icon(Icons.chat_bubble_outline),
-                    enabled: opening == null,
-                    onTap: () => open(person['id'] as String),
+                        : const Icon(LucideIcons.messageSquare),
+                    onTap: opening == null
+                        ? () => open(people[i]['id'] as String)
+                        : null,
                   ),
-                const SizedBox(height: 16),
-                TextButton.icon(
-                  onPressed: opening == null
-                      ? () => context.push('/edit/group')
-                      : null,
-                  icon: const Icon(Icons.group_add_outlined),
-                  label: const Text('Создать сообщество'),
-                ),
+                ],
               ],
             );
           },
+        );
+    if (widget.embedded) {
+      return StudioReviewSheet(
+        title: 'Новая переписка'.tr(context),
+        fixedContent: searchField,
+        child: body,
+      );
+    }
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text('Новая переписка'.tr(context), style: studioSheetText),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+            child: searchField,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: body,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Future<void> showNewChatSheet(BuildContext context) async {
+  final container = ProviderScope.containerOf(context, listen: false);
+  final repository = container.read(communityRepositoryProvider);
+  final uid = repository.userId;
+  final router = GoRouter.of(context);
+  final bucket = PageStorageBucket();
+  var query = '';
+  bool sameAccount() =>
+      identical(repository, container.read(communityRepositoryProvider)) &&
+      uid == repository.userId;
+  while (true) {
+    if (!context.mounted) return;
+    if (!sameAccount()) return;
+    final chat = await showStudioSelectionSheet<String>(
+      context: context,
+      builder: (ctx) => PageStorage(
+        bucket: bucket,
+        child: NewChatScreen(
+          embedded: true,
+          initialQuery: query,
+          onQueryChanged: (value) => query = value,
         ),
-  );
+      ),
+    );
+    if (chat == null || !context.mounted || !sameAccount()) return;
+    await router.push('/chat/$chat');
+  }
 }

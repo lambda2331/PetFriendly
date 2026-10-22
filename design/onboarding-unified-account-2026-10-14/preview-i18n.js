@@ -1,0 +1,30 @@
+/* Application copy only. Never translates user names, messages, care text or canonical IDs. */
+(function(root){const entries={
+ 'owner':['Действие доступно владельцу запроса.','Only the request owner can do this.','Дзеянне даступнае ўладальніку запыту.','To działanie jest dostępne dla właściciela prośby.'],
+ 'participant':['Доступно только участникам прогулки.','Only walk participants have access.','Даступна толькі ўдзельнікам прагулкі.','Dostępne tylko dla uczestników spaceru.'],
+ 'actor':['Действие недоступно для этого участника.','This action is unavailable for this participant.','Дзеянне недаступнае для гэтага ўдзельніка.','To działanie jest niedostępne dla tego uczestnika.'],
+ 'state':['Состояние прогулки изменилось. Откройте её снова.','The walk status changed. Open it again.','Стан прагулкі змяніўся. Адкрыйце яе зноў.','Status spaceru się zmienił. Otwórz go ponownie.'],
+ 'assignment-conflict':['Помощник уже выбран. Обновите запрос.','A helper has already been selected. Refresh the request.','Памочнік ужо выбраны. Абнавіце запыт.','Pomocnik został już wybrany. Odśwież prośbę.'],
+ 'application-unavailable':['Сейчас нельзя откликнуться на этот запрос.','You cannot apply to this request now.','Зараз нельга адгукнуцца на гэты запыт.','Nie można teraz zgłosić się do tej prośby.'],
+ 'application':['Отклик недоступен или уже назначена прогулка.','The application is unavailable or a walk is already assigned.','Водгук недаступны або прагулка ўжо прызначаная.','Zgłoszenie jest niedostępne lub spacer został już przydzielony.'],
+ 'applicant':['Отклик изменился. Вернитесь к списку откликов.','The application changed. Return to the applicant list.','Водгук змяніўся. Вярніцеся да спіса.','Zgłoszenie się zmieniło. Wróć do listy zgłoszeń.'],
+ 'review-ineligible':['Отзыв доступен после подтверждённого завершения прогулки.','Reviews are available after confirmed completion.','Водгук даступны пасля пацверджанага завяршэння прагулкі.','Opinię można wystawić po potwierdzonym zakończeniu spaceru.'],
+ 'review-invalid':['Выберите оценку от 1 до 5 и проверьте текст отзыва.','Choose a rating from 1 to 5 and check the review text.','Выберыце ацэнку ад 1 да 5 і праверце тэкст водгуку.','Wybierz ocenę od 1 do 5 i sprawdź treść opinii.'],
+ 'reply':['Ответ недоступен. Отвечать может получатель отзыва.','Only the review recipient can reply.','Адказваць можа толькі атрымальнік водгуку.','Odpowiedzieć może tylko odbiorca opinii.'],
+ 'join-required':['Сначала вступите в сообщество.','Join the community first.','Спачатку далучайцеся да супольнасці.','Najpierw dołącz do społeczności.'],
+ 'community':['Сообщество недоступно.','This community is unavailable.','Супольнасць недаступная.','Ta społeczność jest niedostępna.'],
+ 'community-invalid':['Укажите название сообщества.','Enter a community name.','Укажыце назву супольнасці.','Podaj nazwę społeczności.'],
+ 'pet-invalid':['Укажите имя питомца.','Enter your pet’s name.','Укажыце імя гадаванца.','Podaj imię zwierzęcia.'],
+ 'pet-access':['Питомец недоступен.','This pet is unavailable.','Гадаванец недаступны.','To zwierzę jest niedostępne.'],
+ 'pet':['Выберите своего питомца.','Choose one of your pets.','Выберыце свайго гадаванца.','Wybierz swoje zwierzę.'],
+ 'request-invalid':['Проверьте дату, время, длительность и часовой пояс.','Check the date, time, duration and time zone.','Праверце дату, час, працягласць і часавы пояс.','Sprawdź datę, godzinę, czas trwania i strefę czasową.'],
+ 'report-invalid':['Выберите причину жалобы.','Choose a report reason.','Выберыце прычыну скаргі.','Wybierz powód zgłoszenia.'],
+ 'report-target':['Объект жалобы недоступен.','The report target is unavailable.','Аб’ект скаргі недаступны.','Obiekt zgłoszenia jest niedostępny.'],
+ 'person':['Не удалось открыть переписку. Вернитесь к списку людей.','Unable to open the conversation. Return to People.','Не ўдалося адкрыць перапіску. Вярніцеся да спіса людзей.','Nie można otworzyć rozmowy. Wróć do listy osób.'],
+ 'Пока нет отзывов':['Пока нет отзывов','No reviews yet','Пакуль няма водгукаў','Brak opinii'],
+ 'Присмотр за кошками — только предпочтение. Запись на такую услугу пока недоступна.':['Присмотр за кошками — только предпочтение. Запись на такую услугу пока недоступна.','Cat sitting is an informational preference. Booking is not available yet.','Догляд катоў — толькі перавага. Запіс пакуль недаступны.','Opieka nad kotami jest preferencją informacyjną. Rezerwacja nie jest jeszcze dostępna.'],
+ 'Подтвердите почту. Инструкции можно запросить повторно.':['Подтвердите почту. Инструкции можно запросить повторно.','Confirm your email. You can request the instructions again.','Пацвердзіце пошту. Інструкцыі можна запытаць паўторна.','Potwierdź adres e-mail. Możesz ponownie poprosić o instrukcje.'],
+ 'Отзыв доступен после подтверждённого завершения прогулки.':['Отзыв доступен после подтверждённого завершения прогулки.','Reviews are available after confirmed completion.','Водгук даступны пасля пацверджанага завяршэння прагулкі.','Opinia jest dostępna po potwierdzonym zakończeniu spaceru.'],
+ 'Геопозиция недоступна. Найдите город или укажите его вручную.':['Геопозиция недоступна. Найдите город или укажите его вручную.','Location is unavailable. Search or enter a city manually.','Геапазіцыя недаступная. Знайдзіце горад або ўкажыце яго ўручную.','Lokalizacja jest niedostępna. Wyszukaj miasto lub wpisz je ręcznie.']
+};root.PFPreviewCopy={entries,text:(key,locale='ru')=>entries[key]?.[['ru','en','be','pl'].indexOf(locale)]||key};if(root.PFLabels)Object.assign(root.PFLabels,entries);if(typeof module!=='undefined')module.exports=root.PFPreviewCopy;
+})(typeof window==='undefined'?globalThis:window);

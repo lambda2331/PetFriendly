@@ -1,3 +1,7 @@
+import 'onboarding_manual_city_sheet.dart';
+import '../../core/ui/studio_review.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/studio_theme.dart';
 import '../../core/ui/components.dart';
@@ -9,16 +13,37 @@ class CitySheet extends StatefulWidget {
     required this.city,
     required this.onSelected,
     required this.onLocate,
+    this.onboarding = false,
+    this.locating = false,
+    this.locationError,
   });
   final String city;
   final ValueChanged<String> onSelected;
   final VoidCallback onLocate;
+  final bool onboarding, locating;
+  final String? locationError;
   @override
   State<CitySheet> createState() => CitySheetState();
 }
 
 class CitySheetState extends State<CitySheet> {
   final input = TextEditingController();
+  bool ready = false;
+  bool unavailable = false;
+  @override
+  void initState() {
+    super.initState();
+    ready = worldCitiesLoaded;
+    if (ready) return;
+    loadWorldCities()
+        .then((_) {
+          if (mounted) setState(() => ready = true);
+        })
+        .catchError((Object _) {
+          if (mounted) setState(() => unavailable = true);
+        });
+  }
+
   @override
   void dispose() {
     input.dispose();
@@ -36,127 +61,164 @@ class CitySheetState extends State<CitySheet> {
   @override
   Widget build(BuildContext context) {
     final query = input.text.trim();
-    final current = canonicalCity(widget.city);
-    final suggestions = suggestCities(query)
-        .where((city) => query.isNotEmpty || city.name != current)
-        .take(query.isEmpty ? 3 : 6)
-        .toList();
-    final custom = query.isNotEmpty && knownCity(query) == null;
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          24,
-          0,
-          24,
-          MediaQuery.viewInsetsOf(context).bottom + 12,
-        ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.sizeOf(context).height * .8,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const StudioSheetHeader(title: 'Выберите город'),
-                const SizedBox(height: 16),
-                TextField(
-                  textAlignVertical: TextAlignVertical.top,
+    final current = knownCity(canonicalCity(widget.city));
+    final suggestions = query.isEmpty
+        ? <CitySuggestion>[
+            ?current,
+            ...['Минск', 'Варшава', 'Вильнюс', 'Лондон']
+                .map(knownCity)
+                .whereType<CitySuggestion>()
+                .where((c) => c.name != current?.name),
+          ].take(4).toList()
+        : suggestCities(query).take(12).toList();
+    Future<void> manual() async {
+      final result = await showStudioSelectionSheet<String>(
+        context: context,
+        builder: (_) => OnboardingManualCitySheet(initialCity: query),
+      );
+      if (mounted && result != null) choose(result);
+    }
+
+    return StudioReviewSheet(
+      title: 'Выберите город'.tr(context),
+      fixedContent: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
                   key: const Key('city-input'),
                   controller: input,
-                  maxLength: 80,
                   textCapitalization: TextCapitalization.words,
                   textInputAction: TextInputAction.search,
                   onChanged: (_) => setState(() {}),
                   onSubmitted: (_) => FocusScope.of(context).unfocus(),
                   decoration: InputDecoration(
-                    labelText: 'Найти город',
-                    counterText: '',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: input.text.isEmpty
-                        ? null
-                        : IconButton(
-                            tooltip: 'Очистить поиск',
-                            onPressed: () => setState(input.clear),
-                            icon: const Icon(Icons.close, size: 18),
-                          ),
+                    hintText: 'Название города'.tr(context),
+                    prefixIcon: const Icon(LucideIcons.search, size: 20),
                   ),
                 ),
-                const SizedBox(height: 16),
-                if (query.isEmpty) ...[
-                  _cityRow(
-                    context,
-                    current,
-                    country: knownCity(current)?.country,
-                    selected: true,
-                    key: const Key('city-current'),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Другие города',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: 4),
-                ],
-                for (final city in suggestions)
-                  _cityRow(
-                    context,
-                    city.name,
-                    country: city.country,
-                    selected: city.name == current,
-                    key: ValueKey('city-suggestion-${city.name}'),
-                  ),
-                if (custom) ...[
-                  if (suggestions.isNotEmpty) const Divider(height: 24),
-                  ListTile(
-                    key: const Key('city-custom'),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    minTileHeight: 56,
-                    leading: const Icon(Icons.location_city_outlined),
-                    title: Text('Выбрать «${canonicalCity(query)}»'),
-                    subtitle: const Text('Другой город'),
-                    onTap: () => choose(query),
-                  ),
-                ],
-                const Divider(height: 28),
-                OutlinedButton.icon(
-                  key: const Key('city-nearby'),
-                  onPressed: widget.onLocate,
-                  icon: const Icon(Icons.my_location_outlined),
-                  label: const Text('Рядом со мной'),
+              ),
+              const SizedBox(width: 8),
+              IconButton.filledTonal(
+                key: Key(
+                  widget.onboarding ? 'onboarding-detect-city' : 'city-nearby',
                 ),
-              ],
-            ),
+                tooltip: 'Определить мой город'.tr(context),
+                onPressed: widget.locating ? null : widget.onLocate,
+                style: IconButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                icon: widget.locating
+                    ? const SizedBox.square(
+                        dimension: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(LucideIcons.locateFixed, size: 20),
+              ),
+            ],
           ),
-        ),
+          if (widget.locationError != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                widget.locationError!.tr(context),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (!ready && !unavailable)
+            StudioReviewState(title: 'Загружаем…'.tr(context), loading: true)
+          else if (unavailable)
+            StudioReviewState(
+              title: 'Не удалось загрузить'.tr(context),
+              action: OutlinedButton(
+                onPressed: manual,
+                child: Text('Указать вручную'.tr(context)),
+              ),
+            )
+          else ...[
+            for (var i = 0; i < suggestions.length; i++) ...[
+              if (i > 0)
+                Divider(height: 1, color: StudioColors.of(context).line),
+              KeyedSubtree(
+                key: ValueKey('city-suggestion-${suggestions[i].name}'),
+                child: onboardingRow(suggestions[i]),
+              ),
+            ],
+            if (query.isNotEmpty && suggestions.isEmpty && query.contains(','))
+              ListTile(
+                key: const Key('city-custom'),
+                title: Text(
+                  'Выбрать «{p0}»'.tr(context, arguments: {'p0': query}),
+                ),
+                subtitle: Text('Другой город'.tr(context)),
+                trailing: const Icon(LucideIcons.chevronRight, size: 20),
+                onTap: () => choose(query),
+              ),
+            if (query.isNotEmpty && suggestions.isEmpty)
+              StudioReviewState(
+                title: 'Город не найден'.tr(context),
+                message:
+                    'Попробуйте другое название или добавьте населённый пункт вручную.'
+                        .tr(context),
+                action: OutlinedButton(
+                  key: const Key('onboarding-manual'),
+                  onPressed: manual,
+                  child: Text('Указать вручную'.tr(context)),
+                ),
+              ),
+          ],
+        ],
       ),
     );
   }
 
-  Widget _cityRow(
-    BuildContext context,
-    String name, {
-    String? country,
-    required bool selected,
-    required Key key,
-  }) => ListTile(
-    key: key,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-    minTileHeight: 56,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-    selected: selected,
-    selectedColor: Theme.of(context).colorScheme.onSurface,
-    selectedTileColor: StudioColors.of(context).tint,
-    leading: const Icon(Icons.location_city_outlined),
-    title: Text(name),
-    subtitle: country?.trim().isNotEmpty == true || selected
-        ? MetadataLine(items: [?country, if (selected) 'Выбран сейчас'])
+  Widget onboardingRow(CitySuggestion city) => KeyedSubtree(
+    key: city.name == canonicalCity(widget.city) && input.text.isEmpty
+        ? const Key('city-current')
         : null,
-    trailing: selected ? const Icon(Icons.check) : null,
-    onTap: () => choose(name),
+    child: Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => choose(city.name),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      city.displayName,
+                      style: studioIdentityText.copyWith(fontSize: 16),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      [
+                        countryName(city.isoCountry, context.languageCode),
+                        if (city.region.isNotEmpty) city.region,
+                      ].join(' · '),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(LucideIcons.chevronRight, size: 22),
+            ],
+          ),
+        ),
+      ),
+    ),
   );
 }

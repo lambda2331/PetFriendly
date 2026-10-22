@@ -17,6 +17,31 @@ Color token(String value) =>
     Color(int.parse('FF${value.substring(1)}', radix: 16));
 
 void main() {
+  test('Every text role uses a bundled Studio family', () {
+    for (final brightness in Brightness.values) {
+      final text = studioTheme(brightness).textTheme;
+      for (final style in [
+        text.displayLarge,
+        text.displayMedium,
+        text.displaySmall,
+        text.headlineLarge,
+        text.headlineMedium,
+        text.headlineSmall,
+        text.titleLarge,
+        text.titleMedium,
+        text.titleSmall,
+        text.bodyLarge,
+        text.bodyMedium,
+        text.bodySmall,
+        text.labelLarge,
+        text.labelMedium,
+        text.labelSmall,
+      ]) {
+        expect(style?.fontFamily, anyOf('Manrope', 'Golos Text'));
+      }
+    }
+  });
+
   test(
     'Studio text remains legible on every semantic surface and matches tokens',
     () {

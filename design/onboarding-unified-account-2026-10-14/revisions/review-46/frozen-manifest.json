@@ -1,0 +1,173 @@
+{
+  "files": [
+    {
+      "path": "../../frozen/assets/fonts/Manrope-OFL.txt",
+      "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+    },
+    {
+      "path": "../../frozen/assets/fonts/GolosText-OFL.txt",
+      "sha256": "ff532f9e8789f09a9fdffc3c0954eedfb0a48be77b2e2eb90f5f82e4f347f50c"
+    },
+    {
+      "path": "../../frozen/assets/fonts/GolosText.ttf",
+      "sha256": "17bb58fb69aec2dfb047a2ebf52534023e9b688c97a6b7ac795b0a72912c2063"
+    },
+    {
+      "path": "../../frozen/assets/fonts/Manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "../../frozen/design/shell-settings-studio-review/index.html",
+      "sha256": "5653cd19736dcbc6f247ea3b952e256c71106be246ddea590d066573db821561"
+    },
+    {
+      "path": "../../frozen/design/shell-settings-studio-review/styles.css",
+      "sha256": "f7f7e08daca92b786ab2e872fb170e028f38e538272fcf6c07a403334775f24e"
+    },
+    {
+      "path": "../../frozen/design/shell-settings-studio-review/app.js",
+      "sha256": "af27ee225819e37e9ff392dd301e458c6687a7c3ce1ec61ebc3559ab7d509260"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/create-scrolled.png",
+      "sha256": "9529665cbf95fcaad5f1db3794b582e9d0e8711e80449394edc918e49eb279a1"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/requests.png",
+      "sha256": "c9789f25a1ebe17c168ac5973c8d8964fca2fc2ea59e98c97a5d962f22abee63"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/preview.png",
+      "sha256": "5a470d3ed3a173a713aa2331042e0edc242f97a35ddd5f7083c6fe74cb08f163"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/details.png",
+      "sha256": "ed3bbbe2fd4f19558aa1fa5d1906274ef8868974c011a04821520a480a49ebf8"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/index.html",
+      "sha256": "b117fb1b0eee6513150dae02a09138980bd49feb924578b3a23c1ad695690e5f"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/history-preview.png",
+      "sha256": "4d94d23e1334a4d863997c56c8835d6dabeee5e9bd46ac163cd543de9c535f48"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/styles.css",
+      "sha256": "f8ac50d2c60824202b1b3b2f9c510a3a10026803f779741db54248402f0e80f9"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/review-form.png",
+      "sha256": "25c8d0fb380ed25d0ef6fd637df2ac314aafc6d18d8241b9a9514ec72cdeb448"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/candidates.png",
+      "sha256": "5a8856dfac27281c467f4d990f6cd0d834608a6f58502a88fd1d58f7ea2f7707"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/conditions.png",
+      "sha256": "e047fae50595a602dc41fc1de34e859f8ce2268c5cfa82d1b64fe178e3ef8fce"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/create.png",
+      "sha256": "66e5999acae86386c248287fce11a553a7875e2c5c9d455d1d21464afb4bd097"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/history.png",
+      "sha256": "ed860ee68b4e15a6db1abf1dcc194a2d1d0d1c5e4e11c7367173119585d09df7"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/empty-mobile.png",
+      "sha256": "8165da94f574ca1a679775f585765cee88aece83a21a44f7992d8ec9fa171211"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/pl-dark-large.png",
+      "sha256": "cc46facddd3b39f980db2b7441caac9d0b1f7d30de05e879ca60202677085715"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/be-dark-large.png",
+      "sha256": "7bc4a05d0c4ed47598ef564de7379341922daaa2069fc07408e65aa46fe964c6"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/calendar.png",
+      "sha256": "e66313ccaf0b95143126e54d32f8caa84670fe05ed313676f66d9f71dfc6fc85"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/calendar-pl-large.png",
+      "sha256": "ee789a45d7d918ab49d88d20a30a01fcc9b6d86ea4d36e52af0eb11072c3f12b"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/reviews.png",
+      "sha256": "bba16aec8e6f8c1c360e98a312ed302b11711e240e1c453f7eec964c672c2dc6"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/current.png",
+      "sha256": "37408bdc44c197ba34cb6e93c620cc7d2211c47fe8e49a0061723e8d6a12d92b"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/en-dark-large.png",
+      "sha256": "a6dcd0c69d37c784821615520812a1e7d6f67a3ece793ae672a61f52630b253f"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/chat.png",
+      "sha256": "34919ce429d7f43292c3965ddcfaba7c7fa93d4bce08f29ba1e55b510ac4a7b0"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/app.js",
+      "sha256": "e80bba38761a94523c21a1417b2d75cf8b56f2a4018362dbb75ca09a0880cbb8"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/ru-dark-large.png",
+      "sha256": "fe1f288cae18b8f5d2af13ed207c69078d702a3bfeb594c543b083b6f430df04"
+    },
+    {
+      "path": "../../frozen/design/walks-studio-review/request-details.png",
+      "sha256": "55eaa185ac080c480cf54cde95857cda7480afd23529d6c938639657ce8df04c"
+    },
+    {
+      "path": "../../frozen/design/chat-profile-studio-review/index.html",
+      "sha256": "071c318c897856cdcb90b604618852e55bafd90eab4274c149444b9cd3053efa"
+    },
+    {
+      "path": "../../frozen/design/chat-profile-studio-review/styles.css",
+      "sha256": "c2053e3b0495456a84759ddb3c79589344f99a05a469a57456b505cf52bdacbe"
+    },
+    {
+      "path": "../../frozen/design/chat-profile-studio-review/app.js",
+      "sha256": "19189adacdace6cea6b0a1a7d82fcda6c742856cdd9a4455afc2a7ca292e23a3"
+    },
+    {
+      "path": "../../frozen/design/walking-assets/owner.jpg",
+      "sha256": "cf0eac6077be7b4dddc8ca97b452d76f2a6c937a80ed8babdd36ceec4295517f"
+    },
+    {
+      "path": "../../frozen/design/walking-assets/PROVENANCE.md",
+      "sha256": "a31a4c2ca7aba67ba6b8787850a1e67e450c9d57ac07923b71146b9ff4dd736b"
+    },
+    {
+      "path": "../../frozen/design/walking-assets/helper.jpg",
+      "sha256": "94a035089dae125745ce80e4f01bf2e04d882a8106d9a5a56eaf0dcfc81e14b5"
+    },
+    {
+      "path": "../../frozen/design/walking-assets/pet.jpg",
+      "sha256": "d1b232263588e55383d176a686ab93312f573df0f77aef7e99fc3462b29ea5bf"
+    },
+    {
+      "path": "../../frozen/design/walking-assets/lucide.min.js",
+      "sha256": "3411692820cb8d47543f69496aa25fd603a358f4498046f41c508a5a3342210e"
+    },
+    {
+      "path": "../../frozen/design/onboarding-studio-review/index.html",
+      "sha256": "1ee7f03455feb4e5d284ac116cfe353db5ccf2317f0429f8c19197dcc866277c"
+    },
+    {
+      "path": "../../frozen/design/onboarding-studio-review/styles.css",
+      "sha256": "960920a27855ee2122375d8ad6b2334b033cf5372259018a6f685fd529d1372d"
+    },
+    {
+      "path": "../../frozen/design/onboarding-studio-review/app.js",
+      "sha256": "3efbbc3d9cdd98a89e1972fb5abe5442fbb0332508a9b4cd58212e2ae900ad55"
+    }
+  ],
+  "originals_verified_unchanged": 192
+}

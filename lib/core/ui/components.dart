@@ -1,19 +1,38 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../theme/studio_theme.dart';
 import '../backend/backend.dart';
+import 'studio_motion.dart';
 
 AnimationStyle studioSheetAnimation(BuildContext context) =>
-    MediaQuery.disableAnimationsOf(context)
+    StudioMotion.reduced(context)
     ? AnimationStyle.noAnimation
     : const AnimationStyle(
         duration: Duration(milliseconds: 250),
         reverseDuration: Duration(milliseconds: 220),
       );
 
+/// Selection panels fill the available screen width; bodies own their padding.
+Future<T?> showStudioSelectionSheet<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+}) => showModalBottomSheet<T>(
+  context: context,
+  useRootNavigator: true,
+  useSafeArea: true,
+  isScrollControlled: true,
+  showDragHandle: false,
+  sheetAnimationStyle: studioSheetAnimation(context),
+  constraints: BoxConstraints.tightFor(width: MediaQuery.sizeOf(context).width),
+  clipBehavior: Clip.antiAlias,
+  builder: builder,
+);
+
 void notice(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text(message)));
+    ..showSnackBar(SnackBar(content: Text(message.tr(context))));
 }
 
 /// Shared heading for modal sheets; the sheet body owns its safe-area padding.
@@ -58,8 +77,8 @@ class StudioSheetHeader extends StatelessWidget {
           ...actions,
           IconButton(
             tooltip: closeEnabled
-                ? 'Закрыть'
-                : 'Сначала дождитесь завершения сохранения',
+                ? "Закрыть".tr(context)
+                : "Сначала дождитесь завершения сохранения".tr(context),
             onPressed: closeEnabled
                 ? onClose ?? () => Navigator.of(context).maybePop()
                 : null,
@@ -235,7 +254,7 @@ class DemoCaption extends StatelessWidget {
       : Padding(
           padding: const EdgeInsets.only(top: 24, bottom: 8),
           child: Text(
-            'Демонстрационные данные · PetFriendly 0.1',
+            "Демонстрационные данные · PetFriendly 0.1".tr(context),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         );
@@ -279,26 +298,181 @@ class _PressButtonState extends State<PressButton> {
   );
 }
 
-String ageYears(dynamic value) {
+String ageYears(dynamic value, {String locale = 'ru'}) {
   final age = int.tryParse('$value');
-  if (age == null) return 'Возраст не указан';
-  final suffix = age % 100 >= 11 && age % 100 <= 14
-      ? 'лет'
-      : age % 10 == 1
-      ? 'год'
-      : age % 10 >= 2 && age % 10 <= 4
-      ? 'года'
-      : 'лет';
-  return '$age $suffix';
+  return age == null
+      ? translateForLanguage('Возраст не указан', locale: locale)
+      : stringsFor(locale).ageYears(age);
 }
 
-String memberCount(int count) {
-  final word = count % 100 >= 11 && count % 100 <= 14
-      ? 'участников'
-      : count % 10 == 1
-      ? 'участник'
-      : count % 10 >= 2 && count % 10 <= 4
-      ? 'участника'
-      : 'участников';
-  return '$count $word';
+String memberCount(int count, {String locale = 'ru'}) =>
+    stringsFor(locale).memberCount(count);
+
+/// A visible caption stays neutral when its control receives focus.
+class StudioFieldLabel extends StatelessWidget {
+  const StudioFieldLabel({required this.label, required this.child, super.key});
+  final String label;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Text(label, style: Theme.of(context).textTheme.bodyMedium),
+      const SizedBox(height: 8),
+      Semantics(label: label, child: child),
+    ],
+  );
+}
+
+/// Shared underlined segments keep localized labels whole at large text sizes.
+class StudioSegmentTabs<T> extends StatefulWidget {
+  const StudioSegmentTabs({
+    required this.entries,
+    required this.value,
+    required this.onChanged,
+    this.selectedWeight = FontWeight.w600,
+    super.key,
+  });
+  final Map<T, String> entries;
+  final T value;
+  final ValueChanged<T> onChanged;
+  final FontWeight selectedWeight;
+  @override
+  State<StudioSegmentTabs<T>> createState() => _StudioSegmentTabsState<T>();
+}
+
+class _StudioSegmentTabsState<T> extends State<StudioSegmentTabs<T>> {
+  final nodes = <T, FocusNode>{};
+  final keys = <T, GlobalKey>{};
+  @override
+  void didUpdateWidget(StudioSegmentTabs<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    for (final key in nodes.keys.toList()) {
+      if (!widget.entries.containsKey(key)) {
+        nodes.remove(key)!.dispose();
+        keys.remove(key);
+      }
+    }
+    if (oldWidget.value != widget.value) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final target = keys[widget.value]?.currentContext;
+        if (mounted && target != null) {
+          Scrollable.ensureVisible(target, duration: Duration.zero);
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    for (final node in nodes.values) {
+      node.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      if (widget.entries.isEmpty) return const SizedBox.shrink();
+      final style = Theme.of(context).textTheme.bodyMedium!;
+      var width = constraints.maxWidth / widget.entries.length;
+      for (final entry in widget.entries.entries) {
+        nodes.putIfAbsent(entry.key, FocusNode.new);
+        keys.putIfAbsent(entry.key, GlobalKey.new);
+        final painter = TextPainter(
+          text: TextSpan(
+            text: entry.value,
+            style: style.copyWith(fontWeight: widget.selectedWeight),
+          ),
+          textDirection: Directionality.of(context),
+          textScaler: MediaQuery.textScalerOf(context),
+        )..layout();
+        if (painter.width + 16 > width) width = painter.width + 16;
+        painter.dispose();
+      }
+      final scrolling =
+          width * widget.entries.length > constraints.maxWidth + .1;
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: scrolling ? null : const NeverScrollableScrollPhysics(),
+        child: Row(
+          children: widget.entries.entries
+              .map(
+                (entry) => Semantics(
+                  selected: widget.value == entry.key,
+                  button: true,
+                  child: Focus(
+                    skipTraversal: true,
+                    canRequestFocus: false,
+                    onKeyEvent: (node, event) {
+                      if (event is! KeyDownEvent) return KeyEventResult.ignored;
+                      final values = widget.entries.keys.toList();
+                      final index = values.indexOf(entry.key);
+                      final key = event.logicalKey;
+                      final target = key == LogicalKeyboardKey.arrowRight
+                          ? (index + 1) % values.length
+                          : key == LogicalKeyboardKey.arrowLeft
+                          ? (index + values.length - 1) % values.length
+                          : key == LogicalKeyboardKey.home
+                          ? 0
+                          : key == LogicalKeyboardKey.end
+                          ? values.length - 1
+                          : null;
+                      if (target == null) return KeyEventResult.ignored;
+                      widget.onChanged(values[target]);
+                      nodes[values[target]]!.requestFocus();
+                      return KeyEventResult.handled;
+                    },
+                    child: InkWell(
+                      key: keys[entry.key],
+                      focusNode: nodes[entry.key],
+                      onTap: () => widget.onChanged(entry.key),
+                      onFocusChange: (focused) {
+                        final target = keys[entry.key]?.currentContext;
+                        if (focused && target != null) {
+                          Scrollable.ensureVisible(
+                            target,
+                            duration: Duration.zero,
+                          );
+                        }
+                      },
+                      child: Container(
+                        width: width,
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: widget.value == entry.key ? 2 : 1,
+                              color: widget.value == entry.key
+                                  ? Theme.of(context).colorScheme.onSurface
+                                  : Theme.of(context).dividerColor,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          entry.value,
+                          style: style.copyWith(
+                            fontWeight: widget.value == entry.key
+                                ? widget.selectedWeight
+                                : FontWeight.w400,
+                          ),
+                          maxLines: 1,
+                          softWrap: false,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+      );
+    },
+  );
 }

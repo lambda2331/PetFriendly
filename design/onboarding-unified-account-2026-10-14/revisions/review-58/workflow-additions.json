@@ -1,0 +1,458 @@
+[
+  {
+    "id": "dirty-exit",
+    "title": "Выйти без сохранения?",
+    "module": "Account & helping",
+    "body": "<p>Изменения будут потеряны.</p>",
+    "actions": [
+      {
+        "label": "Продолжить",
+        "target": "helper",
+        "variant": "outline"
+      },
+      {
+        "label": "Выйти",
+        "target": "walks",
+        "variant": "primary"
+      }
+    ],
+    "parent": "helper",
+    "layout": "sheet",
+    "note": "Compact unsaved-edit confirmation. No extra draft-choice step. Local draft behavior only.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "account-entry",
+    "title": "Войти в PetFriendly",
+    "module": "Account & helping",
+    "body": "<div class=\"auth-intro\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i><h2 class=\"screen-title\">Войти в PetFriendly</h2><p class=\"meta\">Ваша компания для прогулок.</p></div><label class=\"field\">Почта<input name=\"email\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label><label class=\"field\">Пароль<input name=\"password\" type=\"password\" required autocomplete=\"current-password\"></label><button type=\"button\" class=\"primary full-width\" data-go=\"nearby\">Войти</button><div class=\"auth-links\"><button type=\"button\" class=\"text-link\" data-go=\"email-register\">Создать аккаунт</button><button type=\"button\" class=\"text-link\" data-go=\"account-recovery\">Забыли пароль?</button></div><div class=\"provider-actions\"><button type=\"button\" class=\"outline\" data-go=\"nearby\"><img class=\"provider-mark provider-google\" src=\"provider-icons/google.svg\" alt=\"\" aria-hidden=\"true\"><span>Войти через Google</span></button><button type=\"button\" class=\"outline\" data-go=\"nearby\"><img class=\"provider-mark provider-apple\" src=\"provider-icons/apple.svg\" alt=\"\" aria-hidden=\"true\"><span>Войти через Apple</span></button><button type=\"button\" class=\"outline\" data-go=\"nearby\"><img class=\"provider-mark provider-telegram\" src=\"provider-icons/telegram.svg\" alt=\"\" aria-hidden=\"true\"><span>Войти через Telegram</span></button></div>",
+    "actions": [],
+    "parent": "",
+    "layout": "page",
+    "note": "Restores the existing Studio sign-in structure: one email/password form, direct provider actions and reset link. Browser-only design; no credentials are sent.",
+    "toast": "",
+    "form": true,
+    "auth": true
+  },
+  {
+    "id": "email-register",
+    "title": "Создать аккаунт",
+    "module": "Account & helping",
+    "body": "<label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label><label class=\"field\">Пароль<input name=\"Пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"new-password\"></label><p class=\"hint\">После регистрации нужно подтвердить почту.</p>",
+    "actions": [
+      {
+        "label": "Продолжить",
+        "target": "email",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-entry",
+    "layout": "page",
+    "note": "Email registration UI. Password policy and provider confirmation use the configured Auth contract; no new password policy is invented.",
+    "toast": "",
+    "form": true,
+    "auth": true
+  },
+  {
+    "id": "account-recovery",
+    "title": "Восстановить доступ",
+    "module": "Account & helping",
+    "body": "<p>Укажите почту аккаунта. Мы пришлём инструкции для восстановления доступа.</p><label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "password-reset-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-entry",
+    "layout": "page",
+    "note": "Password recovery opens from the sign-in form and sends a generic email acknowledgment. No account-existence disclosure; visual fixture only.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "password-reset-sent",
+    "title": "Восстановить доступ",
+    "module": "Account & helping",
+    "body": "<p>Укажите почту аккаунта. Мы пришлём инструкции для восстановления доступа.</p><label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label><p class=\"meta\">Если аккаунт с такой почтой существует, инструкции придут на неё.</p>",
+    "actions": [
+      {
+        "label": "Ко входу",
+        "target": "account-entry",
+        "variant": "outline"
+      }
+    ],
+    "parent": "account-recovery",
+    "layout": "page",
+    "note": "Same originating recovery form with a generic acknowledgment, without revealing whether the account exists.",
+    "toast": "Инструкции запрошены",
+    "form": false
+  },
+  {
+    "id": "password-new",
+    "title": "Новый пароль",
+    "module": "Account & helping",
+    "body": "<p>Задайте новый пароль для этого аккаунта.</p><label class=\"field\">Новый пароль<input name=\"Новый пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"new-password\"></label><label class=\"field\">Повторите пароль<input name=\"Повторите пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"new-password\"></label>",
+    "actions": [
+      {
+        "label": "Сохранить",
+        "target": "account-entry",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-recovery",
+    "layout": "page",
+    "note": "Opened from a verified recovery email link. The browser preview never validates recovery tokens or changes credentials.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "community-members",
+    "title": "Участники",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">5 участников</span></div></div><label class=\"search\"><i data-lucide=\"search\" class=\"icon\" aria-hidden=\"true\"></i><input placeholder=\"Найти участника\" aria-label=\"Найти участника\"></label><button type=\"button\" class=\"supplemental-row\" data-go=\"chat-direct-design\" data-member=\"anna\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Анна</strong><span class=\"meta\">Организатор</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"chat-direct-design\" data-member=\"ulyana\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Ульяна</strong><span class=\"meta\">Советский район</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"chat-direct-design\" data-member=\"kat\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Екатерина Александровская-Лисовская</strong><span class=\"meta\">Центральный район</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"chat-direct-design\" data-member=\"maxim\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Максим</strong><span class=\"meta\">Советский район</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"chat-direct-design\" data-member=\"mikhail\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Михаил</strong><span class=\"meta\">Центральный район</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><p class=\"empty-members\" hidden>Никого не нашли. Попробуйте другое имя.</p>",
+    "actions": [],
+    "parent": "community",
+    "layout": "page",
+    "note": "Community details → Participants. Tap a member to open the existing direct conversation with an empty composer; nothing is sent automatically.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "community-rules",
+    "title": "Правила сообщества",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">Минск · Центральный район</span></div></div><ol class=\"rules-list\"><li><strong>Уважайте друг друга</strong><p>Обсуждайте вопросы спокойно, без оскорблений.</p></li><li><strong>Берегите личные данные</strong><p>Не публикуйте чужие адреса и контакты без согласия.</p></li><li><strong>Учитывайте питомцев</strong><p>Уточняйте условия встреч и не навязывайте общение.</p></li></ol>",
+    "actions": [],
+    "parent": "community",
+    "layout": "page",
+    "note": "Community details → Rules. Example community-authored rules, not a staff moderation policy.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "invitation-preview",
+    "title": "Соседи с питомцами",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">Открытое сообщество</span></div></div><p>Знакомимся, гуляем и делимся местами рядом.</p>",
+    "actions": [
+      {
+        "label": "Вступить",
+        "target": "community",
+        "variant": "primary"
+      }
+    ],
+    "parent": "community",
+    "layout": "sheet",
+    "note": "Opened by a recipient from a community invitation link in chat. Public communities are also discoverable in People → Communities and can be joined directly; no invitation is required.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "report",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Отзыв об Ульяне</strong><span class=\"meta\">Персик · 11 октября</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "report-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-reviews",
+    "layout": "sheet",
+    "note": "Context-specific report with selected object ID. Reporting does not automatically block a person or expose private handover content.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "report-sent",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Отзыв об Ульяне</strong><span class=\"meta\">Персик · 11 октября</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Вернуться",
+        "target": "walk-reviews",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-reviews",
+    "layout": "sheet",
+    "note": "Compact report acknowledgment; actual submission and handling require the server.",
+    "toast": "Жалоба отправлена",
+    "form": false
+  },
+  {
+    "id": "report-chat",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сообщение Ульяны</strong><span class=\"meta\">Личная переписка</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "report-chat-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "chat-direct-design",
+    "layout": "sheet",
+    "note": "Context-specific report with selected object ID. Reporting does not automatically block a person or expose private handover content.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "report-chat-sent",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сообщение Ульяны</strong><span class=\"meta\">Личная переписка</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Вернуться",
+        "target": "chat-direct-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "chat-direct-design",
+    "layout": "sheet",
+    "note": "Compact report acknowledgment; actual submission and handling require the server.",
+    "toast": "Жалоба отправлена",
+    "form": false
+  },
+  {
+    "id": "application-pending",
+    "title": "Прогулка с Боней",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"dog\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Боня</strong><span class=\"meta\">Сегодня · 18:00 · 45 минут</span></div></div><span class=\"status-chip\"><i data-lucide=\"clock\" class=\"icon\" aria-hidden=\"true\"></i>Отклик отправлен</span><p class=\"meta\">Владелец ещё не выбрал помощника.</p>",
+    "actions": [
+      {
+        "label": "Отозвать отклик",
+        "target": "application-withdraw",
+        "variant": "outline"
+      }
+    ],
+    "parent": "request-shell",
+    "layout": "sheet",
+    "note": "Pending application is part of the compact request details, opened from the same record in My walks. Withdrawal is the only secondary action. Participant chat is unavailable until assignment.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "application-withdraw",
+    "title": "Отозвать отклик?",
+    "module": "Walking assistance",
+    "body": "<p>Владелец больше не сможет выбрать вас для этой прогулки.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "application-pending",
+        "variant": "outline"
+      },
+      {
+        "label": "Отозвать",
+        "target": "walks",
+        "variant": "primary"
+      }
+    ],
+    "parent": "application-pending",
+    "layout": "sheet",
+    "note": "Pending application withdrawal only. This is not an agreement-cancellation policy; request and applicant IDs must remain scoped.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "helper-select-confirm",
+    "title": "Выбрать Ульяну?",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Персик · 18 октября, 10:00</span></div></div><p>Ульяна станет помощником этой прогулки.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "walk-candidates",
+        "variant": "outline"
+      },
+      {
+        "label": "Выбрать",
+        "target": "walk-assigned",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-candidates",
+    "layout": "sheet",
+    "note": "One compact assignment confirmation; applicant experience and reputation stay in the list. Assignment must remain atomic on the server.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-helper-review",
+    "title": "Отзыв о помощнике",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "Сохранить",
+        "target": "walk-helper-review-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-completed",
+    "layout": "page",
+    "note": "Only after owner-confirmed completion. Helper and owner reputation are separate; a new rating starts unset.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "walk-helper-review-sent",
+    "title": "Отзыв о помощнике",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "К истории",
+        "target": "walk-history",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-history",
+    "layout": "page",
+    "note": "Same form with acknowledgment; prevents a duplicate direction-specific review in production. No aggregate total is written by this preview.",
+    "toast": "Отзыв сохранён",
+    "form": false
+  },
+  {
+    "id": "walk-owner-review",
+    "title": "Отзыв о владельце",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Анна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "Сохранить",
+        "target": "walk-owner-review-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-completed-helper",
+    "layout": "page",
+    "note": "Only after owner-confirmed completion. Helper and owner reputation are separate; a new rating starts unset.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "walk-owner-review-sent",
+    "title": "Отзыв о владельце",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Анна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "К истории",
+        "target": "walk-history",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-history",
+    "layout": "page",
+    "note": "Same form with acknowledgment; prevents a duplicate direction-specific review in production. No aggregate total is written by this preview.",
+    "toast": "Отзыв сохранён",
+    "form": false
+  },
+  {
+    "id": "target-unavailable",
+    "title": "Страница недоступна",
+    "module": "App shell",
+    "body": "<div class=\"empty-state\"><i data-lucide=\"circle-help\" class=\"icon\" aria-hidden=\"true\"></i><h3>Не удалось открыть</h3><p>Объект удалён или доступ к нему изменился.</p></div>",
+    "actions": [
+      {
+        "label": "Вернуться",
+        "target": "chats",
+        "variant": "outline"
+      }
+    ],
+    "parent": "chats",
+    "layout": "page",
+    "note": "Unavailable/deleted/no-access target. Actual return context must preserve its initiating list/filter/scroll; no private object content is shown.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "photo-error",
+    "title": "Фото профиля",
+    "module": "Account & helping",
+    "body": "<div class=\"photo-preview\"><i data-lucide=\"image\" class=\"icon\" aria-hidden=\"true\"></i></div><p class=\"field-error\">Не удалось открыть фото.</p><p>Выберите JPEG, PNG или WebP до 5 МБ. Ранее сохранённое фото не изменилось.</p>",
+    "actions": [
+      {
+        "label": "Выбрать другое",
+        "target": "profile-edit",
+        "variant": "primary"
+      },
+      {
+        "label": "Назад",
+        "target": "profile",
+        "variant": "outline"
+      }
+    ],
+    "parent": "profile-edit",
+    "layout": "sheet",
+    "note": "Type/size/decode recovery design. Actual gallery action uses the existing re-encoding pipeline, never claims production upload/storage.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "save-error",
+    "title": "Изменения не сохранены",
+    "module": "Account & helping",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Публичные сведения</strong><span class=\"meta\">Ваш черновик сохранён в редакторе</span></div></div><p class=\"field-error\">Не удалось сохранить изменения.</p><p>Попробуйте ещё раз. Можно вернуться к редактированию.</p>",
+    "actions": [
+      {
+        "label": "Повторить",
+        "target": "helper",
+        "variant": "primary"
+      },
+      {
+        "label": "Редактировать",
+        "target": "helper",
+        "variant": "outline"
+      }
+    ],
+    "parent": "helper",
+    "layout": "sheet",
+    "note": "Failure feedback design. Account-scoped draft continuity and retry command idempotency remain behavior requirements, not claimed by navigation.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "report-place",
+    "title": "Пожаловаться на место",
+    "module": "Nearby & places",
+    "parent": "place-detail",
+    "layout": "sheet",
+    "form": true,
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Зелёный парк</strong><span class=\"meta\">Минск · парк</span></div></div><fieldset class=\"reasons\"><legend>Что не так?</legend><label class=\"current-filter-option\"><input type=\"radio\" name=\"reason\" required value=\"missing\">Места нет</label><label class=\"current-filter-option\"><input type=\"radio\" name=\"reason\" required value=\"duplicate\">Дубликат</label><label class=\"current-filter-option\"><input type=\"radio\" name=\"reason\" required value=\"wrong\">Неверная информация</label></fieldset>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "report-place-sent",
+        "variant": "primary"
+      }
+    ],
+    "note": "Place details → Report. Reports may lead to catalog removal under a server-side rule still to be defined. A single report does not delete a venue in this mock."
+  },
+  {
+    "id": "report-place-sent",
+    "title": "Жалоба отправлена",
+    "module": "Nearby & places",
+    "parent": "place-detail",
+    "layout": "sheet",
+    "body": "<p>Спасибо. Вы можете вернуться к месту.</p>",
+    "actions": [
+      {
+        "label": "Готово",
+        "target": "place-detail",
+        "variant": "outline"
+      }
+    ],
+    "note": "Local report acknowledgment only; no server or staff action is claimed."
+  }
+]

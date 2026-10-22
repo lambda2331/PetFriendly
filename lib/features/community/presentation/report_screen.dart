@@ -1,3 +1,4 @@
+import '../../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/ui/components.dart';
@@ -21,16 +22,18 @@ class _ReportState extends ConsumerState<ReportScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Сообщить о проблеме')),
+    appBar: AppBar(title: Text("Сообщить о проблеме".tr(context))),
     body: PageBody(
       children: [
-        const ScreenIntro(
-          'Помогите сделать\nсообщество безопаснее.',
+        ScreenIntro(
+          "Помогите сделать\nсообщество безопаснее.".tr(context),
           compact: true,
         ),
         const SizedBox(height: 20),
-        const Text(
-          'Жалобу увидит модератор. Не добавляйте лишние личные данные.',
+        Text(
+          "Жалобу увидит модератор. Не добавляйте лишние личные данные.".tr(
+            context,
+          ),
         ),
         const SizedBox(height: 20),
         TextField(
@@ -38,7 +41,7 @@ class _ReportState extends ConsumerState<ReportScreen> {
           controller: reason,
           maxLines: 5,
           maxLength: 1000,
-          decoration: const InputDecoration(labelText: 'Что произошло?'),
+          decoration: InputDecoration(labelText: "Что произошло?".tr(context)),
         ),
         const SizedBox(height: 16),
         FilledButton(
@@ -46,7 +49,7 @@ class _ReportState extends ConsumerState<ReportScreen> {
               ? null
               : () async {
                   if (reason.text.trim().isEmpty) {
-                    notice(context, 'Опишите проблему');
+                    notice(context, "Опишите проблему".tr(context));
                     return;
                   }
                   setState(() => saving = true);
@@ -60,17 +63,22 @@ class _ReportState extends ConsumerState<ReportScreen> {
                         });
                     if (context.mounted) {
                       Navigator.pop(context);
-                      notice(context, 'Жалоба отправлена');
+                      notice(context, "Жалоба отправлена".tr(context));
                     }
                   } catch (_) {
                     if (context.mounted) {
-                      notice(context, 'Не удалось отправить жалобу');
+                      notice(
+                        context,
+                        "Не удалось отправить жалобу".tr(context),
+                      );
                     }
                   } finally {
                     if (mounted) setState(() => saving = false);
                   }
                 },
-          child: saving ? _ReportBusyLabel() : const Text('Отправить жалобу'),
+          child: saving
+              ? _ReportBusyLabel()
+              : Text("Отправить жалобу".tr(context)),
         ),
       ],
     ),
@@ -94,7 +102,7 @@ class _ReportBusyLabel extends StatelessWidget {
         ),
       ),
       const SizedBox(width: 8),
-      const Flexible(child: Text('Отправляем жалобу…')),
+      Flexible(child: Text("Отправляем жалобу…".tr(context))),
     ],
   );
 }

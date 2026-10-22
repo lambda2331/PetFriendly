@@ -7,6 +7,7 @@ import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:petfriendly/core/backend/backend.dart';
 import 'package:petfriendly/features/auth/account_entry_screen.dart';
+import 'package:petfriendly/features/auth/onboarding_replay.dart';
 import 'package:petfriendly/features/auth/profile_suggestion.dart';
 import 'package:petfriendly/features/community/data/community_repository.dart';
 import 'package:petfriendly/features/community/presentation/forms.dart';
@@ -162,12 +163,16 @@ void main() {
     );
   });
   for (final scenario in [
-    ('Новый пользователь', false, '/edit/profile?welcome=true'),
-    ('Моё выбранное имя', false, '/nearby'),
-    ('Новый пользователь', true, '/mfa'),
+    ('Новый пользователь', false, '/onboarding', 'owner', false, false),
+    ('Моё выбранное имя', false, '/nearby', 'owner', false, false),
+    ('Помощник', false, '/requests', 'helper', false, false),
+    ('Новый пользователь', false, '/onboarding', 'owner', true, false),
+    ('Новый пользователь', true, '/mfa', 'owner', true, false),
+    ('Сохранённое имя', false, '/onboarding', 'owner', false, true),
+    ('Сохранённое имя', true, '/mfa', 'owner', false, true),
   ]) {
     test(
-      'Account entry routes ${scenario.$1} with MFA=${scenario.$2}',
+      'Account entry routes ${scenario.$1} with MFA=${scenario.$2}, replay=${scenario.$6}',
       () async {
         var refreshes = 0, profileReads = 0;
         final client = SupabaseClient(
@@ -178,6 +183,18 @@ void main() {
               refreshes++;
               return http.Response(
                 jsonEncode(sessionData(mfa: scenario.$2)),
+                200,
+                request: request,
+                headers: {'content-type': 'application/json'},
+              );
+            }
+            if (request.url.path.endsWith('/my_account_mode')) {
+              return http.Response(
+                jsonEncode({
+                  'account_role': 'both',
+                  'active_mode': scenario.$4,
+                  'needs_role_selection': scenario.$5,
+                }),
                 200,
                 request: request,
                 headers: {'content-type': 'application/json'},
@@ -196,7 +213,10 @@ void main() {
           jsonEncode(sessionData(mfa: scenario.$2)),
         );
         final container = ProviderContainer(
-          overrides: [backendProvider.overrideWithValue(client)],
+          overrides: [
+            backendProvider.overrideWithValue(client),
+            onboardingReplayProvider.overrideWithValue(scenario.$6),
+          ],
           retry: (_, _) => null,
         );
         addTearDown(() async {

@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:convert';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:io';
@@ -233,45 +234,129 @@ final favoriteCatalogProvider = FutureProvider<List<Place>>((ref) async {
   return records.map((p) => catalogPlace(p, p['city'])).toList();
 });
 
+class CatalogRefreshController extends Notifier<Set<String>> {
+  @override
+  Set<String> build() => {};
+
+  Future<void> retry(String city) async {
+    if (state.contains(city)) return;
+    state = {...state, city};
+    try {
+      ref.invalidate(catalogReadyProvider(city));
+      ref.invalidate(cityCatalogProvider(city));
+      await ref.read(cityCatalogProvider(city).future);
+    } catch (_) {
+      // The city-scoped provider exposes the failure to its inline state.
+    } finally {
+      if (ref.mounted) state = {...state}..remove(city);
+    }
+  }
+}
+
+final catalogRefreshProvider =
+    NotifierProvider<CatalogRefreshController, Set<String>>(
+      CatalogRefreshController.new,
+    );
+
 class CityCatalogStatus extends ConsumerWidget {
-  const CityCatalogStatus({super.key});
+  const CityCatalogStatus({
+    this.inset = true,
+    this.linearLoading = false,
+    super.key,
+  });
+  final bool inset, linearLoading;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(selectedCityCatalogProvider);
-    if (state.isLoading) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        child: Row(
+    final city = ref.watch(prototypeProvider.select((s) => s.city));
+    final pending = ref.watch(catalogRefreshProvider).contains(city);
+    final colors = Theme.of(context).colorScheme;
+    if (!state.isLoading && !state.hasError) {
+      if (state.hasValue && state.value!.isEmpty) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: inset ? 24 : 0,
+            vertical: 8,
+          ),
+          child: Text(
+            'В каталоге этого города пока нет мест.'.tr(context),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        );
+      }
+      return const SizedBox.shrink();
+    }
+    final title = state.isLoading
+        ? 'Загружаем места города…'.tr(context)
+        : (state.hasValue && state.value!.isNotEmpty
+                  ? 'Не удалось обновить места.'
+                  : 'Не удалось загрузить места.')
+              .tr(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: inset ? 24 : 0, vertical: 8),
+      child: Semantics(
+        liveRegion: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              width: 16,
-              height: 16,
-              child: CircularProgressIndicator(strokeWidth: 2),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ExcludeSemantics(
+                  child: state.isLoading
+                      ? linearLoading
+                            ? const SizedBox.shrink()
+                            : const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                      : Icon(
+                          Icons.cloud_off_outlined,
+                          size: 20,
+                          color: colors.error,
+                        ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 10),
-            Expanded(child: Text('Загружаем места города…')),
+            if (state.isLoading && linearLoading) ...[
+              const SizedBox(height: 8),
+              LinearProgressIndicator(semanticsLabel: title),
+            ],
+            if (!state.isLoading) ...[
+              const SizedBox(height: 6),
+              Text(
+                (state.hasValue && state.value!.isNotEmpty
+                        ? 'Показаны ранее загруженные места.'
+                        : 'Попробуйте загрузить места ещё раз.')
+                    .tr(context),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  key: const Key('catalog-retry'),
+                  onPressed: pending
+                      ? null
+                      : () => ref
+                            .read(catalogRefreshProvider.notifier)
+                            .retry(city),
+                  child: Text('Повторить загрузку'.tr(context)),
+                ),
+              ),
+            ],
           ],
         ),
-      );
-    }
-    if (state.hasError) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Row(
-          children: [
-            const Expanded(child: Text('Места временно недоступны')),
-            TextButton(
-              onPressed: () {
-                final city = ref.read(prototypeProvider).city;
-                ref.invalidate(catalogReadyProvider(city));
-                ref.invalidate(cityCatalogProvider(city));
-              },
-              child: const Text('Повторить'),
-            ),
-          ],
-        ),
-      );
-    }
-    return const SizedBox.shrink();
+      ),
+    );
   }
 }

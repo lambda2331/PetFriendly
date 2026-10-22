@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,10 +26,10 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Новый пароль')),
+    appBar: AppBar(title: Text("Новый пароль".tr(context))),
     body: PageBody(
       children: [
-        const ScreenIntro('Верните доступ\nк аккаунту.', compact: true),
+        ScreenIntro("Верните доступ\nк аккаунту.".tr(context), compact: true),
         const SizedBox(height: 24),
         TextField(
           textAlignVertical: TextAlignVertical.top,
@@ -36,8 +37,8 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
           obscureText: true,
           enableSuggestions: false,
           autocorrect: false,
-          decoration: const InputDecoration(
-            labelText: 'Новый пароль · минимум 12 символов',
+          decoration: InputDecoration(
+            labelText: "Новый пароль · минимум 12 символов".tr(context),
           ),
         ),
         const SizedBox(height: 12),
@@ -47,17 +48,21 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
           obscureText: true,
           enableSuggestions: false,
           autocorrect: false,
-          decoration: const InputDecoration(labelText: 'Повторите пароль'),
+          decoration: InputDecoration(
+            labelText: "Повторите пароль".tr(context),
+          ),
         ),
         const SizedBox(height: 20),
         if (confirmationRequired) ...[
-          const Text('Подтвердите смену пароля кодом из письма.'),
+          Text("Подтвердите смену пароля кодом из письма.".tr(context)),
           const SizedBox(height: 12),
           TextField(
             controller: nonce,
             keyboardType: TextInputType.number,
             autofillHints: const [AutofillHints.oneTimeCode],
-            decoration: const InputDecoration(labelText: 'Код подтверждения'),
+            decoration: InputDecoration(
+              labelText: "Код подтверждения".tr(context),
+            ),
           ),
           TextButton(
             onPressed: busy
@@ -68,19 +73,25 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
                       await ref
                           .read(passwordChangeServiceProvider)
                           .resendConfirmation();
-                      if (context.mounted) notice(context, 'Код отправлен');
+                      if (context.mounted) {
+                        notice(context, "Код отправлен".tr(context));
+                      }
                     } catch (_) {
                       if (context.mounted) {
                         notice(
                           context,
-                          'Не удалось отправить код. Повторите позже.',
+                          "Не удалось отправить код. Повторите позже.".tr(
+                            context,
+                          ),
                         );
                       }
                     } finally {
-                      if (mounted) setState(() => busy = false);
+                      if (mounted) {
+                        setState(() => busy = false);
+                      }
                     }
                   },
-            child: const Text('Отправить код ещё раз'),
+            child: Text("Отправить код ещё раз".tr(context)),
           ),
           const SizedBox(height: 12),
         ],
@@ -89,10 +100,15 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
               ? null
               : () async {
                   final client = ref.read(backendProvider);
-                  if (client == null) return;
+                  if (client == null) {
+                    return;
+                  }
                   if (password.text.length < 12 ||
                       password.text != confirm.text) {
-                    notice(context, 'Проверьте длину и совпадение паролей');
+                    notice(
+                      context,
+                      "Проверьте длину и совпадение паролей".tr(context),
+                    );
                     return;
                   }
                   setState(() => busy = true);
@@ -106,22 +122,27 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
                               : null,
                         );
                     if (result == PasswordChangeResult.mfaRequired) {
-                      if (context.mounted) context.push('/mfa');
+                      if (context.mounted) {
+                        context.push('/mfa');
+                      }
                       return;
                     }
                     if (result == PasswordChangeResult.confirmationRequired) {
-                      if (mounted) setState(() => confirmationRequired = true);
+                      if (mounted) {
+                        setState(() => confirmationRequired = true);
+                      }
                       return;
                     }
                     if (context.mounted) {
                       context.go('/auth/complete');
-                      notice(context, 'Пароль изменён');
+                      notice(context, "Пароль изменён".tr(context));
                     }
                   } catch (_) {
                     if (context.mounted) {
                       notice(
                         context,
-                        'Не удалось изменить пароль. Повторите восстановление доступа.',
+                        "Не удалось изменить пароль. Повторите восстановление доступа."
+                            .tr(context),
                       );
                     }
                   } finally {
@@ -130,10 +151,14 @@ class _PasswordState extends ConsumerState<PasswordScreen> {
                       confirm.clear();
                     }
                     nonce.clear();
-                    if (mounted) setState(() => busy = false);
+                    if (mounted) {
+                      setState(() => busy = false);
+                    }
                   }
                 },
-          child: Text(busy ? 'Сохраняем…' : 'Изменить пароль'),
+          child: Text(
+            busy ? "Сохраняем…".tr(context) : "Изменить пароль".tr(context),
+          ),
         ),
       ],
     ),

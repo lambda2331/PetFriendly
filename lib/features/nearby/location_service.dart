@@ -2,9 +2,19 @@ import 'package:geocoding/geocoding.dart';
 import 'city_search.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 
-class LocationService {
-  Position? lastPosition;
+class LocationService extends ChangeNotifier {
+  Position? _lastPosition;
+  Position? get lastPosition => _lastPosition;
+  set lastPosition(Position? value) {
+    if (_lastPosition == value) return;
+    _lastPosition = value;
+    // A city lookup and a mounted map share fixes immediately, even while
+    // reverse geocoding is pending. Coordinates remain in memory only.
+    notifyListeners();
+  }
+
   Future<bool> hasPermission() async {
     if (!await Geolocator.isLocationServiceEnabled()) return false;
     final permission = await Geolocator.checkPermission();
@@ -64,6 +74,10 @@ class LocationService {
   Future<({double latitude, double longitude})> _resolveCity(
     String city,
   ) async {
+    final known = knownCity(city);
+    if (known?.latitude != null && known?.longitude != null) {
+      return (latitude: known!.latitude!, longitude: known.longitude!);
+    }
     final locations = await locationFromAddress(
       cityGeocodingQuery(city),
     ).timeout(const Duration(seconds: 8));
@@ -88,7 +102,14 @@ class LocationService {
         'Не удалось определить город. Выберите его вручную.',
       );
     }
-    return canonicalCity(city);
+    final place = places.first;
+    return detectedCity(
+      city,
+      place.isoCountryCode,
+      position.latitude,
+      position.longitude,
+      region: place.administrativeArea,
+    );
   }
 }
 
@@ -97,7 +118,11 @@ class LocationIssue implements Exception {
   final String message;
 }
 
-final locationServiceProvider = Provider((ref) => LocationService());
+final locationServiceProvider = Provider((ref) {
+  final service = LocationService();
+  ref.onDispose(service.dispose);
+  return service;
+});
 
 final cityCenterProvider =
     FutureProvider.family<({double latitude, double longitude}), String>(

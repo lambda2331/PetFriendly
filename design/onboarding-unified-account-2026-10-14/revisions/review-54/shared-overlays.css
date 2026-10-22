@@ -1,0 +1,23 @@
+/* Review 37: Studio overlay chrome. Approved 24px sheet silhouettes are retained. */
+:is(.phone,.places-page).studio-overlay-host .shade{background:rgb(0 0 0 / .4)}
+:is(.phone,.places-page).studio-overlay-host .sheet{display:flex;flex-direction:column;min-height:0;max-height:88%;width:100%;padding:0!important;overflow:hidden;background:var(--ds-sheet);color:var(--ds-textPrimary)}
+:is(.phone,.places-page).studio-overlay-host .sheet>.sheet-head{display:flex;align-items:center!important;justify-content:space-between;gap:12px;flex:none;position:relative;top:auto;min-height:72px;padding:12px 20px!important;margin:0!important;background:var(--ds-sheet)}
+:is(.phone,.places-page).studio-overlay-host .sheet>.sheet-head h2{flex:1;min-width:0;margin:0!important;padding:0!important;text-align:left;font:700 var(--ds-sheet-title)/1.35 Manrope,sans-serif!important;overflow-wrap:anywhere}
+:is(.phone,.places-page).studio-overlay-host .sheet>.sheet-head .icon-button{flex:none;margin:0!important}
+:is(.phone,.places-page).studio-overlay-host .sheet .sheet-body{flex:0 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--ds-border) var(--ds-sheet);padding:8px 20px 20px!important}
+:is(.phone,.places-page).studio-overlay-host .sheet .sheet-body>:first-child{margin-top:0}
+:is(.phone,.places-page).studio-overlay-host .sheet>.studio-sheet-body{margin:0}
+:is(.phone,.places-page).studio-overlay-host .sheet>.studio-sheet-body>form{margin:0}
+:is(.phone,.places-page).studio-overlay-host .sheet>:is(form,.addition-form){display:flex;flex-direction:column;min-height:0;overflow:hidden}
+:is(.phone,.places-page).studio-overlay-host .sheet :is(.current-filter-actions,.addition-actions,.modal-footer){flex:none;background:var(--ds-sheet);padding:16px 20px max(20px,env(safe-area-inset-bottom));gap:12px}
+:is(.phone,.places-page).studio-overlay-host .sheet>.sheet-body:last-child{padding-bottom:max(20px,env(safe-area-inset-bottom))!important}
+:is(.phone,.places-page).studio-overlay-host .sheet .home-indicator{flex:none;margin:0 auto max(8px,env(safe-area-inset-bottom))}
+:is(.phone,.places-page).studio-overlay-host [data-studio-dialog-kind=fullscreen]{color:var(--ds-textPrimary)}
+:is(.phone,.places-page).studio-overlay-host :is([role=dialog],[role=alertdialog]) :is(button,a):focus-visible{outline:2px solid var(--ds-textPrimary);outline-offset:-2px}
+:is(.phone,.places-page).studio-overlay-host .sheet .sheet-head h2:focus{outline:none}
+@media(prefers-reduced-motion:reduce){:is(.phone,.places-page).studio-overlay-host .sheet{animation:none;transition:none}}
+
+/* Older proposed confirmation headers have an ID-specific rule. Match the shared chrome. */
+#addition-phone.studio-overlay-host .sheet>.sheet-head{padding:12px 20px!important}
+#addition-phone.studio-overlay-host .sheet .addition-body{padding:8px 20px 20px!important}
+#addition-phone.studio-overlay-host .sheet .addition-actions{padding:16px 20px max(20px,env(safe-area-inset-bottom));gap:12px}

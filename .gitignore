@@ -79,3 +79,6 @@ config/ci/
 docs/screenshots/
 
 /android/build/
+
+# Public source download cache; derived snapshots are bundled under assets/.
+tooling/.cache/

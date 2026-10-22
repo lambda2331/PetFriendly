@@ -1,5 +1,5 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
-import '../../core/backend/backend.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/storage/prototype_store.dart';
@@ -10,6 +10,7 @@ import 'city_sheet.dart';
 import 'city_catalog.dart';
 import 'place_filters.dart';
 import 'nearby_event_banner.dart';
+import 'nearby_studio_layout.dart';
 
 class NearbyScreen extends ConsumerStatefulWidget {
   const NearbyScreen({super.key});
@@ -18,6 +19,7 @@ class NearbyScreen extends ConsumerStatefulWidget {
 }
 
 class _NearbyScreenState extends ConsumerState<NearbyScreen> {
+  final mapActions = EmbeddedMapActions();
   bool locating = false;
   int locationRequest = 0;
   @override
@@ -47,7 +49,10 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
       }
     } catch (_) {
       if (mounted) {
-        notice(context, 'Местоположение недоступно. Выберите город вручную.');
+        notice(
+          context,
+          "Местоположение недоступно. Выберите город вручную.".tr(context),
+        );
       }
     } finally {
       if (mounted) {
@@ -57,11 +62,8 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
   }
 
   void chooseCity() {
-    showModalBottomSheet<void>(
+    showStudioSelectionSheet<void>(
       context: context,
-      useRootNavigator: true,
-      sheetAnimationStyle: studioSheetAnimation(context),
-      isScrollControlled: true,
       builder: (ctx) => CitySheet(
         city: ref.read(prototypeProvider).city,
         onSelected: (city) {
@@ -80,47 +82,26 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(prototypeProvider);
-    final compact =
-        MediaQuery.sizeOf(context).height < 780 ||
-        MediaQuery.textScalerOf(context).scale(1) > 1.15;
-    final intro = Padding(
-      padding: const EdgeInsets.fromLTRB(24, 4, 24, 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (!compact) ...[
-            const ScreenIntro(
-              'Хороший день\nдля прогулки.',
-              subtitle: 'И новой компании для вас двоих.',
-            ),
-            const SizedBox(height: 12),
-          ] else ...[
-            Semantics(
-              header: true,
-              child: Text(
-                'Хороший день для прогулки.',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-            const SizedBox(height: 12),
-          ],
-          NearbyEventBanner(city: state.city),
-        ],
-      ),
-    );
-    final map = Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-      child: FullscreenMapScreen(
+    return NearbyStudioLayout(
+      greeting: 'Хороший день для прогулки.'.tr(context),
+      subtitle: 'И новой компании для вас двоих.'.tr(context),
+      meetups: NearbyEventBanner(city: state.city),
+      placesTitle: 'Места рядом'.tr(context),
+      city: state.city.split(',').first.trim(),
+      cityDetails: state.city.contains(',')
+          ? state.city.split(',').skip(1).join(',').trim()
+          : '',
+      listLabel: 'Список мест'.tr(context),
+      mapLabel: stringsFor(context.languageCode).nearbyMapView,
+      onCity: chooseCity,
+      onList: () => mapActions.openList(),
+      onMap: () => mapActions.expand(),
+      catalogStatus: const CityCatalogStatus(inset: false, linearLoading: true),
+      map: FullscreenMapScreen(
         embedded: true,
-        filtersActive: ref.watch(placeFiltersProvider).active,
-        args: FullscreenMapArgs(
-          places: ref.watch(filteredPlacesProvider),
-          city: state.city,
-          initialPosition: state.manualCity
-              ? null
-              : ref.read(locationServiceProvider).lastPosition,
-        ),
-        onCityPressed: chooseCity,
+        showEmbeddedControls: false,
+        embeddedHeight: 180,
+        actions: mapActions,
         onList: () {
           ref.invalidate(filteredPlacesProvider);
           return context.push<void>('/places');
@@ -136,36 +117,14 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
                 : ref.read(locationServiceProvider).lastPosition,
           ),
         ),
-      ),
-    );
-    final mapConfigured = AppConfig.mapboxToken.isNotEmpty;
-    if (compact || !mapConfigured) {
-      return LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: Column(
-            children: [
-              intro,
-              const CityCatalogStatus(),
-              if (mapConfigured)
-                SizedBox(
-                  height: constraints.maxHeight * .55 < 320
-                      ? 320
-                      : constraints.maxHeight * .55,
-                  child: map,
-                )
-              else
-                map,
-            ],
-          ),
+        args: FullscreenMapArgs(
+          places: ref.watch(filteredPlacesProvider),
+          city: state.city,
+          initialPosition: state.manualCity
+              ? null
+              : ref.read(locationServiceProvider).lastPosition,
         ),
-      );
-    }
-    return Column(
-      children: [
-        intro,
-        const CityCatalogStatus(),
-        Expanded(child: map),
-      ],
+      ),
     );
   }
 }

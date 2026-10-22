@@ -153,9 +153,9 @@ void main() {
       final lastText = tester.getRect(find.text('Хороший парк.'));
       expect(find.byKey(const Key('open-place-review')), findsNothing);
       expect(find.byKey(const Key('inline-place-review')), findsNothing);
-      expect(frame.height, lessThan(844 * .86));
-      // Only the 34px safe inset and 16px sheet footer remain.
-      expect(frame.bottom - lastText.bottom, closeTo(50, 1));
+      expect(frame.height, lessThan(844 * .88));
+      // Shared sheet: 34px safe inset and 20px body/footer padding.
+      expect(frame.bottom - lastText.bottom, closeTo(54, 1));
       expect(tester.takeException(), isNull);
     },
   );

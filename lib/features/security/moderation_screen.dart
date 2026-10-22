@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -37,12 +38,14 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
       ref.invalidate(placeContributionsProvider);
       ref.invalidate(cityCatalogProvider);
       ref.invalidate(communityProvider);
-      if (mounted) notice(context, 'Решение сохранено');
+      if (mounted) notice(context, "Решение сохранено".tr(context));
     } catch (_) {
       if (mounted) {
         notice(
           context,
-          'Не удалось сохранить решение. Проверьте MFA и соединение.',
+          "Не удалось сохранить решение. Проверьте MFA и соединение.".tr(
+            context,
+          ),
         );
       }
     } finally {
@@ -56,25 +59,29 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
       context: context,
       builder: (dialog) => AlertDialog(
         title: Text(
-          action == 'hide' ? 'Скрыть публикацию' : 'Завершить рассмотрение',
+          action == 'hide'
+              ? "Скрыть публикацию".tr(context)
+              : "Завершить рассмотрение".tr(context),
         ),
         content: TextFormField(
           textAlignVertical: TextAlignVertical.top,
           onChanged: (value) => note = value,
           maxLines: 3,
           maxLength: 500,
-          decoration: const InputDecoration(labelText: 'Основание решения'),
+          decoration: InputDecoration(
+            labelText: "Основание решения".tr(context),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialog),
-            child: const Text('Отмена'),
+            child: Text("Отмена".tr(context)),
           ),
           TextButton(
             onPressed: () {
               if (note.trim().isNotEmpty) Navigator.pop(dialog, note.trim());
             },
-            child: const Text('Сохранить'),
+            child: Text("Сохранить".tr(context)),
           ),
         ],
       ),
@@ -91,10 +98,10 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: const Text('Модерация'),
+      title: Text("Модерация".tr(context)),
       actions: [
         IconButton(
-          tooltip: 'Обновить',
+          tooltip: "Обновить".tr(context),
           onPressed: busy
               ? null
               : () => ref.invalidate(moderationQueueProvider),
@@ -109,8 +116,8 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
           error: (_, _) => Center(
             child: TextButton(
               onPressed: () => context.push('/security'),
-              child: const Text(
-                'Требуется роль модератора и подтверждённая MFA',
+              child: Text(
+                "Требуется роль модератора и подтверждённая MFA".tr(context),
               ),
             ),
           ),
@@ -118,7 +125,7 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
             padding: const EdgeInsets.all(24),
             children: [
               Text(
-                'Предложенные места',
+                "Предложенные места".tr(context),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               for (final raw in queue['submissions'] ?? []) ...[
@@ -138,7 +145,7 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
                               'submission_in': raw['id'],
                               'approve_in': true,
                             }),
-                      child: const Text('Опубликовать'),
+                      child: Text("Опубликовать".tr(context)),
                     ),
                     TextButton(
                       onPressed: busy
@@ -147,18 +154,21 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
                               'submission_in': raw['id'],
                               'approve_in': false,
                             }),
-                      child: const Text('Отклонить'),
+                      child: Text("Отклонить".tr(context)),
                     ),
                   ],
                 ),
               ],
               if ((queue['submissions'] ?? []).isEmpty)
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Text('Нет мест на проверке'),
+                  child: Text("Нет мест на проверке".tr(context)),
                 ),
               const Divider(),
-              Text('Жалобы', style: Theme.of(context).textTheme.titleLarge),
+              Text(
+                "Жалобы".tr(context),
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               for (final raw in queue['reports'] ?? []) ...[
                 const SizedBox(height: 16),
                 Text(raw['reason']),
@@ -175,7 +185,7 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
                               Map<String, dynamic>.from(raw),
                               'dismiss',
                             ),
-                      child: const Text('Рассмотрено'),
+                      child: Text("Рассмотрено".tr(context)),
                     ),
                     if (['place', 'review'].contains(raw['target_kind']))
                       TextButton(
@@ -185,18 +195,19 @@ class _ModerationState extends ConsumerState<ModerationScreen> {
                                 Map<String, dynamic>.from(raw),
                                 'hide',
                               ),
-                        child: const Text('Скрыть'),
+                        child: Text("Скрыть".tr(context)),
                       ),
                   ],
                 ),
               ],
               if ((queue['reports'] ?? []).isEmpty)
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Text('Нет новых жалоб'),
+                  child: Text("Нет новых жалоб".tr(context)),
                 ),
-              const Text(
-                'Очередь: до 50 записей. После рассмотрения загрузится следующая партия.',
+              Text(
+                "Очередь: до 50 записей. После рассмотрения загрузится следующая партия."
+                    .tr(context),
                 style: TextStyle(fontSize: 12),
               ),
             ],

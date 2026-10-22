@@ -1,7 +1,8 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/ui/components.dart';
+import 'nearby_studio_layout.dart';
 import '../community/data/community_repository.dart';
 import '../../core/time/display_time.dart';
 
@@ -20,63 +21,65 @@ final nextCityEventProvider = Provider.family<Json?, String>((ref, city) {
   return events.firstOrNull;
 });
 
-class NearbyEventBanner extends ConsumerWidget {
+class NearbyEventBanner extends ConsumerStatefulWidget {
   const NearbyEventBanner({required this.city, super.key});
   final String city;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final event = ref.watch(nextCityEventProvider(city));
+  ConsumerState<NearbyEventBanner> createState() => _NearbyEventBannerState();
+}
+
+class _NearbyEventBannerState extends ConsumerState<NearbyEventBanner> {
+  Json? lastEvent;
+  Object? snapshotRepository;
+  String? snapshotCity, snapshotAccount;
+
+  @override
+  Widget build(BuildContext context) {
+    final repository = ref.watch(communityRepositoryProvider);
+    if (snapshotRepository != repository ||
+        snapshotCity != widget.city ||
+        snapshotAccount != repository.userId) {
+      lastEvent = null;
+      snapshotRepository = repository;
+      snapshotCity = widget.city;
+      snapshotAccount = repository.userId;
+    }
     final state = ref.watch(communityProvider);
-    final empty = !state.isLoading && !state.hasError && event == null;
-    final title = state.isLoading
-        ? 'Ищем встречи рядом'
-        : state.hasError
-        ? 'Встречи сейчас недоступны'
-        : event?['title'] ?? 'Встречи рядом';
-    final subtitle = state.isLoading
-        ? city
-        : state.hasError
-        ? 'Откройте встречи и повторите загрузку.'
-        : empty
-        ? 'В $city пока нет встреч.'
-        : venueTime(
-            event?['starts_at'],
-            city: city,
-            timeZone: event?['time_zone'],
-          );
-    final action = empty ? 'Создать встречу' : 'Открыть встречи';
-    return Semantics(
-      button: true,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        onTap: () => context.push(empty ? '/edit/event' : '/events'),
-        child: StudioCard(
-          hero: true,
-          padding: 16,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 6),
-                    Text(
-                      subtitle,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(action, style: Theme.of(context).textTheme.labelLarge),
-                  ],
-                ),
+    final currentEvent = ref.watch(nextCityEventProvider(widget.city));
+    if (!state.isLoading && !state.hasError) lastEvent = currentEvent;
+    final event = currentEvent ?? lastEvent;
+
+    final loading = state.isLoading;
+    final failed = state.hasError;
+    final locationLabel = '${event?['location_label'] ?? ''}'.trim();
+    return NearbyMeetupPreview(
+      title: event == null ? 'Встречи рядом'.tr(context) : '${event['title']}',
+      description: event != null
+          ? [
+              venueTime(
+                event['starts_at'],
+                city: widget.city,
+                timeZone: event['time_zone'],
+                locale: context.languageCode,
               ),
-              const SizedBox(width: 12),
-              const ExcludeSemantics(
-                child: Icon(Icons.arrow_forward, size: 22),
-              ),
-            ],
-          ),
-        ),
+              if (locationLabel.isNotEmpty) locationLabel,
+            ].join(' · ')
+          : loading
+          ? 'Ищем встречи рядом'.tr(context)
+          : failed
+          ? ''
+          : 'Пока нет предстоящих встреч.'.tr(context),
+      allLabel: 'Все встречи'.tr(context),
+      onAll: () => context.go('/events'),
+      state: NearbyMeetupFeedback(
+        loading: loading,
+        loadingLabel: 'Ищем встречи рядом'.tr(context),
+        errorLabel: failed ? 'Встречи сейчас недоступны'.tr(context) : null,
+        retryLabel: 'Повторить загрузку'.tr(context),
+        onRetry: loading
+            ? null
+            : () => ref.read(communityProvider.notifier).refresh(),
       ),
     );
   }

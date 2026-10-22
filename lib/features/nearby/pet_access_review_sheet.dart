@@ -1,3 +1,5 @@
+import '../../core/ui/studio_pickers.dart';
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +35,9 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
   Future<void> publish() async {
     if (busy || !form.currentState!.validate()) return;
     if (observed == null) {
-      setState(() => error = 'Выберите дату реального подтверждения.');
+      setState(
+        () => error = "Выберите дату реального подтверждения.".tr(context),
+      );
       return;
     }
     setState(() {
@@ -55,15 +59,17 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
       );
       if (mounted) {
         Navigator.pop(context);
-        notice(context, 'Сведения о допуске опубликованы.');
+        notice(context, "Сведения о допуске опубликованы.".tr(context));
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           needsMfa = e is PostgrestException && e.code == '42501';
           error = needsMfa
-              ? 'Для модерации нужен действующий вход с MFA и роль модератора.'
-              : 'Не удалось опубликовать сведения. Проверьте дату, основание и соединение.';
+              ? "Для модерации нужен действующий вход с MFA и роль модератора."
+                    .tr(context)
+              : "Не удалось опубликовать сведения. Проверьте дату, основание и соединение."
+                    .tr(context);
         });
       }
     } finally {
@@ -76,18 +82,20 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Отозвать подтверждение?'),
-        content: const Text(
-          'Место снова будет показываться без подтверждения допуска.',
+        title: Text("Отозвать подтверждение?".tr(context)),
+        content: Text(
+          "Место снова будет показываться без подтверждения допуска.".tr(
+            context,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Оставить'),
+            child: Text("Оставить".tr(context)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Отозвать'),
+            child: Text("Отозвать".tr(context)),
           ),
         ],
       ),
@@ -101,13 +109,14 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
       await ref.read(petAccessWithdrawalProvider)(widget.place.id);
       if (mounted) {
         Navigator.pop(context);
-        notice(context, 'Подтверждение отозвано.');
+        notice(context, "Подтверждение отозвано.".tr(context));
       }
     } catch (_) {
       if (mounted) {
         setState(
           () => error =
-              'Не удалось отозвать подтверждение. Проверьте вход с MFA и соединение.',
+              "Не удалось отозвать подтверждение. Проверьте вход с MFA и соединение."
+                  .tr(context),
         );
       }
     } finally {
@@ -131,28 +140,33 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 StudioSheetHeader(
-                  title: 'Правила для питомцев',
+                  title: "Правила для питомцев".tr(context),
                   subtitle: widget.place.name,
                   closeEnabled: !busy,
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Только для модераторов. Нужны реальные сведения сообщества или заведения. Не публикуйте личные адреса и инструкции по уходу.',
+                Text(
+                  "Только для модераторов. Нужны реальные сведения сообщества или заведения. Не публикуйте личные адреса и инструкции по уходу."
+                      .tr(context),
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   isExpanded: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Кто подтвердил правила',
+                  decoration: InputDecoration(
+                    labelText: "Кто подтвердил правила".tr(context),
                   ),
-                  items: const [
+                  items: [
                     DropdownMenuItem(
                       value: 'community',
-                      child: Text('Сообщество'),
+                      child: Text("Сообщество".tr(context)),
                     ),
-                    DropdownMenuItem(value: 'venue', child: Text('Заведение')),
+                    DropdownMenuItem(
+                      value: 'venue',
+                      child: Text("Заведение".tr(context)),
+                    ),
                   ],
-                  validator: (v) => v == null ? 'Выберите источник' : null,
+                  validator: (v) =>
+                      v == null ? "Выберите источник".tr(context) : null,
                   onChanged: busy
                       ? null
                       : (v) => setState(() => confirmation = v),
@@ -160,24 +174,25 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                 const SizedBox(height: 14),
                 DropdownButtonFormField<String>(
                   isExpanded: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Правило для собак',
+                  decoration: InputDecoration(
+                    labelText: "Правило для собак".tr(context),
                   ),
-                  items: const [
+                  items: [
                     DropdownMenuItem(
                       value: 'allowed',
-                      child: Text('С собаками можно'),
+                      child: Text("С собаками можно".tr(context)),
                     ),
                     DropdownMenuItem(
                       value: 'on_leash',
-                      child: Text('Только на поводке'),
+                      child: Text("Только на поводке".tr(context)),
                     ),
                     DropdownMenuItem(
                       value: 'forbidden',
-                      child: Text('С собаками нельзя'),
+                      child: Text("С собаками нельзя".tr(context)),
                     ),
                   ],
-                  validator: (v) => v == null ? 'Выберите правило' : null,
+                  validator: (v) =>
+                      v == null ? "Выберите правило".tr(context) : null,
                   onChanged: busy ? null : (v) => setState(() => policy = v),
                 ),
                 const SizedBox(height: 14),
@@ -186,12 +201,14 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                   onPressed: busy
                       ? null
                       : () async {
-                          final picked = await showDatePicker(
+                          final picked = await showStudioDatePicker(
                             context: context,
                             initialDate: observed ?? DateTime.now(),
                             firstDate: DateTime(2000),
                             lastDate: DateTime.now(),
-                            helpText: 'Дата реального подтверждения',
+                            helpText: "Дата реального подтверждения".tr(
+                              context,
+                            ),
                           );
                           if (picked != null && mounted) {
                             setState(() => observed = picked);
@@ -199,8 +216,8 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                         },
                   label: Text(
                     observed == null
-                        ? 'Выбрать дату подтверждения'
-                        : readableDate(observed),
+                        ? "Выбрать дату подтверждения".tr(context)
+                        : readableDate(observed, locale: context.languageCode),
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -210,12 +227,12 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                   maxLength: 1000,
                   minLines: 2,
                   maxLines: 4,
-                  decoration: const InputDecoration(
-                    labelText: 'Основание подтверждения',
+                  decoration: InputDecoration(
+                    labelText: "Основание подтверждения".tr(context),
                   ),
                   validator: (v) => v?.trim().isNotEmpty == true
                       ? null
-                      : 'Опишите подтверждающие сведения',
+                      : "Опишите подтверждающие сведения".tr(context),
                 ),
                 const SizedBox(height: 14),
                 TextFormField(
@@ -224,8 +241,8 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                   maxLength: 1000,
                   minLines: 1,
                   maxLines: 4,
-                  decoration: const InputDecoration(
-                    labelText: 'Условия, если подтверждены',
+                  decoration: InputDecoration(
+                    labelText: "Условия, если подтверждены".tr(context),
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -236,36 +253,40 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(
                     labelText: confirmation == 'venue'
-                        ? 'Публичное подтверждение заведения · https'
-                        : 'Публичная ссылка · необязательно',
+                        ? "Публичное подтверждение заведения · https".tr(
+                            context,
+                          )
+                        : "Публичная ссылка · необязательно".tr(context),
                   ),
                   validator: (v) {
                     if (v?.trim().isEmpty != false) {
                       return confirmation == 'venue'
-                          ? 'Добавьте подтверждение заведения'
+                          ? "Добавьте подтверждение заведения".tr(context)
                           : null;
                     }
                     final uri = Uri.tryParse(v!.trim());
                     return uri?.scheme == 'https' && uri!.host.isNotEmpty
                         ? null
-                        : 'Нужна полная ссылка https';
+                        : "Нужна полная ссылка https".tr(context);
                   },
                 ),
                 if (error != null) ...[
                   const SizedBox(height: 12),
-                  Semantics(liveRegion: true, child: Text(error!)),
+                  Semantics(liveRegion: true, child: Text(error!.tr(context))),
                 ],
                 if (needsMfa)
                   TextButton(
                     onPressed: busy ? null : () => context.push('/mfa'),
-                    child: const Text('Подтвердить вход с MFA'),
+                    child: Text("Подтвердить вход с MFA".tr(context)),
                   ),
                 const SizedBox(height: 18),
                 if (busy) ...[
                   Semantics(
                     liveRegion: true,
                     child: Text(
-                      'Сохраняем сведения. Поля временно недоступны.',
+                      "Сохраняем сведения. Поля временно недоступны.".tr(
+                        context,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -275,7 +296,9 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                 FilledButton(
                   onPressed: busy ? null : publish,
                   child: Text(
-                    busy ? 'Сохраняем…' : 'Опубликовать подтверждение',
+                    busy
+                        ? "Сохраняем…".tr(context)
+                        : "Опубликовать подтверждение".tr(context),
                   ),
                 ),
                 if (ref
@@ -285,7 +308,7 @@ class _PetAccessReviewState extends ConsumerState<PetAccessReviewSheet> {
                   const SizedBox(height: 10),
                   TextButton(
                     onPressed: busy ? null : withdraw,
-                    child: const Text('Отозвать подтверждение'),
+                    child: Text("Отозвать подтверждение".tr(context)),
                   ),
                 ],
               ],

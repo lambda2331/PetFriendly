@@ -52,6 +52,7 @@ class MapMarkerIcons {
       'Зоомагазин': Icons.storefront_outlined,
       'Ветклиника': Icons.local_hospital_outlined,
       'Ресторан': Icons.restaurant_outlined,
+      'Место встречи': Icons.groups_outlined,
     }.entries) {
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(recorder)..scale(pixelRatio);

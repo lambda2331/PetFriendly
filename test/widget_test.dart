@@ -81,7 +81,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Список мест'));
+    await tester.tap(find.byKey(const Key('nearby-places-list')));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.text('Зелёный парк'),
@@ -96,7 +96,7 @@ void main() {
     expect(find.byTooltip('Убрать из избранного'), findsOneWidget);
     await tester.tap(find.byTooltip('Закрыть'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(BackButton).hitTestable());
+    await tester.tap(find.byTooltip('Назад').hitTestable());
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('choose-city')));
     await tester.pumpAndSettle();
@@ -127,54 +127,80 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('city-suggestion-Гродно')));
     await tester.pumpAndSettle();
     expect(prefs.values['city'], 'Гродно');
-    await tester.tap(find.byTooltip('Список мест'));
+    await tester.tap(find.byKey(const Key('nearby-places-list')));
     await tester.pumpAndSettle();
     expect(find.text('Пока нет мест — добавьте первое'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
   testWidgets(
-    'Five tabs, helper profile and chat sending work on a narrow device',
+    'Five tabs, own walking request, chat sending and settings work on a narrow device',
     (tester) async {
       tester.view.physicalSize = const Size(320, 800);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      final community = DemoCommunityRepository();
+      final ownedPet = community.data['pets']!.firstWhere(
+        (p) => p['owner_id'] == community.userId,
+      );
+      final directChat = await community.command('direct', {
+        'target': demoAnna,
+      });
+      final ownRequest = await community.command('walk', {
+        'pet_in': ownedPet['id'],
+        'city_in': 'Минск',
+        'district_in': 'Центральный район',
+        'starts_in': DateTime.now()
+            .add(const Duration(days: 1))
+            .toUtc()
+            .toIso8601String(),
+        'duration_in': 30,
+        'timezone_in': 'Europe/Minsk',
+      });
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
             preferencesProvider.overrideWithValue(MemoryPreferences()),
+            communityRepositoryProvider.overrideWithValue(community),
           ],
           child: const PetFriendlyApp(),
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.byTooltip('Список мест'), findsOneWidget);
-      await tester.tap(find.text('Люди'));
+      expect(find.byKey(const Key('nearby-places-list')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('nav-1')));
       await tester.pumpAndSettle();
-      expect(find.text('Анна и Бруно'), findsOneWidget);
-      await tester.tap(
-        find.descendant(
-          of: find.byType(NavigationBar),
-          matching: find.text('Выгул'),
-        ),
-      );
+      expect(find.text('Анна'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('nav-2')));
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
-        find.text('Подробнее и отклики'),
+        find.widgetWithText(OutlinedButton, 'Детали'),
         200,
         scrollable: find.byType(Scrollable).last,
       );
-      expect(find.text('Подробнее и отклики'), findsOneWidget);
-      await tester.tap(find.text('Чаты'));
+      expect(find.byKey(ValueKey('current-entry-$ownRequest')), findsOneWidget);
+      expect(find.widgetWithText(OutlinedButton, 'Детали'), findsOneWidget);
+      expect(find.widgetWithText(OutlinedButton, 'Отклики'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('nav-3')));
       await tester.pumpAndSettle();
       expect(find.byTooltip('Новая переписка'), findsOneWidget);
-      expect(find.text('petfriendly'), findsNothing);
+      expect(find.text('petfriendly'), findsOneWidget);
       expect(
-        find.descendant(of: find.byType(AppBar), matching: find.text('Чаты')),
+        find.descendant(
+          of: find.byType(AppBar),
+          matching: find.text('petfriendly'),
+        ),
         findsOneWidget,
       );
-      await tester.tap(find.text('Анна и Бруно'));
+      await tester.tap(find.text('Анна'));
       await tester.pumpAndSettle();
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(PetFriendlyApp)),
+      );
+      expect(
+        container.read(routerProvider).state.uri.path,
+        '/chat/$directChat',
+      );
       await tester.enterText(
         find.byKey(const Key('message-input')),
         'Привет, Бруно!',
@@ -182,18 +208,18 @@ void main() {
       await tester.tap(find.byKey(const Key('send-message')));
       await tester.pumpAndSettle();
       expect(find.text('Привет, Бруно!'), findsOneWidget);
-      await tester.tap(find.byType(BackButton).hitTestable());
+      await tester.tap(find.byTooltip('Назад').hitTestable());
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Я'));
+      await tester.tap(find.byKey(const ValueKey('nav-4')));
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Настройки'));
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
-        find.text('Тема приложения'),
+        find.text('Тема'),
         150,
         scrollable: find.byType(Scrollable).last,
       );
-      expect(find.text('Тема приложения'), findsOneWidget);
+      expect(find.text('Тема'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
@@ -209,7 +235,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Люди'));
+      await tester.tap(find.byKey(const ValueKey('nav-1')));
       await tester.pumpAndSettle();
       expect(find.text('Соседи с питомцами'), findsNothing);
       await tester.tap(find.text('Сообщества'));
@@ -218,35 +244,81 @@ void main() {
       await tester.ensureVisible(find.text('Соседи с питомцами'));
       await tester.tap(find.text('Соседи с питомцами'));
       await tester.pumpAndSettle();
-      expect(find.text('Открыть чат сообщества'), findsNothing);
+      expect(find.byKey(const ValueKey('community-chat')), findsNothing);
       await tester.ensureVisible(find.text('Вступить в сообщество'));
       await tester.tap(find.text('Вступить в сообщество'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Открыть чат сообщества'));
-      await tester.tap(find.text('Открыть чат сообщества'));
+      await tester.ensureVisible(find.byKey(const ValueKey('community-chat')));
+      await tester.tap(find.byKey(const ValueKey('community-chat')));
       await tester.pumpAndSettle();
       expect(find.text('Анна'), findsOneWidget);
-      expect(find.text('Вы'), findsOneWidget);
-      await tester.tap(find.byType(BackButton).hitTestable());
+      await tester.enterText(
+        find.byKey(const Key('message-input')),
+        'Привет сообществу',
+      );
+      await tester.tap(find.byKey(const Key('send-message')));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Пригласить человека'));
-      await tester.tap(find.text('Пригласить человека'));
+      final sentBubble = find
+          .ancestor(
+            of: find.text('Привет сообществу'),
+            matching: find.byType(Column),
+          )
+          .first;
+      expect(
+        find.descendant(
+          of: sentBubble,
+          matching: find.textContaining(RegExp(r'^Вы · \d{1,2}:\d{2}$')),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Привет сообществу'), findsOneWidget);
+      await tester.tap(find.byTooltip('Назад').hitTestable());
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('community-invite')),
+      );
+      await tester.tap(find.byKey(const ValueKey('community-invite')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Саша'));
       await tester.pumpAndSettle();
       final input = tester.widget<TextField>(
         find.byKey(const Key('message-input')),
       );
-      expect(input.controller!.text, contains('petfriendly://group/'));
-      // Invitation remains a draft and does not add the recipient to the group.
       final scope = ProviderScope.containerOf(
         tester.element(find.byType(PetFriendlyApp)),
       );
+      expect(input.controller!.text, contains('petfriendly://group/'));
+      // Invitation remains a draft and does not add the recipient to the group.
       final data = scope.read(communityProvider).value!;
+      final groupId = rows(data, 'groups').single['id'];
+      expect(input.controller!.text, contains('petfriendly://group/$groupId'));
+      final conversationId = scope
+          .read(routerProvider)
+          .state
+          .uri
+          .path
+          .split('/')
+          .last;
+      final chat = scope.read(chatRepositoryProvider);
+      final invitation = input.controller!.text;
+      final beforeSend = chat.messages(conversationId).length;
+      expect(
+        chat.messages(conversationId).any((m) => m.text == invitation),
+        isFalse,
+      );
       expect(rows(data, 'group_members').length, 2);
       expect(
         find.text('Присоединяйтесь к «Соседи с питомцами»!'),
         findsNothing,
+      );
+      await tester.tap(find.byKey(const Key('send-message')));
+      await tester.pumpAndSettle();
+      expect(chat.messages(conversationId), hasLength(beforeSend + 1));
+      expect(chat.messages(conversationId).last.text, invitation);
+      expect(input.controller!.text, isEmpty);
+      expect(
+        rows(scope.read(communityProvider).value!, 'group_members'),
+        hasLength(2),
       );
       expect(tester.takeException(), isNull);
     },

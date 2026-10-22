@@ -1,336 +1,484 @@
+import 'presentation/events_screen.dart';
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/ui/components.dart';
 import '../../core/media/preview_photos.dart';
+import '../walks/account_mode.dart';
 import 'data/community_repository.dart';
 import 'data/community_search.dart';
+import 'data/community_browse.dart';
+import 'presentation/community_browser.dart';
+import 'presentation/social_components.dart';
 
 class PeopleScreen extends ConsumerStatefulWidget {
-  const PeopleScreen({super.key});
+  const PeopleScreen({this.initialTab = 0, super.key});
+  final int initialTab;
   @override
   ConsumerState<PeopleScreen> createState() => _PeopleState();
 }
 
 class _PeopleState extends ConsumerState<PeopleScreen> {
-  int tab = 0;
+  late int tab = widget.initialTab;
+  String? district;
+  final expanded = <String>{};
   final searches = [TextEditingController(), TextEditingController()];
-  String get query => searches[tab].text.trim();
+  String get query => tab == 2 ? '' : searches[tab].text.trim();
   void clearSearch() => setState(() => searches[tab].clear());
   @override
   void dispose() {
-    for (final search in searches) {
-      search.dispose();
+    for (final s in searches) {
+      s.dispose();
     }
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-    children: [
+  Widget build(BuildContext context) {
+    final snapshot = ref.watch(communityProvider);
+    final data = snapshot.value ?? <String, List<Json>>{};
+    final districts =
+        rows(data, 'profiles')
+            .map((p) => '${p['district'] ?? ''}'.trim())
+            .where((d) => d.isNotEmpty)
+            .toSet()
+            .toList()
+          ..sort();
+    final participation = ref.watch(communityBrowseProvider).participation;
+    final people = searchPeople(
+      data,
+      ref.watch(communityRepositoryProvider).userId,
+      query,
+    ).where((p) => district == null || p['district'] == district).toList();
+    final children = <Widget>[
       Padding(
-        padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
-        child: Column(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: double.infinity,
-              child: SegmentedButton<int>(
-                segments: const [
-                  ButtonSegment(value: 0, label: Text('Люди рядом')),
-                  ButtonSegment(value: 1, label: Text('Сообщества')),
-                ],
-                selected: {tab},
-                showSelectedIcon: false,
-                onSelectionChanged: (value) => setState(() {
-                  tab = value.first;
-                }),
+            Expanded(
+              child: ScreenIntro(
+                (tab == 2 ? 'Встречи' : 'Знакомьтесь рядом.').tr(context),
               ),
             ),
-            const SizedBox(height: 14),
-            TextField(
-              textAlignVertical: TextAlignVertical.top,
-              key: ValueKey('community-search-$tab'),
-              controller: searches[tab],
-              onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: query.isEmpty
-                    ? null
-                    : IconButton(
-                        tooltip: 'Очистить поиск',
-                        onPressed: clearSearch,
-                        icon: const Icon(Icons.close),
-                      ),
-                hintText: tab == 0
-                    ? 'Имя, питомец или интерес'
-                    : 'Название или интерес',
+            if (tab == 2 &&
+                ref.watch(accountModeProvider).value?.canOwn == true)
+              IconButton.filled(
+                key: const ValueKey('meetup-create'),
+                tooltip: 'Создать встречу'.tr(context),
+                style: IconButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  minimumSize: const Size(48, 48),
+                ),
+                onPressed: () => context.push('/edit/event'),
+                icon: const Icon(Icons.add),
               ),
-            ),
           ],
         ),
       ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: StudioSegmentTabs<int>(
+          key: const ValueKey('people-community-segment'),
+          entries: {
+            0: 'Люди'.tr(context),
+            1: 'Сообщества'.tr(context),
+            2: 'Встречи'.tr(context),
+          },
+          value: tab,
+          selectedWeight: FontWeight.w700,
+          onChanged: (value) => setState(() => tab = value),
+        ),
+      ),
+      if (tab != 2)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      key: ValueKey('community-search-$tab'),
+                      controller: searches[tab],
+                      onChanged: (_) => setState(() {}),
+                      decoration: InputDecoration(
+                        hintMaxLines: 1,
+                        prefixIcon: const Icon(Icons.search),
+                        hintText:
+                            (tab == 0 ? 'Имя, питомец или интерес' : 'Поиск')
+                                .tr(context),
+                        suffixIcon: query.isEmpty
+                            ? null
+                            : IconButton(
+                                tooltip: 'Очистить поиск'.tr(context),
+                                onPressed: clearSearch,
+                                icon: const Icon(Icons.close),
+                              ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  StudioFilterMenu<String>(
+                    key: const ValueKey('social-filter'),
+                    tooltip: 'Фильтры'.tr(context),
+                    icon: Icon(
+                      Icons.filter_list,
+                      color:
+                          (tab == 0
+                              ? district != null
+                              : participation != CommunityParticipation.all)
+                          ? Theme.of(context).colorScheme.primary
+                          : null,
+                    ),
+                    value: tab == 0 ? (district ?? 'all') : participation.name,
+                    onSelected: (value) {
+                      if (tab == 0) {
+                        setState(
+                          () => district = value == 'all' ? null : value,
+                        );
+                      } else {
+                        ref
+                            .read(communityBrowseProvider.notifier)
+                            .select(
+                              CommunityParticipation.values.byName(value),
+                            );
+                      }
+                    },
+                    options: tab == 0
+                        ? [
+                            (value: 'all', label: 'Все районы'.tr(context)),
+                            ...districts.map((d) => (value: d, label: d)),
+                          ]
+                        : [
+                            for (final f in CommunityParticipation.values)
+                              (
+                                value: f.name,
+                                label: (switch (f) {
+                                  CommunityParticipation.all => 'Все',
+                                  CommunityParticipation.joined => 'Мои',
+                                  CommunityParticipation.discover => 'Новые',
+                                }).tr(context),
+                              ),
+                          ],
+                  ),
+                  if (tab == 1 &&
+                      ref.watch(accountModeProvider).value?.canOwn == true) ...[
+                    const SizedBox(width: 8),
+                    IconButton.filled(
+                      key: const ValueKey('community-create'),
+                      tooltip: 'Создать сообщество'.tr(context),
+                      style: IconButton.styleFrom(
+                        fixedSize: const Size(48, 48),
+                      ),
+                      onPressed: () => context.push('/edit/group'),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
       Expanded(
-        child: ref
-            .watch(communityProvider)
-            .when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (_, _) => Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+        child: tab == 2
+            ? const EventsScreen(embedded: true)
+            : ListView(
+                key: const ValueKey('people-list'),
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+                children: [
+                  if (snapshot.isLoading)
+                    SocialContentState(
+                      centered: true,
+                      title:
+                          (tab == 0 ? 'Загрузка людей' : 'Загрузка сообществ')
+                              .tr(context),
+                      loading: true,
+                    ),
+                  if (snapshot.hasError)
+                    SocialContentState(
+                      centered: true,
+                      title: 'Не удалось загрузить людей и сообщества.'.tr(
+                        context,
+                      ),
+                      message: 'Проверьте соединение и повторите загрузку.'.tr(
+                        context,
+                      ),
+                      actionLabel: 'Повторить загрузку'.tr(context),
+                      onAction: () =>
+                          ref.read(communityProvider.notifier).refresh(),
+                    ),
+                  if (snapshot.hasValue) ...[
+                    if (tab == 0) ...[
+                      ...people.map(
+                        (p) => PersonStudioRow(
+                          key: ValueKey('person-${p['id']}'),
+                          person: p,
+                          pets: rows(
+                            data,
+                            'pets',
+                          ).where((pet) => pet['owner_id'] == p['id']).toList(),
+                          expanded: expanded.contains(p['id']),
+                          onToggle: () => setState(() {
+                            if (!expanded.add(p['id'] as String)) {
+                              expanded.remove(p['id']);
+                            }
+                          }),
+                        ),
+                      ),
+                      if (people.isEmpty)
+                        SocialContentState(
+                          centered: true,
+                          title:
+                              (query.isEmpty && district == null
+                                      ? 'Пока никого нет. Загляните позже.'
+                                      : 'Никого не нашли')
+                                  .tr(context),
+                          message: 'Попробуйте другое имя, питомца или интерес.'
+                              .tr(context),
+                          actionLabel: query.isNotEmpty || district != null
+                              ? 'Сбросить'.tr(context)
+                              : null,
+                          onAction: () {
+                            clearSearch();
+                            setState(() => district = null);
+                          },
+                        ),
+                    ] else
+                      CommunityBrowser(
+                        data: data,
+                        query: query,
+                        clearSearch: clearSearch,
+                      ),
+                    if (ref.read(communityRepositoryProvider).isDemo)
+                      const DemoCaption(),
+                  ],
+                ],
+              ),
+      ),
+    ];
+    return LayoutBuilder(
+      builder: (ctx, bounds) {
+        if (bounds.maxHeight < 360 ||
+            (MediaQuery.textScalerOf(ctx).scale(16) > 22 &&
+                bounds.maxHeight < 700)) {
+          // Keep discovery tools reachable. Only the oversized introduction
+          // gets its own scroll region; result scrolling never moves search.
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(child: SingleChildScrollView(child: children.first)),
+              ...children.skip(1).take(children.length - 2),
+              Expanded(child: (children.last as Expanded).child),
+            ],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        );
+      },
+    );
+  }
+}
+
+class PersonStudioRow extends ConsumerWidget {
+  const PersonStudioRow({
+    required this.person,
+    required this.pets,
+    required this.expanded,
+    required this.onToggle,
+    super.key,
+  });
+  final Json person;
+  final List<Json> pets;
+  final bool expanded;
+  final VoidCallback onToggle;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final hasDetails =
+        pets.isNotEmpty || '${person['interests'] ?? ''}'.trim().isNotEmpty;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              IdentityPicture(
+                id: 'profile:${person['id']}',
+                name: person['display_name'],
+                icon: Icons.person_outline,
+                size: 56,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      person['display_name'] ?? '',
+                      style: theme.textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      person['district'] ?? 'Район не указан'.tr(context),
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (pets.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                SizedBox(
+                  width: pets.length > 1 ? 48 : 32,
+                  height: 32,
+                  child: Stack(
                     children: [
-                      const Text(
-                        'Не удалось загрузить людей и сообщества. Проверьте соединение и попробуйте снова.',
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 12),
-                      TextButton(
-                        onPressed: () => ref.invalidate(communityProvider),
-                        child: const Text('Повторить загрузку'),
-                      ),
+                      for (var i = 0; i < pets.take(2).length; i++)
+                        Positioned(
+                          left: i * 16.0,
+                          child: IdentityPicture(
+                            id: 'pet:${pets[i]['id']}',
+                            name: pets[i]['name'],
+                            icon: Icons.pets_outlined,
+                            size: 32,
+                          ),
+                        ),
                     ],
                   ),
                 ),
-              ),
-              data: (data) {
-                final repository = ref.read(communityRepositoryProvider);
-                final people = searchPeople(data, repository.userId, query);
-                final groups = searchGroups(data, query);
-                return PageBody(
-                  children: [
-                    if (tab == 0) ...[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        'Точное местоположение людей скрыто.',
-                        style: Theme.of(context).textTheme.bodySmall,
+                        petSummary(pets, context.languageCode),
+                        style: theme.textTheme.bodyMedium,
                       ),
-                      const SizedBox(height: 16),
-                      ...people.map((p) {
-                        final pets = rows(
-                          data,
-                          'pets',
-                        ).where((pet) => pet['owner_id'] == p['id']);
-                        final name =
-                            '${p['display_name']}${pets.isEmpty ? '' : ' и ${pets.first['name']}'}';
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Column(
+                      if (pets.length > 1)
+                        Text(
+                          petCount(pets.length, context.languageCode),
+                          style: theme.textTheme.bodySmall,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (hasDetails) ...[
+                Expanded(
+                  child: OutlinedButton.icon(
+                    key: ValueKey('person-details-${person['id']}'),
+                    onPressed: onToggle,
+                    icon: Icon(
+                      expanded ? Icons.expand_less : Icons.expand_more,
+                      size: 20,
+                    ),
+                    label: Text((expanded ? 'Скрыть' : 'Детали').tr(context)),
+                  ),
+                ),
+                const SizedBox(width: 8),
+              ],
+              if (!hasDetails) ...[const Spacer(), const SizedBox(width: 8)],
+              Expanded(
+                child: OutlinedButton.icon(
+                  key: ValueKey('person-chat-${person['id']}'),
+                  onPressed: () async {
+                    try {
+                      final cid = await ref
+                          .read(communityProvider.notifier)
+                          .command('direct', {'target': person['id']});
+                      if (context.mounted && cid != null) {
+                        context.push('/chat/$cid');
+                      }
+                    } catch (_) {
+                      if (context.mounted) {
+                        notice(context, 'Переписка недоступна'.tr(context));
+                      }
+                    }
+                  },
+                  icon: const Icon(Icons.chat_bubble_outline, size: 20),
+                  label: Text('Чат'.tr(context)),
+                ),
+              ),
+            ],
+          ),
+          AnimatedSize(
+            duration: studioSheetAnimation(context).duration ?? Duration.zero,
+            child: expanded
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (final pet in pets)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    IdentityPicture(
-                                      id: 'profile:${p['id']}',
-                                      name: p['display_name'],
-                                      icon: Icons.person_outline,
-                                      size: 48,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            name,
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.titleMedium,
-                                          ),
-                                          MetadataLine(
-                                            items: [
-                                              p['district'] ??
-                                                  'Район не указан',
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    IconButton(
-                                      tooltip: 'Написать $name',
-                                      onPressed: () async {
-                                        try {
-                                          final cid = await ref
-                                              .read(communityProvider.notifier)
-                                              .command('direct', {
-                                                'target': p['id'],
-                                              });
-                                          if (context.mounted && cid != null) {
-                                            context.push('/chat/$cid');
-                                          }
-                                        } catch (_) {
-                                          if (context.mounted) {
-                                            notice(
-                                              context,
-                                              'Переписка недоступна',
-                                            );
-                                          }
-                                        }
-                                      },
-                                      icon: const Icon(
-                                        Icons.chat_bubble_outline,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
+                                IdentityPicture(
+                                  id: 'pet:${pet['id']}',
+                                  name: pet['name'],
+                                  icon: Icons.pets_outlined,
+                                  size: 32,
                                 ),
-                                const SizedBox(height: 12),
-                                if (pets.isNotEmpty)
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.pets_outlined, size: 16),
-                                      const SizedBox(width: 8),
-                                      Expanded(
-                                        child: MetadataLine(
-                                          items: [
-                                            pets.first['kind'] ?? 'Питомец',
-                                            if ('${pets.first['temperament'] ?? ''}'
-                                                .trim()
-                                                .isNotEmpty)
-                                              pets.first['temperament'],
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    [
+                                          pet['name'],
+                                          pet['kind'],
+                                          pet['temperament'],
+                                        ]
+                                        .where(
+                                          (v) =>
+                                              v != null &&
+                                              '$v'.trim().isNotEmpty,
+                                        )
+                                        .join(' · '),
                                   ),
-                                if ((p['interests'] ?? '')
-                                    .toString()
-                                    .isNotEmpty) ...[
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    p['interests'],
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall,
-                                  ),
-                                ],
-                                const SizedBox(height: 16),
-                                const Divider(height: 1),
+                                ),
                               ],
                             ),
                           ),
-                        );
-                      }),
-                      if (people.isEmpty) ...[
-                        Text(
-                          query.isEmpty
-                              ? 'Пока никого нет. Загляните позже.'
-                              : 'Никого не нашли',
-                        ),
-                        if (query.isNotEmpty) ...[
-                          const SizedBox(height: 8),
-                          const Text(
-                            'Попробуйте другое имя, питомца или интерес.',
+                        if ('${person['interests'] ?? ''}'
+                            .trim()
+                            .isNotEmpty) ...[
+                          Text(
+                            'Интересы'.tr(context),
+                            style: theme.textTheme.titleSmall,
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: clearSearch,
-                              child: const Text('Сбросить поиск'),
-                            ),
-                          ),
+                          const SizedBox(height: 4),
+                          Text(person['interests']),
                         ],
                       ],
-                    ] else ...[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: const ScreenIntro(
-                              'Найдите сообщество',
-                              compact: true,
-                            ),
-                          ),
-                          IconButton(
-                            tooltip: 'Создать сообщество',
-                            onPressed: () => context.push('/edit/group'),
-                            icon: const Icon(Icons.add),
-                          ),
-                        ],
-                      ),
-                      TextButton.icon(
-                        onPressed: () => context.push('/events'),
-                        icon: const Icon(Icons.event_outlined, size: 18),
-                        label: const Text('Совместные прогулки'),
-                      ),
-                      if (groups.isEmpty) ...[
-                        Text(
-                          query.isEmpty
-                              ? 'Пока нет сообществ. Создайте своё.'
-                              : 'Сообщества не найдены',
-                        ),
-                        if (query.isNotEmpty)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: clearSearch,
-                              child: const Text('Сбросить поиск'),
-                            ),
-                          ),
-                      ],
-                      ...groups.map((g) {
-                        final members = rows(
-                          data,
-                          'group_members',
-                        ).where((m) => m['group_id'] == g['id']);
-                        final joined = members.any(
-                          (m) => m['user_id'] == repository.userId,
-                        );
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: () => context.push('/group/${g['id']}'),
-                            child: StudioCard(
-                              padding: 14,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CommunityCover(
-                                    id: 'group:${g['id']}',
-                                    title: g['title'],
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    g['description'],
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.people_outline,
-                                        size: 16,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Expanded(
-                                        child: MetadataLine(
-                                          items: [
-                                            memberCount(members.length),
-                                            joined
-                                                ? 'Вы участвуете'
-                                                : 'Открытое сообщество',
-                                          ],
-                                        ),
-                                      ),
-                                      const Icon(Icons.arrow_forward, size: 18),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                    if (repository.isDemo) const DemoCaption(),
-                  ],
-                );
-              },
-            ),
+                    ),
+                  )
+                : const SizedBox(width: double.infinity),
+          ),
+          const SizedBox(height: 20),
+          const Divider(height: 1),
+        ],
       ),
-    ],
-  );
+    );
+  }
 }

@@ -2,14 +2,23 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'community_repository.dart';
 import '../../../core/backend/backend.dart';
+import 'event_location.dart';
 
 /// Account-scoped, memory-only drafts. No preferences, database or disk writes.
 class FormDraft {
-  const FormDraft(this.values, this.when, this.zone, this.petId, this.photo);
+  const FormDraft(
+    this.values,
+    this.when,
+    this.zone,
+    this.petId,
+    this.photo, {
+    this.eventLocation,
+  });
   final Map<String, String> values;
   final DateTime when;
   final String? zone, petId;
   final Uint8List? photo;
+  final EventLocation? eventLocation;
 }
 
 class FormDrafts {

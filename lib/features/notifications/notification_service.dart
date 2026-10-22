@@ -15,7 +15,7 @@ class NotificationService {
   final local = FlutterLocalNotificationsPlugin();
   bool initialized = false;
   final push = DevicePushRegistration(FirebasePushDevice());
-  Future<void> enable(SupabaseClient? client) async {
+  Future<bool> enable(SupabaseClient? client) async {
     if (!initialized) {
       await local.initialize(
         settings: const InitializationSettings(
@@ -29,20 +29,22 @@ class NotificationService {
       );
       initialized = true;
     }
+    bool? permission;
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      await local
+      permission = await local
           .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin
           >()
           ?.requestPermissions(alert: true, badge: true, sound: true);
     }
     if (defaultTargetPlatform == TargetPlatform.android) {
-      await local
+      permission = await local
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
           >()
           ?.requestNotificationsPermission();
     }
+    if (permission != true) return false;
     if (client != null) {
       await push.enable(
         client,
@@ -54,6 +56,7 @@ class NotificationService {
         ),
       );
     }
+    return true;
   }
 
   Future<void> show(String title, String body) async {

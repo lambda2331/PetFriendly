@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:petfriendly/features/walks/account_mode.dart';
 import 'package:petfriendly/core/theme/studio_theme.dart';
 import 'package:petfriendly/core/ui/components.dart';
 import 'package:petfriendly/features/auth/first_action_screen.dart';
@@ -11,18 +13,28 @@ void main() {
       'First actions have labeled adequate touch targets in $brightness',
       (tester) async {
         final semantics = tester.ensureSemantics();
-        await tester.pumpWidget(
-          MaterialApp(
-            theme: studioTheme(brightness),
-            home: const FirstActionScreen(),
-          ),
-        );
-        await tester.pumpAndSettle();
-        await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
-        semantics.dispose();
+        try {
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                accountModeRepositoryProvider.overrideWithValue(
+                  DemoAccountModeRepository(),
+                ),
+              ],
+              child: MaterialApp(
+                theme: studioTheme(brightness),
+                home: const FirstActionScreen(),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+          await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+          await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+          await expectLater(tester, meetsGuideline(textContrastGuideline));
+        } finally {
+          semantics.dispose();
+        }
       },
     );
   }

@@ -12,6 +12,11 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - build/**
+    # Archived, standalone QA reproductions are evidence, not package sources.
+    - docs/qa-evidence/**
+    # Independent Flutter preview package and preserved source snapshots.
+    - design/studio-review-native/**
+    - design/flutter-revisions/**
     - android/**
     - ios/**
 

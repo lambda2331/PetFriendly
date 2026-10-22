@@ -83,12 +83,17 @@ void main() {
       find.byKey(const ValueKey('field.title')),
       'Синтетическое сообщество',
     );
+    tester.testTextInput.hide();
+    await tester.pumpAndSettle();
     final submit = find.widgetWithText(FilledButton, 'Создать сообщество');
     await tester.scrollUntilVisible(
       submit,
       250,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(submit);
+    await tester.pumpAndSettle();
+    expect(submit.hitTestable(), findsOneWidget);
     await tester.tap(submit);
     await tester.pump();
     expect(find.text('Создаём сообщество…'), findsOneWidget);

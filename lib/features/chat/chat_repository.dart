@@ -6,6 +6,9 @@ import '../../core/backend/backend.dart';
 import '../community/data/community_repository.dart';
 import 'chat_media.dart';
 
+/// Match PostgreSQL char_length: Unicode code points, not UTF-16 units.
+bool chatTextFitsLimit(String text) => text.runes.length <= 1000;
+
 class ChatMessage {
   const ChatMessage(
     this.text, {
@@ -54,7 +57,7 @@ class DemoChatRepository {
   );
   void send(String id, String text) {
     final value = text.trim();
-    if (value.isEmpty || value.length > 1000) return;
+    if (value.isEmpty || !chatTextFitsLimit(value)) return;
     messages(id);
     _messages[id]!.add(ChatMessage(value, mine: true, sentAt: DateTime.now()));
   }
@@ -192,7 +195,7 @@ class ChatController extends Notifier<Map<String, List<ChatMessage>>> {
 
   Future<void> send(String id, String text, {String? retryId}) async {
     final value = text.trim();
-    if (value.isEmpty || value.length > 1000) return;
+    if (value.isEmpty || !chatTextFitsLimit(value)) return;
     final client = ref.read(backendProvider);
     if (client == null) {
       ref.read(chatRepositoryProvider).send(id, value);
@@ -256,7 +259,7 @@ class ChatController extends Notifier<Map<String, List<ChatMessage>>> {
   }) async {
     validateChatUpload(draft);
     final client = ref.read(backendProvider), value = caption.trim();
-    if (value.length > 1000) return;
+    if (!chatTextFitsLimit(value)) return;
     if (client == null) {
       ref.read(chatRepositoryProvider).sendMedia(id, draft, value);
       state = {...state, id: ref.read(chatRepositoryProvider).messages(id)};

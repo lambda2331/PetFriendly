@@ -1,0 +1,12 @@
+{
+  "index.html": "f106a2a5920fdc7a229061682eb79a0b128f8ac83a5719c4d4cd1fa66face0df",
+  "styles.css": "e5ce327f8c7743a29aece91f7e4c7b98b9e986aebd6b4b359d37426d0c4fdafc",
+  "app.js": "ecf7cb6d2251e2b33ae2249858e593a35b6fd47dd7bf9c8294d9d61dc0a1bd47",
+  "endpoint.html": "5a438b15d231a3411e77614d460a5ef955f0d445cba1798aa3dafa7401859c23",
+  "endpoint-adapter.js": "a6c67b5226f5fdd421158dc68afc09906999a6cb61fda6af49b6887ab90a9fe3",
+  "people-reference.html": "4c9394cd640f41aaab88a82dd7b51b9199018e2c7db5ebfa1b27914bbc94b8bd",
+  "nearby-reference.html": "12e4ed7a5f9449422fdc8f562ac38c571d5b0b969268147842d6ffca6fb014af",
+  "profile-edit-reference.html": "8fcaad9cbbe2904a11f339360ace18f656232228140630cbb4572019b606c926",
+  "pet-edit-reference.html": "f56a0651d624145131862e52ba7bd8f630ca2341b88083c82a2d29bf5a772bbd",
+  "handoff.md": "274b26f8f5fe34f165dc32f1982c87d7808c3443e8a6fa3fa36cb10344266b0a"
+}

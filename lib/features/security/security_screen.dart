@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +26,9 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
   bool busy = false;
   Future<bool> reauthenticate() async {
     final client = ref.read(backendProvider);
-    if (client == null) return false;
+    if (client == null) {
+      return false;
+    }
     final originalUser = client.auth.currentUser?.id;
     final identities = client.auth.currentUser?.identities ?? [];
     final passwordAvailable = identities.any(
@@ -43,22 +46,26 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
       final method = await showDialog<String>(
         context: context,
         builder: (ctx) => SimpleDialog(
-          title: const Text('Подтвердите вход'),
+          title: Text("Подтвердите вход".tr(context)),
           children: [
             for (final provider in providers)
               SimpleDialogOption(
                 onPressed: () => Navigator.pop(ctx, provider.name),
-                child: Text('Через ${provider.label}'),
+                child: Text(
+                  "Через {p0}".tr(context, arguments: {'p0': provider.label}),
+                ),
               ),
             if (passwordAvailable)
               SimpleDialogOption(
                 onPressed: () => Navigator.pop(ctx, 'password'),
-                child: const Text('С паролем'),
+                child: Text("С паролем".tr(context)),
               ),
           ],
         ),
       );
-      if (method == null || !mounted) return false;
+      if (method == null || !mounted) {
+        return false;
+      }
       selected = providers.where((p) => p.name == method).firstOrNull;
     }
     if (selected != null) {
@@ -70,20 +77,24 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
     }
     final email = client.auth.currentUser?.email;
     if (email == null) {
-      notice(context, 'Повторно войдите через связанный провайдер');
+      notice(context, "Повторно войдите через связанный провайдер".tr(context));
       return false;
     }
     final result = await showDialog<Map<String, String>>(
       context: context,
       builder: (ctx) => const _ReauthenticationDialog(),
     );
-    if (result == null) return false;
+    if (result == null) {
+      return false;
+    }
     try {
       await client.auth.signInWithPassword(
         email: email,
         password: result['password']!,
       );
-      if (client.auth.currentUser?.id != originalUser) return false;
+      if (client.auth.currentUser?.id != originalUser) {
+        return false;
+      }
       final factors = await client.auth.mfa.listFactors();
       if (factors.totp.isNotEmpty) {
         await client.auth.mfa.challengeAndVerify(
@@ -93,7 +104,9 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
       }
       return true;
     } catch (_) {
-      if (mounted) notice(context, 'Повторная проверка не пройдена');
+      if (mounted) {
+        notice(context, "Повторная проверка не пройдена".tr(context));
+      }
       return false;
     }
   }
@@ -112,10 +125,15 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
   Future<void> run(String kind) async {
     final client = ref.read(backendProvider);
     if (client == null) {
-      notice(context, 'Эта функция доступна после подключения аккаунта');
+      notice(
+        context,
+        "Эта функция доступна после подключения аккаунта".tr(context),
+      );
       return;
     }
-    if (!await reauthenticate() || !mounted) return;
+    if (!await reauthenticate() || !mounted) {
+      return;
+    }
     setState(() => busy = true);
     try {
       if (kind == 'export') {
@@ -124,7 +142,7 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
           await showDialog<void>(
             context: context,
             builder: (ctx) => AlertDialog(
-              title: const Text('Ваши данные'),
+              title: Text("Ваши данные".tr(context)),
               content: SingleChildScrollView(
                 child: SelectableText(
                   const JsonEncoder.withIndent('  ').convert(data),
@@ -133,7 +151,7 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text('Закрыть'),
+                  child: Text("Закрыть".tr(context)),
                 ),
               ],
             ),
@@ -146,21 +164,32 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
         await ref
             .read(accountActionsProvider.notifier)
             .signOut(scope: SignOutScope.global);
-        if (mounted) context.go('/login');
+        if (mounted) {
+          context.go('/login');
+        }
       }
       if (kind == 'delete') {
         await ref.read(notificationServiceProvider).unregister(client);
         final result = await client.functions.invoke('delete-account');
-        if (result.status != 200) throw StateError('Deletion not completed');
+        if (result.status != 200) {
+          throw StateError('Deletion not completed');
+        }
         await ref.read(accountActionsProvider.notifier).signOut();
-        if (mounted) context.go('/login');
+        if (mounted) {
+          context.go('/login');
+        }
       }
     } catch (_) {
       if (mounted) {
-        notice(context, 'Не удалось завершить операцию. Повторите позже.');
+        notice(
+          context,
+          "Не удалось завершить операцию. Повторите позже.".tr(context),
+        );
       }
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (mounted) {
+        setState(() => busy = false);
+      }
     }
   }
 
@@ -168,21 +197,22 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
   Widget build(BuildContext context) {
     final client = ref.watch(backendProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Безопасность')),
+      appBar: AppBar(title: Text("Безопасность".tr(context))),
       body: PageBody(
         children: [
-          const ScreenIntro('Личное\nостаётся личным.', compact: true),
+          ScreenIntro("Личное\nостаётся личным.".tr(context), compact: true),
           const SizedBox(height: 20),
-          const Text(
-            'Публично показывается только район. Точные инструкции выгула доступны участникам договорённости.',
+          Text(
+            "Публично показывается только район. Точные инструкции выгула доступны участникам договорённости."
+                .tr(context),
           ),
-          const SectionTitle('Аккаунт'),
+          SectionTitle("Аккаунт".tr(context)),
           if (client == null)
-            const Text('Сейчас используется демонстрационный профиль.'),
+            Text("Сейчас используется демонстрационный профиль.".tr(context)),
           ListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Двухфакторная защита'),
-            subtitle: const Text('Код из приложения-аутентификатора'),
+            title: Text("Двухфакторная защита".tr(context)),
+            subtitle: Text("Код из приложения-аутентификатора".tr(context)),
             trailing: const Icon(Icons.chevron_right),
             onTap: client == null
                 ? null
@@ -193,7 +223,7 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
               builder: (context, snapshot) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SectionTitle('Активные сессии'),
+                  SectionTitle("Активные сессии".tr(context)),
                   if (snapshot.hasData)
                     ...(snapshot.data as List).map(
                       (s) => ListTile(
@@ -201,28 +231,33 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
                         leading: const Icon(Icons.devices_outlined),
                         title: Text(
                           s['current_session'] == true
-                              ? 'Текущая сессия'
-                              : 'Другая сессия',
+                              ? "Текущая сессия".tr(context)
+                              : "Другая сессия".tr(context),
                         ),
                         subtitle: MetadataLine(
-                          items: [readableLocalDateTime(s['created_at'])],
+                          items: [
+                            readableLocalDateTime(
+                              s['created_at'],
+                              locale: context.languageCode,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   if (snapshot.hasError)
-                    const Text('Не удалось загрузить сессии'),
+                    Text("Не удалось загрузить сессии".tr(context)),
                 ],
               ),
               future: client.rpc('my_sessions'),
             ),
           OutlinedButton(
             onPressed: busy ? null : () => run('sessions'),
-            child: const Text('Выйти со всех устройств'),
+            child: Text("Выйти со всех устройств".tr(context)),
           ),
-          const SectionTitle('Ваши данные'),
+          SectionTitle("Ваши данные".tr(context)),
           OutlinedButton(
             onPressed: busy ? null : () => run('export'),
-            child: const Text('Посмотреть экспорт данных'),
+            child: Text("Посмотреть экспорт данных".tr(context)),
           ),
           const SizedBox(height: 10),
           const SizedBox(height: 24),
@@ -238,25 +273,28 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
                     final confirmed = await showDialog<bool>(
                       context: context,
                       builder: (ctx) => AlertDialog(
-                        title: const Text('Удалить аккаунт?'),
-                        content: const Text(
-                          'Профиль и связанные личные данные будут удалены. Отменить это действие нельзя.',
+                        title: Text("Удалить аккаунт?".tr(context)),
+                        content: Text(
+                          "Профиль и связанные личные данные будут удалены. Отменить это действие нельзя."
+                              .tr(context),
                         ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(ctx, false),
-                            child: const Text('Отмена'),
+                            child: Text("Отмена".tr(context)),
                           ),
                           TextButton(
                             onPressed: () => Navigator.pop(ctx, true),
-                            child: const Text('Удалить'),
+                            child: Text("Удалить".tr(context)),
                           ),
                         ],
                       ),
                     );
-                    if (confirmed == true && context.mounted) run('delete');
+                    if (confirmed == true && context.mounted) {
+                      run('delete');
+                    }
                   },
-            child: const Text('Удалить аккаунт'),
+            child: Text("Удалить аккаунт".tr(context)),
           ),
           if (client != null) ...[
             const SizedBox(height: 20),
@@ -264,14 +302,19 @@ class _SecurityState extends ConsumerState<AccountSecurityScreen> {
               onPressed: () async {
                 try {
                   await ref.read(accountActionsProvider.notifier).signOut();
-                  if (context.mounted) context.go('/login');
+                  if (context.mounted) {
+                    context.go('/login');
+                  }
                 } catch (_) {
                   if (context.mounted) {
-                    notice(context, 'Не удалось выйти. Повторите попытку.');
+                    notice(
+                      context,
+                      "Не удалось выйти. Повторите попытку.".tr(context),
+                    );
                   }
                 }
               },
-              child: const Text('Выйти на этом устройстве'),
+              child: Text("Выйти на этом устройстве".tr(context)),
             ),
           ],
           if (busy) const LinearProgressIndicator(),
@@ -298,7 +341,7 @@ class _ReauthenticationState extends State<_ReauthenticationDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: const Text('Подтвердите действие'),
+    title: Text("Подтвердите действие".tr(context)),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -308,15 +351,15 @@ class _ReauthenticationState extends State<_ReauthenticationDialog> {
           obscureText: true,
           autocorrect: false,
           enableSuggestions: false,
-          decoration: const InputDecoration(labelText: 'Пароль'),
+          decoration: InputDecoration(labelText: "Пароль".tr(context)),
         ),
         const SizedBox(height: 12),
         TextField(
           textAlignVertical: TextAlignVertical.top,
           controller: code,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Код MFA, если включена',
+          decoration: InputDecoration(
+            labelText: "Код MFA, если включена".tr(context),
           ),
         ),
       ],
@@ -324,14 +367,14 @@ class _ReauthenticationState extends State<_ReauthenticationDialog> {
     actions: [
       TextButton(
         onPressed: () => Navigator.pop(context),
-        child: const Text('Отмена'),
+        child: Text("Отмена".tr(context)),
       ),
       TextButton(
         onPressed: () => Navigator.pop(context, {
           'password': password.text,
           'code': code.text.trim(),
         }),
-        child: const Text('Подтвердить'),
+        child: Text("Подтвердить".tr(context)),
       ),
     ],
   );

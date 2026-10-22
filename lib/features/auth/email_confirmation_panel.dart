@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,18 +77,22 @@ class _ConfirmationState extends ConsumerState<EmailConfirmationPanel> {
     children: [
       const SizedBox(height: 24),
       Text(
-        'Откройте письмо для ${widget.email} и подтвердите адрес.',
+        "Откройте письмо для {p0} и подтвердите адрес.".tr(
+          context,
+          arguments: {'p0': widget.email},
+        ),
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 12),
-      const Text(
-        'После подтверждения вернитесь в приложение. Если открыли письмо на другом устройстве, войдите с email и паролем.',
+      Text(
+        "После подтверждения вернитесь в приложение. Если открыли письмо на другом устройстве, войдите с email и паролем."
+            .tr(context),
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 24),
       FilledButton(
         onPressed: busy ? null : widget.onLogin,
-        child: const Text('Адрес подтверждён — войти'),
+        child: Text("Адрес подтверждён — войти".tr(context)),
       ),
       TextButton(
         onPressed: busy || seconds > 0
@@ -102,14 +107,17 @@ class _ConfirmationState extends ConsumerState<EmailConfirmationPanel> {
                   if (context.mounted) {
                     notice(
                       context,
-                      'Если адрес ожидает подтверждения, письмо будет отправлено.',
+                      "Если адрес ожидает подтверждения, письмо будет отправлено."
+                          .tr(context),
                     );
                   }
                 } catch (_) {
                   if (context.mounted) {
                     notice(
                       context,
-                      'Повторная отправка недоступна. Попробуйте позже.',
+                      "Повторная отправка недоступна. Попробуйте позже.".tr(
+                        context,
+                      ),
                     );
                   }
                 } finally {
@@ -123,13 +131,16 @@ class _ConfirmationState extends ConsumerState<EmailConfirmationPanel> {
               },
         child: Text(
           seconds > 0
-              ? 'Отправить повторно через $seconds с'
-              : 'Отправить письмо повторно',
+              ? "Отправить повторно через {p0} с".tr(
+                  context,
+                  arguments: {'p0': seconds},
+                )
+              : "Отправить письмо повторно".tr(context),
         ),
       ),
       TextButton(
         onPressed: busy ? null : widget.onChangeEmail,
-        child: const Text('Изменить email'),
+        child: Text("Изменить email".tr(context)),
       ),
     ],
   );

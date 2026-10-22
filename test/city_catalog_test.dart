@@ -125,11 +125,11 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Места временно недоступны'), findsOneWidget);
-    await tester.tap(find.text('Повторить'));
+    expect(find.text('Не удалось загрузить места.'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('catalog-retry')));
     await tester.pumpAndSettle();
     expect(attempts, 2);
-    expect(find.text('Места временно недоступны'), findsNothing);
+    expect(find.text('Не удалось загрузить места.'), findsNothing);
   });
   test(
     'Late city response cannot replace the selected city; previous results are reused',

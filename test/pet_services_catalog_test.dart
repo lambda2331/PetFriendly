@@ -49,7 +49,12 @@ void main() {
   test('Russian aliases resolve with correct country and venue timezone', () {
     expect(canonicalCity('Moscow'), 'Москва');
     expect(canonicalCity('СПб'), 'Санкт-Петербург');
-    expect(suggestCities('Екатерин').single.country, 'Россия');
+    expect(
+      suggestCities(
+        'Екатерин',
+      ).firstWhere((c) => c.name == 'Екатеринбург').country,
+      'Россия',
+    );
     expect(cityGeocodingQuery('Moscow'), 'Москва, Россия');
     expect(cityGeocodingQuery('Гродно'), 'Гродно, Беларусь');
     expect(cityGeocodingQuery('Тверь, Россия'), 'Тверь, Россия');

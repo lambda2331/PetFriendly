@@ -1,0 +1,2395 @@
+{
+  "@@locale": "pl",
+  "message4ae50d30739d": "Zamknij",
+  "message0cde2263f6e5": "Poczekaj na zakończenie zapisu",
+  "message3a74d52afa96": "Dane demonstracyjne · PetFriendly 0.1",
+  "messagef97f5193d7b9": "Strefa czasowa miejsca",
+  "messagea1c06650b352": "Wybierz miasto w strefie czasowej spaceru.",
+  "message207cc1623db9": "Szukaj miasta lub strefy czasowej",
+  "message0fd2db57c60a": "Brak wyników. Spróbuj nazwy angielskiej.",
+  "message309aff5a3a47": "Nie dodano zdjęcia społeczności",
+  "messagedf4542c99427": "DEMO",
+  "message517663fc884d": "Nowa rozmowa",
+  "messageb45bbb457091": "Jasny motyw",
+  "messageec1c55d8666a": "Ciemny motyw",
+  "message7f17c7c62a7f": "Ustawienia",
+  "message76dd8ec92a26": "Zlecenia",
+  "messageba808f64fe23": "Moje spacery",
+  "message3ba5efad4cd4": "Czaty",
+  "message8e7c6cca09b5": "Ja",
+  "messagefa01903fa84d": "W pobliżu",
+  "messagef3920df09cfb": "Ludzie",
+  "message583180ec5673": "Spacery",
+  "message07a3550a7841": "Profil jest obecnie niedostępny",
+  "message9ad513f109f4": "Twój tryb",
+  "message9869201614f7": "Jedno konto. Rozmowy i historia pozostają z Tobą.",
+  "messaged7d8c68ec39c": "Właściciel zwierzęcia",
+  "message6fc6234c12bc": "Opiekun spacerowy",
+  "messaged5b38ac02d9d": "Zmień role",
+  "message4650f6c5db0a": "Nie udało się zmienić trybu. Spróbuj ponownie.",
+  "messageffcd1996d108": "Opiekun",
+  "message926e3b436e29": "Właściciel",
+  "message4b1f8b9cc594": "Dobra rozmowa\nzaczyna się blisko.",
+  "messagebc652384a792": "Ludzie, spotkania i społeczności.",
+  "messagec55412d56d36": "Nie masz jeszcze rozmów",
+  "message8c1e4b83e79a": "Poznaj ludzi w pobliżu lub dołącz do spotkania.",
+  "messagefd788d92b6eb": "Znajdź towarzystwo",
+  "messagebff943ef3d9c": "Wczytywanie rozmów",
+  "message8e208c91b4ce": "Nie udało się odświeżyć rozmów. Sprawdź połączenie.",
+  "message9e506acb19ac": "Spróbuj ponownie",
+  "messageadb4032a9ddb": "Ty",
+  "message83d643155ac8": "Rozpocznij rozmowę",
+  "message10624d724642": "Nieprzeczytane wiadomości: {p0}",
+  "message2025d80f28a2": "Nie udało się wybrać załącznika. Spróbuj innego pliku.",
+  "messagebcb7c732b1b5": "Jesteś właścicielem",
+  "message86b790812012": "Jesteś opiekunem",
+  "message01d1dda443b6": "Tylko uczestnicy rozmowy",
+  "message1153059d04bb": "Czat demonstracyjny · wiadomości tylko w pamięci",
+  "message56042ae0fd22": "Spacer · {p0}",
+  "message5ba8f80d5941": "Nie udało się wczytać wiadomości. Spróbuj ponownie",
+  "message76ffe26d00be": "Uczestnik",
+  "message15f087779585": "Otwórz społeczność",
+  "message53726bb80b10": "Wysyłanie…",
+  "message3a705aeb2673": "Nie wysłano · spróbuj ponownie",
+  "message11a0e7efda26": "Przygotowywanie załącznika",
+  "message9e516806abec": "{p0} · {p1} MB",
+  "messagedc25e7c7bd60": "Usuń załącznik",
+  "messagedfa87887f1f4": "Dodaj zdjęcie",
+  "messagedb4a9d7ae70d": "Załączniki są niedostępne. Spróbuj później.",
+  "message986720f40262": "Napisz wiadomość…",
+  "message76dcf737a6cd": "Wyślij",
+  "messagee989f2d35ea9": "Nie udało się otworzyć rozmowy. Spróbuj ponownie.",
+  "message4ead60795573": "Wczytaj ponownie",
+  "message595b385ea9de": "Szukaj po imieniu",
+  "message03e1f5d395bd": "Nie ma jeszcze kogo wybrać. Inny uczestnik pojawi się po rejestracji.",
+  "message2a680b43f27a": "Utwórz społeczność",
+  "message5f3e915498d8": "Nie udało się otworzyć załącznika. Spróbuj ponownie.",
+  "message32a151b43602": "Wideo · {p0} s",
+  "message437c1adb16c9": "Zdjęcie · spróbuj ponownie",
+  "message160247465439": "Zdjęcie w rozmowie",
+  "messagefb8ffc7377b8": "Zdjęcie",
+  "message8e7b9894c7ef": "Wideo",
+  "message2dd1a313a442": "Ten format wideo nie jest obsługiwany na urządzeniu.",
+  "message03498e395a43": "Pauza",
+  "messageedf6515d2ea9": "Odtwórz",
+  "messagea07b8e6b73f0": "Włącz dźwięk",
+  "message68f09f6a08ca": "Wyłącz dźwięk",
+  "message8d4b630efae4": "Decyzja zapisana",
+  "message8789b0aefe4b": "Nie udało się zapisać decyzji. Sprawdź MFA i połączenie.",
+  "message365f1bb58d48": "Ukryj publikację",
+  "message83dc42a1964c": "Zakończ rozpatrywanie",
+  "message6af8da01ed23": "Uzasadnienie decyzji",
+  "message0ec753be8df9": "Anuluj",
+  "message4864057d626a": "Zapisz",
+  "message80ae616e0bcf": "Moderacja",
+  "messagec2f668e54fb6": "Odśwież",
+  "message97f5fe1bc1d8": "Wymagana rola moderatora i potwierdzone MFA",
+  "messageb3f67b2b19c8": "Proponowane miejsca",
+  "messageb3c43a26007d": "Opublikuj",
+  "message5047a0698663": "Odrzuć",
+  "messagec20a4e93008e": "Brak miejsc do sprawdzenia",
+  "message19a91f50d916": "Zgłoszenia",
+  "message8ff52a34a0f9": "Rozpatrzono",
+  "message10729118a0e1": "Ukryj",
+  "messagec9181d60ae97": "Brak nowych zgłoszeń",
+  "messagefffdbf73ef8f": "Kolejka: do 50 pozycji. Kolejna partia wczyta się po rozpatrzeniu.",
+  "message075aec641b2a": "Potwierdź logowanie",
+  "message34a031ac7bfc": "Przez {p0}",
+  "messagec0b50b959962": "Hasłem",
+  "messagefb344a91df7b": "Zaloguj się ponownie przez połączonego dostawcę",
+  "message290cc0423110": "Weryfikacja nie powiodła się",
+  "messagef941f25a6e97": "Dostępne po połączeniu konta",
+  "message81b2cec8b96d": "Twoje dane",
+  "messageeffe73d2bed6": "Nie udało się zakończyć operacji. Spróbuj później.",
+  "messaged4fab139643b": "Bezpieczeństwo",
+  "message47302540dbfa": "Prywatne\npozostaje prywatne.",
+  "message74737e8cb674": "Publicznie widoczna jest tylko dzielnica. Dokładne instrukcje spaceru są dostępne uczestnikom umowy.",
+  "message5b16fcdd971f": "Konto",
+  "messageabd3be7f1255": "Korzystasz z profilu demonstracyjnego.",
+  "message637e4413bc0a": "Ochrona dwuskładnikowa",
+  "message1fcf0a112a1e": "Kod z aplikacji uwierzytelniającej",
+  "message1237e008781b": "Aktywne sesje",
+  "message837d2985a1bd": "Bieżąca sesja",
+  "message4f3252f14176": "Inna sesja",
+  "message4be5a62431e9": "Nie udało się wczytać sesji",
+  "message47bc6dd18ad0": "Wyloguj się ze wszystkich urządzeń",
+  "message7dc4678d2f15": "Zobacz eksport danych",
+  "message3f04fb4b1325": "Usunąć konto?",
+  "message6fd44e9f07c8": "Profil i powiązane dane osobowe zostaną usunięte. Tego działania nie można cofnąć.",
+  "message86ea33aef5e9": "Usuń",
+  "message0e42e93d21a2": "Usuń konto",
+  "messagefca1d5a23d7a": "Nie udało się wylogować. Spróbuj ponownie.",
+  "message534f4a068e11": "Wyloguj się na tym urządzeniu",
+  "message6128d9a9ebf4": "Potwierdź działanie",
+  "message14f7c63cc128": "Hasło",
+  "messagea98fc7736194": "Kod MFA, jeśli włączone",
+  "message0467ae4bb88b": "Potwierdź",
+  "messageb4833a8d044f": "Zaloguj się ponownie\nprzez {p0}.",
+  "message6311a1409975": "Wybierz to samo konto {p0}, którego użyto w PetFriendly.",
+  "message7cb9ab8aeaae": "Wybrano inne konto. Działanie nie zostanie wykonane.",
+  "messagef7d551559582": "Weryfikacja wygasła. Wróć i rozpocznij ponownie.",
+  "messagee74833a9a9a7": "Sprawdź kod i spróbuj ponownie.",
+  "message359b06363129": "Potwierdź kod",
+  "messagee0c92a580912": "Kontynuuj",
+  "message0240fd39a824": "Nie udało się otworzyć {p0}. Spróbuj później.",
+  "message0046fc427f8e": "Zaloguj się przez {p0}",
+  "messagee47f17c9cfc9": "Dokończ logowanie na stronie {p0} i wróć do aplikacji.",
+  "messagea24e5f71797a": "Zaloguj się ponownie",
+  "message258dedfee5f0": "Otwórz wiadomość dla {p0} i potwierdź adres.",
+  "message85f5ac7c500d": "Wróć po potwierdzeniu. Jeśli otwarto wiadomość na innym urządzeniu, zaloguj się emailem i hasłem.",
+  "message6d017188288f": "Adres potwierdzony — zaloguj się",
+  "message1bc57726d4bd": "Jeśli adres oczekuje na potwierdzenie, wyślemy wiadomość.",
+  "message1749e230614a": "Ponowne wysłanie jest niedostępne. Spróbuj później.",
+  "message1ff55dc792bd": "Wyślij ponownie za {p0} s",
+  "message0a62985acad6": "Wyślij wiadomość ponownie",
+  "message6260994326b8": "Zmień email",
+  "message5e611d705a8d": "Nowe hasło",
+  "messageb932b45ad2c3": "Odzyskaj dostęp\ndo konta.",
+  "message317fc4baf5ae": "Nowe hasło · co najmniej 12 znaków",
+  "messagec39e27d0b1d8": "Powtórz hasło",
+  "message71fbc05fc24a": "Potwierdź zmianę hasła kodem z wiadomości.",
+  "messagebfee5d1b490b": "Kod potwierdzenia",
+  "messagef8f6b19f3421": "Kod wysłany",
+  "message51068c92928f": "Nie udało się wysłać kodu. Spróbuj później.",
+  "message5c280f2a5253": "Wyślij kod ponownie",
+  "message5e0ce8fb6af7": "Sprawdź długość i zgodność haseł",
+  "messaged39175aa7a79": "Hasło zmienione",
+  "message826df6bd083d": "Nie udało się zmienić hasła. Ponów odzyskiwanie dostępu.",
+  "message73bfb5e42401": "Zapisywanie…",
+  "message5e4fa6bdb7a2": "Zmień hasło",
+  "messageabc2b08d8eb8": "Zacznijmy od spaceru",
+  "messageea03f645bdb8": "Czego teraz potrzebujesz?",
+  "message16bd824605ab": "Profil gotowy. Wybierz pierwszy krok — pozostałe sekcje są zawsze dostępne.",
+  "messageba88deb93bf0": "Znajdź miejsce na spacer",
+  "message881f8007ff59": "Parki i wybiegi w wybranym mieście",
+  "message63c692ad6d67": "Poznaj właścicieli",
+  "message2a8ed08c7e40": "Ludzie w pobliżu i społeczności tematyczne",
+  "messagee8e728fbce78": "Znajdź pomoc ze spacerami",
+  "message2e28d4db2479": "Przejrzyj sekcję i utwórz zlecenie",
+  "messagea8b4e67065ab": "Przejdź do mapy",
+  "message6821d156899e": "Podgląd: Auth nie jest połączone",
+  "messagee9f3958bbcb2": "Zbyt wiele prób. Spróbuj później.",
+  "message925df3235222": "Nie udało się zalogować. Sprawdź dane i potwierdzenie emaila.",
+  "message1b10862a4cae": "Usługa logowania niedostępna. Spróbuj później.",
+  "messagec3b87ac59dfa": "Podgląd: {p0} nie jest połączone",
+  "message380aa0757439": "{p0} nie jest jeszcze połączone",
+  "message27975fb33e13": "Dostawca nie jest jeszcze skonfigurowany na serwerze",
+  "messaged7c997fb176f": "Potwierdź email",
+  "message8d29ff5c8493": "Utwórz konto",
+  "message23c1898aef01": "Zaloguj się do PetFriendly",
+  "message34fb4991e532": "Twoje towarzystwo na spacery.",
+  "message56f72e4a5294": "Demo logowania · nie wpisuj prawdziwych haseł.",
+  "messagee643c76bc43d": "Podaj email",
+  "message727ca0beac8b": "Co najmniej 12 znaków",
+  "message9674b15f97cf": "Poczekaj…",
+  "message939e95a11ddd": "Zaloguj się",
+  "messagebbdb97ba6709": "Mam już konto",
+  "message580318597c8b": "Jeśli konto istnieje, wiadomość została wysłana",
+  "message42127ad3c475": "Nie pamiętasz hasła?",
+  "message73694d652138": "lub zaloguj się przez",
+  "message2a1cc7bbb30b": "Zewnętrzne metody logowania są podłączane w środowisku testowym.",
+  "messagebc0cf27895f2": "Nie udało się przygotować weryfikacji dwuskładnikowej",
+  "message973044930cbd": "Potwierdź logowanie.",
+  "message614e0ffeb9f7": "Dodaj ten klucz do aplikacji uwierzytelniającej. Nikomu go nie udostępniaj.",
+  "message615d4a668757": "Kod z aplikacji uwierzytelniającej",
+  "message20c41bb522e7": "Nieprawidłowy kod. Spróbuj ponownie.",
+  "message350473a96835": "Sprawdzanie…",
+  "message6a52a8394a11": "Otwieranie miejsca…",
+  "messageb63d30ea1b5b": "Opinia dodana do demo · do ponownego uruchomienia.",
+  "messagec09627f596b0": "Dziękujemy! Opinia opublikowana.",
+  "message7e7f95af3e24": "Nie udało się wysłać. Być może to miejsce zostało już ocenione.",
+  "message4dfa61dad124": "Zasady odwiedzin mogą się zmienić. Sprawdź możliwość wejścia ze zwierzęciem przed wizytą.",
+  "messaged9f48a75fd7a": "Usuń z ulubionych",
+  "message5da9e0e83bf6": "Dodaj do ulubionych",
+  "message877c1baa61c1": "W moderacji · widoczne tylko dla Ciebie",
+  "message086515e11e12": "Wczytywanie potwierdzeń zasad…",
+  "messagecdf6b2c0b7d9": "Nie wczytano potwierdzeń · spróbuj ponownie",
+  "message7f9809ed9895": "Sprawdź zasady wstępu ze zwierzęciem",
+  "message86f399f20ecb": "Pokaż na mapie",
+  "messagea844e74aa79a": "Zaproponuj zmianę",
+  "message8dc6ee4c95f5": "Opinie",
+  "message9f2c895cf878": "Wczytywanie opinii…",
+  "messageb40d1863ee07": "Nie wczytano opinii · spróbuj ponownie",
+  "messagef15a050c9945": "To miejsce zostało już przez Ciebie ocenione",
+  "message7f51476ba243": "Opinie będą dostępne po opublikowaniu miejsca.",
+  "messagec73e5ef41ce1": "Nie ma jeszcze opinii.",
+  "messagebbf6601c4a66": "Więcej opinii",
+  "messagea29c9787fc4a": "Wyświetlono najnowsze opinie.",
+  "message476475f94a7f": "Dodaj opinię",
+  "message1fc8ddf57951": "Twoje wrażenia",
+  "message3e373ebc196e": "Wybierz ocenę, aby opublikować.",
+  "message413fa6dbf7e8": "Ocena: {p0} z 5. Można opublikować.",
+  "message1f38ce4d9e66": "{p0} z 5",
+  "message3279857538dd": "Komentarz (opcjonalny)",
+  "messaged5ff51f71399": "Opinia jest publiczna. Nie podawaj danych osobowych.",
+  "messageb2b4a8f23969": "Publikowanie…",
+  "message2bbbb4c9d269": "Opublikuj opinię",
+  "message4a414a60a4dd": "Mińsk",
+  "messageecdae5a020e0": "Nie znaleziono miasta na mapie. Możesz przesunąć mapę ręcznie.",
+  "messageb0b3783ba96c": "Oczekiwanie na lokalizację. Możesz już korzystać z mapy.",
+  "message28911c46d23f": "Nie udało się ustalić lokalizacji. Spróbuj ponownie.",
+  "message2f01fc6e6e82": "Lokalizacja niedostępna. Możesz korzystać z mapy bez niej.",
+  "message40cfb76b3c40": "Nie udało się zmienić powiększenia.",
+  "message1a3fccfcd521": "Zamknij mapę",
+  "messagecabb8a9cab58": "Przegląd mapy",
+  "message3ee5bef85b19": "Miejsca · {p0}",
+  "message89e527dd6f01": "Lista miejsc",
+  "messagefe0e0481ce50": "Pełny ekran",
+  "message0c937db5aac6": "Przybliż",
+  "messagefea897eb050a": "Oddal",
+  "messagee775733e3b0e": "Moja lokalizacja",
+  "messageb17b9b86b846": "Miejsca w pobliżu",
+  "message594067e3bfcd": "Lista miejsc",
+  "message27e3dbbfc497": "Wczytywanie miejsc w mieście…",
+  "message25ba851ce48e": "Miejsca tymczasowo niedostępne",
+  "message63fd87d7165e": "Potwierdzenia są obecnie niedostępne",
+  "messagee2bdb385e7f4": "Sprawdzanie potwierdzeń…",
+  "messagea10c68ba4075": "Ze zwierzęciem",
+  "messagea44b2ae67718": "Potwierdzono {p0}",
+  "message183e219d00b5": "Warunki: {p0}",
+  "message6122f5c77171": "Publiczne potwierdzenie: {p0}",
+  "message7c59e4b64a85": "Zasady mogą się zmienić. Sprawdź je przed wizytą.",
+  "messageba29e6e28466": "Sprawdź zasady u obsługi miejsca przed wizytą.",
+  "message60d60563138f": "Oznaczenie katalogu: {p0}. To nie jest potwierdzenie społeczności ani obiektu.",
+  "message7a0fc176d5c2": "Wstęp ze zwierzętami niepotwierdzony",
+  "message8bf9548437b6": "Katalog zawiera niezweryfikowany opis zasad. Brak potwierdzających informacji.",
+  "messaged6d4e85f8d2e": "Wybierz datę rzeczywistego potwierdzenia.",
+  "messagebc708ecc5d39": "Informacje o wstępie ze zwierzętami opublikowane.",
+  "message6f6af34d9eb3": "Moderacja wymaga aktywnego logowania z MFA i roli moderatora.",
+  "messagede5188320574": "Nie udało się opublikować informacji. Sprawdź datę, dowody i połączenie.",
+  "message7cac34abe6d1": "Cofnąć potwierdzenie?",
+  "messageb6b3ae84813e": "Miejsce znów będzie miało niepotwierdzony wstęp ze zwierzętami.",
+  "messagea90b7cbc92c1": "Zachowaj",
+  "message9b16ca539e60": "Cofnij",
+  "message67f253006df7": "Potwierdzenie cofnięte.",
+  "messageb43a0b443bc8": "Nie udało się cofnąć potwierdzenia. Sprawdź logowanie z MFA i połączenie.",
+  "message9e6268c91e70": "Zasady dla zwierząt",
+  "message609e486c29d6": "Tylko dla moderatorów. Wymagane rzeczywiste informacje społeczności lub obiektu. Nie publikuj prywatnych adresów ani instrukcji opieki.",
+  "messagea1dafced06ec": "Kto potwierdził zasady",
+  "message477e5b714f95": "Społeczność",
+  "message878a1b007147": "Obiekt",
+  "messagee77efef50de5": "Wybierz źródło",
+  "message47724a7ae271": "Zasady wstępu z psem",
+  "message50e2c047734c": "Psy dozwolone",
+  "message38fc3621c869": "Tylko na smyczy",
+  "message909e57c7764b": "Psy niedozwolone",
+  "message0f5097cac2b5": "Wybierz zasadę",
+  "message823ac9a06768": "Data rzeczywistego potwierdzenia",
+  "messagebdaabd06e10e": "Wybierz datę potwierdzenia",
+  "messagef0fa28c4cf6a": "Podstawa potwierdzenia",
+  "messagef130c00bbaba": "Opisz potwierdzające informacje",
+  "messagefdb7bc74ac73": "Warunki, jeśli potwierdzone",
+  "messagec1d65d583b6b": "Publiczne potwierdzenie obiektu · https",
+  "messageb030a8ae56c8": "Publiczny link · opcjonalnie",
+  "messagea4033c342d84": "Dodaj potwierdzenie obiektu",
+  "messagee3bde4b7d4b6": "Wymagany pełny link https",
+  "message183924112be1": "Potwierdź logowanie z MFA",
+  "messagebe6a3e29af88": "Zapisywanie informacji. Pola są tymczasowo niedostępne.",
+  "message3b54c45d35d3": "Opublikuj potwierdzenie",
+  "messaged23ecba34e2d": "Cofnij potwierdzenie",
+  "message1fb5d089d1f6": "Wybierz miasto",
+  "messagebe36cb78e360": "Znajdź miasto",
+  "messagea736131fb81e": "Wyczyść wyszukiwanie",
+  "message8a1b17f3eadb": "Inne miasta",
+  "messageb6163b2a807a": "Wybierz „{p0}”",
+  "message8d9b0ff09510": "Inne miasto",
+  "message0fe11a127f09": "W pobliżu mnie",
+  "message9055e89ca230": "Obecnie wybrane",
+  "messageebc80ccdfd81": "Lokalizacja niedostępna. Wybierz miasto ręcznie.",
+  "message955e0000838c": "Dobry dzień\nna spacer.",
+  "messagea50134fbdba7": "I nowe towarzystwo dla Was obojga.",
+  "message76335e1fd1f9": "Dobry dzień na spacer.",
+  "message77f62bda6a39": "Dodaj miejsce",
+  "message058f162d2926": "Resetuj",
+  "messagedba0c9fc1cc8": "Nazwa lub kategoria",
+  "message19c85838e63f": "Kategoria",
+  "message3d17b5d1c49a": "Filtry miejsc",
+  "messagebd287a5e9a02": "Filtry miejsc · {p0}",
+  "message03ead01c5b2d": "Resetuj filtry",
+  "messagee649fbf77d5b": "Pokaż miejsca",
+  "message0c11f47078b9": "Usuń filtr wstępu",
+  "messageb880e6a10520": "Ulubione",
+  "message3834f482a88b": "Usuń filtr ulubionych",
+  "message04f096a7809c": "Najbliżej mnie",
+  "message66964fcc834e": "Sortuj według nazwy",
+  "messagecb9b47907637": "Wczytywanie miejsc…",
+  "message0d1f8e4e6617": "Liczba miejsc niedostępna",
+  "message14850c1974ce": "Miejsca: {p0}",
+  "message6519c61cb7b2": "Nie wczytano miejsc · spróbuj ponownie",
+  "message5cc41ad1f714": "Nie wczytano moich miejsc · spróbuj ponownie",
+  "message331f33cc07ba": "Wczytywanie miejsc",
+  "messageb541ec9ba08b": "Spróbuj ponownie wczytać miejsca",
+  "message84f85ce5066e": "Nic nie znaleziono",
+  "message7db7a8dd6353": "Brak miejsc — dodaj pierwsze",
+  "messageb53ec8fb330b": "Pokaż więcej",
+  "messageae667e29b799": "© OpenStreetMap contributors · ODbL. Oznaczenia wstępu z OSM wymagają sprawdzenia przed wizytą.",
+  "messagec3d316e42464": "Zestaw",
+  "messaged0a7b29c4963": "Wszystkie miejsca",
+  "messageed030118aad8": "Sortowanie",
+  "message33f30bf7231f": "Według nazwy",
+  "message9fe4f347ca78": "Zaproponuj poprawkę",
+  "message3aa007f0be71": "Opinia o miejscu",
+  "message796f94d5a701": "Co warto\npoprawić?",
+  "messageaf68461951b3": "Podziel się\nwrażeniami.",
+  "messagebb3c79d7155b": "Ocena",
+  "message56a21d1cf64b": "Na przykład zasady wejścia z psem",
+  "messagebe3cb9fe8f62": "Twoja opinia",
+  "message5dba63f62d7b": "Poprawka zostanie sprawdzona.",
+  "message3fcb3649b230": "Komentarz będzie publiczny. Nie podawaj danych osobowych.",
+  "message85c034301ee0": "Wysyłanie. Pola są tymczasowo niedostępne.",
+  "messageb26bc8000fc1": "Opisz poprawkę",
+  "messageadd0be798503": "Wysłano",
+  "message5a34fef4feab": "Nie udało się wysłać. Opinia może już być opublikowana.",
+  "message4cbdc4d6d28e": "Wysyłanie…",
+  "messageed9365a5c198": "Szukanie spotkań w pobliżu",
+  "message5402369b901c": "Spotkania obecnie niedostępne",
+  "messaged01d885857e6": "Spotkania w pobliżu",
+  "message3a560fa595c2": "Otwórz spotkania i ponów wczytywanie.",
+  "message237991afdb98": "W {p0} nie ma jeszcze spotkań.",
+  "message15948e737bd7": "Utwórz spotkanie",
+  "message0441784192fd": "Otwórz spotkania",
+  "messageb89e6a6393c3": "W moderacji · widoczne tylko dla Ciebie",
+  "message20098560d9b9": "Park",
+  "message64ac191fe57d": "Mapa miejsc w pobliżu",
+  "message25aa2370e769": "Miejsca na mapie: {p0}",
+  "messagec7373346fde5": "Wczytywanie mapy",
+  "messagefea57c06eb11": "Twoja lokalizacja jest zaznaczona na niebiesko",
+  "messageb640e182bbd9": "Mapa jeszcze niedostępna",
+  "message4ac4e956f44d": "Możesz przeglądać miejsca na liście.",
+  "message824d50c1306c": "Otwórz listę miejsc",
+  "messagee88221ca074d": "Zaznacz miejsce na mapie",
+  "messagec5723887df15": "Miejsce wysłano do moderacji. Znacznik jest na razie widoczny tylko dla Ciebie.",
+  "messageca55353362f3": "Miejsce dodano do mapy demonstracyjnej do ponownego uruchomienia.",
+  "messagec538d84c2037": "Nie udało się dodać miejsca. Sprawdź dane i połączenie.",
+  "message8391acdda563": "Twoje odkrycie dla innych",
+  "message2c2558bc13a8": "Dodawaj publiczne miejsca. Nie zaznaczaj domu, prywatnego adresu ani lokalizacji innej osoby.",
+  "message3de49828e86a": "Nazwa",
+  "messagedd6e1a08b642": "Podaj nazwę",
+  "message62fa090db476": "Kawiarnia",
+  "messagebf4f87eb47a1": "Wybieg dla psów",
+  "messaged50c4d0059d4": "Restauracja",
+  "message81de872b4d82": "Sklep zoologiczny",
+  "message0aa2129cf1eb": "Klinika weterynaryjna",
+  "messagecd9eda0841f8": "Zaznacz na mapie",
+  "messagec9ca66feb886": "Punkt wybrany",
+  "message19961f25d7e8": "Co jest tu ciekawego?",
+  "messagec7e7a2d08df0": "Publiczny opis, bez danych osobowych",
+  "messagedd4f0f8ea2d6": "Wstęp ze zwierzętami niepotwierdzony. Po sprawdzeniu miejsce pojawi się w katalogu.",
+  "messagedfcf7f73dfb5": "Zaznacz miejsce na mapie przed wysłaniem.",
+  "messagee53283d97cd4": "Wysyłanie miejsca…",
+  "message118793e6c3de": "Mapa niedostępna. Spróbuj otworzyć ją ponownie.",
+  "messagea65dd0bba407": "Nie znaleziono miasta. Przesuń mapę ręcznie.",
+  "messageba91dd132b53": "Mapa nieskonfigurowana. Wybór punktu niedostępny.",
+  "message5770f389be1e": "Wybór punktu będzie dostępny po wczytaniu mapy.",
+  "message076589d75107": "Mapa niedostępna. Spróbuj ponownie.",
+  "messagef4fd42038f19": "Wybieranie punktu…",
+  "message0f0e5c4000a8": "Wybierz ten punkt",
+  "message32e54a35bc78": "Wybrany punkt miejsca",
+  "message67de1dc534eb": "Twoja reputacja",
+  "messaged5a1d7f0c34a": "Profil właściciela",
+  "message7ff40d0d0a9d": "Nie wczytano profilu · spróbuj ponownie",
+  "messagefac58c3b106f": "Profil niedostępny",
+  "message99cfd50063ba": "Doświadczenie właściciela",
+  "message2272fd1e7146": "Reputacja obecnie niedostępna",
+  "message6bc4c140f03f": "Brak opinii",
+  "message137fe6edcbfd": "{p0} z 5 · opinie: {p1}",
+  "message387f0bbc18d0": "Ukończone zlecenia: {p0}",
+  "messagea95477ee566a": "Opinie pomagają podjąć decyzję, ale nie gwarantują bezpieczeństwa.",
+  "messagef13f587ce835": "Opinie opiekunów",
+  "message3d797c1d2978": "{p0} z 5 · {p1}",
+  "message881a224a7e44": "Odpowiedź właściciela: {p0}",
+  "messagea57d557c565d": "Zgłoś opinię",
+  "message28ca4fed00a5": "Pierwsza opinia pojawi się po potwierdzonym spacerze.",
+  "messageb1a4510cd3b2": "Zgłoś profil",
+  "messagecf535012ff9b": "Odpowiedź na opinię",
+  "message4e409e120a03": "Odpowiedź nieopublikowana. Tekst zachowano — spróbuj ponownie.",
+  "message3b68ffeddea4": "Opublikuj odpowiedź",
+  "messagefd042c9a3a77": "Później",
+  "messagec6f4665b45af": "Odpowiedz",
+  "message026ff0fde5ce": "Zablokować użytkownika?",
+  "message242c55c538e0": "Nowe wiadomości prywatne i dostęp do profili zostaną ograniczone.",
+  "messagef6dab074d7bb": "Wstecz",
+  "message0d57053c516f": "Zablokuj",
+  "message96b0ec7561a1": "Nie udało się wykonać działania. Spróbuj ponownie.",
+  "messaged9a212ef5ccb": "Omów spacer",
+  "messagea81c74fa845a": "Pomoc ze spacerami",
+  "message658dd455ca5e": "Poproś sąsiadów o pomoc lub pomóż innym.",
+  "message9a9e515e0756": "Na spacer\nw dobrym towarzystwie.",
+  "message8138af81bee7": "Poproś o spacer",
+  "message9a5177c6a23d": "Moje zlecenia",
+  "message9749a2115aac": "Spacer z {p0}",
+  "message67f7ac13a1ef": "Zlecenia spacerów",
+  "message0ceb71d45778": "Brak zleceń spacerów.",
+  "message366010a8d085": "Zwierzę",
+  "messagef3b7422bb310": "{p0} min",
+  "message3d038bb2ce29": "Zgłoszenia: {p0}",
+  "messagef9f44250ed68": "Szczegóły i zgłoszenia",
+  "messagea078bfd6abc2": "Historia spacerów",
+  "message51ae927ac586": "Opiekunowie",
+  "message0201495c2bfa": "Wybrać opiekuna?",
+  "message484310166485": "Anulować zlecenie?",
+  "messaged15f5f5612a6": "Utworzysz zlecenie z wybranym opiekunem. Najpierw sprawdź profil i omów spacer. Opinie pomagają podjąć decyzję, ale nie gwarantują bezpieczeństwa.",
+  "messagedcda30343452": "Otwarte zlecenie przestanie przyjmować zgłoszenia.",
+  "message94dd8db7ef3a": "Wybierz opiekuna",
+  "message38c31abdc2d9": "Anuluj zlecenie",
+  "messageeb3808cdd076": "Nie udało się zaktualizować zlecenia. Sprawdź połączenie i odśwież: status mógł się zmienić.",
+  "message6d2b7d187ba6": "Zlecenie spaceru",
+  "messageee5e75f7e5fd": "Nie wczytano zlecenia · spróbuj ponownie",
+  "message02dc810e40cb": "Zlecenie niedostępne",
+  "message3478d495e092": "Odśwież status zlecenia",
+  "messagead02ad789086": "Profil i reputacja właściciela",
+  "messageda067f8393c2": "Czat zlecenia",
+  "message1d37f80e1d09": "Minuty: {p0}",
+  "message44709768863d": "Prywatne instrukcje",
+  "message068b46482b10": "Opiekun: {p0}",
+  "messagea8f2829e97ad": "Wycofaj zgłoszenie",
+  "message602f41cfb486": "Zaoferuj pomoc",
+  "message06cbeae325ab": "Zgłoszenia",
+  "message1c11119e08de": "Brak zgłoszeń.",
+  "message844f5b518e8d": "Profil i opinie",
+  "messagefd506239a903": "Dodaj testowe zgłoszenie Saszy",
+  "message80c0e381378b": "Demo: opiekun rozpoczął spacer",
+  "messagedb943fa7ada9": "Rozpocznij spacer",
+  "message1e98007eb41a": "Demo: opiekun zakończył spacer",
+  "messageed67b4499488": "Zakończ spacer",
+  "message4fdde1330fb6": "Potwierdź zakończenie",
+  "message84a9f8f3891e": "Oceń opiekuna",
+  "message021fbdbf2254": "Oceń właściciela",
+  "message34b477d79551": "Nie sprawdzono możliwości oceny · spróbuj ponownie",
+  "messageb3cdaecc4112": "Zgłoś problem",
+  "message984c19519d3b": "Nie udało się otworzyć rozmowy. Sprawdź połączenie i spróbuj ponownie.",
+  "message8d2572a4ef7f": "Wiadomości prywatne do „{p0}” będą niedostępne.",
+  "message82fcaddd93c0": "Użytkownik zablokowany",
+  "messageec28638c2572": "Nie udało się zablokować użytkownika. Sprawdź połączenie i spróbuj ponownie.",
+  "message18620f06195e": "Twój profil opiekuna",
+  "message043abf2ad90d": "Profil opiekuna",
+  "messaged93392a45c0a": "Wczytywanie profilu opiekuna",
+  "message72bb02a89f31": "Wczytywanie profilu…",
+  "message877e1469098d": "Nie wczytano profilu",
+  "message92b10f9c44a7": "Odświeżanie profilu",
+  "messagec20c124c2a79": "Nie udało się odświeżyć profilu. Wyświetlono wcześniejsze informacje.",
+  "message5a66960212f5": "Doświadczenie opiekuna",
+  "message20606e69b7d0": "Opinie i doświadczenie pomagają podjąć decyzję, ale nie gwarantują bezpieczeństwa.",
+  "message0755f11f125b": "Edytuj profil",
+  "message924e5fd0cc8e": "Otwieranie czatu…",
+  "messagedf8147f7087b": "Działania profilu",
+  "message9978ac34b293": "Działania",
+  "messageb1c89d34ee5e": "Blokowanie użytkownika…",
+  "messageb5edd2329ffe": "Ponów blokowanie",
+  "messagebee1d49ce082": "Opinie o spacerach",
+  "message19cf50ac61b0": "Opinia o właścicielu",
+  "messageb40b6c61e3bd": "Opinia o opiekunie",
+  "messagef8cc719e17c5": "Jak przebiegł spacer?",
+  "messagedaed281f8d81": "Opinia o {p0}",
+  "message99a6175391a5": "Spacer z {p0} · {p1}",
+  "message0df0695807df": "Uczestnik może wystawić jedną opinię na zlecenie po potwierdzeniu właściciela.",
+  "message43c522c733e4": "Wybierz ocenę",
+  "message829038c9ec94": "Komentarz",
+  "message036fb5113b63": "Opinia będzie publiczna. Nie podawaj adresów ani kontaktów.",
+  "message70bf9258922d": "Nie udało się opublikować opinii. Tekst zachowano — sprawdź połączenie i ponów.",
+  "message0fdadd6e99ac": "Odpowiedź opublikowana",
+  "messagedfaf51b365d6": "Odpowiedz na opinię",
+  "message56bce8cb2713": "Edytuj odpowiedź",
+  "messageec357f7136c2": "Odpowiedź będzie publiczna. Nie podawaj adresów ani instrukcji opieki.",
+  "message93d23f58f161": "Etap {p0} z {p1}: {p2}",
+  "message0f04a460f0c5": "Wczytywanie preferencji opiekuna",
+  "message6765213e1479": "Preferencje niedostępne · spróbuj ponownie",
+  "messagea51de1b434f1": "Preferencje i dostępność",
+  "messagee4002bf3fbb0": "Rozmiary psów: {p0}",
+  "messagebcf3701eacdc": "Dzielnice: {p0}",
+  "messagec50e27eb9737": "Gotowość do omawiania spacerów",
+  "message082f3a59c63a": "Obecnie nie przyjmuje nowych zleceń",
+  "message84fd0ccfc00f": "Czas w {p0}",
+  "message78453f85c3b5": "Dostępność to preferencja, a nie zobowiązanie do rezerwacji.",
+  "message60d688e9bf1d": "Twój PetFriendly",
+  "messagedfceefcea364": "Wczytaj role ponownie",
+  "message986d9b6ee0bb": "Jak chcesz uczestniczyć?",
+  "messagea1fbe4942f8c": "Jedno konto dla zwierząt, spacerów i rozmów.",
+  "messagedd4dc742d378": "Miejsca, spotkania i pomoc ze spacerami dla Twojego zwierzęcia.",
+  "messagecbc0fe1953f4": "Znajduj zlecenia i pomagaj właścicielom. Własne zwierzę nie jest wymagane.",
+  "message4694ba8e759b": "Obie role",
+  "message1c6715645def": "Pomagaj innym i dbaj o swoje zwierzę. Zmieniaj tryb w dowolnej chwili.",
+  "messagec6d4b7bc6855": "Rolę możesz zmienić w profilu. Rozmowy i historia pozostaną z Tobą.",
+  "messagea1f60d3adb50": "Nowy użytkownik",
+  "messagee9456f9a328c": "Nie udało się zapisać roli. Spróbuj ponownie.",
+  "message3f75368ab958": "Kontynuuj",
+  "message834b2fb85184": "Nie udało się zaimportować zdjęcia. Spróbuj ponownie lub wybierz zdjęcie z urządzenia.",
+  "messagee18ed2351d80": "Nie udało się zapisać profilu. Dane pozostają w formularzu. Spróbuj ponownie.",
+  "message7a7e9f66a26e": "Wypełnij pole",
+  "message8b46b78c5de2": "Wybierz rolę opiekuna",
+  "messagee31309039c8a": "Przedstawienie",
+  "message7304fe00ec5a": "Preferencje",
+  "messageecdc49301fb2": "Wczytaj profil ponownie",
+  "message70cfab0968e9": "Poznajmy się",
+  "message27df61435707": "Jakie spacery Ci odpowiadają?",
+  "message12632234ec91": "Opowiedz o sobie. Własne zwierzę nie jest wymagane.",
+  "messagef67ddc898dcd": "To preferencje, a nie rezerwacje. Możesz je zmienić później.",
+  "message9ad668a84bce": "Nie udało się wybrać zdjęcia. Wybierz obraz do 8 MB.",
+  "message60e702f57b3e": "Otwieranie…",
+  "message649ff75fdaad": "Wybierz zdjęcie",
+  "messageab6257eaf578": "Zdjęcie z Google",
+  "messagef306a2a41a01": "Zdjęcie z Telegram",
+  "message716e5371c728": "Anuluj wybór",
+  "messageaee78fe86022": "Imię",
+  "message95405f676698": "Miasto",
+  "messagefdff86c0585a": "Publiczna dzielnica · opcjonalnie",
+  "messagec754b66d089f": "Krótko o sobie · opcjonalnie",
+  "message1064aceacabb": "Doświadczenie ze zwierzętami · opcjonalnie",
+  "message9b15270d320c": "Rozmiary psów",
+  "message88f361ebd46f": "Małe",
+  "messagec9b5eb57acf1": "Średnie",
+  "message48cec48bb5dc": "Duże",
+  "messagec59229de3c14": "Dzielnice, w których możesz pomóc",
+  "message15885b3bd4c7": "Do 10 publicznych dzielnic oddzielonych przecinkami. Nie podawaj adresu.",
+  "message47947a0c467b": "Strefa czasowa",
+  "messagef95f004933ab": "Kiedy masz czas?",
+  "message568183ec7cfa": "Przedziały tygodniowe w wybranej strefie czasowej. Możesz zostawić puste.",
+  "message76294a78d1a7": "Usuń przedział",
+  "message9cca54b87e3c": "Dodaj czas",
+  "messagec9684f50069d": "Gotowość do pomocy teraz",
+  "message239cfbbec36b": "Widoczne w publicznym profilu",
+  "message9b3fe599d67b": "Te dane są widoczne dla innych użytkowników. Podawaj tylko miasto i dzielnicę, bez dokładnego adresu ani prywatnych instrukcji.",
+  "message52d23dc8ff56": "Zapisz i otwórz zlecenia",
+  "message256d12fe7ff9": "Poniedziałek",
+  "message677afb97c3d0": "Wtorek",
+  "messagef81e505f9bbb": "Środa",
+  "message903dac9fa4f5": "Czwartek",
+  "message90f314d3bf46": "Piątek",
+  "messageb1dda156ff0d": "Sobota",
+  "message6eb1432a3265": "Niedziela",
+  "messagec033a50deae3": "Dostępność na spacery",
+  "messagee7cc928e4172": "Dzień tygodnia",
+  "messageeb54fb7750b1": "Początek: {p0}",
+  "message936c3ac380d2": "Koniec: {p0}",
+  "message559a87f7cc13": "Dodaj",
+  "message862606151868": "Średnia ocena {p0} z 5",
+  "messagea35b6e5d22a7": "Opinie niedostępne",
+  "message8f7d56b10039": "Ocena niedostępna",
+  "messagebc3266a5d2e2": "{p0} · opublikowano",
+  "messageca22b00e631a": "ukończonych spacerów",
+  "messagea679f6b15361": "ukończony spacer",
+  "messagee54bd9aabd9c": "ukończone spacery",
+  "message5226e6c162fb": "Doświadczenie niedostępne",
+  "message6023e5b18ddc": "Wczytaj doświadczenie ponownie",
+  "message42d01ae06459": "Opinie lub doświadczenie niedostępne. Ponów wczytywanie.",
+  "messagee956509b4a4d": "Opinie obecnie niedostępne.",
+  "messagee06dfa4f2a69": "Opinie jeszcze przed Tobą",
+  "messagece84293ecd2e": "Pierwszy spacer jeszcze przed Tobą",
+  "message1b12dde9a0e2": "Nowy opiekun",
+  "messagef6ed8ce8882b": "Są ukończone spacery, ale właściciele nie dodali jeszcze opinii.",
+  "message5251fb350d9d": "Pomóż właścicielowi ze spacerem. Po zakończeniu może dodać opinię.",
+  "messagef5a30329ff08": "Brak ukończonych spacerów i opinii. Omów doświadczenie i potrzeby zwierzęcia w rozmowie.",
+  "message00bac6443460": "Jak liczymy doświadczenie",
+  "message45aa64128880": "Liczą się spacery, w których pełnisz rolę opiekuna. Na ocenę wpływają tylko opublikowane opinie właścicieli po ukończonym spacerze. Zlecenia dla własnego zwierzęcia nie są liczone.",
+  "message56ff0751e702": "Liczą się spacery, w których ta osoba pomagała innym właścicielom. Na ocenę wpływają tylko opublikowane opinie po ukończonym spacerze. Zlecenia dla własnego zwierzęcia nie są liczone.",
+  "messageec99f9dda205": "Działania opinii",
+  "messagee0ecf63c9f95": "Zwiń opinię",
+  "messagecc4f98cb076a": "Czytaj całość",
+  "message83523c6cf235": "Twoja odpowiedź",
+  "message1d9ce9d72830": "Odpowiedź opiekuna",
+  "message021b09f43776": "Wybierz strefę czasową miasta",
+  "message3e64d9846e81": "Dobry spacer zaczyna się od poznania.",
+  "message4b7451a8afb8": "Data, czas i rozmiar psa",
+  "message61c1a507c065": "Rozmiar psa",
+  "message431cc8e7a87d": "Dowolny rozmiar",
+  "message35bf716d9818": "Mały",
+  "message7b84ec2fed83": "Średni",
+  "message4296acb119f3": "Duży",
+  "message1b2b2152c02a": "Wybierz dzień",
+  "messageead637077af5": "Godziny wybranego dnia",
+  "message7bd841568fb7": "Cały dzień",
+  "messageb7d3053970be": "Rano · 06:00–12:00",
+  "message76556691650d": "Wieczór · 17:00–24:00",
+  "message24058ef0e02b": "Wybierz dzień, aby określić godziny.",
+  "message3cf7a713593b": "Wybierz strefę czasową miasta",
+  "messagea1906faaea66": "Pokaż zlecenia",
+  "messageb1282718acd0": "Brak pasujących zleceń. Spróbuj innego dnia lub dzielnicy.",
+  "message5948ec11d66b": "Zlecenia, którym poświęcasz czas.",
+  "messaged43ed8cb4bbc": "Nadchodzące",
+  "messagea06cf5bce520": "Zgłoszenie nie oznacza wyboru. Właściciel potwierdzi zlecenie.",
+  "messagef07272117269": "Nie masz jeszcze zgłoszeń do zleceń.",
+  "message277d13df80ee": "Tutaj pojawią się Twoje zlecenia.",
+  "message57b06591d163": "Nie wczytano zleceń. Dane obecnie niedostępne.",
+  "messagefd5921036852": "Kolejne zlecenia",
+  "message244d40ad2eed": "Właściciel · {p0}",
+  "messagedeaeff2a8741": "Zgłoszenie wysłane · oczekiwanie na decyzję",
+  "message0aa1c2d9079d": "Otwórz zlecenie",
+  "messagea9f39971c107": "Zobacz zlecenie",
+  "messaged206f1bed011": "Wygląd",
+  "message8f505f82466a": "Zdjęcie zapisane",
+  "message9766bfad75b7": "Podgląd zdjęcia · do ponownego uruchomienia",
+  "message1749fec018a0": "Nie udało się zapisać zdjęcia. Sprawdź połączenie i wybierz obraz do 8 MB.",
+  "message47b9cd40b434": "Ty, zwierzęta\ni Wasze historie.",
+  "message759783add0dd": "Zmień zdjęcie profilowe",
+  "message37842b90ae0b": "Zdjęcie profilowe",
+  "message3aef68134819": "Twój profil",
+  "messagef1679502b6fe": "Nie podano dzielnicy",
+  "messagee721bdacfe97": "W publicznym profilu widać tylko dzielnicę.",
+  "message9e18d5862dae": "Moje zwierzęta",
+  "message4d9bc4a5beb5": "Dodaj zwierzę",
+  "messageadb6d1671651": "Zdjęcie zwierzęcia {p0}",
+  "message31ae3642aa66": "Edytuj zwierzę",
+  "message5435a4e37380": "Reputacja właściciela",
+  "message86f56e2c6ded": "Role i tryb",
+  "message87b3d9e523c2": "Wczytywanie zapisanych miejsc…",
+  "messagece236352b617": "Nie wczytano ulubionych miejsc.",
+  "messaged7ac6cd2344e": "Wczytaj miejsca ponownie",
+  "message01cc4792b87a": "Ulubione miejsca",
+  "message2f4c84f8e9e4": "Zapisuj miejsca na mapie — pojawią się tutaj.",
+  "message63d9df58a7c3": "Zapisane miejsca obecnie niedostępne.",
+  "messagea076d73648cb": "Twoje doświadczenie opiekuna",
+  "messageef6b94aceac3": "Gdy spacerujesz ze zwierzętami innych właścicieli.",
+  "messagea9a227373497": "Moje opinie · {p0}",
+  "messagedbdb7654a3a2": "Mój profil opiekuna",
+  "messagee465f57578e3": "Znajdź zlecenie spaceru",
+  "messagef5e5eb98950f": "Motyw aplikacji",
+  "messageee3c35f31147": "Powiadomienia",
+  "message3f633a5a6211": "Bezpieczeństwo i prywatność",
+  "message20ea080cb2f2": "Konto, sesje i dane osobowe",
+  "message14c066aeaae0": "Raporty błędów",
+  "messagee477cdeaf8e5": "Wysyłaj raporty techniczne do Firebase",
+  "messagee7c1a949faaf": "Nie udało się zmienić ustawienia",
+  "message90050fcfe2b9": "O aplikacji i danych",
+  "message67df9668eb2e": "Katalog: © OpenStreetMap contributors · ODbL\nhttps://www.openstreetmap.org/copyright\n\nWstęp ze zwierzętami potwierdzany informacjami społeczności.",
+  "messagef346b299cdc1": "Wylogowywanie…",
+  "message1d5ad05dcb6b": "Wyloguj się",
+  "messagef554a379892e": "Na tym urządzeniu",
+  "message33582a5e3d51": "Nie udało się zmienić uczestnictwa",
+  "message08391f34ef47": "Zaproś do społeczności",
+  "message4b4e86d592be": "Otworzy się szkic wiadomości prywatnej. Osoba sama zdecyduje, czy dołączyć.",
+  "message89eb79601b5a": "Wszystkie dostępne osoby już uczestniczą.",
+  "messagec8362545abb5": "Dołącz do „{p0}”!\npetfriendly://group/{p1}",
+  "message0b511f01eb9d": "Nie udało się otworzyć zaproszenia",
+  "messagef11b12e634dc": "Społeczność niedostępna",
+  "message0ffe26083b2f": "Zdjęcie społeczności",
+  "message9415614b97a6": "Podgląd zdjęcia · do ponownego uruchomienia",
+  "message2543e7c879c1": "Nie udało się otworzyć zdjęcia",
+  "message9bae7b28d155": "Otwarta społeczność",
+  "message22b9769931b0": "Dołączanie…",
+  "message2e692114d30f": "Dołącz do społeczności",
+  "messagef2d30d5ad857": "Otwórz czat społeczności",
+  "message28c8c2c67fc8": "Zaproś osobę",
+  "messagefcb848e42690": "Uczestnicy",
+  "message17d9d9622b22": "Organizator",
+  "message17caac1f45a9": "Opuść społeczność",
+  "message461285515199": "Czat pokazuje imię autora i czas każdej wiadomości.",
+  "message395a7f5b8d17": "Czat dostępny po dołączeniu. Nie dodajemy Cię bez zgody.",
+  "message2e90ca162872": "Nie udało się zmienić uczestnictwa. Może nie być wolnych miejsc.",
+  "message904dbc353c13": "Czat pojawi się po połączeniu danych spotkania",
+  "message3b599536f6db": "Wspólne spacery",
+  "messagee45a61bc019f": "Spotkanie",
+  "message49f67359faa0": "Wybierz spacer",
+  "message7cd4c88be0f6": "Spotkanie niedostępne. Być może już nie istnieje.",
+  "messageb1955e60d1bc": "Brak spotkań. Utwórz pierwsze.",
+  "messagebe06b85d34df": "Uczestnicy: {p0} z {p1}",
+  "message37e318fdeb91": "Jesteś organizatorem",
+  "message4198697c8734": "Dołącz",
+  "message79b97decc746": "Anuluj udział",
+  "messagec151ef28de83": "Czat spotkania",
+  "message005704df1e70": "Pomóż zadbać\no bezpieczeństwo społeczności.",
+  "message67197255e129": "Moderator zobaczy zgłoszenie. Nie dodawaj zbędnych danych osobowych.",
+  "message4b476322516b": "Co się stało?",
+  "messagef2074d9e66c3": "Opisz problem",
+  "message050a2dab17b8": "Zgłoszenie wysłane",
+  "messageb11318be3823": "Nie udało się wysłać zgłoszenia",
+  "message0c62c154f11e": "Wyślij zgłoszenie",
+  "message3656f83c7354": "Wysyłanie zgłoszenia…",
+  "messageb19e091c9944": "Opuścić formularz?",
+  "messagebb88935ad891": "Możesz zachować szkic do zamknięcia aplikacji. Nie jest publikowany ani zapisywany na urządzeniu.",
+  "message2d15a70b48e2": "Odrzuć zmiany",
+  "message0fc6c0d06cc9": "Zachowaj szkic",
+  "message4d72b2f8e55f": "Najpierw podaj miasto spotkania",
+  "message85a30e204d73": "Nie udało się wybrać punktu. Spróbuj ponownie.",
+  "messageb5cc2ef39619": "Zdjęcie niedostępne. Wybierz inny obraz.",
+  "messagec78b4f55e7a2": "Podaj liczbę",
+  "message9d900f020f0e": "Data spaceru",
+  "message71ee099024d3": "Data spotkania",
+  "messagefe4b0c80f09e": "Wybierz",
+  "messaged0ab03c14d1f": "Godzina rozpoczęcia",
+  "message19ed7fc9d8d7": "Wybierz strefę czasową miejsca spaceru",
+  "messagedc186d2b3bbe": "Wybierz przyszły czas w miejscu spaceru",
+  "messagee2ab213e839d": "Wiek musi wynosić od 0 do 100",
+  "message939ed792df11": "Od 2 do 100 uczestników",
+  "messagef71b1c28e749": "Dodaj i wybierz swoje zwierzę",
+  "messagedc74357f92b3": "Czas trwania od 15 do 240 minut",
+  "messagefdcb6753efb8": "Dane zapisane. Zdjęcie możesz dodać później.",
+  "messagef0dff5ab4a66": "Zapisano",
+  "message4e22892a49e9": "Nie udało się zapisać. Sprawdź dane i połączenie.",
+  "message0645fbe718fd": "Poznajmy się",
+  "message351052c26392": "Tworzenie społeczności…",
+  "message94a58c2c86dd": "Tworzenie spotkania…",
+  "message5ce1f1c664fd": "Publikowanie zlecenia…",
+  "message4cea4797f5fc": "Dodawanie zwierzęcia…",
+  "message19201d75daee": "Zapisywanie zwierzęcia…",
+  "messagee2344530c7af": "Zapisywanie profilu…",
+  "messagef05953369617": "Szkic przywrócony. Do zapisania widoczny tylko dla Ciebie.",
+  "message501b6b70441b": "Wybierz zdjęcie społeczności",
+  "message53d4df4e067f": "Nie udało się otworzyć zdjęcia. Maksymalnie 8 MB.",
+  "message3fea1d99e3b9": "Zdjęcie jest lokalnym podglądem do ponownego uruchomienia, bez publikacji.",
+  "message6d080f825c4c": "Nazwa społeczności",
+  "message4a68dd8cf1ef": "O społeczności",
+  "messagebe377c462a13": "Jak będą Cię widzieć inni właściciele? Imię i zdjęcie można zmienić.",
+  "messageb00e2401eb97": "Wczytywanie…",
+  "messagee32a39491144": "Zdjęcie z {p0}",
+  "message0dddb4e11969": "Dzielnica",
+  "message312416bd6b59": "O sobie",
+  "messagefa4e157472cf": "Zainteresowania",
+  "messagef5877eb4b196": "Imię zwierzęcia",
+  "message136b5f4791f1": "Gatunek zwierzęcia",
+  "message596794f4ae1a": "Pies",
+  "message923f88ac18e7": "Wiek w latach",
+  "message1ae8a2e2f4bf": "Charakter i cechy",
+  "messageb0e181ce9464": "Nazwa spotkania",
+  "message73ce590f1b54": "Liczba uczestników",
+  "messageb25eec006d87": "Najpierw dodaj zwierzę w profilu.",
+  "messageb1d2aecbaf1d": "Czas trwania, minuty",
+  "messageab243279dfe8": "Wybierz miejsce na mapie",
+  "messagee39e548ac7da": "Punkt spotkania wybrany",
+  "message30de177fca5b": "Opcjonalnie",
+  "message9a4b491c3ca8": "Dotknij, aby zmienić",
+  "message6e4be49ad20b": "Usuń punkt spotkania",
+  "message869d5223f4cf": "Gdzie się zbieramy",
+  "messaged0d23e281e3e": "Punkt i opis będą widoczne dla innych. Wybierz miejsce publiczne.",
+  "message205356dd7a6b": "Wybierz przed zapisaniem",
+  "messagee5d3b5981249": "Data i czas w miejscu spaceru",
+  "messagede1cdaf0d1eb": "Publiczny opis",
+  "messageb526ddbf1bca": "Prywatne instrukcje dla opiekuna",
+  "message1341bac612ae": "Przesyłanie zdjęcia. Potem możesz zapisać.",
+  "message399addcd0e7b": "Demo: zmiany pozostają w pamięci.",
+  "message867c35f6aeea": "Dostęp do danych osobowych zgodny z zasadami konta.",
+  "messagedea538eebd3f": "Miejsce spotkania",
+  "message426a3fad9bb0": "Przesuń mapę i wybierz publiczny punkt spotkania.",
+  "messageeabcf1f4ee38": "Poznawaj ludzi w pobliżu.",
+  "messagea49efe6e86e9": "Ludzie w pobliżu",
+  "message66f2059653b6": "Społeczności",
+  "message9aff32018242": "Imię, zwierzę lub zainteresowanie",
+  "message8a09f06cda91": "Nazwa lub zainteresowanie",
+  "message0328ac4ae829": "Nie udało się wczytać ludzi i społeczności. Sprawdź połączenie i spróbuj ponownie.",
+  "message2b9cf1ed85bf": "Dokładna lokalizacja osób jest ukryta.",
+  "message4d2b4b63c4b8": "Napisz do {p0}",
+  "message83f6c67ecb86": "Rozmowa niedostępna",
+  "message0d14415bf2d4": "Jeszcze nikogo tu nie ma. Zajrzyj później.",
+  "messagec0ed14dd82fd": "Nikogo nie znaleziono",
+  "message055eab447fd5": "Spróbuj innego imienia, zwierzęcia lub zainteresowania.",
+  "messageeec2d77a2fad": "Wyczyść wyszukiwanie",
+  "messagef9ae3cd4e9a1": "Znajdź społeczność",
+  "messagec4b3e11aebb2": "Brak społeczności. Utwórz własną.",
+  "message9b1c54777257": "Nie znaleziono społeczności",
+  "message179a4c29fc0e": "Uczestniczysz",
+  "messagecb2b3004e8da": "Wszystko ważne\npod ręką.",
+  "message66ab23fd4dbc": "Nie udało się włączyć powiadomień",
+  "messagefe35c9ab559a": "Ustaw powiadomienia",
+  "messagec42808e89208": "Powiadomienie testowe bez danych osobowych.",
+  "message66de510f1074": "Sprawdź powiadomienie lokalne",
+  "message297cf77ec513": "Powiadomienia push nie są jeszcze podłączone. Powiadomienia wewnętrzne są dostępne w aplikacji.",
+  "message2355a3badd7f": "Ostatnie wydarzenia",
+  "message43843ef49670": "Brak nowych wydarzeń.",
+  "message9aaab9126496": "Nowa wiadomość",
+  "messageea7abe214c11": "Wybrano Cię do spaceru",
+  "message1e32e76e0488": "Nowe zgłoszenie do spaceru",
+  "message24e6d41f837f": "Status spaceru zmieniony",
+  "message467e22763678": "Aktualizacja spotkania",
+  "message4275cb57eb99": "Język aplikacji",
+  "message0860b3491171": "Język urządzenia",
+  "messageb15cce3d7ee7": "Wszystkie kraje",
+  "message7bc2f626288f": "Kraj",
+  "messagebcbba461b60e": "Miasto, region lub kraj",
+  "message88dd327792e2": "Podaj miasto i kraj",
+  "message33e88b747bdc": "Mniejsze miejscowości możesz wpisać ręcznie, dodając kraj.",
+  "message094873973b43": "Brześć",
+  "message24120671d526": "Nie podano wieku",
+  "message6422f4b68a3f": "W tym czasie zmienia się czas. Wybierz inną godzinę.",
+  "message4e1081bbabf3": "Ta godzina występuje dwukrotnie przy zmianie czasu. Wybierz inną godzinę.",
+  "message1d9bddaea918": "Warszawa",
+  "message39ef3db3f651": "Moskwa",
+  "message0c766e6b61d0": "Wilno",
+  "message36985485208d": "Ryga",
+  "message29cbedd98e33": "Kijów",
+  "message5bfdd82d218d": "Nie podano czasu",
+  "message10f7ed92c4f4": "{p0} · {p1} UTC · nie podano strefy czasowej miejsca",
+  "message089ab0c991d4": "Nie podano daty",
+  "message6621bce60796": "Wybierz zdjęcie do {p0} MB",
+  "message794cfc85b0cb": "Zbyt duża rozdzielczość zdjęcia",
+  "messagecf518012172c": "Zlecenie spaceru",
+  "message2a793f66f34d": "Rozmowa prywatna",
+  "messageb0e6ecc2e6cd": "Rozmowa",
+  "message28726b6555e5": "Otwórz spotkanie",
+  "message2236cf3068a6": "Do czatów można przesyłać tylko zdjęcia",
+  "message61165ddb443f": "Wybierz zdjęcie do 5 MB",
+  "messagecf53210c7fff": "Zdjęcie po przetworzeniu przekracza 5 MB. Wybierz inny obraz.",
+  "message28ea9cea7c99": "Lokalizacja wyłączona. Wybierz miasto ręcznie.",
+  "messagede91d9f20bac": "Nie przyznano dostępu do lokalizacji. Możesz wybrać miasto ręcznie.",
+  "message633e233ae0d6": "Nie znaleziono wybranego miasta.",
+  "messagefd27189df3de": "Nie ustalono miasta. Wybierz je ręcznie.",
+  "message9c20af65fda9": "Psy dozwolone",
+  "messagee3747f6545c2": "Psy na smyczy",
+  "messagee35fa18a4522": "Psy niedozwolone",
+  "message9b43e612e90d": "Wstęp niepotwierdzony",
+  "message2f4bdc07dc63": "Potwierdzone przez społeczność",
+  "messagea23fe384e726": "Potwierdzone przez obiekt",
+  "message4301c689a11b": "Psy tylko na smyczy",
+  "messagede1348a21e8f": "Zasady dla zwierząt jeszcze nieznane",
+  "message1f7d20aa078a": "Sprawdź zasady odwiedzin przed spacerem.",
+  "message0684985fc1c7": "Psy dozwolone · oznaczenie OSM",
+  "message9f0b89aa8e29": "Psy na smyczy · oznaczenie OSM",
+  "messageefb4b2b7b0bd": "Psy niedozwolone · oznaczenie OSM",
+  "messagefd08da7a630b": "Wszystkie",
+  "message057bb673cb59": "Parki",
+  "messagec7397f0b5db4": "Wybiegi",
+  "message3886266b6593": "Restauracje",
+  "message3be39323b5b8": "Sklepy zoologiczne",
+  "messagef6c9d7568145": "Kliniki weterynaryjne",
+  "message6117e6ec54ee": "Dowolny wstęp",
+  "message7bdf320b4b38": "Dozwolone według OSM",
+  "messagef9cd9bc8e35c": "Brak potwierdzenia",
+  "messageecfa10af30d6": "Niedozwolone według OSM",
+  "message82293a962273": "~{p0} m w linii prostej",
+  "message85efa6b61ccd": "~{p0} km w linii prostej",
+  "messagea9dfb3cfe2c8": "Położenie miejsca",
+  "message484fc68961e9": "Przesuń mapę: znacznik w środku to Twoje miejsce.",
+  "message95d009718d65": "Opinie obecnie niedostępne",
+  "message77d1fb5fd28b": "★ {p0} · opinie: {p1}",
+  "messagebbf1cff83b1f": "Doświadczenie obecnie niedostępne",
+  "message07863f4ea103": "Ukończone spacery: {p0}",
+  "message951ebec7b8a5": "Zgłoszenie wysłane",
+  "message955e7c4e168f": "Zgłoszenie wycofane",
+  "message8b0f1f8ae948": "Opiekun wybrany. Zlecenie utworzone",
+  "messagef366eac215a4": "Zgłoszenie testowe dodane",
+  "messagefa5356be8f63": "Zlecenie anulowane",
+  "message2ed204eb3508": "Spacer rozpoczęty",
+  "message5340d365bb80": "Właściciel może potwierdzić zakończenie",
+  "messagee2f8d0888d94": "Zakończenie potwierdzone",
+  "message10df66211a0a": "Zlecenie zaktualizowane",
+  "message7b3e83c2e9fb": "Zlecenie",
+  "message3dfcd2dc31c5": "Spacer",
+  "message846aff7071bb": "Potwierdzenie",
+  "message016bc923f7ff": "Ukończono",
+  "message072d474a77d3": "Sprawdź profile i opinie zgłaszających się, a potem wybierz opiekuna.",
+  "messaged6af38682a9f": "Zgłoszenie wysłane. Poczekaj na decyzję właściciela.",
+  "messagebc77fea18d7a": "Przeczytaj opis spaceru i zaoferuj pomoc, jeśli możesz uczestniczyć.",
+  "message7f2a76a01520": "Omów szczegóły z właścicielem w czacie. Dotknij „Rozpocznij spacer”, gdy się zacznie.",
+  "message512875df25af": "Omów szczegóły w czacie. Wybrany opiekun oznacza rozpoczęcie.",
+  "messagea4ed6dc14aaf": "Na koniec dotknij „Zakończ spacer”. Właściciel potwierdzi zakończenie.",
+  "messageef93b47bd5f6": "Opiekun oznacza koniec spaceru. Następnie możesz potwierdzić zakończenie.",
+  "messageaccfd2fd31e2": "Sprawdź, czy spacer się skończył, i dotknij „Potwierdź zakończenie”.",
+  "message9d1a7265b3ba": "Koniec oznaczono. Poczekaj na potwierdzenie właściciela.",
+  "messagee98a1e953c9b": "Spacer ukończony. Podziel się doświadczeniem — oceń opiekuna.",
+  "messagee7aafc25d1c9": "Spacer ukończony. Opinia już zapisana.",
+  "message6962497418cd": "Spacer ukończony. Opinia właściciela pojawi się w profilu po publikacji.",
+  "message05ba555dfef8": "Zlecenie anulowane i nie przyjmuje zgłoszeń.",
+  "messagee83f6a2fe9b1": "Tutaj widać bieżący status zlecenia. Tylko uczestnicy mogą je zmieniać.",
+  "messagee02da454b071": "Dodaj maksymalnie 28 przedziałów",
+  "messagebb4cc1e6e161": "Początek musi poprzedzać koniec w tym samym dniu",
+  "messagec7c78544f4b2": "Przedziały tego samego dnia nie mogą się nakładać",
+  "message67eba41d5b09": "Podaj miasto do 120 znaków",
+  "message9de5817d88f0": "Skróć opis do wskazanego limitu",
+  "message24b3f4e77859": "Wybierz rozmiar psa z listy",
+  "message90dc3d113555": "Podaj do 10 dzielnic, każda do 100 znaków",
+  "message6f7139f2b0ca": "Wybierz strefę czasową z listy",
+  "messagea670537e7382": "Nie udało się zapisać. Sprawdź połączenie i spróbuj ponownie.",
+  "message8db62374e5b4": "Opiekun wybrany",
+  "message15751266a91c": "Na spacerze",
+  "message7ac8761ffe51": "Oczekuje na potwierdzenie",
+  "message5ebee19fe902": "Anulowano",
+  "messageb8b38d3046e7": "Szukanie opiekuna",
+  "message3bd0ab7b8ac9": "Opinie: {p0}",
+  "message4aadc103f4cd": "Napisz odpowiedź",
+  "message2f82f06b396a": "Odpowiedź może mieć maksymalnie 1000 znaków",
+  "messagea58112409df0": "Nie udało się opublikować. Sprawdź połączenie i ponów.",
+  "messagef0a22d9d1ac8": "Systemowy",
+  "message8080010c5e7d": "Jasny",
+  "messagebd16b234708a": "Ciemny",
+  "message9c24f1019155": "Zapisz i kontynuuj",
+  "message3f1997ae2824": "Opublikuj zlecenie",
+  "messagec2d595b2bec8": "Zapisz zwierzę",
+  "message75bcf434565a": "Zapisz profil",
+  "messagecd98843b19d4": "Nowe powiadomienie",
+  "message892a0c4a22c4": "Otwórz PetFriendly, aby zobaczyć szczegóły.",
+  "ageYears": "{count, plural, one{{count} rok} few{{count} lata} many{{count} lat} other{{count} roku}}",
+  "memberCount": "{count, plural, one{{count} uczestnik} few{{count} uczestnicy} many{{count} uczestników} other{{count} uczestnika}}",
+  "reviewCount": "{count, plural, one{{count} opinia} few{{count} opinie} many{{count} opinii} other{{count} opinii}}",
+  "completedWalkCount": "{count, plural, one{{count} ukończony spacer} few{{count} ukończone spacery} many{{count} ukończonych spacerów} other{{count} ukończonego spaceru}}",
+  "message42c41e298a1d": "Kot",
+  "message8f96cac0d466": "Inne",
+  "message486be4ec3980": "ukończony",
+  "message99a264302517": "bieżący etap",
+  "messagee23e3eaba01f": "przed Tobą",
+  "completedWalkNoun": "{count, plural, one{ukończony spacer} few{ukończone spacery} many{ukończonych spacerów} other{ukończonego spaceru}}",
+  "message29ee26fd254f": "Krok 1 z 2",
+  "@message29ee26fd254f": {
+    "description": "Шаг 1 из 2"
+  },
+  "messagebe1978ee013c": "Krok 2 z 2",
+  "@messagebe1978ee013c": {
+    "description": "Шаг 2 из 2"
+  },
+  "message7b24d22634b0": "O Tobie i doświadczeniu · opcjonalnie",
+  "@message7b24d22634b0": {
+    "description": "О себе и опыте · необязательно"
+  },
+  "messaged52447138753": "Możesz uzupełnić to później w profilu.",
+  "@messaged52447138753": {
+    "description": "Можно заполнить позже в профиле."
+  },
+  "messagec253c2990498": "Spacer uzgodniony.\nPorozmawiajmy.",
+  "@messagec253c2990498": {
+    "description": "Договорились —\nможно обсуждать."
+  },
+  "message26916f84479d": "Opiekunowie i Twoje spacery.",
+  "@message26916f84479d": {
+    "description": "Владельцы и ваши прогулки."
+  },
+  "messagedcafdc9b0189": "Po wybraniu pomocnika możecie omówić szczegóły spaceru na czacie.",
+  "@messagedcafdc9b0189": {
+    "description": "После выбора помощника вы сможете обсудить детали прогулки в чате."
+  },
+  "message2845dc344d77": "Profil pomocnika jest niekompletny. Dodaj imię i miasto, aby opiekunowie mogli Cię poznać.",
+  "@message2845dc344d77": {
+    "description": "Профиль помощника ещё не заполнен. Укажите имя и город, чтобы владельцы могли познакомиться с вами."
+  },
+  "message32783b8b2a16": "Nie dodano jeszcze preferencji",
+  "@message32783b8b2a16": {
+    "description": "Предпочтения пока не указаны"
+  },
+  "message7a8a03503a52": "Nie dodano jeszcze dzielnic",
+  "@message7a8a03503a52": {
+    "description": "Районы пока не указаны"
+  },
+  "messagec1a5483b65eb": "Ustalcie czas w rozmowie",
+  "@messagec1a5483b65eb": {
+    "description": "Время обсудим в переписке"
+  },
+  "message4519bc458ddc": "Brak ukończonych spacerów",
+  "@message4519bc458ddc": {
+    "description": "Завершённых прогулок пока нет"
+  },
+  "message1851e709a6e3": "Miasto i preferencje są niedostępne. Spróbuj wczytać ponownie.",
+  "@message1851e709a6e3": {
+    "description": "Ваш город и предпочтения недоступны. Повторите загрузку."
+  },
+  "message1dace2803f71": "Filtry zostały zmienione. Zastosuj je, aby zaktualizować wyniki.",
+  "@message1dace2803f71": {
+    "description": "Фильтры изменены. Примените их, чтобы обновить результаты."
+  },
+  "message62f206a28aa3": "Wybierz strefę czasową miasta, aby szukać według daty.",
+  "@message62f206a28aa3": {
+    "description": "Для поиска по дате выберите часовой пояс города."
+  },
+  "message17d9acb5f5c7": "Wyszukiwanie: {p0}",
+  "@message17d9acb5f5c7": {
+    "description": "Поиск: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message3ab0ec6bf2d4": "Wróć do nadchodzących spacerów",
+  "@message3ab0ec6bf2d4": {
+    "description": "К предстоящим прогулкам"
+  },
+  "messagea7d5fe998ec8": "Ukończone i anulowane ustalenia.",
+  "@messagea7d5fe998ec8": {
+    "description": "Завершённые и отменённые договорённости."
+  },
+  "messageb3bb855fd296": "Nie udało się wczytać spacerów. Spróbuj ponownie.",
+  "@messageb3bb855fd296": {
+    "description": "Прогулки не загрузились. Попробуйте ещё раз."
+  },
+  "messagee97d74e1e324": "Więcej spacerów",
+  "@messagee97d74e1e324": {
+    "description": "Следующие прогулки"
+  },
+  "message4d92bc2c00a0": "Tutaj pojawią się ukończone i anulowane spacery.",
+  "@message4d92bc2c00a0": {
+    "description": "Завершённые и отменённые прогулки появятся здесь."
+  },
+  "message0b8bc74a8f0b": "Zgłoś się do prośby. Spacer pojawi się tutaj, gdy opiekun Cię wybierze.",
+  "@message0b8bc74a8f0b": {
+    "description": "Отправьте отклик. Прогулка появится здесь, когда владелец выберет вас."
+  },
+  "message0fb5bfd22fdc": "Dzielnica · opcjonalnie",
+  "@message0fb5bfd22fdc": {
+    "description": "Район · необязательно"
+  },
+  "message7bf8ccff13cb": "Wpisz dzielnicę lub wybierz jedną z wyników.",
+  "@message7bf8ccff13cb": {
+    "description": "Введите район или выберите из найденных."
+  },
+  "message4b4b1fb484b5": "Wybierz dzielnicę",
+  "@message4b4b1fb484b5": {
+    "description": "Выбрать район"
+  },
+  "message8596f5cbb86f": "Dowolna dzielnica",
+  "@message8596f5cbb86f": {
+    "description": "Любой район"
+  },
+  "message6863b5c957fe": "Dzielnice pojawią się po wczytaniu próśb. Możesz też wpisać dzielnicę ręcznie.",
+  "@message6863b5c957fe": {
+    "description": "Районы появятся после загрузки запросов. Можно ввести район вручную."
+  },
+  "message2723824e690d": "Szczegóły spaceru —\nw rozmowie.",
+  "@message2723824e690d": {
+    "description": "Все детали прогулки —\nв переписке."
+  },
+  "messagea5dd80026537": "Zobacz zlecenia",
+  "messagef77ec0d8c1dc": "Reputacja niedostępna",
+  "messaged9f5b4e6bda8": "Twoja rola",
+  "@messaged9f5b4e6bda8": {
+    "description": "Ваша роль"
+  },
+  "message1a505d939af7": "O Tobie",
+  "@message1a505d939af7": {
+    "description": "О вас"
+  },
+  "message56c2edd9ccfb": "Nie musisz mieć własnego zwierzaka.",
+  "@message56c2edd9ccfb": {
+    "description": "Свой питомец не нужен."
+  },
+  "messageca5d8538a54d": "Na spacery",
+  "@messageca5d8538a54d": {
+    "description": "Для прогулок"
+  },
+  "messagef85c6baf5759": "Preferencje możesz zmienić później.",
+  "@messagef85c6baf5759": {
+    "description": "Предпочтения можно изменить позже."
+  },
+  "message7b5fbbab74ad": "Twoje spacery\ni rozmowy.",
+  "@message7b5fbbab74ad": {
+    "description": "Ваши прогулки\nи переписка."
+  },
+  "message1988576ea1cf": "Rozmawiaj z opiekunami. Po wybraniu Cię pojawi się czat spaceru.",
+  "@message1988576ea1cf": {
+    "description": "Переписывайтесь с владельцами. После назначения появится чат прогулки."
+  },
+  "message0433f066f26c": "Dzielnice: {p0} z 10",
+  "@message0433f066f26c": {
+    "description": "Районы: {p0} из 10",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message3267d2dda78c": "Usuń dzielnicę",
+  "@message3267d2dda78c": {
+    "description": "Удалить район"
+  },
+  "messagecebbf2940a49": "Dodaj dzielnicę",
+  "@messagecebbf2940a49": {
+    "description": "Добавить район"
+  },
+  "message079a21f978ea": "Podawaj publiczne dzielnice, bez dokładnego adresu.",
+  "@message079a21f978ea": {
+    "description": "Указывайте публичные районы, без точного адреса."
+  },
+  "messagec98573fd5523": "Ta dzielnica jest już dodana",
+  "@messagec98573fd5523": {
+    "description": "Этот район уже добавлен"
+  },
+  "messaged7ae5c2bcdb0": "Profil zapisany",
+  "@messaged7ae5c2bcdb0": {
+    "description": "Профиль сохранён"
+  },
+  "messagea0b0e776e828": "Znajdź spacer w pobliżu.",
+  "@messagea0b0e776e828": {
+    "description": "Найдите прогулку рядом."
+  },
+  "messageb9f1fffef424": "Jak to działa",
+  "@messageb9f1fffef424": {
+    "description": "Как это работает"
+  },
+  "message1340ce217e72": "Zgłoś się do prośby",
+  "@message1340ce217e72": {
+    "description": "Отправьте отклик"
+  },
+  "messageca25c6950f96": "Zgłoszenie to prośba o wybór, jeszcze nie ustalenie spaceru.",
+  "@messageca25c6950f96": {
+    "description": "Отклик — это заявка, ещё не договорённость."
+  },
+  "message61f3fb91bb65": "Poczekaj na wybór",
+  "@message61f3fb91bb65": {
+    "description": "Дождитесь выбора"
+  },
+  "messagede934b6efb66": "Opiekun wybiera jednego pomocnika. Ustalony spacer pojawi się w Moich spacerach.",
+  "@messagede934b6efb66": {
+    "description": "Владелец выбирает одного помощника. Выбранная прогулка появится в «Моих прогулках»."
+  },
+  "message1c5954142ed0": "Omów spacer",
+  "@message1c5954142ed0": {
+    "description": "Обсудите прогулку"
+  },
+  "message580b57bb6c65": "Po wybraniu ustalcie szczegóły w prywatnym czacie spaceru.",
+  "@message580b57bb6c65": {
+    "description": "После выбора договоритесь о деталях в личном чате прогулки."
+  },
+  "message13f6dd068b47": "Oznacz rozpoczęcie i zakończenie",
+  "@message13f6dd068b47": {
+    "description": "Отметьте начало и завершение"
+  },
+  "message388c779e46bc": "Pomocnik oznacza rozpoczęcie spaceru, a następnie jego zakończenie.",
+  "@message388c779e46bc": {
+    "description": "Помощник отмечает начало прогулки и её завершение."
+  },
+  "message253678f6c7d5": "Poczekaj na potwierdzenie",
+  "@message253678f6c7d5": {
+    "description": "Дождитесь подтверждения"
+  },
+  "message5a20271d15f7": "Opiekun potwierdza zakończenie spaceru.",
+  "@message5a20271d15f7": {
+    "description": "Владелец подтверждает, что прогулка завершена."
+  },
+  "message0e32e6a0035a": "Dodaj opinię",
+  "@message0e32e6a0035a": {
+    "description": "Оставьте отзыв"
+  },
+  "messagea1cf9e853e4d": "Po potwierdzeniu każdy uczestnik może dodać jedną opinię o drugiej osobie. Oceny opiekuna i pomocnika są oddzielne.",
+  "@messagea1cf9e853e4d": {
+    "description": "После подтверждения каждый участник может оставить один отзыв о другом. Оценки владельца и помощника учитываются отдельно."
+  },
+  "messageb57a95e3610f": "Nie udało się wczytać kolejnej strony. Wcześniej znalezione spacery są nadal widoczne.",
+  "@messageb57a95e3610f": {
+    "description": "Следующая страница не загрузилась. Уже найденные прогулки сохранены."
+  },
+  "ownerCompletedCount": "{count, plural, one{{count} zakończone ustalenie} few{{count} zakończone ustalenia} many{{count} zakończonych ustaleń} other{{count} zakończonego ustalenia}}",
+  "@ownerCompletedCount": {
+    "description": "Completed walking agreements as an owner.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "message569a541c641f": "Wszystkie spotkania",
+  "@message569a541c641f": {
+    "description": "Все встречи"
+  },
+  "messagee035962d07d7": "Czat społeczności",
+  "@messagee035962d07d7": {
+    "description": "Чат сообщества"
+  },
+  "message2566315efae7": "Poznawaj osoby o wspólnych zainteresowaniach i rozmawiajcie razem.",
+  "@message2566315efae7": {
+    "description": "Знакомьтесь по интересам и общайтесь вместе."
+  },
+  "messagea44fb1b5bf6a": "Moje społeczności",
+  "@messagea44fb1b5bf6a": {
+    "description": "Мои сообщества"
+  },
+  "messagea003b068e9cf": "Odkryj nowe",
+  "@messagea003b068e9cf": {
+    "description": "Найти новые"
+  },
+  "message0add446625e6": "Nie należysz jeszcze do żadnej społeczności.",
+  "@message0add446625e6": {
+    "description": "Вы пока не вступили в сообщества."
+  },
+  "messagea84a75b98045": "Nie ma jeszcze społeczności. Zajrzyj później.",
+  "@messagea84a75b98045": {
+    "description": "Пока нет сообществ. Загляните позже."
+  },
+  "message9361f60117a9": "Pokaż wszystkie społeczności",
+  "@message9361f60117a9": {
+    "description": "Показать все сообщества"
+  },
+  "message3241340ab4a4": "Organizator: {p0}",
+  "@message3241340ab4a4": {
+    "description": "Организатор: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message57a64cc39bbb": "Nie udało się wczytać społeczności. Sprawdź połączenie i spróbuj ponownie.",
+  "@message57a64cc39bbb": {
+    "description": "Не удалось загрузить сообщество. Проверьте соединение и попробуйте снова."
+  },
+  "messagef173477c1ef6": "Czat społeczności jest niedostępny. Spróbuj odświeżyć dane.",
+  "@messagef173477c1ef6": {
+    "description": "Чат сообщества пока недоступен. Попробуйте обновить данные."
+  },
+  "message0695df66283c": "Najbliższe 7 dni",
+  "@message0695df66283c": {
+    "description": "Ближайшие 7 дней"
+  },
+  "message4d2042d2cd07": "Nie ma jeszcze spotkań w historii",
+  "@message4d2042d2cd07": {
+    "description": "В истории пока нет встреч"
+  },
+  "messagedc21d1880187": "Spotkanie odwołane",
+  "@messagedc21d1880187": {
+    "description": "Встреча отменена"
+  },
+  "message422c232b5cda": "Minione spotkanie",
+  "@message422c232b5cda": {
+    "description": "Встреча прошла"
+  },
+  "message81444b09b0cf": "Spotkania",
+  "@message81444b09b0cf": {
+    "description": "Встречи"
+  },
+  "messageaa7abeea345d": "Dołączono do spotkania",
+  "@messageaa7abeea345d": {
+    "description": "Вы присоединились к встрече"
+  },
+  "message232a0ead182b": "Data",
+  "@message232a0ead182b": {
+    "description": "Дата"
+  },
+  "messageef3c662c8a59": "Wczytywanie spotkań",
+  "@messageef3c662c8a59": {
+    "description": "Загрузка встреч"
+  },
+  "message56425e533035": "Poznawajcie się i spacerujcie razem.",
+  "@message56425e533035": {
+    "description": "Знакомьтесь и гуляйте вместе."
+  },
+  "messagef8415aabbaf7": "Nie podano imienia",
+  "@messagef8415aabbaf7": {
+    "description": "Имя не указано"
+  },
+  "message1417b7792d57": "Historia",
+  "@message1417b7792d57": {
+    "description": "История"
+  },
+  "message2941b0da7947": "Dowolna data",
+  "@message2941b0da7947": {
+    "description": "Любая дата"
+  },
+  "messagef4165ef8cd0c": "Brak wolnych miejsc",
+  "@messagef4165ef8cd0c": {
+    "description": "Мест нет"
+  },
+  "message09be0340abdb": "Organizator poda miejsce",
+  "@message09be0340abdb": {
+    "description": "Место уточнит организатор"
+  },
+  "messagea7baa34a406d": "Możesz dołączyć",
+  "@messagea7baa34a406d": {
+    "description": "Можно присоединиться"
+  },
+  "messageb5185e0b5723": "Nie udało się zmienić udziału. Sprawdź połączenie i dostępność miejsc.",
+  "@messageb5185e0b5723": {
+    "description": "Не удалось изменить участие. Проверьте соединение и наличие свободных мест."
+  },
+  "message59589fe2a549": "Szczegóły",
+  "@message59589fe2a549": {
+    "description": "Подробнее"
+  },
+  "messagec8b2963e1437": "Brak pasujących spotkań",
+  "@messagec8b2963e1437": {
+    "description": "Подходящих встреч пока нет"
+  },
+  "message81bbde0e58a4": "Szukaj spotkań",
+  "@message81bbde0e58a4": {
+    "description": "Поиск встреч"
+  },
+  "message750a4997d1fc": "Pokaż miejsce na mapie",
+  "@message750a4997d1fc": {
+    "description": "Показать место на карте"
+  },
+  "messagef5d613dc98cf": "Wybierz inną datę lub zmień wyszukiwanie.",
+  "@messagef5d613dc98cf": {
+    "description": "Попробуйте другую дату или измените поиск."
+  },
+  "messageb1a1258c6247": "Nadchodzące spotkania",
+  "@messageb1a1258c6247": {
+    "description": "Предстоящие встречи"
+  },
+  "message4e42ce1927e2": "Sprawdź połączenie i spróbuj wczytać ponownie.",
+  "@message4e42ce1927e2": {
+    "description": "Проверьте соединение и повторите загрузку."
+  },
+  "message72e17336e142": "Minione i odwołane",
+  "@message72e17336e142": {
+    "description": "Прошедшие и отменённые"
+  },
+  "messageb688b4c0d783": "Dzisiaj",
+  "@messageb688b4c0d783": {
+    "description": "Сегодня"
+  },
+  "message0af51d68126c": "Zrezygnowano z udziału",
+  "@message0af51d68126c": {
+    "description": "Участие отменено"
+  },
+  "message98db9b117288": "Uczestnicy: {p0}",
+  "@message98db9b117288": {
+    "description": "Участников: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message1839d4d9f117": "Organizuję",
+  "@message1839d4d9f117": {
+    "description": "Я организую"
+  },
+  "message6d57b0180642": "Uczestniczę",
+  "@message6d57b0180642": {
+    "description": "Я участвую"
+  },
+  "message180f58ab9753": "Szukaj",
+  "@message180f58ab9753": {
+    "description": "Поиск"
+  },
+  "messageda611f1e5be2": "Łączą nas zainteresowania.",
+  "@messageda611f1e5be2": {
+    "description": "Вместе по интересам."
+  },
+  "message49a2bce3a46a": "Moje",
+  "@message49a2bce3a46a": {
+    "description": "Мои"
+  },
+  "message32d5a2ea7ad3": "Odkrywaj",
+  "@message32d5a2ea7ad3": {
+    "description": "Новые"
+  },
+  "message26405b8b6442": "Znaleziono: {p0}",
+  "@message26405b8b6442": {
+    "description": "Найдено: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messageae08a890dc77": "Nie ma jeszcze społeczności",
+  "@messageae08a890dc77": {
+    "description": "Пока нет сообществ"
+  },
+  "messagead855a45a18c": "Społeczności pojawią się tutaj, gdy zostaną utworzone.",
+  "@messagead855a45a18c": {
+    "description": "Сообщества появятся здесь, когда их создадут."
+  },
+  "message4d357f2834c0": "Spróbuj innej nazwy lub zresetuj filtry.",
+  "@message4d357f2834c0": {
+    "description": "Попробуйте другое название или сбросьте фильтры."
+  },
+  "message3b70ea44d549": "Wybierz społeczność zgodną z Twoimi zainteresowaniami i dołącz dobrowolnie.",
+  "@message3b70ea44d549": {
+    "description": "Выберите сообщество по интересам и вступите добровольно."
+  },
+  "message70e5ea709ab9": "Znajdź społeczność",
+  "@message70e5ea709ab9": {
+    "description": "Найти сообщество"
+  },
+  "message0b82ae44a1b3": "Należysz już do wszystkich dostępnych społeczności.",
+  "@message0b82ae44a1b3": {
+    "description": "Вы уже участвуете во всех доступных сообществах."
+  },
+  "messageebf0fe15caba": "Twoje społeczności są na karcie „Moje”.",
+  "@messageebf0fe15caba": {
+    "description": "Ваши сообщества находятся во вкладке «Мои»."
+  },
+  "messageea1f40824607": "Otwórz",
+  "@messageea1f40824607": {
+    "description": "Открыть"
+  },
+  "message5eca35cc0e17": "Nie ma jeszcze nadchodzących spotkań w tym mieście",
+  "@message5eca35cc0e17": {
+    "description": "В этом городе пока нет предстоящих встреч"
+  },
+  "messagec97531f276d5": "Nie uczestniczysz jeszcze w żadnym spotkaniu",
+  "@messagec97531f276d5": {
+    "description": "Вы пока не участвуете во встречах"
+  },
+  "message0b925c3d9851": "Nie organizujesz jeszcze żadnych spotkań",
+  "@message0b925c3d9851": {
+    "description": "Вы пока не организуете встречи"
+  },
+  "messageb7f8346025bf": "Tutaj pojawią się zakończone i odwołane spotkania.",
+  "@messageb7f8346025bf": {
+    "description": "Здесь появятся прошедшие и отменённые встречи."
+  },
+  "message177289f0e29c": "Utwórz spotkanie, aby zebrać towarzystwo.",
+  "@message177289f0e29c": {
+    "description": "Создайте встречу, чтобы собрать компанию."
+  },
+  "message0253dfa093af": "Wybierz spotkanie i dołącz do spaceru.",
+  "@message0253dfa093af": {
+    "description": "Выберите встречу и присоединитесь к прогулке."
+  },
+  "messageca8ad0cd2efe": "Tutaj pojawią się nowe spotkania.",
+  "@messageca8ad0cd2efe": {
+    "description": "Новые встречи появятся здесь."
+  },
+  "message0f404fdf8f57": "Przeglądaj spotkania",
+  "@message0f404fdf8f57": {
+    "description": "Посмотреть встречи"
+  },
+  "message3930be27278b": "Ładowanie osób",
+  "@message3930be27278b": {
+    "description": "Загрузка людей"
+  },
+  "message7ff90dfabc89": "Ładowanie społeczności",
+  "@message7ff90dfabc89": {
+    "description": "Загрузка сообществ"
+  },
+  "message648deacb6361": "Nie udało się wczytać osób i społeczności.",
+  "@message648deacb6361": {
+    "description": "Не удалось загрузить людей и сообщества."
+  },
+  "messageb610d14732f0": "Nie ma jeszcze nadchodzących spotkań.",
+  "@messageb610d14732f0": {
+    "description": "Пока нет предстоящих встреч."
+  },
+  "messageca2860088a0f": "Nie udało się zaktualizować miejsc.",
+  "@messageca2860088a0f": {
+    "description": "Не удалось обновить места."
+  },
+  "messageae374b391805": "Nie udało się wczytać miejsc.",
+  "@messageae374b391805": {
+    "description": "Не удалось загрузить места."
+  },
+  "message48734fac6745": "Wyświetlane są wcześniej wczytane miejsca.",
+  "@message48734fac6745": {
+    "description": "Показаны ранее загруженные места."
+  },
+  "messagee1c058edde72": "Spróbuj ponownie wczytać miejsca.",
+  "@messagee1c058edde72": {
+    "description": "Попробуйте загрузить места ещё раз."
+  },
+  "message93fd1e0f9feb": "Lista",
+  "@message93fd1e0f9feb": {
+    "description": "Список"
+  },
+  "message4b9181d8571c": "Nie udało się wczytać mapy.",
+  "@message4b9181d8571c": {
+    "description": "Не удалось загрузить карту."
+  },
+  "messageec57a965fe87": "Otwórz listę miejsc.",
+  "@messageec57a965fe87": {
+    "description": "Перейдите к списку мест."
+  },
+  "messaged4198dcfe8f7": "W katalogu tego miasta nie ma jeszcze miejsc.",
+  "@messaged4198dcfe8f7": {
+    "description": "В каталоге этого города пока нет мест."
+  },
+  "message9bf3f9251601": "Wiadomość nie może przekraczać 1000 znaków",
+  "messageWalkingb2666bcc85a5": "Bieżące",
+  "@messageWalkingb2666bcc85a5": {
+    "description": "Текущие"
+  },
+  "messageWalking88060502e211": "Mój profil",
+  "@messageWalking88060502e211": {
+    "description": "Мой профиль"
+  },
+  "messageWalking7f86482aa519": "Spacery i oceny",
+  "@messageWalking7f86482aa519": {
+    "description": "Выгул и рейтинг"
+  },
+  "messageWalking4d35e7318ef5": "Uzgodnione spacery",
+  "@messageWalking4d35e7318ef5": {
+    "description": "Назначенные прогулки"
+  },
+  "messageWalking4dee7cd235cd": "Nie ma jeszcze uzgodnionych spacerów",
+  "@messageWalking4dee7cd235cd": {
+    "description": "Пока нет назначенных прогулок"
+  },
+  "messageWalkingcc610707ac3f": "Moje prośby",
+  "@messageWalkingcc610707ac3f": {
+    "description": "Мои запросы"
+  },
+  "messageWalking44897002f154": "Moje zgłoszenia",
+  "@messageWalking44897002f154": {
+    "description": "Мои отклики"
+  },
+  "messageWalkingc93b07a7c1d3": "Nie zostałeś jeszcze wybrany",
+  "@messageWalkingc93b07a7c1d3": {
+    "description": "Вы ещё не назначены"
+  },
+  "messageWalking9bf4850c4523": "Nie ma jeszcze wysłanych zgłoszeń",
+  "@messageWalking9bf4850c4523": {
+    "description": "Пока нет отправленных откликов"
+  },
+  "messageWalking502fa7aca525": "Wszystkie daty",
+  "@messageWalking502fa7aca525": {
+    "description": "Все даты"
+  },
+  "messageWalking90234bea14bf": "W tym okresie nie ma spacerów",
+  "@messageWalking90234bea14bf": {
+    "description": "В этом периоде прогулок пока нет"
+  },
+  "messageWalkingf822dde5b924": "Reputacja według roli",
+  "@messageWalkingf822dde5b924": {
+    "description": "Репутация по роли"
+  },
+  "messageWalking4ed2a2405c95": "Edytuj preferencje",
+  "@messageWalking4ed2a2405c95": {
+    "description": "Редактировать условия"
+  },
+  "messageWalking03b406005aa6": "Szczegóły spaceru",
+  "@messageWalking03b406005aa6": {
+    "description": "Подробности прогулки"
+  },
+  "messageWalking927e2aa975d8": "Zgłoszenia: {p0}",
+  "@messageWalking927e2aa975d8": {
+    "description": "Отклики: {p0}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messageWalking6641971bf29f": "Opinia została już dodana",
+  "@messageWalking6641971bf29f": {
+    "description": "Отзыв уже оставлен"
+  },
+  "messageWalking1267682ee3c7": "Nie udało się wczytać spacerów.",
+  "@messageWalking1267682ee3c7": {
+    "description": "Не удалось загрузить прогулки."
+  },
+  "messageWalking76c5928026fc": "Moje spacery i reputacja",
+  "@messageWalking76c5928026fc": {
+    "description": "Мои прогулки и опыт"
+  },
+  "messageWalking91de955f0881": "Bieżące spacery, historia i opinie",
+  "@messageWalking91de955f0881": {
+    "description": "Текущие прогулки, история и отзывы"
+  },
+  "messageWalkingdde0047379dc": "Preferencje spacerów",
+  "@messageWalkingdde0047379dc": {
+    "description": "Условия для прогулок"
+  },
+  "messageWalking80e020cefd8b": "Widoczne tylko dla uczestników uzgodnionego spaceru",
+  "@messageWalking80e020cefd8b": {
+    "description": "Видны только участникам договорённости"
+  },
+  "messageWalking896aac9bc2d9": "Odpowiedź właściciela",
+  "@messageWalking896aac9bc2d9": {
+    "description": "Ответ владельца"
+  },
+  "messageWalking8c77e45816c4": "Czat",
+  "@messageWalking8c77e45816c4": {
+    "description": "Чат"
+  },
+  "messageWalking7bfacbc95580": "Jak przebiega spacer",
+  "@messageWalking7bfacbc95580": {
+    "description": "Как проходит прогулка"
+  },
+  "messageWalking418f53987eaa": "Prośba i wybór",
+  "@messageWalking418f53987eaa": {
+    "description": "Запрос и выбор"
+  },
+  "messageWalkingb7bcff43977a": "Właściciel wybiera jednego pomocnika spośród zgłoszeń. Zgłoszenie nie oznacza wyboru.",
+  "@messageWalkingb7bcff43977a": {
+    "description": "Владелец выбирает одного помощника из откликов. Отклик ещё не означает назначение."
+  },
+  "messageWalkinge8faea482ade": "Ustalcie szczegóły na czacie",
+  "@messageWalkinge8faea482ade": {
+    "description": "Договоритесь в чате"
+  },
+  "messageWalkinge8f813e513f3": "Po wyborze uczestnicy mają dostęp do prywatnego czatu.",
+  "@messageWalkinge8f813e513f3": {
+    "description": "После назначения участникам доступен личный чат."
+  },
+  "messageWalkingd8a8c678b900": "Spacer i potwierdzenie",
+  "@messageWalkingd8a8c678b900": {
+    "description": "Прогулка и подтверждение"
+  },
+  "messageWalking90e19d941e67": "Pomocnik oznacza początek i koniec. Następnie właściciel potwierdza zakończenie.",
+  "@messageWalking90e19d941e67": {
+    "description": "Помощник отмечает начало и окончание. Затем владелец подтверждает завершение."
+  },
+  "messageWalkingbab2d7aa8c22": "Co oznacza ocena",
+  "@messageWalkingbab2d7aa8c22": {
+    "description": "Что означает рейтинг"
+  },
+  "messageWalking7f8e0d68b456": "Reputacje właściciela i pomocnika są oddzielne, oparte na opublikowanych uprawnionych opiniach.",
+  "@messageWalking7f8e0d68b456": {
+    "description": "Опыт владельца и помощника учитывается отдельно — по опубликованным допустимым отзывам."
+  },
+  "messageWalkingb2074fc966de": "Oceny pomagają w wyborze, ale nie gwarantują bezpieczeństwa. Miejsca mają osobne oceny.",
+  "@messageWalkingb2074fc966de": {
+    "description": "Рейтинг помогает выбрать, но не гарантирует безопасность. У мест — отдельный рейтинг."
+  },
+  "messageWalking66b009980868": "Kto może dodać opinię",
+  "@messageWalking66b009980868": {
+    "description": "Кто может оставить отзыв"
+  },
+  "messageWalking2bf8d10491d4": "Po potwierdzonym zakończeniu każdy przypisany uczestnik może dodać jedną opinię o drugim. Nie można oceniać siebie ani osoby spoza tego uzgodnienia.",
+  "@messageWalking2bf8d10491d4": {
+    "description": "После подтверждённого завершения каждый назначенный участник может оставить один отзыв о другом. Нельзя оценивать себя или человека вне этой договорённости."
+  },
+  "messageWalking0516f084b8d6": "Przekazanie zwierzęcia",
+  "@messageWalking0516f084b8d6": {
+    "description": "Передача питомца"
+  },
+  "messageWalkinga9d94f5032b2": "Opinie o Tobie jako właścicielu",
+  "@messageWalkinga9d94f5032b2": {
+    "description": "Отзывы о вас как о владельце"
+  },
+  "messageWalkingca7161f845a8": "Opinie o Tobie jako pomocniku",
+  "@messageWalkingca7161f845a8": {
+    "description": "Отзывы о вас как о помощнике"
+  },
+  "messageWalking35cb994b8fc4": "Doświadczenie i opinie",
+  "@messageWalking35cb994b8fc4": {
+    "description": "Опыт и отзывы"
+  },
+  "messageWalking1ad6b2ba45c0": "Właściciel wybiera pomocnika spośród zgłoszeń.",
+  "@messageWalking1ad6b2ba45c0": {
+    "description": "Владелец выбирает помощника из откликов."
+  },
+  "messageWalking53951c3fe7ec": "Po wyborze omówcie szczegóły na prywatnym czacie.",
+  "@messageWalking53951c3fe7ec": {
+    "description": "Обсудите детали в личном чате после назначения."
+  },
+  "messageWalking9e23d3d53775": "Pomocnik oznacza początek i koniec, a właściciel potwierdza zakończenie.",
+  "@messageWalking9e23d3d53775": {
+    "description": "Помощник отмечает начало и конец, владелец подтверждает завершение."
+  },
+  "messageWalking8aa4f6e69d65": "Ocena opiera się na opiniach o zakończonych spacerach.",
+  "@messageWalking8aa4f6e69d65": {
+    "description": "Рейтинг основан на отзывах о завершённых прогулках."
+  },
+  "messageWalking7825dcb936ca": "Zgłoszenie nie oznacza wyboru.",
+  "@messageWalking7825dcb936ca": {
+    "description": "Отклик ещё не означает назначение."
+  },
+  "messageWalking6959ec61eff5": "Szczegóły spaceru",
+  "messageWalking0f3075c129a3": "Nie udało się wczytać spaceru",
+  "messageWalking46ca333724cd": "Spacer niedostępny",
+  "messageWalking3059be73c438": "Nie udało się zmienić statusu. Odśwież spacer i spróbuj ponownie.",
+  "messageWalking4aa946af3e7f": "Tylko dla uczestników tego spaceru",
+  "messageWalking3a6faeae4f88": "Co warto wiedzieć",
+  "messageWalkingd664c60270d6": "Czas w miejscu spotkania",
+  "messageWalkingfaaca5305132": "Komentarz · opcjonalnie",
+  "messageWalkingb5bf28ed0847": "Niewłaściwe zachowanie",
+  "messageWalking33f0bf824130": "Problem z wiadomościami lub zdjęciami",
+  "messageWalking48d48bd78b8b": "Powód i komentarz mogą mieć łącznie do 1000 znaków",
+  "messageWalking99cc5f3d96b3": "Czat tego spaceru jest niedostępny",
+  "messageWalking53ccc1dfe2ff": "Jako pomocnik",
+  "messageWalking1326b72d5619": "Jako właściciel",
+  "messageWalking38e6452fe27c": "Warunki spacerów",
+  "messageWalking5d95fca8e04b": "Gdzie",
+  "messageWalking24513ee9515e": "Z jakimi zwierzętami",
+  "messageWalking725347e42525": "Kiedy",
+  "messageWalkinga1c56f5633c4": "Dostępność",
+  "messageWalkingcb5968d45b01": "Opinie pojawiają się po potwierdzonych spacerach.",
+  "messageWalking4dc49c143c09": "Przekazanie i opieka",
+  "messageWalking4c8b61b41265": "Notatka właściciela",
+  "walkingDurationMinutes": "{count, plural, one{{count} minuta} few{{count} minuty} many{{count} minut} other{{count} minuty}}",
+  "@walkingDurationMinutes": {
+    "description": "Duration of a walk in minutes",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nearbyMapView": "Na mapie",
+  "@nearbyMapView": {
+    "description": "Nearby screen: open fullscreen public-place map."
+  },
+  "messageMeetupSimple0": "W weekend",
+  "@messageMeetupSimple0": {
+    "description": "На выходных"
+  },
+  "messageMeetupSimple1": "Uczestniczę",
+  "@messageMeetupSimple1": {
+    "description": "Участвую"
+  },
+  "messageMeetupSimple2": "Organizuję",
+  "@messageMeetupSimple2": {
+    "description": "Организую"
+  },
+  "messageMeetupSimple3": "Szukaj spotkań",
+  "@messageMeetupSimple3": {
+    "description": "Найти встречу"
+  },
+  "messageMeetupSimple5": "Ładowanie spotkań…",
+  "@messageMeetupSimple5": {
+    "description": "Загружаем встречи…"
+  },
+  "messageMeetupSimple6": "Szczegóły",
+  "@messageMeetupSimple6": {
+    "description": "Детали"
+  },
+  "messageMeetupSimple8": "Czat spotkania jest niedostępny. Spróbuj ponownie.",
+  "@messageMeetupSimple8": {
+    "description": "Чат встречи пока недоступен. Повторите попытку."
+  },
+  "messageMeetupSimple9": "Znajdź spotkanie na karcie Wszystkie.",
+  "@messageMeetupSimple9": {
+    "description": "Найдите подходящую встречу во вкладке «Все»."
+  },
+  "messageMeetupSimple10": "Utwórz pierwsze spotkanie przyciskiem +.",
+  "@messageMeetupSimple10": {
+    "description": "Создайте первую встречу кнопкой «+»."
+  },
+  "messageSocialStudio0": "Wszystkie dzielnice",
+  "@messageSocialStudio0": {
+    "description": "Все районы"
+  },
+  "messageSocialStudio1": "Filtry",
+  "@messageSocialStudio1": {
+    "description": "Фильтры"
+  },
+  "messageSocialStudio3": "Zaproś",
+  "@messageSocialStudio3": {
+    "description": "Пригласить"
+  },
+  "messageSocialStudio4": "Zaproszenie",
+  "@messageSocialStudio4": {
+    "description": "Приглашение"
+  },
+  "messageSocialStudio5": "Wybierz osobę lub skopiuj link.",
+  "@messageSocialStudio5": {
+    "description": "Выберите человека или скопируйте ссылку."
+  },
+  "messageSocialStudio6": "Znajdź osobę",
+  "@messageSocialStudio6": {
+    "description": "Найти человека"
+  },
+  "messageSocialStudio7": "Link skopiowany",
+  "@messageSocialStudio7": {
+    "description": "Ссылка скопирована"
+  },
+  "messageSocialStudio8": "Kopiuj link",
+  "@messageSocialStudio8": {
+    "description": "Скопировать ссылку"
+  },
+  "messageSocialStudio9": "Nie udało się skopiować linku",
+  "@messageSocialStudio9": {
+    "description": "Не удалось скопировать ссылку"
+  },
+  "message862606151869": "Zwierzę, uczestnik",
+  "message862606151870": "Nie znaleziono spacerów",
+  "message862606151871": "Zmień wyszukiwanie lub filtr daty",
+  "message862606151872": "W tym miesiącu",
+  "message862606151873": "W poprzednim miesiącu",
+  "message862606151874": "Wybierz okres",
+  "message862606151875": "Godziny",
+  "message862606151876": "Minuty",
+  "message862606151877": "Wybierz prawidłową godzinę",
+  "message862606151878": "Co warto wiedzieć",
+  "message862606151879": "Opinia o spacerze",
+  "message862606151880": "To ogłoszenie nie przyjmuje już zgłoszeń",
+  "message862606151881": "Nie ma jeszcze spacerów",
+  "message862606151882": "Wybierz ogłoszenie, aby pomóc ze spacerem.",
+  "message862606151883": "Poproś sąsiadów o pomoc ze spacerem.",
+  "message862606151884": "Twoje zgłoszenia pojawią się tutaj.",
+  "message862606151885": "Data i godzina",
+  "message862606151886": "Czas trwania, minuty",
+  "message862606151887": "Nie ma jeszcze ogłoszeń",
+  "messageWalkReviewPublished": "Opinia opublikowana",
+  "messageWalksLoading": "Wczytywanie spacerów…",
+  "message61161ec5730e": "Zwierzęta",
+  "message25e4211a74fe": "Doświadczenie z psami i kotami",
+  "messagef4be47b4c237": "Małe psy",
+  "message9282ebe655f3": "Średnie psy",
+  "message4d6d5c0e514a": "Duże psy",
+  "message31245d5c6830": "Małe i średnie psy",
+  "message9ea62f8c7efb": "Małe i duże psy",
+  "message19a13812e810": "Średnie i duże psy",
+  "message0577e85843a4": "Małe, średnie i duże psy",
+  "message3996ca2072a3": "Czas w Mińsku · UTC+3",
+  "message26835a13961e": "Opublikuj prośbę",
+  "message186eacb432e7": "Tylko uczestnicy spaceru",
+  "messagedd68fadd17a7": "Zaproszenia i zmiany spotkań",
+  "@messagedd68fadd17a7": {
+    "description": "Приглашения и изменения встреч"
+  },
+  "message5f049e85e942": "Znajdź uczestnika",
+  "@message5f049e85e942": {
+    "description": "Найти участника"
+  },
+  "messagee92f9c1a8ae4": "Znajdź osobę i rozpocznij rozmowę.",
+  "@messagee92f9c1a8ae4": {
+    "description": "Найдите человека и начните разговор."
+  },
+  "message15dbd1b2f7e0": "Zgłoś społeczność",
+  "@message15dbd1b2f7e0": {
+    "description": "Пожаловаться на сообщество"
+  },
+  "message88f1a5a112f2": "Gatunek",
+  "@message88f1a5a112f2": {
+    "description": "Вид"
+  },
+  "messagee0d96f8291d5": "Zapisuj miejsca na stronie W pobliżu.",
+  "@messagee0d96f8291d5": {
+    "description": "Сохраняйте места на странице «Рядом»."
+  },
+  "message675c1a4db2a1": "Brak ulubionych miejsc",
+  "@message675c1a4db2a1": {
+    "description": "Пока нет избранных мест"
+  },
+  "messagec36f2b3ae42b": "Nie udało się wczytać",
+  "@messagec36f2b3ae42b": {
+    "description": "Не удалось загрузить"
+  },
+  "message638832e436e1": "Spacery",
+  "@message638832e436e1": {
+    "description": "Прогулки"
+  },
+  "messageed3f0e507a5b": "Język",
+  "@messageed3f0e507a5b": {
+    "description": "Язык"
+  },
+  "messageeb0b9b0d9010": "Profil",
+  "@messageeb0b9b0d9010": {
+    "description": "Профиль"
+  },
+  "message1f3d6eee3757": "Wczytywanie rozmów…",
+  "@message1f3d6eee3757": {
+    "description": "Загружаем переписки…"
+  },
+  "message2a55cd24cdb5": "Spróbuj innego imienia.",
+  "@message2a55cd24cdb5": {
+    "description": "Попробуйте другое имя."
+  },
+  "message1152da9833a7": "Charakter i nawyki",
+  "@message1152da9833a7": {
+    "description": "Характер и привычки"
+  },
+  "message1cad15d22390": "Spotkania i społeczności",
+  "@message1cad15d22390": {
+    "description": "Встречи и сообщества"
+  },
+  "message7d91fdefb803": "Nowe wiadomości w Twoich czatach",
+  "@message7d91fdefb803": {
+    "description": "Новые сообщения в ваших чатах"
+  },
+  "message019803d4e40e": "Wiadomości",
+  "@message019803d4e40e": {
+    "description": "Сообщения"
+  },
+  "message491396f8b980": "O rozmowie",
+  "@message491396f8b980": {
+    "description": "О переписке"
+  },
+  "messagebe01dd5057b9": "Imię lub rozmowa",
+  "@messagebe01dd5057b9": {
+    "description": "Имя или переписка"
+  },
+  "message1e1b70b17c42": "Brak wyników",
+  "@message1e1b70b17c42": {
+    "description": "Ничего не найдено"
+  },
+  "messagea43dbff99399": "O spotkaniu",
+  "@messagea43dbff99399": {
+    "description": "О встрече"
+  },
+  "messagecc132aeb4aa7": "Zgłoszenia i zmiany spacerów",
+  "@messagecc132aeb4aa7": {
+    "description": "Отклики и изменения прогулок"
+  },
+  "message9498f6fc7439": "Sprawdź połączenie i spróbuj ponownie.",
+  "@message9498f6fc7439": {
+    "description": "Проверьте соединение и попробуйте снова."
+  },
+  "message96a4a7e48c89": "Prywatne",
+  "@message96a4a7e48c89": {
+    "description": "Личные"
+  },
+  "message525fd0f45e80": "Dodaj swoje zwierzę",
+  "@message525fd0f45e80": {
+    "description": "Добавьте своего питомца"
+  },
+  "messaged629f3a9cd1f": "Tryb aplikacji",
+  "@messaged629f3a9cd1f": {
+    "description": "Режим приложения"
+  },
+  "message084af3a7e3c2": "Zgłoś spotkanie",
+  "@message084af3a7e3c2": {
+    "description": "Пожаловаться на встречу"
+  },
+  "message52740dab5438": "Treść wiadomości jest ukryta w powiadomieniach.",
+  "@message52740dab5438": {
+    "description": "Текст сообщений скрыт в уведомлениях."
+  },
+  "message553c45f1b84a": "Motyw",
+  "@message553c45f1b84a": {
+    "description": "Тема"
+  },
+  "messagea6433b4c1826": "Kategorie dotyczą listy zdarzeń w aplikacji.",
+  "@messagea6433b4c1826": {
+    "description": "Категории действуют для списка событий в приложении."
+  },
+  "message711ea2fb1d7e": "Zdjęcie i kilka słów pomogą sąsiadom poznać zwierzę.",
+  "@message711ea2fb1d7e": {
+    "description": "Фото и несколько слов помогут соседям познакомиться."
+  },
+  "message8386554285c1": "Wczytywanie powiadomień…",
+  "@message8386554285c1": {
+    "description": "Загружаем уведомления…"
+  },
+  "messagedadfff627cf4": "Włącz na urządzeniu",
+  "@messagedadfff627cf4": {
+    "description": "Включить на устройстве"
+  },
+  "message77a08254cfdf": "Nie udzielono zgody. Powiadomienia można włączyć w ustawieniach urządzenia.",
+  "@message77a08254cfdf": {
+    "description": "Разрешение не получено. Уведомления можно включить в настройках устройства."
+  },
+  "message3d9d9aedf030": "Wybierz, czego teraz potrzebujesz. Rolę możesz zmienić w ustawieniach.",
+  "@message3d9d9aedf030": {
+    "description": "Выберите, что вам сейчас нужно. Роль можно изменить в настройках."
+  },
+  "messagef6065c8d2167": "Miejsca, znajomości i pomoc w spacerach",
+  "@messagef6065c8d2167": {
+    "description": "Места, знакомства и помощь с прогулками"
+  },
+  "message570996436a61": "Odpowiadaj na zgłoszenia i spaceruj ze zwierzętami",
+  "@message570996436a61": {
+    "description": "Откликайтесь на запросы и гуляйте с питомцами"
+  },
+  "messagea6cb5a656298": "Opiekun i pomocnik",
+  "@messagea6cb5a656298": {
+    "description": "Владелец и помощник"
+  },
+  "message79b2a0ab6bad": "Oba tryby, wspólne rozmowy i historia",
+  "@message79b2a0ab6bad": {
+    "description": "Оба режима, общие чаты и история"
+  },
+  "message314301e99c8c": "Jedno konto dla wszystkich ról. Pomocnik nie musi mieć własnego zwierzęcia.",
+  "@message314301e99c8c": {
+    "description": "Один аккаунт для всех ролей. Своего питомца помощнику иметь не обязательно."
+  },
+  "messageedecdde20516": "Poznajmy się",
+  "@messageedecdde20516": {
+    "description": "Познакомимся"
+  },
+  "messageaef4b658cece": "Imię pozwoli rozpoznać Cię w rozmowach. Resztę możesz dodać później.",
+  "@messageaef4b658cece": {
+    "description": "Имя поможет узнать вас в чатах. Остальные детали можно добавить позже."
+  },
+  "message1459ccaadaf8": "Twoje imię",
+  "@message1459ccaadaf8": {
+    "description": "Ваше имя"
+  },
+  "messagee5c0eb842701": "Tak zobaczą Cię inni",
+  "@messagee5c0eb842701": {
+    "description": "Как вас будут видеть другие люди"
+  },
+  "message8d18c7ba46d0": "Podaj dzielnicę, nie adres. Dokładna lokalizacja nie jest publikowana.",
+  "@message8d18c7ba46d0": {
+    "description": "Укажите район, а не адрес. Точное местоположение не публикуется."
+  },
+  "messagee9fbd79bca16": "Opcjonalnie · możesz dodać później",
+  "@messagee9fbd79bca16": {
+    "description": "По желанию · можно добавить позже"
+  },
+  "message226efca62ef9": "Kto z Tobą spaceruje?",
+  "@message226efca62ef9": {
+    "description": "Кто гуляет с вами?"
+  },
+  "message65953f0b951e": "Dodaj zwierzę, by przedstawić je sąsiadom. Możesz pominąć ten krok.",
+  "@message65953f0b951e": {
+    "description": "Добавьте питомца, чтобы познакомить его с соседями. Этот шаг можно пропустить."
+  },
+  "message7a97252b2cfc": "Kot",
+  "@message7a97252b2cfc": {
+    "description": "Кот"
+  },
+  "message06ca96c1c989": "Z kim czujesz się swobodnie?",
+  "@message06ca96c1c989": {
+    "description": "С кем вам комфортно?"
+  },
+  "message2289cb5dba20": "Te informacje pomogą opiekunom wybrać pomocnika.",
+  "@message2289cb5dba20": {
+    "description": "Эти детали помогут владельцам выбрать помощника для своего питомца."
+  },
+  "messagea6531d075d28": "Doświadczenie ze zwierzętami",
+  "@messagea6531d075d28": {
+    "description": "Опыт с животными"
+  },
+  "messagefb6852ccdc52": "Krótko o zwierzętach, z którymi spacerowałeś lub którymi się opiekowałeś",
+  "@messagefb6852ccdc52": {
+    "description": "Коротко о том, с кем вы гуляли или кого содержали"
+  },
+  "message31ad3a16704f": "Wielkość psów",
+  "@message31ad3a16704f": {
+    "description": "Размеры собак"
+  },
+  "message5e91552f9fc5": "Dzielnice spacerów",
+  "@message5e91552f9fc5": {
+    "description": "Районы для прогулок"
+  },
+  "message90510c0b3235": "Publiczne dzielnice wybranego miasta",
+  "@message90510c0b3235": {
+    "description": "Публичные районы в выбранном городе"
+  },
+  "messageaa9a3c1070ed": "Kiedy masz czas?",
+  "@messageaa9a3c1070ed": {
+    "description": "Когда вы свободны?"
+  },
+  "messagec7adce9638a2": "Typowa dostępność w tygodniu. Konkretny spacer ustalicie w rozmowie.",
+  "@messagec7adce9638a2": {
+    "description": "Обычная доступность на неделю. О конкретной прогулке договоритесь в чате."
+  },
+  "message20439befe477": "Możesz ruszać na spacer",
+  "@message20439befe477": {
+    "description": "Вы готовы к прогулке"
+  },
+  "message2cc03c49625b": "Profil pomocnika jest gotowy",
+  "@message2cc03c49625b": {
+    "description": "Профиль помощника готов"
+  },
+  "messagedeee8fef554a": "Zacznij od tego, co Cię interesuje. Inne sekcje są zawsze dostępne.",
+  "@messagedeee8fef554a": {
+    "description": "Начните с того, что вам интересно. Остальные разделы всегда рядом."
+  },
+  "messagecbda8dbb8566": "Poznaj sąsiadów",
+  "@messagecbda8dbb8566": {
+    "description": "Познакомиться с соседями"
+  },
+  "messageec4e9c1c81a0": "Dodam później",
+  "@messageec4e9c1c81a0": {
+    "description": "Добавлю позже"
+  },
+  "message634070dae4d4": "Zakończ konfigurację",
+  "@message634070dae4d4": {
+    "description": "Завершить настройку"
+  },
+  "message93ed5e2586a8": "Wpisz imię, aby kontynuować.",
+  "@message93ed5e2586a8": {
+    "description": "Введите имя, чтобы продолжить."
+  },
+  "message9f476bf24779": "Nie udało się zapisać",
+  "@message9f476bf24779": {
+    "description": "Не удалось сохранить"
+  },
+  "messagef93c75f8eb82": "Dane pozostają w formularzu. Sprawdź połączenie i spróbuj ponownie.",
+  "@messagef93c75f8eb82": {
+    "description": "Данные остаются в форме. Проверьте соединение и повторите."
+  },
+  "message5ae91b704bb8": "Od którego trybu zaczynamy?",
+  "@message5ae91b704bb8": {
+    "description": "С какого режима начнём?"
+  },
+  "messageee899dd5ccb8": "Krok",
+  "@messageee899dd5ccb8": {
+    "description": "Шаг"
+  },
+  "messagebeed16881732": "z",
+  "@messagebeed16881732": {
+    "description": "из"
+  },
+  "message4a55a9bfb630": "Wykryj moje miasto",
+  "@message4a55a9bfb630": {
+    "description": "Определить мой город"
+  },
+  "messagebc99f6077fdb": "Opisz doświadczenie ze zwierzętami.",
+  "@messagebc99f6077fdb": {
+    "description": "Расскажите об опыте с животными."
+  },
+  "message837fae74927d": "Wybierz co najmniej jedną wielkość psów.",
+  "@message837fae74927d": {
+    "description": "Выберите хотя бы один размер собак."
+  },
+  "messaged1dfa72a2eb8": "Podaj co najmniej jedną dzielnicę spacerów.",
+  "@messaged1dfa72a2eb8": {
+    "description": "Укажите хотя бы один район для прогулок."
+  },
+  "message1a3f02b3502b": "Wykryj lub wybierz miasto.",
+  "@message1a3f02b3502b": {
+    "description": "Определите или выберите город."
+  },
+  "message4747b3a9779e": "Wpisz imię zwierzęcia.",
+  "@message4747b3a9779e": {
+    "description": "Введите имя питомца."
+  },
+  "message2b681c0a24ba": "Google",
+  "@message2b681c0a24ba": {
+    "description": "Google"
+  },
+  "message476432a3e85a": "Apple",
+  "@message476432a3e85a": {
+    "description": "Apple"
+  },
+  "messageedbea9ff1a78": "Telegram",
+  "@messageedbea9ff1a78": {
+    "description": "Telegram"
+  },
+  "message9ac9478a17cb": "Logowanie przez",
+  "@message9ac9478a17cb": {
+    "description": "Вход через"
+  },
+  "messageb0c5ac267cc8": "Sprawdź imię i zdjęcie — możesz je zmienić.",
+  "@messageb0c5ac267cc8": {
+    "description": "Проверьте имя и фото — их можно изменить."
+  },
+  "message7e64171379f1": "Adres email jest opcjonalny przy tym logowaniu.",
+  "@message7e64171379f1": {
+    "description": "Для этого входа email необязателен."
+  },
+  "message9e71ee0112a1": "Krok {p0} z {p1}",
+  "@message9e71ee0112a1": {
+    "description": "Шаг {p0} из {p1}",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      },
+      "p1": {
+        "type": "String"
+      }
+    }
+  },
+  "message68c8e2d63315": "Logowanie przez {p0}. Sprawdź imię i zdjęcie — możesz je zmienić.",
+  "@message68c8e2d63315": {
+    "description": "Вход через {p0}. Проверьте имя и фото — их можно изменить.",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messageeb2bb58e42ee": "Nie udało się wczytać zdjęcia. Wybierz własne lub dodaj później.",
+  "@messageeb2bb58e42ee": {
+    "description": "Не удалось загрузить фото. Можно выбрать своё или добавить позже."
+  },
+  "messageb2b90fe7321c": "Nie udało się zapisać. Dane pozostają w formularzu. Sprawdź połączenie i spróbuj ponownie.",
+  "@messageb2b90fe7321c": {
+    "description": "Не удалось сохранить. Данные остаются в форме. Проверьте соединение и повторите."
+  },
+  "message6b579ab4ae5e": "Skróć imię do 80 znaków.",
+  "@message6b579ab4ae5e": {
+    "description": "Сократите имя до 80 символов."
+  },
+  "messagead4851865236": "Skróć dzielnicę do 100 znaków.",
+  "@messagead4851865236": {
+    "description": "Сократите район до 100 символов."
+  },
+  "message4cb88fd4ab49": "Skróć opis do 1000 znaków.",
+  "@message4cb88fd4ab49": {
+    "description": "Сократите описание до 1000 символов."
+  },
+  "messagead59a14b1876": "Odpowiedz na pasujący spacer",
+  "@messagead59a14b1876": {
+    "description": "Вы сможете откликнуться на подходящую прогулку"
+  },
+  "message20618909f53a": "Nazwa miasta",
+  "@message20618909f53a": {
+    "description": "Название города"
+  },
+  "messagead3a82d291bb": "Nie znaleziono miasta",
+  "@messagead3a82d291bb": {
+    "description": "Город не найден"
+  },
+  "message3bd398e21c9d": "Spróbuj innej nazwy lub dodaj miejscowość ręcznie.",
+  "@message3bd398e21c9d": {
+    "description": "Попробуйте другое название или добавьте населённый пункт вручную."
+  },
+  "message55e9a38397a2": "Podaj ręcznie",
+  "@message55e9a38397a2": {
+    "description": "Указать вручную"
+  },
+  "message65cf35fd2cd0": "Wykrywanie miasta…",
+  "@message65cf35fd2cd0": {
+    "description": "Определяем город…"
+  },
+  "messageb68589d22141": "Lokalizacja służy tylko do wyboru miasta. Dokładne współrzędne nie są publikowane.",
+  "@messageb68589d22141": {
+    "description": "Используем геопозицию только для выбора города. Точные координаты не публикуются."
+  },
+  "messagebea65c9cf251": "Podaj kraj.",
+  "@messagebea65c9cf251": {
+    "description": "Укажите страну."
+  },
+  "messagef246a4e2d69a": "Nie przekazano imienia. Wybierz nazwę wyświetlaną w aplikacji.",
+  "@messagef246a4e2d69a": {
+    "description": "Имя не передано. Укажите, как вас будут видеть в приложении."
+  },
+  "messageda3a88d3e263": "Bez miejsca",
+  "@messageda3a88d3e263": {
+    "description": "Без места"
+  },
+  "messagec80d7e81724d": "Godzina",
+  "@messagec80d7e81724d": {
+    "description": "Время"
+  },
+  "message69fffcdce705": "Wybierz miejsce",
+  "@message69fffcdce705": {
+    "description": "Выбрать место"
+  },
+  "message398c7d4f7b0d": "Gotowe",
+  "@message398c7d4f7b0d": {
+    "description": "Готово"
+  },
+  "message6fd8b0fc8b89": "Ten element jest niedostępny",
+  "@message6fd8b0fc8b89": {
+    "description": "Запись недоступна"
+  },
+  "messagede2d0926960a": "Do listy spotkań",
+  "@messagede2d0926960a": {
+    "description": "К списку встреч"
+  },
+  "messagec1a17d5a1cbf": "Spotkanie osobiste",
+  "@messagec1a17d5a1cbf": {
+    "description": "Личная встреча"
+  },
+  "message6e76e2c81210": "Nazwa lub miejsce",
+  "@message6e76e2c81210": {
+    "description": "Название или место"
+  },
+  "message557885a6cbcc": "Społeczność",
+  "@message557885a6cbcc": {
+    "description": "От сообщества"
+  },
+  "messagede96a94317da": "Otwórz czat",
+  "@messagede96a94317da": {
+    "description": "Открыть чат"
+  },
+  "messageaf50cca67010": "Park lub miejsce publiczne",
+  "@messageaf50cca67010": {
+    "description": "Парк или публичное место"
+  },
+  "message563feab60b4d": "Planowany czas",
+  "@message563feab60b4d": {
+    "description": "По плану"
+  },
+  "message99ce26e80688": "Udostępnij",
+  "@message99ce26e80688": {
+    "description": "Поделиться"
+  },
+  "message9df309ac9d3b": "Nie masz jeszcze czatów",
+  "@message9df309ac9d3b": {
+    "description": "Пока нет чатов"
+  },
+  "message7788a11e4dbf": "Pokaż",
+  "@message7788a11e4dbf": {
+    "description": "Показать"
+  },
+  "message768af677624e": "Zastosuj",
+  "@message768af677624e": {
+    "description": "Применить"
+  },
+  "messaged6035dc6ed35": "min",
+  "@messaged6035dc6ed35": {
+    "description": "мин"
+  },
+  "messageba59db3761e7": "uczestników",
+  "@messageba59db3761e7": {
+    "description": "участников"
+  },
+  "message5fe77df6c927": "Widoczne dla wszystkich w prośbie",
+  "@message5fe77df6c927": {
+    "description": "Виден всем в запросе"
+  },
+  "messageadeb2a420659": "W profilu widać dzielnicę, a nie dokładny adres.",
+  "@messageadeb2a420659": {
+    "description": "В профиле виден район, а не точный адрес."
+  },
+  "message65385487e56d": "Rejestracja jest zamknięta. Możesz przyjść bez rejestracji.",
+  "@message65385487e56d": {
+    "description": "Регистрация закрыта. Можно прийти без регистрации."
+  },
+  "message05d67ec2f0de": "Szanujcie się nawzajem",
+  "@message05d67ec2f0de": {
+    "description": "Уважайте друг друга"
+  },
+  "message773826a3260c": "Rozmawiajcie spokojnie, bez obrażania.",
+  "@message773826a3260c": {
+    "description": "Обсуждайте вопросы спокойно, без оскорблений."
+  },
+  "messageab88882d8dbd": "Chrońcie dane osobowe",
+  "@messageab88882d8dbd": {
+    "description": "Берегите личные данные"
+  },
+  "message6acbc2186e94": "Nie publikujcie cudzych adresów ani kontaktów bez zgody.",
+  "@message6acbc2186e94": {
+    "description": "Не публикуйте чужие адреса и контакты без согласия."
+  },
+  "message2d08a982cf26": "Uwzględniajcie potrzeby zwierząt",
+  "@message2d08a982cf26": {
+    "description": "Учитывайте питомцев"
+  },
+  "messagebf079a7ef346": "Ustalajcie warunki spotkania i nie narzucajcie kontaktu.",
+  "@messagebf079a7ef346": {
+    "description": "Уточняйте условия встречи и не навязывайте общение."
+  },
+  "message40258a3c54c3": "Opcjonalnie · bez limitu",
+  "@message40258a3c54c3": {
+    "description": "Необязательно · без ограничения"
+  },
+  "messagee4a421d85eba": "Otwarte spotkanie",
+  "@messagee4a421d85eba": {
+    "description": "Открытая встреча"
+  },
+  "messagef22860b35824": "Spotkania społeczności",
+  "@messagef22860b35824": {
+    "description": "Встречи сообщества"
+  },
+  "message1991e3b5aaca": "Zasady społeczności",
+  "@message1991e3b5aaca": {
+    "description": "Правила сообщества"
+  },
+  "messageb828dd35893e": "Od 15 do 480 minut, co 15 minut",
+  "@messageb828dd35893e": {
+    "description": "От 15 до 480 минут с шагом 15 минут"
+  },
+  "message790985014c6b": "Otwarte spotkanie. Każdy może dołączyć, nawet bez członkostwa w społeczności.",
+  "@message790985014c6b": {
+    "description": "Открытая встреча. Любой пользователь может присоединиться, даже без участия в сообществе."
+  },
+  "messaged008c17e7fa7": "Wybierz miejsce publiczne",
+  "@messaged008c17e7fa7": {
+    "description": "Выбрать публичную точку"
+  },
+  "message119994fb58df": "Udział jest dobrowolny",
+  "@message119994fb58df": {
+    "description": "Присоединение добровольное"
+  },
+  "message2538b91dbf4c": "Ulubione",
+  "@message2538b91dbf4c": {
+    "description": "Избранные"
+  },
+  "message108aa2199fd5": "E-mail",
+  "@message108aa2199fd5": {
+    "description": "Почта"
+  },
+  "messageff12ced8b225": "Pomoc w opiece nad zwierzętami",
+  "@messageff12ced8b225": {
+    "description": "Помощь с питомцами"
+  },
+  "message92c423b7c9d4": "Spacery z psami i opieka nad kotami",
+  "@message92c423b7c9d4": {
+    "description": "Выгул и присмотр за кошками"
+  },
+  "message8e2fe0254e78": "Miejsce",
+  "@message8e2fe0254e78": {
+    "description": "Место"
+  },
+  "message60a50accdee3": "Wybrać {p0}?",
+  "@message60a50accdee3": {
+    "description": "Выбрать {p0}?",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "message2b875cc315a3": "{p0} pomoże w tym spacerze.",
+  "@message2b875cc315a3": {
+    "description": "{p0} станет помощником этой прогулки.",
+    "placeholders": {
+      "p0": {
+        "type": "String"
+      }
+    }
+  },
+  "messagec8dd5253569d": "Właściciel zobaczy Twoje publiczne informacje o pomocy.",
+  "@messagec8dd5253569d": {
+    "description": "Владелец увидит ваши публичные сведения о помощи."
+  },
+  "message2aac3c25d922": "Wysłać zgłoszenie?",
+  "@message2aac3c25d922": {
+    "description": "Отправить отклик?"
+  },
+  "messagea2021cf94690": "Wyślij zgłoszenie",
+  "@messagea2021cf94690": {
+    "description": "Отправить отклик"
+  },
+  "message0876ad4f706c": "Format 24-godzinny",
+  "@message0876ad4f706c": {
+    "description": "24-часовой формат"
+  },
+  "message3b6a4f170158": "Nie wybrano strefy czasowej",
+  "@message3b6a4f170158": {
+    "description": "Часовой пояс не выбран"
+  }
+}

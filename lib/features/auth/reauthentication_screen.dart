@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,31 +33,41 @@ class _ReauthState extends ConsumerState<ProviderReauthenticationScreen> {
     );
     final status = service.status;
     return Scaffold(
-      appBar: AppBar(title: const Text('Подтвердите действие')),
+      appBar: AppBar(title: Text("Подтвердите действие".tr(context))),
       body: PageBody(
         children: [
           ScreenIntro(
-            'Повторный вход\nчерез ${widget.provider.label}.',
+            "Повторный вход\nчерез {p0}.".tr(
+              context,
+              arguments: {'p0': widget.provider.label},
+            ),
             compact: true,
           ),
           const SizedBox(height: 16),
           Text(
-            'Выберите тот же аккаунт ${widget.provider.label}, с которым вошли в PetFriendly.',
+            "Выберите тот же аккаунт {p0}, с которым вошли в PetFriendly.".tr(
+              context,
+              arguments: {'p0': widget.provider.label},
+            ),
           ),
           const SizedBox(height: 24),
           if (status == ReauthStatus.wrongAccount)
-            const Text('Выбран другой аккаунт. Действие не будет выполнено.'),
+            Text(
+              "Выбран другой аккаунт. Действие не будет выполнено.".tr(context),
+            ),
           if (status == ReauthStatus.expired)
-            const Text(
-              'Проверка истекла. Вернитесь и начните действие заново.',
+            Text(
+              "Проверка истекла. Вернитесь и начните действие заново.".tr(
+                context,
+              ),
             ),
           if (status == ReauthStatus.needsMfa) ...[
             TextField(
               controller: code,
               obscureText: true,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Код из приложения-аутентификатора',
+              decoration: InputDecoration(
+                labelText: "Код из приложения-аутентификатора".tr(context),
               ),
             ),
             const SizedBox(height: 16),
@@ -70,14 +81,17 @@ class _ReauthState extends ConsumerState<ProviderReauthenticationScreen> {
                         await service.verifyMfa(code.text.trim());
                       } catch (_) {
                         if (context.mounted) {
-                          notice(context, 'Проверьте код и повторите попытку.');
+                          notice(
+                            context,
+                            "Проверьте код и повторите попытку.".tr(context),
+                          );
                         }
                       } finally {
                         code.clear();
                         if (mounted) setState(() => busy = false);
                       }
                     },
-              child: const Text('Подтвердить код'),
+              child: Text("Подтвердить код".tr(context)),
             ),
           ] else if (status == ReauthStatus.ready)
             FilledButton(
@@ -90,7 +104,7 @@ class _ReauthState extends ConsumerState<ProviderReauthenticationScreen> {
                   setState(() {});
                 }
               },
-              child: const Text('Продолжить действие'),
+              child: Text("Продолжить действие".tr(context)),
             )
           else if (!started)
             FilledButton(
@@ -110,23 +124,34 @@ class _ReauthState extends ConsumerState<ProviderReauthenticationScreen> {
                         if (context.mounted) {
                           notice(
                             context,
-                            'Не удалось открыть ${widget.provider.label}. Попробуйте позже.',
+                            "Не удалось открыть {p0}. Попробуйте позже.".tr(
+                              context,
+                              arguments: {'p0': widget.provider.label},
+                            ),
                           );
                         }
                       } finally {
                         if (mounted) setState(() => busy = false);
                       }
                     },
-              child: Text('Войти через ${widget.provider.label}'),
+              child: Text(
+                "Войти через {p0}".tr(
+                  context,
+                  arguments: {'p0': widget.provider.label},
+                ),
+              ),
             )
           else if (status == ReauthStatus.waiting)
             Text(
-              'Завершите вход на странице ${widget.provider.label} и вернитесь в приложение.',
+              "Завершите вход на странице {p0} и вернитесь в приложение.".tr(
+                context,
+                arguments: {'p0': widget.provider.label},
+              ),
             ),
           const SizedBox(height: 12),
           TextButton(
             onPressed: busy ? null : () => context.pop(false),
-            child: const Text('Отмена'),
+            child: Text("Отмена".tr(context)),
           ),
         ],
       ),

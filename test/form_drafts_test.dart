@@ -46,8 +46,10 @@ void main() {
     );
     await tester.tap(find.text('Открыть'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(
+    await tester.scrollUntilVisible(
       find.byKey(const ValueKey('field.instructions')),
+      200,
+      scrollable: find.byType(Scrollable).first,
     );
     await tester.enterText(
       find.byKey(const ValueKey('field.instructions')),
@@ -66,8 +68,10 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Открыть'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(
+    await tester.scrollUntilVisible(
       find.byKey(const ValueKey('field.instructions')),
+      200,
+      scrollable: find.byType(Scrollable).first,
     );
     expect(
       tester
@@ -142,15 +146,17 @@ void main() {
       );
       addTearDown(router.dispose);
       await tester.pumpWidget(
-        MaterialApp.router(
-          theme: studioTheme(Brightness.dark),
-          builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(
-              context,
-            ).copyWith(textScaler: const TextScaler.linear(2)),
-            child: child!,
+        ProviderScope(
+          child: MaterialApp.router(
+            theme: studioTheme(Brightness.dark),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(2)),
+              child: child!,
+            ),
+            routerConfig: router,
           ),
-          routerConfig: router,
         ),
       );
       await tester.pumpAndSettle();

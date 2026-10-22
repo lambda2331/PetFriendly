@@ -24,21 +24,26 @@ void main() {
     await tester.enterText(find.byType(TextField), 'нет-такого-питомца');
     await tester.pump();
     expect(find.text('Никого не нашли'), findsOneWidget);
-    expect(find.text('Сбросить поиск'), findsOneWidget);
+    expect(find.byTooltip('Очистить поиск'), findsOneWidget);
     await tester.tap(find.text('Сообщества'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'соседи');
     await tester.pump();
     expect(find.text('Соседи с питомцами'), findsOneWidget);
-    await tester.tap(find.text('Люди рядом'));
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const ValueKey('people-community-segment')),
+        matching: find.text('Люди'),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(
       tester.widget<TextField>(find.byType(TextField)).controller!.text,
       'нет-такого-питомца',
     );
-    await tester.tap(find.text('Сбросить поиск'));
+    await tester.tap(find.byTooltip('Очистить поиск'));
     await tester.pump();
-    expect(find.text('Анна и Бруно'), findsOneWidget);
+    expect(find.text('Анна'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
   testWidgets('Large text keeps Nearby greeting and places controls usable', (
@@ -60,11 +65,11 @@ void main() {
     expect(find.text('Хороший день для прогулки.'), findsOneWidget);
     expect(find.byTooltip('На весь экран'), findsNothing);
     expect(find.text('Карта пока недоступна'), findsOneWidget);
-    await tester.ensureVisible(find.text('Места списком'));
-    await tester.tap(find.text('Места списком'));
+    await tester.ensureVisible(find.byKey(const Key('nearby-places-list')));
+    await tester.tap(find.byKey(const Key('nearby-places-list')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    await tester.tap(find.text('Фильтры мест'));
+    await tester.tap(find.byKey(const Key('place-more-filters')));
     await tester.pumpAndSettle();
     expect(find.text('Категория'), findsOneWidget);
     await tester.ensureVisible(find.text('Показать места'));

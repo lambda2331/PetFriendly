@@ -1,0 +1,7 @@
+Mockup review, 12 October 2026
+
+Verified in Chromium: district selection; public person preview to chat; text draft preserved after Back; voluntary community join with pending button; community chat returns to details; invitation becomes an unsent message draft; retry preserves chosen filters; no runtime page errors; responsive 625px review viewport and 320px phone widths; Russian, English, Belarusian and Polish interface copy; dark theme and enlarged content text.
+
+Reference images are pre-existing synthetic design assets from design/walking-assets; see its PROVENANCE.md. Member counts derive from the synthetic membership arrays. No real user data or server operations.
+
+Scope: browser mockups only. Flutter app, database, account permissions, live photo uploads and cloud messaging are unchanged. The public person preview and district filtering are proposed presentation additions using existing public fields. Structured community location/interests filtering is intentionally absent until supported by the product data.

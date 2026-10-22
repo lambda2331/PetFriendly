@@ -72,7 +72,18 @@ String? walkConversationId(CommunityData data, String requestId, String? uid) {
       ).any((a) => a['request_id'] == requestId && a['helper_id'] == uid);
   if (!participant) return null;
   return rows(data, 'conversations')
-          .where((c) => c['kind'] == 'walk' && c['context_id'] == requestId)
+          .where(
+            (c) =>
+                c['kind'] == 'walk' &&
+                c['context_id'] == requestId &&
+                rows(data, 'conversation_members').any(
+                  (m) =>
+                      m['conversation_id'] == c['id'] &&
+                      m['user_id'] == uid &&
+                      m['left_at'] == null &&
+                      m['active'] != false,
+                ),
+          )
           .firstOrNull?['id']
       as String?;
 }

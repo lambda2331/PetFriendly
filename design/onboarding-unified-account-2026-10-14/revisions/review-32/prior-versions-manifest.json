@@ -1,0 +1,966 @@
+{
+  "created": "2026-10-14",
+  "policy": "All originals and archives retained untouched. Complete authored design inventory before new-version creation. Generated build/cache trees excluded.",
+  "files": [
+    {
+      "path": "design/walking-activity.js",
+      "sha256": "f6eed88f30b5ada8c1c7b3f976917dd5282cc4fcd9f74f1e9a639c1b1f711bb2",
+      "bytes": 18935
+    },
+    {
+      "path": "design/walking-hub.html",
+      "sha256": "89215923684cfeb32afb8eb835d993e58dcd1ace67f2aa65360c5f3011f620d0",
+      "bytes": 3594
+    },
+    {
+      "path": "design/walking-chat.js",
+      "sha256": "61e599dc09cb87b21d2d24c3278944a66e2488d51b6241874d7802c61b322dae",
+      "bytes": 14821
+    },
+    {
+      "path": "design/prototype.html",
+      "sha256": "ea4acb6777f2a75d828f81641037ca0e8c8dd7989ba159d06507658c22c07bd9",
+      "bytes": 110930
+    },
+    {
+      "path": "design/studio-light.png",
+      "sha256": "03924e80e193fa8dff16a295675314f735f0d5d342dfc5b830a064fe89b3b59c",
+      "bytes": 69747
+    },
+    {
+      "path": "design/project-settings.json",
+      "sha256": "fc736d01d3edad64c4b489981ed69efae6aadc0d28b17ad2c82fb8e445cc1836",
+      "bytes": 9459
+    },
+    {
+      "path": "design/walking-review-refinement.html",
+      "sha256": "18be5d8106673809daf780c49dd76b86efa1a832c6972f17b348ded3667e4be4",
+      "bytes": 4180
+    },
+    {
+      "path": "design/walking-chat.html",
+      "sha256": "3892156926c8c0fd38ef31b73074e41b564dc066d17a988e07adda51c7e12825",
+      "bytes": 4667
+    },
+    {
+      "path": "design/walking-profile.html",
+      "sha256": "e741a5259f29436c80c7161f00f03468b75d66dfee16b292f5aadbcc97015773",
+      "bytes": 3973
+    },
+    {
+      "path": "design/walking-hub.js",
+      "sha256": "f006f02c6ae342ef964bbab2b4a25601346c4d38d700627eb6cc4bb92eb265fd",
+      "bytes": 66595
+    },
+    {
+      "path": "design/walking-review-refinement.js",
+      "sha256": "d4e6ff33bf8d20ab08a2fe826d0eb81ba9e1f866211a9e2b81c4d79b942bb1c7",
+      "bytes": 13631
+    },
+    {
+      "path": "design/helper-mode-flow.svg",
+      "sha256": "531f15d5b8a76cf49ad9a9d89f196ec8f50341dc7296ad6970f8f8f95f9a04b6",
+      "bytes": 5086
+    },
+    {
+      "path": "design/walking-hub.css",
+      "sha256": "d483116a555a853fcdd435492baa2d09ecd50a98e3db6f41a5b62929fb91124b",
+      "bytes": 26356
+    },
+    {
+      "path": "design/studio-dark.png",
+      "sha256": "ded581a84ecff526fcef0e7a10fe20a23c0c70e4fea2f4304a20290dada2032e",
+      "bytes": 68431
+    },
+    {
+      "path": "design/helper-mode.html",
+      "sha256": "277fbd13b6d1ed4c5c0e46efd24f7354487da181721def1e67b3462aa89d360c",
+      "bytes": 6244
+    },
+    {
+      "path": "design/prototype.fragment.html",
+      "sha256": "93246303a26d4c27aa23174955b88cae8639a7cd98f3ed44323efd9cb022410c",
+      "bytes": 26711
+    },
+    {
+      "path": "design/walking-chat.css",
+      "sha256": "f3e045ee44e03b2c752165452d321c5b57e2d069d1dfabef9ef2da3e4c8b2931",
+      "bytes": 17643
+    },
+    {
+      "path": "design/walking-profile.css",
+      "sha256": "b27c5b81394fa076b6192a7910126154d4561eed90f0eab2e5f88161c4f29dca",
+      "bytes": 14630
+    },
+    {
+      "path": "design/walking-review-refinement.css",
+      "sha256": "e5438e02853035daaaa3c0de58bd44fd9f3b6bf9382bca9ef0c67586019a4b25",
+      "bytes": 12450
+    },
+    {
+      "path": "design/tokens.json",
+      "sha256": "d43d0411c50b9f22b94b0e0ac8a1d4fbbc507f2e51540572f1302edc99c8d96f",
+      "bytes": 3257
+    },
+    {
+      "path": "design/helper-mode.js",
+      "sha256": "bfc31fbbb21b86b30f2e3b957bf47f2b5d62e43bad5bcc2cffa0a67b92ca8792",
+      "bytes": 64256
+    },
+    {
+      "path": "design/walking-profile.js",
+      "sha256": "2f35533f18247c7f09b2ebaf8d0c33b8a16b0243ebcd3d023ce92b2b0d75236e",
+      "bytes": 32000
+    },
+    {
+      "path": "design/helper-mode.css",
+      "sha256": "e240eec311a64634b4dcecfdc059bcc2b24dbe27e6acc690969da426b2bcb3e0",
+      "bytes": 21795
+    },
+    {
+      "path": "design/shell-settings-studio-review/index.html",
+      "sha256": "34ad249b003bd6e97a9eb7a70e547ed102a98bddb583ceab8154479433565f56",
+      "bytes": 1830
+    },
+    {
+      "path": "design/shell-settings-studio-review/styles.css",
+      "sha256": "f7f7e08daca92b786ab2e872fb170e028f38e538272fcf6c07a403334775f24e",
+      "bytes": 10702
+    },
+    {
+      "path": "design/shell-settings-studio-review/app.js",
+      "sha256": "b9ca16bb062700f34b7a38bba0e8f7c2eb84ad118a70e9ce6630270225f14fbb",
+      "bytes": 29285
+    },
+    {
+      "path": "design/studio-review-20261012/index.html",
+      "sha256": "28ca58ed650d638a956ebae54300b2ed8897f8d8b93e06384ecfc890f67b21ea",
+      "bytes": 8021
+    },
+    {
+      "path": "design/walks-studio-review/create-scrolled.png",
+      "sha256": "9529665cbf95fcaad5f1db3794b582e9d0e8711e80449394edc918e49eb279a1",
+      "bytes": 42954
+    },
+    {
+      "path": "design/walks-studio-review/requests.png",
+      "sha256": "c9789f25a1ebe17c168ac5973c8d8964fca2fc2ea59e98c97a5d962f22abee63",
+      "bytes": 200502
+    },
+    {
+      "path": "design/walks-studio-review/preview.png",
+      "sha256": "5a470d3ed3a173a713aa2331042e0edc242f97a35ddd5f7083c6fe74cb08f163",
+      "bytes": 89341
+    },
+    {
+      "path": "design/walks-studio-review/details.png",
+      "sha256": "ed3bbbe2fd4f19558aa1fa5d1906274ef8868974c011a04821520a480a49ebf8",
+      "bytes": 230310
+    },
+    {
+      "path": "design/walks-studio-review/index.html",
+      "sha256": "4252a9d45a500c9fb0ddf3851b3d0580d8d4c9be0921ade734ca7f4802ccf974",
+      "bytes": 2613
+    },
+    {
+      "path": "design/walks-studio-review/history-preview.png",
+      "sha256": "4d94d23e1334a4d863997c56c8835d6dabeee5e9bd46ac163cd543de9c535f48",
+      "bytes": 63389
+    },
+    {
+      "path": "design/walks-studio-review/styles.css",
+      "sha256": "bd1cbc3a64044ef8d1a3785804a8e3bc97b2080028fb83b7ce39059a05598f95",
+      "bytes": 27160
+    },
+    {
+      "path": "design/walks-studio-review/review-form.png",
+      "sha256": "25c8d0fb380ed25d0ef6fd637df2ac314aafc6d18d8241b9a9514ec72cdeb448",
+      "bytes": 43792
+    },
+    {
+      "path": "design/walks-studio-review/candidates.png",
+      "sha256": "5a8856dfac27281c467f4d990f6cd0d834608a6f58502a88fd1d58f7ea2f7707",
+      "bytes": 222767
+    },
+    {
+      "path": "design/walks-studio-review/conditions.png",
+      "sha256": "e047fae50595a602dc41fc1de34e859f8ce2268c5cfa82d1b64fe178e3ef8fce",
+      "bytes": 223980
+    },
+    {
+      "path": "design/walks-studio-review/create.png",
+      "sha256": "66e5999acae86386c248287fce11a553a7875e2c5c9d455d1d21464afb4bd097",
+      "bytes": 207559
+    },
+    {
+      "path": "design/walks-studio-review/history.png",
+      "sha256": "ed860ee68b4e15a6db1abf1dcc194a2d1d0d1c5e4e11c7367173119585d09df7",
+      "bytes": 190001
+    },
+    {
+      "path": "design/walks-studio-review/empty-mobile.png",
+      "sha256": "8165da94f574ca1a679775f585765cee88aece83a21a44f7992d8ec9fa171211",
+      "bytes": 172985
+    },
+    {
+      "path": "design/walks-studio-review/pl-dark-large.png",
+      "sha256": "cc46facddd3b39f980db2b7441caac9d0b1f7d30de05e879ca60202677085715",
+      "bytes": 222812
+    },
+    {
+      "path": "design/walks-studio-review/be-dark-large.png",
+      "sha256": "7bc4a05d0c4ed47598ef564de7379341922daaa2069fc07408e65aa46fe964c6",
+      "bytes": 210705
+    },
+    {
+      "path": "design/walks-studio-review/calendar.png",
+      "sha256": "e66313ccaf0b95143126e54d32f8caa84670fe05ed313676f66d9f71dfc6fc85",
+      "bytes": 210253
+    },
+    {
+      "path": "design/walks-studio-review/calendar-pl-large.png",
+      "sha256": "ee789a45d7d918ab49d88d20a30a01fcc9b6d86ea4d36e52af0eb11072c3f12b",
+      "bytes": 221315
+    },
+    {
+      "path": "design/walks-studio-review/reviews.png",
+      "sha256": "bba16aec8e6f8c1c360e98a312ed302b11711e240e1c453f7eec964c672c2dc6",
+      "bytes": 209150
+    },
+    {
+      "path": "design/walks-studio-review/current.png",
+      "sha256": "37408bdc44c197ba34cb6e93c620cc7d2211c47fe8e49a0061723e8d6a12d92b",
+      "bytes": 205798
+    },
+    {
+      "path": "design/walks-studio-review/en-dark-large.png",
+      "sha256": "a6dcd0c69d37c784821615520812a1e7d6f67a3ece793ae672a61f52630b253f",
+      "bytes": 229400
+    },
+    {
+      "path": "design/walks-studio-review/chat.png",
+      "sha256": "34919ce429d7f43292c3965ddcfaba7c7fa93d4bce08f29ba1e55b510ac4a7b0",
+      "bytes": 185894
+    },
+    {
+      "path": "design/walks-studio-review/app.js",
+      "sha256": "6db2a848ca048d2fd6ebbae259b06f47ea5d3ee0ee92a6bf51de2f3c1b417eef",
+      "bytes": 35427
+    },
+    {
+      "path": "design/walks-studio-review/ru-dark-large.png",
+      "sha256": "fe1f288cae18b8f5d2af13ed207c69078d702a3bfeb594c543b083b6f430df04",
+      "bytes": 210739
+    },
+    {
+      "path": "design/walks-studio-review/request-details.png",
+      "sha256": "55eaa185ac080c480cf54cde95857cda7480afd23529d6c938639657ce8df04c",
+      "bytes": 49204
+    },
+    {
+      "path": "design/nearby-studio-native/main.dart",
+      "sha256": "20ba6e767d94c1e8a81791f318c8cc7c6431f25a5eaeb1625cde6c4f37225b2c",
+      "bytes": 4357
+    },
+    {
+      "path": "design/nearby-studio-native/fixture.dart",
+      "sha256": "103da9841b96323ec46e9a2b9a9b95c8253be4532d645d3b1a8e2bd797a3558e",
+      "bytes": 8488
+    },
+    {
+      "path": "design/chat-profile-studio-review/index.html",
+      "sha256": "84337ae8b3d7278f77befdfd398fa292c70a003c3abae9ebc2316f33461c857f",
+      "bytes": 1617
+    },
+    {
+      "path": "design/chat-profile-studio-review/styles.css",
+      "sha256": "61e5869835d6c6f01ff976858833456de21c309de2bd1b5f491cd38c5717cdc3",
+      "bytes": 17073
+    },
+    {
+      "path": "design/chat-profile-studio-review/app.js",
+      "sha256": "01c5fc1074b50520eaf3164d93bbb63bc0d70a82a122e0e4ceb2214acde6c143",
+      "bytes": 45777
+    },
+    {
+      "path": "design/studio-review-native/README.md",
+      "sha256": "1c2a0a4bebee660711d69eced4f41d299abc63e8203b941cbc172d4174694b97",
+      "bytes": 1436
+    },
+    {
+      "path": "design/studio-review-native/pubspec.yaml",
+      "sha256": "656eeca7f12406d6d41a3f4f9b7d4bca456a4f50935288b7d79d758a281c36bf",
+      "bytes": 455
+    },
+    {
+      "path": "design/meetup-simplification/compact-dark-large.png",
+      "sha256": "d28d36bd2d8af68d2ca1158f68637b38b51f9e19667c356b50c8f4fe9338441f",
+      "bytes": 298878
+    },
+    {
+      "path": "design/meetup-simplification/index.html",
+      "sha256": "fc1d5c1c4de643c8b03168864bceee041dd4c19aff7024de6823d643e89b41f0",
+      "bytes": 25672
+    },
+    {
+      "path": "design/meetup-simplification/empty.png",
+      "sha256": "0cbe6943e954a1dd168e7ebe20d47b34e6f3864d2987660601e84331d0d038bf",
+      "bytes": 136341
+    },
+    {
+      "path": "design/meetup-simplification/comparison.png",
+      "sha256": "d3f23e98c2569ee30617f76f4be9d85e6cfd90b87173f757f8e1e7758b71bfde",
+      "bytes": 207431
+    },
+    {
+      "path": "design/meetup-simplification/date-menu.png",
+      "sha256": "9512757cfea9b2a98c655f380e24620f092dabe331145d7436a1b909481a0d5d",
+      "bytes": 184032
+    },
+    {
+      "path": "design/meetup-simplification/chat.png",
+      "sha256": "70152568fe33686d08f6c4bb6043fedd208b98e393323c09f162f7cbf0ca2c09",
+      "bytes": 195662
+    },
+    {
+      "path": "design/meetup-simplification/loading.png",
+      "sha256": "0fe7c3fdd59e936dfbc86259727ec152fb5bc1d66e48072fbe4dca4c9f12dc71",
+      "bytes": 126512
+    },
+    {
+      "path": "design/walking-assets/owner.jpg",
+      "sha256": "cf0eac6077be7b4dddc8ca97b452d76f2a6c937a80ed8babdd36ceec4295517f",
+      "bytes": 24246
+    },
+    {
+      "path": "design/walking-assets/PROVENANCE.md",
+      "sha256": "a31a4c2ca7aba67ba6b8787850a1e67e450c9d57ac07923b71146b9ff4dd736b",
+      "bytes": 936
+    },
+    {
+      "path": "design/walking-assets/helper.jpg",
+      "sha256": "94a035089dae125745ce80e4f01bf2e04d882a8106d9a5a56eaf0dcfc81e14b5",
+      "bytes": 17326
+    },
+    {
+      "path": "design/walking-assets/pet.jpg",
+      "sha256": "d1b232263588e55383d176a686ab93312f573df0f77aef7e99fc3462b29ea5bf",
+      "bytes": 14285
+    },
+    {
+      "path": "design/walking-assets/lucide.min.js",
+      "sha256": "3411692820cb8d47543f69496aa25fd603a358f4498046f41c508a5a3342210e",
+      "bytes": 357796
+    },
+    {
+      "path": "design/nearby-review-20261012/index.html",
+      "sha256": "0a065397b5a378ca8fe78ab4eb2641dfdc445b3676737a0e9e18c3f86095a4f2",
+      "bytes": 4017
+    },
+    {
+      "path": "design/people-community-studio/invite-search.png",
+      "sha256": "0b03110962e952f0086b90ff3d53e9d42e54cddedb797ce10d34775b40245a12",
+      "bytes": 350228
+    },
+    {
+      "path": "design/people-community-studio/index.html",
+      "sha256": "0af0e1aa565f96b26c034a454699e009270ea3dde7a152760a9bf33ede6fd09a",
+      "bytes": 4948
+    },
+    {
+      "path": "design/people-community-studio/desktop.png",
+      "sha256": "11996a27c373377784486e0873c5c077bd973df7b070f7c66698d636f53070f6",
+      "bytes": 346497
+    },
+    {
+      "path": "design/people-community-studio/styles.css",
+      "sha256": "3155d736522f7a28c4856d6c0434c6bd19b2dad2f6a0be8d886156d5c8bb896b",
+      "bytes": 13792
+    },
+    {
+      "path": "design/people-community-studio/qa-notes.txt",
+      "sha256": "b830628c4d87f53ba2832e6bdec87d5a925b309c0ba476b49c9a8298be429975",
+      "bytes": 1033
+    },
+    {
+      "path": "design/people-community-studio/community-modal.png",
+      "sha256": "22aa81028d7ea2f88d0c828a094bead8ac6c5a3582269da80283502eca98c288",
+      "bytes": 356895
+    },
+    {
+      "path": "design/people-community-studio/pl-dark-large.png",
+      "sha256": "859d2c2d2f97a1157f2dc94e492d9dddbe24b5185903a09ccec12e1c7bcd9ffa",
+      "bytes": 316554
+    },
+    {
+      "path": "design/people-community-studio/be-dark-large.png",
+      "sha256": "761267b3b880912248fe5523da8672a2fa260fa219254ff2380e6abfac5828b6",
+      "bytes": 312184
+    },
+    {
+      "path": "design/people-community-studio/mobile.png",
+      "sha256": "54b1af80f8683a3e95b0838654f0a850a879fdc12c157032ebd5fab97d5c7912",
+      "bytes": 352161
+    },
+    {
+      "path": "design/people-community-studio/invite-pl-dark-large.png",
+      "sha256": "6c7b911d5789c840d43cb01a5a79d0e203f0a4598c8ecab0cf3fac72b68be8b9",
+      "bytes": 326164
+    },
+    {
+      "path": "design/people-community-studio/en-dark-large.png",
+      "sha256": "6c13f2f08ebad8243bf1a801cfe6dd7aff07002e67b5491049bea0045f9e9990",
+      "bytes": 311325
+    },
+    {
+      "path": "design/people-community-studio/app.js",
+      "sha256": "c9283114a4483361c9498493c576ac37ee3822fc61be616b27b231063c07c5dc",
+      "bytes": 35488
+    },
+    {
+      "path": "design/people-community-studio/ru-dark-large.png",
+      "sha256": "be8db059bcf12571111d6916fe85d2c02940b22954ef1b29bf1ae3824f70c461",
+      "bytes": 311541
+    },
+    {
+      "path": "design/onboarding-studio-review/index.html",
+      "sha256": "3a3d839943d35891c48abdc502485111413e7779fbacc645cec223e4ed93b2bc",
+      "bytes": 1776
+    },
+    {
+      "path": "design/onboarding-studio-review/styles.css",
+      "sha256": "960920a27855ee2122375d8ad6b2334b033cf5372259018a6f685fd529d1372d",
+      "bytes": 6887
+    },
+    {
+      "path": "design/onboarding-studio-review/app.js",
+      "sha256": "3361f272b21d6181a2975ef5b8c1e73107a0bc7dc3a00c749fb90b1b963d5c97",
+      "bytes": 38611
+    },
+    {
+      "path": "design/nearby-review-20261012/app/flutter_bootstrap.js",
+      "sha256": "36bb5d189bc88db544d9788f31804802d8053daed2f42f928f85bbd69f04bdcf",
+      "bytes": 13094
+    },
+    {
+      "path": "design/nearby-review-20261012/app/version.json",
+      "sha256": "e3ef727fc90821eb10b93092a7bbc6b285857813a641b34e7c8a7ec0a09ca29e",
+      "bytes": 92
+    },
+    {
+      "path": "design/nearby-review-20261012/app/.last_build_id",
+      "sha256": "d3c1a9cbe941c89a22d5889cab8e85c7af39a16bac9d88f29f3b1bfd92f88978",
+      "bytes": 32
+    },
+    {
+      "path": "design/nearby-review-20261012/app/index.html",
+      "sha256": "f34af69d6fac3c3d56621be73d84fd4f0bdfc45d573d95e263b257ff69525606",
+      "bytes": 1544
+    },
+    {
+      "path": "design/nearby-review-20261012/app/main.dart.js",
+      "sha256": "dc77947b89023530901c017175334752b1e59d65ba6421c4f0fd1debf015797e",
+      "bytes": 6239200
+    },
+    {
+      "path": "design/nearby-review-20261012/app/flutter.js",
+      "sha256": "2beb1ce6b159c71540aa66030af1d7964b6a92377cc78473745e02f97b74effe",
+      "bytes": 12136
+    },
+    {
+      "path": "design/nearby-review-20261012/app/flutter_service_worker.js",
+      "sha256": "a131df5ca46154cc4eb79044f7f5a14029c2f8bfccf8cef34e3ec3b5a9f5a88c",
+      "bytes": 784
+    },
+    {
+      "path": "design/nearby-review-20261012/app/favicon.png",
+      "sha256": "7ab2525f4b86b65d3e4c70358a17e5a1aaf6f437f99cbcc046dad73d59bb9015",
+      "bytes": 917
+    },
+    {
+      "path": "design/nearby-review-20261012/app/manifest.json",
+      "sha256": "0fef8bebf2358664091ceefded14f83cba0d3bddd0dee6a6b6d25a64bf98a793",
+      "bytes": 918
+    },
+    {
+      "path": "design/nearby-review-20261012/app/icons/Icon-192.png",
+      "sha256": "3dce99077602f70421c1c6b2a240bc9b83d64d86681d45f2154143310c980be3",
+      "bytes": 5292
+    },
+    {
+      "path": "design/nearby-review-20261012/app/icons/Icon-maskable-192.png",
+      "sha256": "d2c842e22a9f4ec9d996b23373a905c88d9a203b220c5c151885ad621f974b5c",
+      "bytes": 5594
+    },
+    {
+      "path": "design/nearby-review-20261012/app/icons/Icon-maskable-512.png",
+      "sha256": "6aee06cdcab6b2aef74b1734c4778f4421d2da100b0ff9e52b21b55240202929",
+      "bytes": 20998
+    },
+    {
+      "path": "design/nearby-review-20261012/app/icons/Icon-512.png",
+      "sha256": "baccb205ae45f0b421be1657259b4943ac40c95094ab877f3bcbe12cd544dcbe",
+      "bytes": 8252
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/NOTICES",
+      "sha256": "365243e1752d70e42502d92173cccf1196b7e0b7aae39f376bfaced42fdfaba3",
+      "bytes": 1613954
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/FontManifest.json",
+      "sha256": "3f0d50cfed2f091e455e0ad86a2c57168afd66b48886490bdca130134993cc96",
+      "bytes": 223
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/AssetManifest.bin.json",
+      "sha256": "80f65389abe4be51aaabd85baae25ae264f78472356f1ce80391e79a7a2134ef",
+      "bytes": 1058
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/AssetManifest.bin",
+      "sha256": "04fb78185ea4ecb8a66e751b0ab1b7aaf564af178262ce5ece3c49f4de0201c0",
+      "bytes": 791
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/wimp.wasm",
+      "sha256": "e924eaafd801d41e017d178f3fd5cf8a417f641fe35c9ed34a4e1d7582283e0c",
+      "bytes": 3581677
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/skwasm.js",
+      "sha256": "71d7d3e34bf71b52bdba3b588b103bba8148ba28de5754083e01b3398e7a6e1c",
+      "bytes": 63537
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/skwasm_heavy.js",
+      "sha256": "cec554b46ddcf4c0e63d799e0556d546f42d2c3f69316fb4f67ed776f6104558",
+      "bytes": 63650
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/skwasm.js.symbols",
+      "sha256": "9137f1a3ae744dea575043abfc6e063a047e910e6dab1ee53e496c975d1c033e",
+      "bytes": 1540006
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/canvaskit.js.symbols",
+      "sha256": "384f80b392972c83fd4f262527e3d06215a297d33ed59732c726721e9d9311bd",
+      "bytes": 1356926
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/skwasm_heavy.js.symbols",
+      "sha256": "b6b79ed497e11d4cd13cc46724f9e289eacc744d2d185e31c72d595cdf62772b",
+      "bytes": 1672152
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/skwasm.wasm",
+      "sha256": "e540fd5e8303b7b68ec2718cb49e9c421f8ade3075b15e02a7059a62654df9a1",
+      "bytes": 3593715
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/canvaskit.js",
+      "sha256": "bb559f6080c7d312ac2a912b4abec9f68ff3d3022d4a603c7796b9b31460642b",
+      "bytes": 86987
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/wimp.js",
+      "sha256": "8fd8a47480c6eb0a374d159912d0b3fb15661b41f5c113ecdd39c2f01f2bee46",
+      "bytes": 59127
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/canvaskit.wasm",
+      "sha256": "fbed517a43e82452404446683f00f2e876d835aed84410695759e67b6bb01cd3",
+      "bytes": 7284602
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/wimp.js.symbols",
+      "sha256": "b4907ebd33131302a8cd99f7c55f52357bdfde04f421b605a616ba8764ae1de4",
+      "bytes": 1813030
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/skwasm_heavy.wasm",
+      "sha256": "565f5cc1cca6ab120f11934b105f01fec4b58b480c82e0889dca93af8e6f8635",
+      "bytes": 5216217
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/webparagraph/canvaskit.js.symbols",
+      "sha256": "44d6c47919106235cf32252252490cdf798d907ee874ba343ab53dc94bc2a9dc",
+      "bytes": 963641
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/webparagraph/canvaskit.js",
+      "sha256": "3110e3e4d9b7b5657d336f253aaca8acca5777cde9319fb69ac302d6ff5a8b23",
+      "bytes": 76114
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/webparagraph/canvaskit.wasm",
+      "sha256": "0ce1b05082efdc8529550e8a01f6ff0593972d55525035010e26f5600aa9f254",
+      "bytes": 3729129
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/chromium/canvaskit.js.symbols",
+      "sha256": "31c86fac6042dd8b756150832c1d15495d0d07742e2718f75dbdde5a5a91455e",
+      "bytes": 1235870
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/chromium/canvaskit.js",
+      "sha256": "6018b12bd8ed37e6952eee72d59c1cf7ad707ccdb74a0a45190010f77edd9068",
+      "bytes": 86226
+    },
+    {
+      "path": "design/nearby-review-20261012/app/canvaskit/chromium/canvaskit.wasm",
+      "sha256": "ae8ff1d858140f7b1300ced3fa89fb8c9dce0a400a0f4f1e11f6dcfb3315fdcf",
+      "bytes": 5428806
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/shaders/ink_sparkle.frag",
+      "sha256": "2dca5ab93d4ec29e963f996f3916320ba60825e9537dfb149a68008c7a16b026",
+      "bytes": 8890
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/shaders/stretch_effect.frag",
+      "sha256": "ab412f07a5b9b50b67a885b24dbe16929738ae28630407d6490c924caf0a3220",
+      "bytes": 6737
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/fonts/MaterialIcons-Regular.otf",
+      "sha256": "38e3a65b2ea68feacfc01bc22b356d4f5b7797b40f82ff93f818cd5b0d93e4ca",
+      "bytes": 19376
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/fonts/GolosText.ttf",
+      "sha256": "17bb58fb69aec2dfb047a2ebf52534023e9b688c97a6b7ac795b0a72912c2063",
+      "bytes": 184292
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/fonts/Manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+      "bytes": 164700
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/data/minsk_places.json",
+      "sha256": "39d9e0a725f72e957376154c88e3c3aebceca8afdb1e7159d838ae5318dc3ef4",
+      "bytes": 119162
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/data/geonames/UNICODE-LICENSE.txt",
+      "sha256": "220ba0e1c43b99530d2d5bdb892a99dca0989414f51ab695ecd90163eaa1ec3b",
+      "bytes": 2033
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/data/geonames/countries.json",
+      "sha256": "e3a325810fabb4ee0de46e6b4cb7e24313eccb3aef322789ef9fccb9b4eb1aa7",
+      "bytes": 30377
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/data/geonames/snapshot.json",
+      "sha256": "d6d42c7c072cdbde738941bbccb3ba3fd60c6cfd6fe88b1933a3d43873335d46",
+      "bytes": 152
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/data/geonames/NOTICE.txt",
+      "sha256": "97c8139ae2ff66facde0b257508aa39918dd96668bb84937b357b6b0c739fdf5",
+      "bytes": 524
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/assets/data/geonames/cities.json",
+      "sha256": "74bd40d09858ed697e7eb893621cc801558b0e96888f32bfa843c96a04779415",
+      "bytes": 9994269
+    },
+    {
+      "path": "design/nearby-review-20261012/app/assets/packages/flutter_local_notifications_web/web/notifications_service_worker.js",
+      "sha256": "566f47dccc0f417f0164a3d0852334c340d0941472af43fc65ee50a314555058",
+      "bytes": 3407
+    },
+    {
+      "path": "design/studio-review-native/test_driver/preview_driver.dart",
+      "sha256": "752c10b2c578cf6616811aefb3b3cea119be146304b67267120dcb593f61d5df",
+      "bytes": 369
+    },
+    {
+      "path": "design/studio-review-native/integration_test/review_preview_test.dart",
+      "sha256": "6e698afc3d9f72fe35e9ee57545a12a48dd7ec4b44af47335aa3eb08ae51b377",
+      "bytes": 6228
+    },
+    {
+      "path": "design/studio-review-native/test/layout_test.dart",
+      "sha256": "18e0653a01c4f7ee4734cc933e10326265bf543107135d04c251aa162f3731e1",
+      "bytes": 1746
+    },
+    {
+      "path": "design/studio-review-native/lib/preview_copy.dart",
+      "sha256": "61ad47cccf575019db31ff27e28c48182c559cba504db3aa9834a1b8b3a62b29",
+      "bytes": 30403
+    },
+    {
+      "path": "design/studio-review-native/lib/main.dart",
+      "sha256": "b4d2542271d9f0a6ad4e0be3ae31394be6a1ea88cada1682e798a99a1b4c0197",
+      "bytes": 91856
+    },
+    {
+      "path": "design/studio-review-native/lib/message_bridge.dart",
+      "sha256": "474073bd2ac5d8c26806d08be9695a6a83261425d32e21903a4805ef32beb7f2",
+      "bytes": 94211
+    },
+    {
+      "path": "design/studio-review-native/lib/studio_theme.dart",
+      "sha256": "64361fda4ccc27f919f82a9c5b0172cd43de1c8325d8d3fbff0fe2a4aa8f4e56",
+      "bytes": 10026
+    },
+    {
+      "path": "design/studio-review-native/assets/fonts/GolosText.ttf",
+      "sha256": "17bb58fb69aec2dfb047a2ebf52534023e9b688c97a6b7ac795b0a72912c2063",
+      "bytes": 184292
+    },
+    {
+      "path": "design/studio-review-native/assets/fonts/Manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+      "bytes": 164700
+    },
+    {
+      "path": "design/studio-review-native/lib/generated/app_localizations.dart",
+      "sha256": "4544c88f64a0724c2742c4fedcba7a3d97470ca23dc7ddebc57dc46ea7929b30",
+      "bytes": 233833
+    },
+    {
+      "path": "design/studio-review-native/lib/generated/app_localizations_ru.dart",
+      "sha256": "c90bccb49514407e915d1d2286655d154a4cb26c28d4a162e15558f671524a65",
+      "bytes": 121030
+    },
+    {
+      "path": "design/studio-review-native/lib/generated/app_localizations_pl.dart",
+      "sha256": "875dd3c4ada0d3c1e14e72a831dbeced179118b28b2eeb4e535535a2214ca308",
+      "bytes": 97637
+    },
+    {
+      "path": "design/studio-review-native/lib/generated/app_localizations_be.dart",
+      "sha256": "a9589949534f739bc10d0cf79e3a668dc5a6a5f8999bb925c6ab867bfe7d176d",
+      "bytes": 121170
+    },
+    {
+      "path": "design/studio-review-native/lib/generated/app_localizations_en.dart",
+      "sha256": "7f90e87b3a4cd748a2cf22a3d40daac623ca20468fc058c2fb97f5c654c99900",
+      "bytes": 92268
+    },
+    {
+      "path": "design/studio-review-20261012/app/flutter_bootstrap.js",
+      "sha256": "e76caac7a3fe5437789350bfd6bfb48bc1ba4232a42b5fb3ffae5f070df85a88",
+      "bytes": 13094
+    },
+    {
+      "path": "design/studio-review-20261012/app/version.json",
+      "sha256": "189599aaceb5edadd5ac6259d46125dbd203636750567afe5bbc40706b3bd570",
+      "bytes": 59
+    },
+    {
+      "path": "design/studio-review-20261012/app/.last_build_id",
+      "sha256": "1394f290cc55e4ae96b0d3481e51f478b9f21d24d6943d79d1c2b4da27332de1",
+      "bytes": 32
+    },
+    {
+      "path": "design/studio-review-20261012/app/index.html",
+      "sha256": "2f08abd2ce40df6cd91eedb2ab9d25b519ad5a2f1769bd0b3bf79ef4dc13c31b",
+      "bytes": 1548
+    },
+    {
+      "path": "design/studio-review-20261012/app/main.dart.js",
+      "sha256": "16a49f10e0aab1c60c38cf34c3e309125d84314cd42faaf69f4052c5b0ddcd61",
+      "bytes": 3696429
+    },
+    {
+      "path": "design/studio-review-20261012/app/flutter.js",
+      "sha256": "2beb1ce6b159c71540aa66030af1d7964b6a92377cc78473745e02f97b74effe",
+      "bytes": 12136
+    },
+    {
+      "path": "design/studio-review-20261012/app/flutter_service_worker.js",
+      "sha256": "a131df5ca46154cc4eb79044f7f5a14029c2f8bfccf8cef34e3ec3b5a9f5a88c",
+      "bytes": 784
+    },
+    {
+      "path": "design/studio-review-20261012/app/favicon.png",
+      "sha256": "7ab2525f4b86b65d3e4c70358a17e5a1aaf6f437f99cbcc046dad73d59bb9015",
+      "bytes": 917
+    },
+    {
+      "path": "design/studio-review-20261012/app/manifest.json",
+      "sha256": "799bb94ab02e1e8c65dad0d1e00d64597eedcc968ebc1ae3b6f140b0aa6d76bb",
+      "bytes": 922
+    },
+    {
+      "path": "design/studio-review-20261012/app/icons/Icon-192.png",
+      "sha256": "3dce99077602f70421c1c6b2a240bc9b83d64d86681d45f2154143310c980be3",
+      "bytes": 5292
+    },
+    {
+      "path": "design/studio-review-20261012/app/icons/Icon-maskable-192.png",
+      "sha256": "d2c842e22a9f4ec9d996b23373a905c88d9a203b220c5c151885ad621f974b5c",
+      "bytes": 5594
+    },
+    {
+      "path": "design/studio-review-20261012/app/icons/Icon-maskable-512.png",
+      "sha256": "6aee06cdcab6b2aef74b1734c4778f4421d2da100b0ff9e52b21b55240202929",
+      "bytes": 20998
+    },
+    {
+      "path": "design/studio-review-20261012/app/icons/Icon-512.png",
+      "sha256": "baccb205ae45f0b421be1657259b4943ac40c95094ab877f3bcbe12cd544dcbe",
+      "bytes": 8252
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/NOTICES",
+      "sha256": "bc2b14c4ce0788902bd1c45f4e052c2f587ecf0a411e982ae0f4e5a4690f00e5",
+      "bytes": 1319329
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/FontManifest.json",
+      "sha256": "3f0d50cfed2f091e455e0ad86a2c57168afd66b48886490bdca130134993cc96",
+      "bytes": 223
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/AssetManifest.bin.json",
+      "sha256": "4f0102b7c123048402bcd304a529670750962e2d1e744104481f99adbf9496d9",
+      "bytes": 178
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/AssetManifest.bin",
+      "sha256": "2f2ec34f7e745d00e707b79ee636b5af04273056b428ce0e770a451b6660769d",
+      "bytes": 132
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/wimp.wasm",
+      "sha256": "e924eaafd801d41e017d178f3fd5cf8a417f641fe35c9ed34a4e1d7582283e0c",
+      "bytes": 3581677
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/skwasm.js",
+      "sha256": "71d7d3e34bf71b52bdba3b588b103bba8148ba28de5754083e01b3398e7a6e1c",
+      "bytes": 63537
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/skwasm_heavy.js",
+      "sha256": "cec554b46ddcf4c0e63d799e0556d546f42d2c3f69316fb4f67ed776f6104558",
+      "bytes": 63650
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/skwasm.js.symbols",
+      "sha256": "9137f1a3ae744dea575043abfc6e063a047e910e6dab1ee53e496c975d1c033e",
+      "bytes": 1540006
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/canvaskit.js.symbols",
+      "sha256": "384f80b392972c83fd4f262527e3d06215a297d33ed59732c726721e9d9311bd",
+      "bytes": 1356926
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/skwasm_heavy.js.symbols",
+      "sha256": "b6b79ed497e11d4cd13cc46724f9e289eacc744d2d185e31c72d595cdf62772b",
+      "bytes": 1672152
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/skwasm.wasm",
+      "sha256": "e540fd5e8303b7b68ec2718cb49e9c421f8ade3075b15e02a7059a62654df9a1",
+      "bytes": 3593715
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/canvaskit.js",
+      "sha256": "bb559f6080c7d312ac2a912b4abec9f68ff3d3022d4a603c7796b9b31460642b",
+      "bytes": 86987
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/wimp.js",
+      "sha256": "8fd8a47480c6eb0a374d159912d0b3fb15661b41f5c113ecdd39c2f01f2bee46",
+      "bytes": 59127
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/canvaskit.wasm",
+      "sha256": "fbed517a43e82452404446683f00f2e876d835aed84410695759e67b6bb01cd3",
+      "bytes": 7284602
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/wimp.js.symbols",
+      "sha256": "b4907ebd33131302a8cd99f7c55f52357bdfde04f421b605a616ba8764ae1de4",
+      "bytes": 1813030
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/skwasm_heavy.wasm",
+      "sha256": "565f5cc1cca6ab120f11934b105f01fec4b58b480c82e0889dca93af8e6f8635",
+      "bytes": 5216217
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/webparagraph/canvaskit.js.symbols",
+      "sha256": "44d6c47919106235cf32252252490cdf798d907ee874ba343ab53dc94bc2a9dc",
+      "bytes": 963641
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/webparagraph/canvaskit.js",
+      "sha256": "3110e3e4d9b7b5657d336f253aaca8acca5777cde9319fb69ac302d6ff5a8b23",
+      "bytes": 76114
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/webparagraph/canvaskit.wasm",
+      "sha256": "0ce1b05082efdc8529550e8a01f6ff0593972d55525035010e26f5600aa9f254",
+      "bytes": 3729129
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/chromium/canvaskit.js.symbols",
+      "sha256": "31c86fac6042dd8b756150832c1d15495d0d07742e2718f75dbdde5a5a91455e",
+      "bytes": 1235870
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/chromium/canvaskit.js",
+      "sha256": "6018b12bd8ed37e6952eee72d59c1cf7ad707ccdb74a0a45190010f77edd9068",
+      "bytes": 86226
+    },
+    {
+      "path": "design/studio-review-20261012/app/canvaskit/chromium/canvaskit.wasm",
+      "sha256": "ae8ff1d858140f7b1300ced3fa89fb8c9dce0a400a0f4f1e11f6dcfb3315fdcf",
+      "bytes": 5428806
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/shaders/ink_sparkle.frag",
+      "sha256": "2dca5ab93d4ec29e963f996f3916320ba60825e9537dfb149a68008c7a16b026",
+      "bytes": 8890
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/shaders/stretch_effect.frag",
+      "sha256": "ab412f07a5b9b50b67a885b24dbe16929738ae28630407d6490c924caf0a3220",
+      "bytes": 6737
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/fonts/MaterialIcons-Regular.otf",
+      "sha256": "ba3f214ff6fdaa1c6b87926fe6540bbb3f47117c3aa94c8a36d8d00d161f2c09",
+      "bytes": 12992
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/assets/fonts/GolosText.ttf",
+      "sha256": "17bb58fb69aec2dfb047a2ebf52534023e9b688c97a6b7ac795b0a72912c2063",
+      "bytes": 184292
+    },
+    {
+      "path": "design/studio-review-20261012/app/assets/assets/fonts/Manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+      "bytes": 164700
+    },
+    {
+      "path": "assets/fonts/Manrope-OFL.txt",
+      "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b",
+      "bytes": 4387
+    },
+    {
+      "path": "assets/fonts/GolosText-OFL.txt",
+      "sha256": "ff532f9e8789f09a9fdffc3c0954eedfb0a48be77b2e2eb90f5f82e4f347f50c",
+      "bytes": 4394
+    },
+    {
+      "path": "assets/fonts/GolosText.ttf",
+      "sha256": "17bb58fb69aec2dfb047a2ebf52534023e9b688c97a6b7ac795b0a72912c2063",
+      "bytes": 184292
+    },
+    {
+      "path": "assets/fonts/Manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+      "bytes": 164700
+    }
+  ]
+}

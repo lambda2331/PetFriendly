@@ -47,7 +47,106 @@ final sample = Position(
   speed: 0,
   speedAccuracy: 0,
 );
+
+class SlowLocation extends FakeLocation {
+  SlowLocation() {
+    permissionGranted = true;
+  }
+  @override
+  Future<Position> currentPosition({
+    LocationAccuracy accuracy = LocationAccuracy.high,
+  }) async => throw TimeoutException('First GPS fix is slow');
+}
+
 void main() {
+  testWidgets('A fix from city detection reaches an already mounted map', (
+    tester,
+  ) async {
+    final service = FakeLocation();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [locationServiceProvider.overrideWithValue(service)],
+        child: const MaterialApp(
+          home: FullscreenMapScreen(
+            args: FullscreenMapArgs(places: [], city: 'Минск'),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.widget<LiveMap>(find.byType(LiveMap)).userPosition, isNull);
+
+    // Nearby requests permission separately; reverse geocoding may still be
+    // pending and no city/parent rebuild has happened yet.
+    service.permissionGranted = true;
+    service.lastPosition = sample;
+    await tester.pumpAndSettle();
+    expect(tester.widget<LiveMap>(find.byType(LiveMap)).userPosition, sample);
+    expect(service.active, isTrue);
+
+    service.permissionGranted = false;
+    service.lastPosition = null;
+    await tester.pumpAndSettle();
+    expect(tester.widget<LiveMap>(find.byType(LiveMap)).userPosition, isNull);
+    expect(service.active, isFalse);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+    await service.updates.close();
+  });
+  testWidgets('Slow first GPS fix keeps listening and displays a later fix', (
+    tester,
+  ) async {
+    final service = SlowLocation();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [locationServiceProvider.overrideWithValue(service)],
+        child: const MaterialApp(
+          home: FullscreenMapScreen(
+            args: FullscreenMapArgs(places: [], city: 'Минск'),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(service.active, isTrue);
+    expect(tester.widget<LiveMap>(find.byType(LiveMap)).userPosition, isNull);
+    service.updates.add(sample);
+    await tester.pumpAndSettle();
+    expect(tester.widget<LiveMap>(find.byType(LiveMap)).userPosition, sample);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+    expect(service.active, isFalse);
+    await service.updates.close();
+  });
+  testWidgets('Returning to map discovers permission granted while hidden', (
+    tester,
+  ) async {
+    final service = FakeLocation();
+    Widget screen(bool active) => ProviderScope(
+      overrides: [locationServiceProvider.overrideWithValue(service)],
+      child: MaterialApp(
+        home: TickerMode(
+          enabled: active,
+          child: const FullscreenMapScreen(
+            args: FullscreenMapArgs(places: [], city: 'Минск'),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpWidget(screen(true));
+    await tester.pumpAndSettle();
+    expect(service.active, isFalse);
+    await tester.pumpWidget(screen(false));
+    await tester.pumpAndSettle();
+    service.permissionGranted = true;
+    await tester.pumpWidget(screen(true));
+    await tester.pumpAndSettle();
+    expect(service.active, isTrue);
+    expect(tester.widget<LiveMap>(find.byType(LiveMap)).userPosition, sample);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+    await service.updates.close();
+  });
   testWidgets(
     'Main map resumes already permitted location without changing manual city',
     (tester) async {

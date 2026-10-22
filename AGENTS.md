@@ -6,6 +6,8 @@ Use these agreed project settings unless the user changes them.
 - Platforms: iOS and Android using Flutter and Dart.
 - Approved visual direction: Studio. Minimal, generous spacing, strong typography, lime accent. Social/lavender is an archived alternative, not the default.
 - Fonts: Manrope for headings and wordmark; Golos Text for body, controls and messages. Support Cyrillic. Bundle font assets for production rather than relying on runtime downloads.
+- Languages: Russian (`ru`), English (`en`), Belarusian (`be`) and Polish (`pl`). Follow device language by default, fall back to Russian, and persist an explicit device-local language choice. Use Flutter ARB/gen-l10n and locale-aware plural/date/number formatting. Translate application copy only; keep user messages, names, reviews and canonical API values unchanged.
+- City selection is international: bundle the attributed GeoNames cities15000 snapshot, search aliases locally, show country/region and allow country-qualified manual smaller settlements. Canonical keys and IANA venue zones are independent of UI language; preserve legacy Belarus/Russia keys. City selection never publishes device GPS.
 - Themes: light, dark and system; system by default. Persist selection locally. Use semantic tokens from design/tokens.json; apply theme to map and overlays too.
 - Motion: restrained, purposeful; tap 100 ms, tab change 180 ms, navigation/theme 220 ms, bottom sheet 250 ms. Respect reduced motion. Haptics only for meaningful actions, with a user preference.
 - Navigation: Nearby, People, Walking help, Chats, Profile. Nearby retains the Studio greeting and nearby-event banner above the map. Places list is a separate screen with search and filters, opened from the map. Single map markers use category icons; clusters retain counts. Groups and events belong to community modules.
@@ -13,6 +15,7 @@ Use these agreed project settings unless the user changes them.
 - Profile uses compact person/pet identity cards; settings open separately from a header gear next to theme. People and communities have separate segments. Community invitations open a message draft and require voluntary joining. Chats show sender and time. Photo selection is currently an in-memory design preview only, with re-encoding to remove original EXIF; production upload/storage is not implemented.
 - Favorite places appear inline in the personal profile. Place details include rating/review composition within the sheet and focus on the map without changing manual city. Unrated list rows omit empty rating text; real rating averages come from the server. Source attribution belongs to map/catalog/app information, not the main place-card content.
 - Chat uploads now allow photos only: at most 5 MiB before upload, re-encoded without original metadata, at most 1200 px and 1 MiB in private server storage. Reject new videos in the client, Edge Function and SQL write path; keep already stored attachments readable.
+- Meeting creation optionally selects a public venue point on the map and a short gathering label. Keep the point in account-scoped memory drafts; clear it and its label when the event city changes. Store it atomically through create_event_at_location and expose it under existing event RLS, never as a user's live position. Event cards open a map focused on the selected point.
 - App structure: feature-first, UI/controllers/repositories/services, Riverpod and go_router. Widgets do not contain business logic.
 - Planned backend: Supabase Auth, PostgreSQL + PostGIS, Realtime, private Storage and Edge Functions. Mapbox for maps; FCM with APNs configuration for push.
 - Server validates privileged changes. Walking assignment must be atomic; chat access requires active membership; public profiles expose a district rather than exact coordinates.
@@ -32,13 +35,27 @@ Use these agreed project settings unless the user changes them.
 - Define retention, export, deletion and backup deletion handling before launch. Test authorization bypass and account recovery.
 - Do not claim E2EE or implemented protection from this specification alone. Demo mode and a local Supabase backend are implemented; distinguish tested local protections from unconfigured production services.
 
+## Walking helper mode
+
+- Approved helper experience is implemented in Flutter: one account can be owner, helper or both. Owner navigation remains Nearby, People, Walking help, Chats, Profile; helper navigation is Requests, My walks, Chats, Profile. Mode switching preserves account identity, conversations and role-labelled history. No pet is required for helpers.
+- Helper onboarding uses public city/district, introduction, animal experience, dog-size preferences, service districts and structured weekly availability. Private handover instructions stay in participant-only agreement views.
+- Upcoming agreements and unassigned applications stay separate. Date filters use the walk city’s time zone. Eligible owner and helper reviews use separate aggregates and one review per completed agreement per direction.
+- UI/API mapping and native verification limits: docs/helper-mode-implementation.md and docs/walking-api.md. Browser design reference remains design/helper-mode.html; it is not the native application.
+
 ## Walking reputation
 
 - User profiles expose a role-specific walking-helper rating: 1–5 stars, published review count and completed walking count. No reviews means "No reviews yet", never zero stars.
-- Only the request owner can review the assigned helper after a completed agreement. One review per agreement; no self-review or arbitrary ratings of strangers.
+- After owner-confirmed completion, the request owner may review the assigned helper and the assigned helper may review the owner. One review per agreement in each direction; no self-review or arbitrary ratings of strangers. Keep owner and helper ratings, counts and replies separate; eligibility survives product-role changes.
 - Rating aggregates are server-derived from published eligible reviews; clients cannot write reputation totals.
 - Keep place ratings separate. Include helper replies, reporting and moderation; do not expose private addresses or pet-care instructions in reviews.
 - Reviews and counts are decision support, not an identity or safety guarantee. New helpers remain discoverable.
+
+## Product roles and helper mode
+
+- Keep one internal account ID with product roles owner, helper or both; active mode is owner/helper. These choices never grant moderator/admin privileges or come from untrusted Auth user_metadata.
+- Helper-only accounts use focused Requests, My walks, Chats and Profile navigation. New request/pet/community/meeting/venue creation requires owner capability; applying requires helper capability. Existing agreements, history and personal-data management survive role changes.
+- No pet is required for helper onboarding. Public helper preferences contain city/district, introduction, experience, dog-size preferences, public service districts and weekly availability in an IANA time zone. Never put GPS, handover addresses or private care instructions there.
+- Server/API contract: docs/walking-api.md. Migrations 026–028 implement product roles, private preferences, public helper fields, owner reviews and bounded request/personal-walk queries. UI rollout and cloud status are tracked separately.
 
 ## Launch and sign-in decisions
 
@@ -54,7 +71,7 @@ Use these agreed project settings unless the user changes them.
 ## Approved place catalog source
 
 - MVP uses Mapbox for map rendering and OpenStreetMap for the initial place catalog.
-- Respect ODbL attribution and applicable database obligations. The bundled Minsk catalog contains 130 parks/dog parks with source IDs and provenance. Automatic imports include parks/dog parks, pet shops (shop=pet) and veterinary clinics (amenity=veterinary), including selected/detected cities in Belarus and Russia. Automatic imports exclude cafes/restaurants; users may propose them through community moderation. Load the selected/detected city catalog; do not restrict the product to Minsk. The current fetch covers 15 km around the public city centre, not a guaranteed complete administrative area.
+- Respect ODbL attribution and applicable database obligations. The bundled Minsk catalog contains 130 parks/dog parks with source IDs and provenance. Automatic imports include parks/dog parks, pet shops (shop=pet) and veterinary clinics (amenity=veterinary), including selected/detected cities across countries. Automatic imports exclude cafes/restaurants; users may propose them through community moderation. Load the selected/detected city catalog; do not restrict the product to Minsk. The current fetch covers 15 km around the public city centre, not a guaranteed complete administrative area.
 - Track source IDs and freshness; deduplicate and preserve independently verified edits.
 - Pet access is confirmed by community/venue evidence. Missing tags mean unknown; never assume all cafes/parks allow pets.
 - Google Maps and Yandex catalog imports are excluded from the current MVP decision.
@@ -63,7 +80,7 @@ Use these agreed project settings unless the user changes them.
 ## Prototype development
 
 - Flutter code is in lib/. Launch locally with scripts/run-ios.sh; setup and limits are in docs/development.md.
-- Theme, manual city and favorite place IDs are the only persisted prototype preferences. Demo chat messages stay in memory.
+- Theme, language, manual city and favorite place IDs are the persisted prototype preferences. Demo chat messages stay in memory.
 - Demo login is a preview. Local Supabase email login is functional; never use real personal data in local test fixtures.
 - Mapbox renders only when a public token is configured; otherwise show an honest unavailable state. The OSM catalog is real, with unknown pet access where evidence is missing.
 
@@ -108,3 +125,43 @@ re-read whole files.
 After big code changes, refresh the graph with `graft build` (deterministic,
 no API key, $0).
 <!-- graft:end -->
+
+## Approved mock flow review
+
+- Preserve approved screen presentation and all previous versions. Business-requirement audits must not replace approved layouts.
+- Before adding or changing a mock flow, action or destination, show the user its current screen, expected behavior and gap in the workflow map, and review the proposed change with them. Keep unapproved proposals isolated from the active mock.
+- Current review board: design/onboarding-unified-account-2026-10-14/workflow-map.html. Review 18 is the approved pre-BA UI baseline; Reviews 21–26 contain user-requested refinements. Prior versions, including the Review 19 BA proposal, remain archived for comparison.
+
+
+## Design system instructions
+
+- Before any UI design, mock or Flutter visual update, read `docs/design-system.md` and `design/system/components.json`. Use `design/tokens.json` for semantic foundation values.
+- Reference catalog: `design/system/index.html`. Reuse existing shared components with the same intent; do not introduce another font, palette, button size or modal container for an existing pattern.
+- Keep current approved screen appearances and all prior versions. Resolve historical token differences through a reviewed migration, never a silent global restyle.
+- New actions, destinations and flow behavior must be reviewed in the workflow map with the user before implementation. The design system is not authorization to implement BA proposals.
+
+
+## Workflow simplification · Review 27 (supersedes earlier UI decisions)
+
+User decision on 14 October 2026: keep sign-in simple with the previous email/password/provider design and password reset. Exclude MFA, data-copy and device-session screens from the current design workflow. There is no moderator product role; user-created public places publish directly, with reporting available for potential removal. The old pre-publication moderation decision is superseded for future designs. Keep pet access unknown until supported by evidence. Server report-removal policy and backend rollout remain separate work; do not assume an automatic deletion threshold. Preserve existing security enforcement while simplifying mock designs. Public communities are discoverable and directly joinable. Keep pending applications in request details, applicant information inline, and agreement lifecycle in participant chat. Review 26 is retained in the version archive.
+
+
+## Meetings design · Review 28
+
+15 October 2026: Meetings is a third segment within People, alongside People and Communities; keep five bottom navigation destinations. Nearby has an All meetings entry. Public events can be joined without joining the associated community, subject to capacity. Create uses one form, with optional public point/gathering label and optional community association; city changes clear the point and its label. Share an event through an existing chat draft with explicit Send; retain event ID on the message card. Unknown event links never resolve to an unrelated event. Keep walking controls in the fixed chat context, with an elapsed timer during an active walk; no location tracking or automatic completion. Browser-only review implementation is separate from Flutter/backend enforcement. Review 27 is preserved.
+
+## Browser review 30 decisions
+
+- Meetings discovery uses search then compact location/date controls. Creation has one place picker; its search area owns city selection and derives the event time zone. Permission-based geodata is only a proposed initial map centre; browser mocks use sample public points.
+- Registration-full public meetings leave nonparticipant discovery but keep shared details accessible; attendance without registration remains possible.
+- Optional form fields show separate secondary hints. Walking chat shows a status entry; timer and actor-permitted lifecycle actions open in a compact sheet. Dynamic Island support is a native Live Activity follow-up, not implemented in the browser or native app by this design revision.
+
+## Browser review 34 — city picker reuse
+
+- All active mock city-selection entry points reuse `design/onboarding-unified-account-2026-10-14/nearby-city-picker.js`. Approved onboarding/helper, profile editor and walking-condition forms use `shared-city-adapter.js`; meetings keeps its host adapter. Preserve surrounding layouts and unrelated drafts. Do not add separate city dropdowns or raw city text fields outside the shared manual flow.
+- Retain country qualification for manual settlements. Require a valid IANA zone for scheduled service/meeting contexts, and clear stale districts when changing city. Native/backend rollout remains separate.
+
+## Browser review 35 — date/time picker reuse
+
+- Active mock date/time controls use `design/onboarding-unified-account-2026-10-14/shared-date-time.js`. Keep approved form positions and unrelated drafts. Reuse its calendar and explicit 24-hour time sheet rather than native browser date/time visuals or duplicated inline calendars.
+- Done commits; close/Escape cancels and restores focus. Preserve date-only and wall-time canonical values in the proper venue/request/service IANA zone. Keep relative-date filters and recurring weekdays as their distinct approved controls. Native/backend rollout remains separate.

@@ -1,0 +1,19 @@
+/* Review 40: shared feedback vocabulary; retain the host's approved content region. */
+:is(.phone,.places-page) .studio-feedback{padding:32px 20px;text-align:center;line-height:1.45;color:var(--ds-textPrimary)}
+:is(.phone,.places-page) .studio-feedback>h3{font:700 var(--ds-identity)/1.35 Manrope,sans-serif!important;margin:16px 0 8px;overflow-wrap:anywhere}
+:is(.phone,.places-page) .studio-feedback>p{font:400 var(--ds-body)/1.45 Golos,sans-serif;color:var(--ds-textSecondary);max-width:30ch;margin:0 auto;overflow-wrap:anywhere}
+:is(.phone,.places-page) .studio-feedback>.icon{width:32px;height:32px;color:var(--ds-textSecondary);margin:0}
+:is(.phone,.places-page) .studio-feedback>:is(button.primary,button.outline){margin-top:20px;max-width:100%}
+:is(.phone,.places-page) .studio-feedback .spinner{display:block;width:28px;height:28px;border:2px solid var(--ds-border);border-top-color:var(--ds-textPrimary);border-radius:50%;margin:0 auto 16px}
+:is(.phone,.places-page) .studio-inline-feedback{font:400 var(--ds-meta)/1.45 Golos,sans-serif;color:var(--ds-textSecondary);overflow-wrap:anywhere}
+:is(.phone,.places-page) .save-error.studio-inline-feedback{color:var(--ds-error);margin-top:16px}
+:is(.phone,.places-page) .review-loading.studio-inline-feedback{min-height:48px;gap:8px}
+:is(.phone,.places-page) .review-error.studio-inline-feedback{gap:12px;flex-wrap:wrap}
+/* A date value stays complete and on one line; its full localized date is available as a tooltip. */
+.phone .meeting-form{container:meeting-form / inline-size}
+.phone .shared-temporal-trigger[data-temporal-display=date]>span{white-space:nowrap;overflow-wrap:normal;word-break:normal;font-variant-numeric:tabular-nums}
+@container meeting-form (max-width:340px){.meeting-time-pair{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){:is(.phone,.places-page) :is(.spinner,.loading-dot){animation:none!important;transition:none!important}}
+
+/* Preserve the heading and create action when large text exceeds a narrow row. */
+.phone.large .meeting-list-heading{flex-wrap:wrap}

@@ -107,8 +107,10 @@ final chatInboxProvider = StreamProvider.autoDispose<List<InboxEntry>>((ref) {
           repository.seedSamples
       ? ['anna', 'event', 'neighbors']
       : conversations.map((c) => c['id'] as String).toList();
+  // Refresh canonical previews after local sends settle, including the sender
+  // whose server notification stream intentionally excludes self messages.
+  ref.watch(chatProvider);
   if (client == null) {
-    ref.watch(chatProvider);
     final read = ref.watch(chatReadProvider);
     return Stream.value(
       sortInbox(
