@@ -1,0 +1,10 @@
+/* Review-only refinements; frozen source styles remain untouched. */
+.full-head{gap:12px}.full-head h2{min-width:0}.full-head .icon-button{margin:0!important}.full-head .icon-button:focus-visible{outline-offset:-2px}
+.soft-note .outline{margin-top:16px}.soft-note p{margin-top:8px}
+.nav{align-items:center;justify-content:space-between;gap:4px}
+.nav button{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;flex:0 1 48px;min-width:44px;min-height:48px;padding:8px;border-radius:16px;font-size:0}
+.nav button[aria-current=page]{flex:1;max-width:140px;background:var(--lime);color:var(--onlime);font-size:12px;font-weight:700;white-space:nowrap}
+.nav .nav-label{display:none}.nav button[aria-current=page] .nav-label{display:inline}
+.nav .icon-wrap{width:auto;height:auto;background:none}.nav button .icon{width:22px;height:22px}
+
+.brand .mode{display:none}.sheet-head .icon-button{margin:0!important}

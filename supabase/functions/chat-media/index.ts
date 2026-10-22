@@ -28,7 +28,7 @@ Deno.serve(async(request:Request)=>{
  if(total<4)return fail(400);
  const metadataSize=new DataView(body.buffer).getUint32(0);if(metadataSize>8192||metadataSize+4>total)return fail(400);
  let caption:string,inputMime:string;
- try{const metadata=JSON.parse(new TextDecoder().decode(body.slice(4,4+metadataSize)));caption=metadata.caption;inputMime=metadata.mime;if(typeof caption!=='string'||caption.length>1000)return fail(400);}catch{return fail(400);}
+ try{const metadata=JSON.parse(new TextDecoder().decode(body.slice(4,4+metadataSize)));caption=metadata.caption;inputMime=metadata.mime;if(typeof caption!=='string'||Array.from(caption).length>1000)return fail(400);}catch{return fail(400);}
  const raw=body.slice(4+metadataSize);total=raw.length;if(total>limit)return fail(413);
  let bytes:Uint8Array,mime:string,duration:number|null=null;
  try{

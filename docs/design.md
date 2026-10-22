@@ -331,3 +331,85 @@ Profile applies Material list guidance (short, consistent headlines/supporting d
 Pets retain compact identity cards and real metadata. Empty pets have a labelled Add action; populated pets use the section add action. Blank temperament does not reserve a line. Walking-helper reputation remains role-specific, with no-review text instead of zero stars and a link to detailed reviews. Favorite places remain inline; empty favorites link to the catalog, while retained favorite IDs distinguish loading/failure/unavailable data from having saved nothing. The duplicate demo footer is removed; status remains in the app header. Authentication, photo storage and reputation eligibility are unchanged.
 
 Sources: https://github.com/material-components/material-components-android/blob/master/docs/components/List.md and https://developer.apple.com/design/human-interface-guidelines/settings.
+
+### Profile: shared owner and pet identity (2026-10-10)
+
+The personal profile now groups the owner and their pets in one compact identity surface. A quiet, labelled edit icon sits beside the owner's name; photo selection remains a separate accessible action. Pet rows share the same surface instead of adding nested cards. An empty pet list offers one add row without explanatory filler or a large capsule. Optional biography, interests and temperament only occupy space when present. Walking reputation uses one navigation row with the existing server-derived review and completed-walk labels. Saved places remain inline, with existing loading/error/unavailable states retained. Settings remain in the header.
+
+This applies the previously reviewed person-first profile approach within Studio rather than copying another application's visual styling. Reference: https://telegram.org/blog/my-profile-and-15-more?setln=en and https://www.airbnb.com/help/article/67.
+
+Checked on the iPhone simulator in light and dark themes, plus sparse/populated 320px layouts at 2x text size and edit/add route tests. Captures: profile-shared-identity-light-ios.png and profile-shared-identity-dark-ios.png.
+
+### Profile content tabs (2026-10-10)
+
+Below the shared identity card, two text-only secondary tabs now separate «Избранное» (default) and «Выгул». A thin foreground underline indicates selection; no tab pills or icons are used. Favorites remain inline in the personal profile with the existing empty/loading/error states. The walking tab retains server-derived reputation and the route to full helper details. No fixed-height content area is reserved. Tab labels accommodate enlarged text, and indicator motion respects reduced motion. Verified in both simulator themes and five profile tests covering sparse/populated 320px layouts at 2x text size, mutually exclusive tab content and edit/add routes. Reference: https://github.com/material-components/material-web/blob/main/docs/components/tabs.md.
+
+### Profile tab spacing refinement (2026-10-10)
+
+Profile tabs now sit together at the leading edge rather than occupying equal halves of the page. Removed the full-width rule; the selected label uses stronger weight and a short underline. Large text uses available width for readable labels instead of forcing horizontal scrolling. Native tab semantics and content switching remain. Verified both themes and five 320px/2x profile tests. Capture: profile-tabs-compact-ios.png.
+
+### Profile tabs: equal widths (2026-10-10)
+
+At the user's request, both profile tabs now fill the content width equally at every text size. Labels are centered, and the selection underline spans the selected tab's half instead of following the text width. The identity card and content retain page insets. Confirmed in the iPhone simulator and five profile tests including light/dark 320px layouts at 2x text size. Analyzer is clean. Capture: profile-tabs-full-width-ios.png.
+
+### Restore the Studio wordmark and page phrases (2026-10-10)
+
+At the user's request, all five main tabs again show the PetFriendly wordmark in the app bar. Nearby retains its original greeting. The other tabs introduce their content with compact Studio headings: «Знакомьтесь рядом.», «На прогулку / с хорошей компанией.», «Хороший разговор / начинается рядом.» and «Вы, питомцы / и ваши истории.». Existing contextual subtitles, header actions, profile content tabs and revised layouts remain. Ten navigation/profile tests pass and analysis of the five edited UI files is clean. Install the rebuilt app rather than delivering a hot-reload-only preview.
+
+### Точка встречи на карте — 10 октября 2026
+
+В форме встречи после города — «Выбрать место на карте». Полноэкранный выбор с неподвижной меткой по центру, жестами карты и подтверждением точки. Повторный выбор открывает прежнюю точку, отмена сохраняет её. Подтверждение доступно только после загрузки карты и начального положения. Выбор необязательный: встречи без точки продолжают работать.
+
+После выбора доступны короткая подпись «Где собираемся» и удаление точки. При смене города точка и подпись сбрасываются. В черновике остаются только в памяти текущего аккаунта. Карточка встречи открывает отдельную карту с приближением к выбранной точке и иконкой встречи, сохраняя ручной город приложения. Публичность точки обозначена в форме; текущее положение устройства не подставляется и не публикуется. Проверено в обеих темах iOS Simulator; подпись на карте не закрывает attribution.
+
+### Selection panels and dropdown margins (2026-10-10)
+
+City, place filters, appearance and venue time-zone sheets use a shared selection-sheet presentation with 16px horizontal screen gutters, a 640px maximum width on wider devices, safe-area handling and clipped rounded surfaces. Existing scrolling, keyboard insets, dismissal and selected-value behavior remain. Native dropdown menus now align to their fields instead of expanding beyond them via Flutter's default menu margin. This applies consistently through the Studio button theme. Added a rendered panel-bounds regression check at 320px; city/filter/profile tests passed, including enlarged text. Capture: city-picker-inset-ios.png.
+
+### Filter sheet content height (2026-10-10)
+
+Removed the forced 80%-screen height from the place-filter sheet. It now fits its controls and action, with an 80% maximum and scrolling when needed; side gutters remain. Verified the rebuilt, cold-launched app and five filter tests, including panel-bottom spacing and action access at 320×640 with 2x text in both themes. Capture: place-filters-content-fit-ios.png.
+
+### Selection modals: full width (2026-10-10)
+
+The user clarified that bottom-sheet selection modals should fill the screen width. The shared presentation now uses full available width for city, filters, appearance and time-zone panels, with content padding inside. This supersedes the earlier 16px panel gutters. The filter sheet still fits its content and scrolls when needed; native dropdown menus retain their separate field-alignment fix. Eleven city/filter tests pass, including rendered full-width bounds and enlarged-text scrolling in both themes.
+
+### Walking profile — Studio proposal and handoff (2026-10-10)
+
+The clickable proposal in `design/walking-profile.html`, `design/walking-profile.css` and `design/walking-profile.js` preserves Studio identity, restrained lime, flat surfaces, rounded controls and bundled Manrope/Golos Text. Its ten exercised semantic color roles match `design/tokens.json` in both themes. Personal Walking distinguishes experience helping other owners from requests for one's own pet; the compact experience summary and plain review/reply sections are reusable across personal, own-helper and public-helper views. Self finds requests and replies to eligible reviews; another helper offers discussion in chat and contextual report/block actions, without selecting a helper or creating an agreement.
+
+Loading, unavailable data, no reviews, completed-but-unrated, long content, missing photos and recoverable action failures have explicit states. Light/dark layouts retain 48px targets, labelled actions, keyboard/focus semantics, reduced motion and wrapping/stacking at enlarged text; review author/date remain readable before rating/menu controls. The finish review accepted the prototype/handoff scope after the enlarged review-header correction: 72 browser layout cases and four own/public header recaptures at 320px/200% are recorded in `.impeccable/review/walking/`. Detailed Flutter guidance and optional agreement-history scope are in `docs/walking-profile-design.md`; preview with `python3 scripts/preview_walking_design.py`.
+
+This proposal uses synthetic fixture data and local action simulations. It does not modify the existing live Flutter screens or backend, and agreement history is documented only as an optional extension. Native VoiceOver/TalkBack, keyboard/safe-area behavior and provider/authorization integration still require implementation and validation. The original palette table above predates current tokens: its dark secondary text and divider values differ from `design/tokens.json`; the proposal follows the current tokens. Historical documentation and global design tokens are unchanged.
+
+### Walking profile — Flutter implementation mapping (2026-10-10)
+
+The approved Walking composition now maps to native `ProfileScreen` and `HelperScreen`, with shared `WalkingExperienceSummary`, `WalkingEmptyState`, `WalkingExperienceExplanation` and `WalkingReviewTile` in `lib/features/walks/walking_profile_components.dart`. The personal tab labels helper experience, previews a published review and links to the own helper profile and existing requests. Helper detail reuses the summary/reviews, keeps identity and optional district/bio first, and separates self actions from discussion/report/block actions for another person. Summary and review headers reflow with available width and device text scaling; long reviews expand inline.
+
+Existing `IdentityPicture`, production server aggregates and `direct`, `reply_walk_review`, report and `block` paths remain authoritative. `ReplyToReview` uses the current-session, account/review-scoped `reviewReplyDraftsProvider` in `lib/features/walks/reply_drafts.dart` for text, error and pending state. Back/reopen and inline cancellation/failure preserve the draft; account changes and successful publication clear it. Drafts are not persisted to disk, and the provider blocks duplicate pending submissions across route reopening. Uncached profile loading/error/missing identity and cached refresh failure are distinct; unavailable aggregates never become fabricated zero experience. The HTML remains a synthetic design reference, with no stock photos copied into Flutter and no agreements dashboard added. The detailed API map is in `docs/walking-profile-design.md`. Native verification: 36 targeted Flutter tests pass, including 320px/200% own/public layouts in both themes, published-only review previews, missing/unavailable states, route actions, reply failure/Back/reopen/pending guards and account reset. Flutter analysis is clean. The installed iOS simulator build was cold-launched and the personal/own empty views and request-discovery route were inspected in both themes; captures are in `docs/screenshots/walking-native-*.png`. Public populated views were validated by widget tests rather than seeded into the installed app. VoiceOver/TalkBack and a physical Android device remain unverified; these results do not certify backend protection.
+
+## Международный интерфейс
+
+Русский, English, беларуская и polski. По умолчанию — язык устройства, неподдерживаемый язык заменяется русским. Выбор доступен до входа и в настройках, сохраняется локально и сразу обновляет интерфейс. Смена языка не меняет город, профиль, режим аккаунта или переписки. Названия и отзывы пользователей остаются в исходном виде.
+
+Выбор города использует тот же экран в Nearby, формах встреч/выгула и профиле помощника. Поиск локальный, по названию и алиасам; отдельный select страны. В строках показываются страна и регион, для маленьких населённых пунктов доступен ручной ввод со страной. Подписи не задают фиксированную высоту карточек; длинные переводы и увеличение текста должны оставаться читаемыми.
+
+### Shared typography calibration — 2026-10-13
+
+The approved Walks Studio typography now supplies the app-wide Flutter defaults: every TextTheme role explicitly uses bundled Manrope or Golos Text. Identity/section titles use stronger Manrope weights; sheet/app-bar titles use Manrope 20/700, body and form content use Golos Text 16/400, metadata uses Golos Text 14/400, controls use 14/500, and small labels use 12. Calendar weekdays retain their purpose-specific 12-point size. Machine-readable roles are in design/tokens.json. These defaults supersede the earlier 15-point body notes above; feature-specific display/wordmark sizes remain intentional.
+
+Centered content feedback follows the Studio reference: 48-point vertical spacing, an 18-point bold Manrope heading, 14-point muted Golos copy, and a 28-point thin spinner during loading. Loading does not display an empty-state icon. Reduced motion uses a static progress arc. Empty reviews have one centered message without an orphan completed-count line; unavailable data remains distinct from genuinely empty data.
+
+## Studio component instructions
+
+For future design updates, use [design-system.md](design-system.md), the [component contract](../design/system/components.json) and the [visual catalog](../design/system/index.html). These consolidate the current reviewed conventions and record differences from older token values. Existing approved screens and archived versions remain unchanged until a reviewed migration is authorized.
+
+
+### Review 27 superseding workflow decisions
+
+The user simplified the active browser design on 14 October 2026: one sign-in form with providers and password reset; no MFA, data-copy or device-session journeys. Public places are published directly without a moderator product role or approval queue; report-based removal requires a separate backend rule. Public communities can be joined from discovery or a received link. Walk applications stay in record details and agreement actions stay in participant chat. See design/system/instructions.md and docs/workflow-simplification-review.md. Existing native/backend behavior was not changed by this design pass. Earlier moderation/account-management diagrams are historical, preserved in Review 26.
+
+
+### Review 28 · public meetings
+
+Meetings is a third People segment, also opened from Nearby’s All meetings entry and community details. Public events allow voluntary joining without joining a community, subject to capacity. One create form accepts an optional public point and gathering label; changing venue city clears both. A meeting can be shared through an existing chat draft and explicit Send; its card retains event identity. Unknown links never fall back to another event. Walking chat keeps the fixed context actions and adds an elapsed timer during an active walk. See docs/meetings-workflow-review.md and the design-system instructions. These are browser design fixtures; native/backend integration remains separate.

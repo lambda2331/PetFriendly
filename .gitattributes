@@ -1,0 +1,8 @@
+* text=auto
+
+# Keep preserved browser review material out of application language statistics.
+design/** linguist-documentation
+docs/** linguist-documentation
+
+# Bundled geographic snapshots are generated; their provenance is retained nearby.
+assets/data/geonames/*.json linguist-generated

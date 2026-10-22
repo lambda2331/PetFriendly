@@ -72,7 +72,7 @@ void main() {
       ),
     );
     await tester.pump();
-    expect(find.byType(LinearProgressIndicator), findsOneWidget);
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
     expect(find.text('Пока нет переписок'), findsNothing);
     community.complete({});
     inbox.addError(StateError('offline'));
@@ -83,7 +83,7 @@ void main() {
     inbox.add([]);
     await tester.pumpAndSettle();
     expect(find.text('Пока нет переписок'), findsOneWidget);
-    expect(find.text('Найти компанию'), findsOneWidget);
+    expect(find.text('Новая переписка'), findsOneWidget);
   });
 
   for (final brightness in Brightness.values) {
@@ -117,11 +117,11 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.byTooltip('Новая переписка'), findsOneWidget);
-        await tester.ensureVisible(find.text('Найти компанию'));
+        await tester.ensureVisible(find.text('Новая переписка'));
         await tester.pumpAndSettle();
         expect(find.text('Пока нет переписок'), findsOneWidget);
         expect(
-          tester.getRect(find.text('Найти компанию')).bottom,
+          tester.getRect(find.text('Новая переписка')).bottom,
           lessThanOrEqualTo(520),
         );
         expect(tester.takeException(), isNull);

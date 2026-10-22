@@ -1,8 +1,11 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/backend/backend.dart';
+import '../walks/account_mode.dart';
+import 'onboarding_replay.dart';
 
 final accountEntryProvider = FutureProvider<String>((ref) async {
   // listFactors refreshes the SDK session. Watching every refresh event here
@@ -18,6 +21,9 @@ final accountEntryProvider = FutureProvider<String>((ref) async {
       assurance.currentLevel != AuthenticatorAssuranceLevels.aal2) {
     return '/mfa';
   }
+  if (ref.watch(onboardingReplayProvider)) return '/onboarding';
+  final mode = await ref.read(accountModeProvider.future);
+  if (mode.needsRoleSelection) return '/onboarding';
   final profile = await client
       .from('profiles')
       .select('display_name')
@@ -25,9 +31,11 @@ final accountEntryProvider = FutureProvider<String>((ref) async {
       .maybeSingle();
   if (profile == null) throw StateError('Profile unavailable');
   final name = (profile['display_name'] as String).trim();
-  return name.isEmpty || name == 'Новый пользователь'
-      ? '/edit/profile?welcome=true'
-      : '/nearby';
+  if (name.isEmpty || name == 'Новый пользователь') return '/onboarding';
+  if (mode.isHelper && await ref.read(helperProfileProvider.future) == null) {
+    return '/onboarding';
+  }
+  return mode.isHelper ? '/requests' : '/nearby';
 }, retry: (_, _) => null);
 
 class AccountEntryScreen extends ConsumerWidget {
@@ -51,7 +59,7 @@ class AccountEntryScreen extends ConsumerWidget {
         child: state.hasError
             ? TextButton(
                 onPressed: () => ref.invalidate(accountEntryProvider),
-                child: const Text('Повторить вход в аккаунт'),
+                child: Text("Повторить вход в аккаунт".tr(context)),
               )
             : const CircularProgressIndicator(),
       ),

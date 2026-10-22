@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui/components.dart';
@@ -42,7 +44,7 @@ class PlaceRow extends ConsumerWidget {
                       ),
                       if (place.pending)
                         Text(
-                          'На проверке · видно только вам',
+                          "На проверке · видно только вам".tr(context),
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       const SizedBox(height: 4),
@@ -55,9 +57,10 @@ class PlaceRow extends ConsumerWidget {
                                       .read(locationServiceProvider)
                                       .lastPosition,
                                 ),
+                                locale: context.languageCode,
                               ) ??
                               place.distance,
-                          place.category,
+                          place.category.tr(context),
                         ],
                       ),
                       const SizedBox(height: 6),
@@ -81,7 +84,10 @@ class PlaceRow extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        rating.average.toStringAsFixed(1).replaceAll('.', ','),
+                        NumberFormat(
+                          '0.0',
+                          context.languageCode,
+                        ).format(rating.average),
                       ),
                       const SizedBox(width: 4),
                       const Icon(Icons.star_rounded, size: 16),
@@ -98,8 +104,16 @@ class PlaceRow extends ConsumerWidget {
   }
 }
 
-String? distanceLabel(double? meters) => meters == null
+String? distanceLabel(double? meters, {String locale = 'ru'}) => meters == null
     ? null
     : meters < 1000
-    ? '~${(meters / 10).round() * 10} м по прямой'
-    : '~${(meters / 1000).toStringAsFixed(1).replaceAll('.', ',')} км по прямой';
+    ? translateForLanguage(
+        '~{p0} м по прямой',
+        locale: locale,
+        arguments: {'p0': (meters / 10).round() * 10},
+      )
+    : translateForLanguage(
+        '~{p0} км по прямой',
+        locale: locale,
+        arguments: {'p0': NumberFormat('0.0', locale).format(meters / 1000)},
+      );

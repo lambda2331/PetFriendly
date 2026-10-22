@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -27,7 +28,10 @@ Future<void> showChatMedia(
     );
   } catch (_) {
     if (context.mounted) {
-      notice(context, 'Не удалось открыть вложение. Повторите попытку.');
+      notice(
+        context,
+        "Не удалось открыть вложение. Повторите попытку.".tr(context),
+      );
     }
   }
 }
@@ -51,7 +55,12 @@ class ChatMediaTile extends ConsumerWidget {
         onPressed: () =>
             showChatMedia(context, ref, messageId, attachment, local),
         icon: const Icon(Icons.play_circle_outline),
-        label: Text('Видео · ${attachment.duration?.round() ?? 0} с'),
+        label: Text(
+          "Видео · {p0} с".tr(
+            context,
+            arguments: {'p0': attachment.duration?.round() ?? 0},
+          ),
+        ),
         style: TextButton.styleFrom(
           foregroundColor:
               foreground ?? Theme.of(context).colorScheme.onSurface,
@@ -74,7 +83,7 @@ class ChatMediaTile extends ConsumerWidget {
               ? Center(
                   child: remote?.hasError == true
                       ? Text(
-                          'Фото · повторить',
+                          "Фото · повторить".tr(context),
                           style: TextStyle(color: foreground),
                         )
                       : const CircularProgressIndicator(),
@@ -83,7 +92,7 @@ class ChatMediaTile extends ConsumerWidget {
                   photo,
                   fit: BoxFit.cover,
                   cacheWidth: 600,
-                  semanticLabel: 'Фото в переписке',
+                  semanticLabel: "Фото в переписке".tr(context),
                 ),
         ),
       ),
@@ -175,12 +184,14 @@ class _MediaViewerState extends ConsumerState<_MediaViewer>
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    widget.attachment.kind == 'image' ? 'Фото' : 'Видео',
+                    widget.attachment.kind == 'image'
+                        ? "Фото".tr(context)
+                        : "Видео".tr(context),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
                 IconButton(
-                  tooltip: 'Закрыть',
+                  tooltip: "Закрыть".tr(context),
                   onPressed: () => Navigator.pop(context),
                   icon: const Icon(Icons.close),
                 ),
@@ -193,8 +204,10 @@ class _MediaViewerState extends ConsumerState<_MediaViewer>
                         child: Image.memory(widget.bytes, fit: BoxFit.contain),
                       )
                     : failed
-                    ? const Text(
-                        'Формат видео не поддерживается на устройстве.',
+                    ? Text(
+                        "Формат видео не поддерживается на устройстве.".tr(
+                          context,
+                        ),
                       )
                     : current == null
                     ? const CircularProgressIndicator()
@@ -214,7 +227,9 @@ class _MediaViewerState extends ConsumerState<_MediaViewer>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          tooltip: value.isPlaying ? 'Пауза' : 'Воспроизвести',
+                          tooltip: value.isPlaying
+                              ? "Пауза".tr(context)
+                              : "Воспроизвести".tr(context),
                           onPressed: () => value.isPlaying
                               ? current.pause()
                               : current.play(),
@@ -224,8 +239,8 @@ class _MediaViewerState extends ConsumerState<_MediaViewer>
                         ),
                         IconButton(
                           tooltip: value.volume == 0
-                              ? 'Включить звук'
-                              : 'Выключить звук',
+                              ? "Включить звук".tr(context)
+                              : "Выключить звук".tr(context),
                           onPressed: () =>
                               current.setVolume(value.volume == 0 ? 1 : 0),
                           icon: Icon(

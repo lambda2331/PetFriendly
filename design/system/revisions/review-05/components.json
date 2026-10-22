@@ -1,0 +1,390 @@
+{
+  "version": "1.3.2",
+  "direction": "Studio",
+  "updated": "2026-10-14",
+  "foundationRef": "../../../tokens.json",
+  "instructionsRef": "instructions.md",
+  "scope": "Future design work. Preserve approved screens; the current mock is a review candidate, not blanket approval of all flows.",
+  "fonts": {
+    "heading": {
+      "family": "Manrope",
+      "asset": "../../assets/fonts/Manrope.ttf"
+    },
+    "body": {
+      "family": "Golos Text",
+      "cssAlias": "Golos",
+      "asset": "../../assets/fonts/GolosText.ttf"
+    }
+  },
+  "typography": {
+    "screenTitle": {
+      "family": "Manrope",
+      "size": 32,
+      "weight": 700,
+      "lineHeight": 1.12
+    },
+    "sheetTitle": {
+      "token": "typography.sheetHeading",
+      "family": "Manrope",
+      "size": 20,
+      "weight": 700,
+      "lineHeight": 1.35
+    },
+    "identityTitle": {
+      "token": "typography.identityHeading",
+      "family": "Manrope",
+      "size": 18,
+      "weight": 700,
+      "lineHeight": 1.35
+    },
+    "body": {
+      "token": "typography.body",
+      "family": "Golos Text",
+      "size": 16,
+      "weight": 400,
+      "lineHeight": 1.4
+    },
+    "metadata": {
+      "token": "typography.metadata",
+      "family": "Golos Text",
+      "size": 14,
+      "weight": 400,
+      "lineHeight": 1.45
+    },
+    "actionLabel": {
+      "family": "Golos Text",
+      "size": 16,
+      "weight": 600,
+      "lineHeight": 1.4
+    },
+    "smallLabel": {
+      "token": "typography.smallLabel",
+      "family": "Golos Text",
+      "size": 12,
+      "weight": 500,
+      "lineHeight": 1.4
+    }
+  },
+  "components": {
+    "actionButton": {
+      "minimumHeight": 48,
+      "minimumHitTarget": 44,
+      "horizontalPadding": 16,
+      "verticalPadding": 12,
+      "radius": "pill",
+      "variants": {
+        "primary": {
+          "background": "accent",
+          "foreground": "onAccent",
+          "border": "none"
+        },
+        "secondary": {
+          "background": "background",
+          "foreground": "textPrimary",
+          "border": "border"
+        },
+        "tertiary": {
+          "background": "transparent",
+          "foreground": "textPrimary",
+          "border": "none"
+        }
+      },
+      "states": [
+        "default",
+        "hover",
+        "pressed",
+        "focus",
+        "disabled",
+        "loading"
+      ],
+      "loading": "Keep label and size; prevent duplicate submission.",
+      "copy": "Short verb: Send, Create, Choose, Save. Use object text only when needed."
+    },
+    "actionPair": {
+      "width": "full",
+      "columns": 2,
+      "gap": 12,
+      "equalWidth": true,
+      "equalHeight": true,
+      "primaryPosition": "right",
+      "secondaryPosition": "left",
+      "largeText": "Stack vertically; keep primary visually identifiable.",
+      "buttonHorizontalPadding": 8
+    },
+    "iconButton": {
+      "minimumWidth": 48,
+      "minimumHeight": 48,
+      "iconSize": 20,
+      "accessibleNameRequired": true
+    },
+    "field": {
+      "minimumHeight": 48,
+      "radiusToken": "radii.control",
+      "background": "subtle",
+      "border": "border",
+      "padding": 12,
+      "fontStyle": "body",
+      "states": [
+        "default",
+        "focused",
+        "invalid",
+        "disabled"
+      ],
+      "label": "Visible, outside field.",
+      "error": "Adjacent actionable message; preserve draft.",
+      "focus": "One existing border changes color; no outer outline. Invalid focus retains the error border."
+    },
+    "select": {
+      "triggerHeight": 48,
+      "presentation": "Reuse the reviewed anchored mock select: soft 48 px trigger, trailing chevron, selected check mark, Escape/outside dismissal and arrow-key navigation. Searchable long lists use the shared selection sheet.",
+      "preserveDraftUntilApply": true,
+      "optionSurface": "Transparent at rest including selected option; subtle fill on hover only. Selected check and weight remain."
+    },
+    "checkbox": {
+      "visualSize": 24,
+      "rowMinimumHeight": 48,
+      "selection": "Multiple independent choices.",
+      "selectedBackground": "accent",
+      "selectedForeground": "onAccent",
+      "checkmark": "Centered 18 px SVG check mask; translate(-50%, -50%) on both axes."
+    },
+    "radio": {
+      "visualSize": 24,
+      "rowMinimumHeight": 48,
+      "selection": "Exactly one choice per named group.",
+      "border": "textSecondary",
+      "selectedIndicator": "Single accent-filled circle with an 8 px onAccent dot; no double ring.",
+      "keyboard": "Arrow keys move selection; visible focus."
+    },
+    "starRating": {
+      "count": 5,
+      "width": "full",
+      "gap": 8,
+      "itemMinimumHeight": 48,
+      "itemEqualWidth": true,
+      "selectedBackground": "accent",
+      "selectedForeground": "onAccent",
+      "icon": "star",
+      "semantics": "Label each value 1–5; selected value exposed; keyboard selection.",
+      "unset": "No preselected rating unless editing a saved review."
+    },
+    "contextRow": {
+      "avatarSize": 48,
+      "avatarRadius": 12,
+      "gap": 12,
+      "titleStyle": "identityTitle",
+      "metadataStyle": "metadata",
+      "layout": "Name above date/city/participant.",
+      "editable": "Whole row is one labelled change action, with trailing chevron."
+    },
+    "identityRow": {
+      "avatarSizes": [
+        48,
+        56,
+        72
+      ],
+      "titleStyle": "identityTitle",
+      "metadataStyle": "metadata",
+      "separator": "One per row boundary; none duplicated before footer."
+    },
+    "statusChip": {
+      "minimumHeight": 32,
+      "horizontalPadding": 10,
+      "verticalPadding": 6,
+      "radius": 8,
+      "fontStyle": "metadata",
+      "background": "subtle",
+      "foreground": "textSecondary",
+      "placement": "One row per record where width permits; wrap for large text, never truncate meaning.",
+      "textRequired": true,
+      "variants": {
+        "status": "subtle fill with state icon and text",
+        "recordType": "transparent background with category icon and textPrimary label"
+      }
+    },
+    "sheet": {
+      "radiusToken": "radii.sheet",
+      "maxHeightFraction": 0.88,
+      "horizontalPadding": 20,
+      "header": "Title left, close action right.",
+      "body": "Scroll body; keep header accessible.",
+      "footer": "Safe-area aware. Paired actions use actionPair.",
+      "keyboard": "Focus trapped, Escape closes if cancellable; restore trigger focus.",
+      "motionToken": "motion.sheetMs"
+    },
+    "pageHeader": {
+      "backHitTarget": 48,
+      "titleAlignment": "center for compact detail/editor header",
+      "centerMethod": "Equal 48 px leading and trailing slots; title centered in remaining column."
+    },
+    "listScreen": {
+      "fixed": [
+        "header",
+        "segments",
+        "search",
+        "filters"
+      ],
+      "scrolling": "Results list only",
+      "footer": "Bottom navigation fixed, safe-area aware."
+    },
+    "tabs": {
+      "active": "Weight and underline, not color alone.",
+      "horizontalOverflow": "Scrollable if localized labels need it; do not clip."
+    },
+    "searchAndFilters": {
+      "searchHeight": 48,
+      "filterHitTarget": 48,
+      "gap": 12,
+      "advanced": "One filter sheet with related criteria, explicit Apply / Reset.",
+      "summary": "Do not add extra result/filter-summary lines to Walking Current."
+    },
+    "toast": {
+      "purpose": "Short non-blocking acknowledgement on the originating screen.",
+      "background": "accent",
+      "foreground": "onAccent",
+      "padding": 14,
+      "radius": 12,
+      "semantics": "status",
+      "avoid": "Standalone success page for a simple saved/sent result.",
+      "border": "none",
+      "successIcon": "onAccent check without an extra badge"
+    },
+    "confirmation": {
+      "container": "sheet",
+      "title": "One concise question.",
+      "context": "contextRow",
+      "body": "Only consequences necessary for a decision.",
+      "actions": "actionPair",
+      "avoid": "Repeated action word in title, paragraph and button."
+    },
+    "photoPicker": {
+      "interaction": "Direct gallery picker; optional explicit provider import as separate inline action.",
+      "preview": "Local re-encoded image; removal available.",
+      "validation": [
+        "JPEG/PNG/WebP",
+        "At most 5 MiB source",
+        "Decode failure recovery"
+      ],
+      "imageMaxDimension": 1200,
+      "metadata": "Do not carry original EXIF.",
+      "production": "Use private upload pipeline; mock previews do not imply storage."
+    },
+    "emptyErrorLoading": {
+      "empty": "Short heading, reason and recovery if useful.",
+      "error": "Preserve content/draft; give retry.",
+      "loading": "Preserve layout and identify the real pending operation.",
+      "reputation": "No reviews yet; never zero stars for unrated people."
+    },
+    "mapContainer": {
+      "inline": "Side insets and rounded corners.",
+      "fullscreenControls": [
+        "zoom",
+        "location"
+      ],
+      "unavailable": "Honest unavailable state and useful list fallback.",
+      "publicPoint": "Select a public venue point, never publish device GPS."
+    },
+    "chat": {
+      "typeStyle": "body",
+      "metadataStyle": "metadata",
+      "required": [
+        "sender",
+        "time",
+        "context",
+        "membership-appropriate actions"
+      ],
+      "media": "Photos only; constraints come from security and chat-media requirements."
+    }
+  },
+  "aliases": {
+    "--bg": "background",
+    "--fg": "textPrimary",
+    "--muted": "textSecondary",
+    "--line": "border",
+    "--soft": "subtle",
+    "--lime": "accent",
+    "--onlime": "onAccent"
+  },
+  "legacyDifferences": [
+    {
+      "item": "Body scale",
+      "canonical": "typography.body is 16; older typeScale.body is 15.",
+      "rule": "Use the scoped typography token for new mobile components; do not resize approved legacy screens automatically."
+    },
+    {
+      "item": "Action label",
+      "canonical": "General typography.control is 14; reviewed action buttons are 16/600.",
+      "rule": "Use this actionButton contract for main actions; reserve 14 for metadata and compact tertiary controls."
+    },
+    {
+      "item": "Padding",
+      "canonical": "layout.horizontalPadding is 24; reviewed sheets/lists often use 20.",
+      "rule": "Keep 20 for the reviewed sheet pattern and approved mocks; retain existing 24 px page layouts. Migration needs review."
+    },
+    {
+      "item": "Control radius",
+      "canonical": "radii.control is 14; reviewed inputs often use 12; primary/secondary actions use pills.",
+      "rule": "Use semantic token for new fields, pill for action buttons; preserve approved field silhouettes until a reviewed migration."
+    },
+    {
+      "item": "Colors",
+      "canonical": "Mock CSS contains near-matching historical hex values.",
+      "rule": "Use semantic tokens for new work; do not silently recolor existing approved views."
+    },
+    {
+      "item": "Sheet heading",
+      "canonical": "Token/native shared style is 20; some reviewed browser headings are 22 or 24.",
+      "rule": "Use shared sheet heading for new sheets; preserve existing approved sizes until migration is reviewed."
+    },
+    {
+      "item": "Avatar shape",
+      "canonical": "Foundation avatar token is circular; person/pet rows use compact rounded squares in reviewed screens.",
+      "rule": "Select shape by existing component role; do not replace identity images or all avatar shapes globally."
+    }
+  ],
+  "changeRules": [
+    "Read instructions before every UI task.",
+    "Reuse the established component with the same intent.",
+    "Keep approved screens and archived versions unchanged unless the user explicitly authorizes that screen change.",
+    "Review new actions, destinations or flow behavior in the workflow map before implementation.",
+    "Archive the current candidate before altering it.",
+    "Apply shared component corrections to active matching uses, never frozen archives.",
+    "Document any intentional exception with its affected surface and reason.",
+    "Validate changed states and representative light/dark, large-text and localized layouts without claiming native/server verification from browser mocks."
+  ],
+  "browserAlignment": {
+    "review": 25,
+    "finalStylesheet": "../onboarding-unified-account-2026-10-14/mock-system.css",
+    "scope": "Nine active mock sources; preserved screen structure and flows.",
+    "exceptions": [
+      "Approved Nearby greeting and event hero scale",
+      "Compact category captions: smallLabel",
+      "Time-entry digits: approved 18/32 px numeric style",
+      "Reviewed 12 px field corners",
+      "Compact bottom navigation labels"
+    ],
+    "toggle": {
+      "track": [
+        48,
+        28
+      ],
+      "target": [
+        48,
+        48
+      ]
+    },
+    "calendar": {
+      "columns": 7,
+      "gap": 4,
+      "minimumTarget": [
+        44,
+        48
+      ]
+    },
+    "largeText": "200% role typography; paired actions stack and long labels wrap.",
+    "currentWorkflowReview": 27,
+    "additionalRenderer": "../onboarding-unified-account-2026-10-14/workflow-additions.js",
+    "additionalStylesheet": "../onboarding-unified-account-2026-10-14/workflow-additions.css",
+    "reviewStatus": "New destinations are design proposals; existing component contracts unchanged."
+  }
+}

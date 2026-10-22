@@ -1,0 +1,75 @@
+/* Review-only refinements; frozen source styles remain untouched. */
+.full-head{gap:12px}.full-head h2{min-width:0}.full-head .icon-button{margin:0!important}.full-head .icon-button:focus-visible{outline-offset:-2px}
+.soft-note .outline{margin-top:16px}.soft-note p{margin-top:8px}
+.nav{align-items:center;justify-content:space-between;gap:4px}
+.nav button{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;flex:0 1 48px;min-width:44px;min-height:48px;padding:8px;border-radius:16px;font-size:0}
+.nav button[aria-current=page]{flex:1;max-width:140px;background:var(--lime);color:var(--onlime);font-size:12px;font-weight:700;white-space:nowrap}
+.nav .nav-label{display:none}.nav button[aria-current=page] .nav-label{display:inline}
+.nav .icon-wrap{width:auto;height:auto;background:none}.nav button .icon{width:22px;height:22px}
+
+.brand .mode{display:none}.sheet-head .icon-button{margin:0!important}
+
+/* Reset inherited Walks .nav span sizing for both the icon and its label. */
+.nav button>span,.nav button .icon-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:auto;height:auto;min-width:0;margin:0;border-radius:0;background:transparent;color:inherit}
+.nav button[aria-current=page]>span{background:transparent;color:inherit}
+.nav button>.nav-label{display:none;line-height:20px}
+.nav button[aria-current=page]>.nav-label{display:inline;width:auto;height:auto;margin:0;animation:nav-label-enter 180ms ease-out}
+.nav button{transition:background-color 180ms ease,color 180ms ease,transform 100ms ease;overflow:hidden}
+.nav button:active,.nav button.nav-tap{transform:scale(.96)}
+@keyframes nav-label-enter{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.nav button{transition:none}.nav button[aria-current=page]>.nav-label{animation:none}.nav button:active,.nav button.nav-tap{transform:none}}
+
+/* Filter menus share the Studio control typography and compact corners. */
+.filter-menu{border:1px solid var(--line);border-radius:12px;padding:4px;background:var(--bg)}
+.filter-menu button{border:0;border-radius:6px;min-height:44px;padding:10px 12px;font-family:Golos,sans-serif;font-size:16px;font-weight:400;line-height:1.4}
+.filter-menu button[aria-selected=true],.filter-menu button[aria-checked=true]{background:var(--soft);font-weight:600}
+.filter-menu button:focus-visible{outline:2px solid var(--fg);outline-offset:-2px}
+
+.meeting-restored .meeting-title{font:700 26px/1.25 Manrope;margin:4px 0 20px}.meeting-fact{display:flex;gap:12px;align-items:center;padding:12px 0}.meeting-fact strong{font:500 16px/1.4 Golos}.meeting-fact .avatar{width:44px;height:44px;border-radius:12px;background:var(--soft);display:flex;align-items:center;justify-content:center;font:600 14px Golos}.meeting-map{display:flex;align-items:center;justify-content:center;gap:12px;background:var(--soft);border-radius:20px;min-height:120px;margin:12px 0 20px;color:var(--muted);font:14px Golos}.meeting-restored>.primary{width:100%;margin-top:16px}.meeting-restored>.subtle-button{display:block;margin:8px auto}.meeting-restored .section-title{margin:20px 0 8px}
+
+.help-entry{display:block;margin:-12px 0 12px auto;padding:6px 0;min-height:44px;font:500 14px Golos;text-decoration:underline;text-underline-offset:3px;border-radius:6px}.full-body>.primary{width:100%;margin-top:16px}
+
+.request-discovery{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-radius:0;padding:20px 0;border-top:1px solid var(--line);margin-top:20px}.request-discovery .copy{flex:1;min-width:0}.request-discovery strong{display:block;font:600 16px/1.4 Golos}.request-discovery .copy>span{display:block;font:14px/1.5 Golos;color:var(--muted);margin-top:4px}
+
+/* The final walk row already supplies the separator before request discovery. */
+.request-discovery{border-top:0;margin-top:0}.walk[hidden],.section-heading[hidden]{display:none}.current-tools{margin-bottom:16px}
+
+.current-tools{margin-bottom:8px}.walk-kind{font:12px/1.4 Golos;color:var(--muted);margin:0 0 12px}.nearby-request .avatar{display:flex;align-items:center;justify-content:center}.walk button:focus-visible{outline-offset:-2px}
+
+/* Current list: one mobile filter surface for type and date. */
+.current-filter-trigger{position:relative;flex-shrink:0}
+.current-filter-trigger.is-filtered{background:var(--lime);color:var(--onlime)}
+.filter-badge{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;border-radius:50%;background:var(--fg);color:var(--bg);font:600 11px/18px Golos;text-align:center}
+.current-filter-sheet{max-height:calc(100% - 32px)}
+.current-filter-sheet form{display:flex;flex-direction:column;min-height:0}
+.current-filter-sheet .sheet-body{padding-top:8px;padding-bottom:16px;overflow:auto}
+.current-filter-sheet fieldset{border:0;padding:0;margin:0}
+.current-filter-sheet fieldset+fieldset{margin-top:24px}
+.current-filter-sheet legend{font:700 16px/1.4 Manrope;margin-bottom:8px}
+.current-filter-option{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;font:400 16px/1.4 Golos}
+.current-filter-option input{appearance:none;flex:0 0 20px;width:20px;height:20px;border:1px solid var(--muted);border-radius:50%;margin:0;display:grid;place-content:center;background:var(--bg)}
+.current-filter-option input:checked{background:var(--lime);border-color:var(--onlime)}
+.current-filter-option input:checked:after{color:var(--onlime);content:'';width:8px;height:8px;border-radius:50%;background:var(--onlime)}
+.current-filter-option input:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.current-filter-actions{display:flex;align-items:center;gap:16px;padding:16px 20px;border-top:1px solid var(--line)}
+.current-filter-actions .filter-reset{min-height:48px;border:0;padding:8px 12px;border-radius:8px;font:600 14px/1.4 Golos}
+.current-filter-actions .primary{flex:1;margin:0!important}
+
+.current-filter-trigger.is-filtered::after{display:none}
+
+.large .current-filter-option,.large .current-filter-sheet legend{font-size:1em}
+.current-filter-option{padding:8px 0}
+.current-filter-sheet form{overflow:hidden}
+
+.large .current-filter-actions{flex-direction:column;gap:8px}
+.large .current-filter-actions button{width:100%;min-width:0;overflow-wrap:anywhere}
+.current-filter-actions{flex-shrink:0}
+/* Business repairs reuse Studio surfaces; no change to the approved hierarchy. */
+.sheet .field select{width:100%;min-height:48px;background:var(--soft);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit}
+.business-messages{display:flex;flex-direction:column;gap:12px;margin:20px 0;max-height:40vh;overflow:auto}
+.business-messages .soft-note{margin:0;max-width:90%;align-self:flex-start}
+.business-messages .soft-note:last-child{margin-bottom:8px}
+.current-filter-sheet input{padding:0!important}
+.sheet-body .field{display:block;margin:16px 0;font:inherit}
+.sheet-body .field input:not([type=radio]):not([type=checkbox]),.sheet-body .field textarea,.sheet-body .field select,.filter-menu .field select{display:block;width:100%;box-sizing:border-box;min-height:48px;margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--fg);font:inherit}
+.sheet-body .field textarea{min-height:96px}

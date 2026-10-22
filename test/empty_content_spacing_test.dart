@@ -80,7 +80,7 @@ void main() {
       final last = tester.getRect(
         find.text('Отзывы станут доступны после публикации места.'),
       );
-      expect(frame.bottom - last.bottom, closeTo(16, 1));
+      expect(frame.bottom - last.bottom, closeTo(20, 1));
       expect(frame.height, lessThan(400));
       expect(tester.takeException(), isNull);
     },

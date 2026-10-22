@@ -1,0 +1,530 @@
+{
+  "version": "1.3.3",
+  "direction": "Studio",
+  "updated": "2026-10-15",
+  "foundationRef": "../tokens.json",
+  "instructionsRef": "../../docs/design-system.md",
+  "scope": "Future design work. Preserve approved screens; the current mock is a review candidate, not blanket approval of all flows.",
+  "fonts": {
+    "heading": {
+      "family": "Manrope",
+      "asset": "../../assets/fonts/Manrope.ttf"
+    },
+    "body": {
+      "family": "Golos Text",
+      "cssAlias": "Golos",
+      "asset": "../../assets/fonts/GolosText.ttf"
+    }
+  },
+  "typography": {
+    "screenTitle": {
+      "family": "Manrope",
+      "size": 32,
+      "weight": 700,
+      "lineHeight": 1.12
+    },
+    "sheetTitle": {
+      "token": "typography.sheetHeading",
+      "family": "Manrope",
+      "size": 20,
+      "weight": 700,
+      "lineHeight": 1.35
+    },
+    "identityTitle": {
+      "token": "typography.identityHeading",
+      "family": "Manrope",
+      "size": 18,
+      "weight": 700,
+      "lineHeight": 1.35
+    },
+    "body": {
+      "token": "typography.body",
+      "family": "Golos Text",
+      "size": 16,
+      "weight": 400,
+      "lineHeight": 1.4
+    },
+    "metadata": {
+      "token": "typography.metadata",
+      "family": "Golos Text",
+      "size": 14,
+      "weight": 400,
+      "lineHeight": 1.45
+    },
+    "actionLabel": {
+      "family": "Golos Text",
+      "size": 16,
+      "weight": 600,
+      "lineHeight": 1.4
+    },
+    "smallLabel": {
+      "token": "typography.smallLabel",
+      "family": "Golos Text",
+      "size": 12,
+      "weight": 500,
+      "lineHeight": 1.4
+    }
+  },
+  "components": {
+    "actionButton": {
+      "minimumHeight": 48,
+      "minimumHitTarget": 44,
+      "horizontalPadding": 16,
+      "verticalPadding": 12,
+      "radius": "pill",
+      "variants": {
+        "primary": {
+          "background": "accent",
+          "foreground": "onAccent",
+          "border": "none"
+        },
+        "secondary": {
+          "background": "background",
+          "foreground": "textPrimary",
+          "border": "border"
+        },
+        "tertiary": {
+          "background": "transparent",
+          "foreground": "textPrimary",
+          "border": "none"
+        }
+      },
+      "states": [
+        "default",
+        "hover",
+        "pressed",
+        "focus",
+        "disabled",
+        "loading"
+      ],
+      "loading": "Keep label and size; prevent duplicate submission.",
+      "copy": "Short verb: Send, Create, Choose, Save. Use object text only when needed."
+    },
+    "actionPair": {
+      "width": "full",
+      "columns": 2,
+      "gap": 12,
+      "equalWidth": true,
+      "equalHeight": true,
+      "primaryPosition": "right",
+      "secondaryPosition": "left",
+      "largeText": "Stack vertically; keep primary visually identifiable.",
+      "buttonHorizontalPadding": 8
+    },
+    "iconButton": {
+      "minimumWidth": 48,
+      "minimumHeight": 48,
+      "iconSize": 20,
+      "accessibleNameRequired": true
+    },
+    "field": {
+      "minimumHeight": 48,
+      "radiusToken": "radii.control",
+      "background": "subtle",
+      "border": "border",
+      "padding": 12,
+      "fontStyle": "body",
+      "states": [
+        "default",
+        "focused",
+        "invalid",
+        "disabled"
+      ],
+      "label": "Visible, outside field.",
+      "error": "Adjacent actionable message; preserve draft.",
+      "focus": "One existing border changes color; no outer outline. Invalid focus retains the error border."
+    },
+    "select": {
+      "triggerHeight": 48,
+      "presentation": "Reuse the reviewed anchored mock select: soft 48 px trigger, trailing chevron, selected check mark, Escape/outside dismissal and arrow-key navigation. Searchable long lists use the shared selection sheet.",
+      "preserveDraftUntilApply": true,
+      "optionSurface": "Transparent at rest including selected option; subtle fill on hover only. Selected check and weight remain."
+    },
+    "checkbox": {
+      "visualSize": 24,
+      "rowMinimumHeight": 48,
+      "selection": "Multiple independent choices.",
+      "selectedBackground": "accent",
+      "selectedForeground": "onAccent",
+      "checkmark": "Centered 18 px SVG check mask; translate(-50%, -50%) on both axes."
+    },
+    "radio": {
+      "visualSize": 24,
+      "rowMinimumHeight": 48,
+      "selection": "Exactly one choice per named group.",
+      "border": "textSecondary",
+      "selectedIndicator": "Single accent-filled circle with an 8 px onAccent dot; no double ring.",
+      "keyboard": "Arrow keys move selection; visible focus."
+    },
+    "starRating": {
+      "count": 5,
+      "width": "full",
+      "gap": 8,
+      "itemMinimumHeight": 48,
+      "itemEqualWidth": true,
+      "selectedBackground": "accent",
+      "selectedForeground": "onAccent",
+      "icon": "star",
+      "semantics": "Label each value 1–5; selected value exposed; keyboard selection.",
+      "unset": "No preselected rating unless editing a saved review."
+    },
+    "contextRow": {
+      "avatarSize": 48,
+      "avatarRadius": 12,
+      "gap": 12,
+      "titleStyle": "identityTitle",
+      "metadataStyle": "metadata",
+      "layout": "Name above date/city/participant.",
+      "editable": "Whole row is one labelled change action, with trailing chevron."
+    },
+    "identityRow": {
+      "avatarSizes": [
+        48,
+        56,
+        72
+      ],
+      "titleStyle": "identityTitle",
+      "metadataStyle": "metadata",
+      "separator": "One per row boundary; none duplicated before footer."
+    },
+    "statusChip": {
+      "minimumHeight": 32,
+      "horizontalPadding": 10,
+      "verticalPadding": 6,
+      "radius": 8,
+      "fontStyle": "metadata",
+      "background": "subtle",
+      "foreground": "textSecondary",
+      "placement": "One row per record where width permits; wrap for large text, never truncate meaning.",
+      "textRequired": true,
+      "variants": {
+        "status": "subtle fill with state icon and text",
+        "recordType": "transparent background with category icon and textPrimary label"
+      }
+    },
+    "sheet": {
+      "radiusToken": "radii.sheet",
+      "maxHeightFraction": 0.88,
+      "horizontalPadding": 20,
+      "header": "Title left, close action right.",
+      "body": "Scroll body; keep header accessible.",
+      "footer": "Safe-area aware. Paired actions use actionPair.",
+      "keyboard": "Focus trapped, Escape closes if cancellable; restore trigger focus.",
+      "motionToken": "motion.sheetMs"
+    },
+    "pageHeader": {
+      "backHitTarget": 48,
+      "titleAlignment": "center for compact detail/editor header",
+      "centerMethod": "Equal 48 px leading and trailing slots; title centered in remaining column."
+    },
+    "listScreen": {
+      "fixed": [
+        "header",
+        "segments",
+        "search",
+        "filters"
+      ],
+      "scrolling": "Results list only",
+      "footer": "Bottom navigation fixed, safe-area aware."
+    },
+    "tabs": {
+      "active": "Weight and underline, not color alone.",
+      "horizontalOverflow": "Scrollable if localized labels need it; do not clip."
+    },
+    "searchAndFilters": {
+      "searchHeight": 48,
+      "filterHitTarget": 48,
+      "gap": 12,
+      "advanced": "One filter sheet with related criteria, explicit Apply / Reset.",
+      "summary": "Do not add extra result/filter-summary lines to Walking Current."
+    },
+    "toast": {
+      "purpose": "Short non-blocking acknowledgement on the originating screen.",
+      "background": "accent",
+      "foreground": "onAccent",
+      "padding": 14,
+      "radius": 12,
+      "semantics": "status",
+      "avoid": "Standalone success page for a simple saved/sent result.",
+      "border": "none",
+      "successIcon": "onAccent check without an extra badge"
+    },
+    "confirmation": {
+      "container": "sheet",
+      "title": "One concise question.",
+      "context": "contextRow",
+      "body": "Only consequences necessary for a decision.",
+      "actions": "actionPair",
+      "avoid": "Repeated action word in title, paragraph and button."
+    },
+    "photoPicker": {
+      "interaction": "Direct gallery picker; optional explicit provider import as separate inline action.",
+      "preview": "Local re-encoded image; removal available.",
+      "validation": [
+        "JPEG/PNG/WebP",
+        "At most 5 MiB source",
+        "Decode failure recovery"
+      ],
+      "imageMaxDimension": 1200,
+      "metadata": "Do not carry original EXIF.",
+      "production": "Use private upload pipeline; mock previews do not imply storage."
+    },
+    "emptyErrorLoading": {
+      "empty": "Short heading, reason and recovery if useful.",
+      "error": "Preserve content/draft; give retry.",
+      "loading": "Preserve layout and identify the real pending operation.",
+      "reputation": "No reviews yet; never zero stars for unrated people."
+    },
+    "mapContainer": {
+      "inline": "Side insets and rounded corners.",
+      "fullscreenControls": [
+        "zoom",
+        "location"
+      ],
+      "unavailable": "Honest unavailable state and useful list fallback.",
+      "publicPoint": "Select a public venue point, never publish device GPS."
+    },
+    "chat": {
+      "typeStyle": "body",
+      "metadataStyle": "metadata",
+      "required": [
+        "sender",
+        "time",
+        "context",
+        "membership-appropriate actions"
+      ],
+      "media": "Photos only; constraints come from security and chat-media requirements."
+    },
+    "walkElapsedTimer": {
+      "typographyRole": "screenTitle",
+      "contextMetadataRole": "metadata",
+      "digits": "tabular",
+      "target": "Fixed walk conversation context; live only after local Start in the fixture",
+      "tracking": false,
+      "automaticCompletion": false
+    },
+    "providerButton": {
+      "base": "outline button",
+      "iconSize": 24,
+      "minimumHeight": 48,
+      "labelRequired": true,
+      "assets": "../onboarding-unified-account-2026-10-14/provider-icons/"
+    }
+  },
+  "aliases": {
+    "--bg": "background",
+    "--fg": "textPrimary",
+    "--muted": "textSecondary",
+    "--line": "border",
+    "--soft": "subtle",
+    "--lime": "accent",
+    "--onlime": "onAccent"
+  },
+  "legacyDifferences": [
+    {
+      "item": "Body scale",
+      "canonical": "typography.body is 16; older typeScale.body is 15.",
+      "rule": "Use the scoped typography token for new mobile components; do not resize approved legacy screens automatically."
+    },
+    {
+      "item": "Action label",
+      "canonical": "General typography.control is 14; reviewed action buttons are 16/600.",
+      "rule": "Use this actionButton contract for main actions; reserve 14 for metadata and compact tertiary controls."
+    },
+    {
+      "item": "Padding",
+      "canonical": "layout.horizontalPadding is 24; reviewed sheets/lists often use 20.",
+      "rule": "Keep 20 for the reviewed sheet pattern and approved mocks; retain existing 24 px page layouts. Migration needs review."
+    },
+    {
+      "item": "Control radius",
+      "canonical": "radii.control is 14; reviewed inputs often use 12; primary/secondary actions use pills.",
+      "rule": "Use semantic token for new fields, pill for action buttons; preserve approved field silhouettes until a reviewed migration."
+    },
+    {
+      "item": "Colors",
+      "canonical": "Mock CSS contains near-matching historical hex values.",
+      "rule": "Use semantic tokens for new work; do not silently recolor existing approved views."
+    },
+    {
+      "item": "Sheet heading",
+      "canonical": "Token/native shared style is 20; some reviewed browser headings are 22 or 24.",
+      "rule": "Use shared sheet heading for new sheets; preserve existing approved sizes until migration is reviewed."
+    },
+    {
+      "item": "Avatar shape",
+      "canonical": "Foundation avatar token is circular; person/pet rows use compact rounded squares in reviewed screens.",
+      "rule": "Select shape by existing component role; do not replace identity images or all avatar shapes globally."
+    }
+  ],
+  "changeRules": [
+    "Read instructions before every UI task.",
+    "Reuse the established component with the same intent.",
+    "Keep approved screens and archived versions unchanged unless the user explicitly authorizes that screen change.",
+    "Review new actions, destinations or flow behavior in the workflow map before implementation.",
+    "Archive the current candidate before altering it.",
+    "Apply shared component corrections to active matching uses, never frozen archives.",
+    "Document any intentional exception with its affected surface and reason.",
+    "Validate changed states and representative light/dark, large-text and localized layouts without claiming native/server verification from browser mocks."
+  ],
+  "browserAlignment": {
+    "review": 25,
+    "finalStylesheet": "../onboarding-unified-account-2026-10-14/mock-system.css",
+    "scope": "Nine active mock sources; preserved screen structure and flows.",
+    "exceptions": [
+      "Approved Nearby greeting and event hero scale",
+      "Compact category captions: smallLabel",
+      "Time-entry digits: approved 18/32 px numeric style",
+      "Reviewed 12 px field corners",
+      "Compact bottom navigation labels"
+    ],
+    "toggle": {
+      "track": [
+        48,
+        28
+      ],
+      "target": [
+        48,
+        48
+      ]
+    },
+    "calendar": {
+      "columns": 7,
+      "gap": 4,
+      "minimumTarget": [
+        44,
+        48
+      ]
+    },
+    "largeText": "200% role typography; paired actions stack and long labels wrap.",
+    "currentWorkflowReview": 60,
+    "additionalRenderer": "../onboarding-unified-account-2026-10-14/workflow-additions.js",
+    "additionalStylesheet": "../onboarding-unified-account-2026-10-14/workflow-additions.css",
+    "reviewStatus": "New destinations are design proposals; existing component contracts unchanged.",
+    "meetingSource": "../onboarding-unified-account-2026-10-14/meetings-reference.html",
+    "meetingStyles": "../onboarding-unified-account-2026-10-14/meetings.css",
+    "cityPicker": {
+      "implementation": "nearby-city-picker.js",
+      "formAdapter": "shared-city-adapter.js",
+      "scope": "all active city-selection entry points"
+    },
+    "dateTimePickers": {
+      "implementation": "shared-date-time.js",
+      "date": "shared localized calendar",
+      "time": "shared 24-hour hours/minutes sheet",
+      "commit": "explicit Done; cancel discards edits",
+      "scope": "all active temporal entry points",
+      "dateDisplay": "Localized numeric date on one line; full localized tooltip; stack narrow meeting date/time fields."
+    },
+    "filters": {
+      "implementation": "shared-filters.js",
+      "shortList": "Anchored single choice menu; current check, roving focus, arrows/Home/End and Escape.",
+      "relatedCriteria": "Shared filter sheet; temporary draft; explicit Apply/Reset; dismiss cancels; focus restored.",
+      "targets": 48,
+      "scope": "All active browser filter entry points; approved surrounding layouts retained."
+    },
+    "overlays": {
+      "implementation": [
+        "shared-overlays.js",
+        "shared-overlays.css"
+      ],
+      "scope": "All active browser sheets and full-screen modal hosts.",
+      "surface": "sheet semantic token; consistent 40% scrim.",
+      "header": "12px 20px padding; 48px close target; 20px Manrope title; grows for large text.",
+      "body": "8px 20px 20px padding; internal scrolling; approved content/action order retained.",
+      "height": "Compact content height; 88% maximum; header remains accessible.",
+      "radii": "Approved 24px silhouettes preserved; proposal 28px sheets retain the sheet token.",
+      "behavior": "One active dialog; underlying layers inert; focus trapped; Escape/backdrop use existing close action; return focus to opener; keep drafts through auxiliary pickers.",
+      "native": "No Flutter/backend implementation change."
+    },
+    "actions": {
+      "implementation": "shared-actions.css",
+      "scope": "All active browser review hosts.",
+      "typography": "Golos Text 16/600; existing 200% text scale retained.",
+      "padding": "12px 16px standalone; 12px 8px within paired action rows.",
+      "targets": "48px actions/icon buttons; 56px minimum for large text actions; icons remain 48px square.",
+      "icons": "20px centered with 8px label gap; provider marks retain 24px grid.",
+      "pairs": "12px gap, equal width and height; stacked equal-height rows at large text.",
+      "retained": "Approved action order and placement, compact weekday/calendar selectors and compact Reset with expanding Apply.",
+      "states": "Shared keyboard focus, disabled opacity and enabled hover/pressed treatment; existing disabled/loading semantics retained.",
+      "native": "Flutter/backend unchanged."
+    },
+    "forms": {
+      "implementation": [
+        "shared-forms.js",
+        "shared-forms.css"
+      ],
+      "scope": "All active browser review form hosts.",
+      "labels": "Visible captions outside controls; caption-only accessible names with optional hints linked separately.",
+      "controls": "Body typography, 48px minimum, 12px padding, subtle surface and one border. Approved 12/14px shapes retained; square manual fields use the reviewed 12px shape.",
+      "support": "14px helper/error text, 8px spacing, semantic secondary/error colors; existing message copy retained.",
+      "validation": "Existing field/group errors linked with aria-describedby and aria-errormessage; invalid state applies to each affected field. Existing manual-city validation focuses the affected control.",
+      "preservation": "Drafts, field order and acceptance rules retained; search/composer patterns remain unchanged.",
+      "native": "No native/backend changes."
+    },
+    "feedback": {
+      "implementation": [
+        "shared-states.js",
+        "shared-states.css"
+      ],
+      "scope": "Active browser empty/loading/error views and inline recovery states.",
+      "presentation": "32px 20px content padding; 18px Manrope headings; 16px Golos explanation; semantic secondary/error colors; shared recovery actions.",
+      "accessibility": "Polite status regions; existing save alert retained; decorative indicators hidden; reduced motion respected.",
+      "retained": "Approved surrounding layout, source copy, recovery callbacks, form drafts, disabled saving state; native/backend unchanged."
+    },
+    "navigation": {
+      "implementation": [
+        "shared-navigation.js",
+        "shared-navigation.css"
+      ],
+      "pageHeaders": "20px Manrope title, semantic divider, 48px targets / 20px icons; retain approved centered/left/chat identity variants.",
+      "bottomNavigation": "8px top / 12px sides / 12px minimum safe-area bottom; 48px targets; 22px icons; existing lime current pill with compact 12px label.",
+      "semantics": "One current section; localized accessible names; legacy active classes supported; named tab groups; explicit button types; visible focus.",
+      "preservation": "Root greeting, approved alignment, owner/helper ordering, back versus close callbacks, drafts and route graph retained; Review 40 preserved."
+    },
+    "typographySpacing": {
+      "implementation": "shared-typography.css",
+      "roles": "Screen 32/700 Manrope/1.12; body 16/400 Golos/1.4; supporting metadata 14/400 Golos/1.45. Existing large-text variables retained.",
+      "spacing": "4px meeting metadata gaps; 24px helper introductory separation; 16px app introduction top margin.",
+      "alignment": "Copy columns min-width:0; long names/descriptions wrap in their existing columns.",
+      "exceptions": [
+        "Approved Nearby greeting and hero typography",
+        "Chat message line heights",
+        "Compact navigation/status labels",
+        "Approved 20/24px page insets and section composition"
+      ],
+      "preservedReview": 41,
+      "native": "No Flutter/backend changes."
+    },
+    "finalReview": {
+      "review": 43,
+      "communityMeetingTools": "16px header-to-search/filter separation",
+      "preservedReview": 42,
+      "scope": "Final browser mock presentation audit; registered flow statuses unchanged."
+    },
+    "previewFoundations": {
+      "implemented": [
+        "F01",
+        "F02"
+      ],
+      "scope": "Workflow host and mounted/nested references; memory-only account state and origin context; approved app presentation retained.",
+      "preservedReview": 44,
+      "pending": "Zero remaining browser action proposals after Review 59; configured Auth/maps/GPS and native/backend verification remain separate."
+    },
+    "finalEndToEndReview": {
+      "review": 60,
+      "preservedReview": 59,
+      "presentation": "Approved inline styles, CSS and all 127 screen definitions retained.",
+      "scope": "Existing browser flow repairs; no new production authorization or external service configuration."
+    }
+  },
+  "nativeReview60": {
+    "reference": "../onboarding-unified-account-2026-10-14/final-review-60.md",
+    "preservedSources": "../flutter-revisions/pre-review60-20261016-093009/source.tar.gz",
+    "pickers": "lib/core/ui/studio_pickers.dart",
+    "sharedPublicRecords": "lib/features/chat/shared_content.dart",
+    "walkingControls": "lib/features/walks/walking_chat_widgets.dart",
+    "migration": "supabase/migrations/202610160029_review60_native_parity.sql",
+    "scope": "Flutter adoption of reviewed flows. Browser definitions and prior archives unchanged. Migration must be applied before configuring a backend with the new client."
+  }
+}

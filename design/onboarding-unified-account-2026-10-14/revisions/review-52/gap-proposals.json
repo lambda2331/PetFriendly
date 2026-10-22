@@ -1,0 +1,1201 @@
+{
+  "review": 44,
+  "baseline": "Review 43 preserved",
+  "scope": "Proposal board only; approved screen presentation and active mock behavior unchanged.",
+  "implementationStatus": "Shared conversation and New chat wiring, including A166 public-person search, is implemented in the browser preview; 42 action proposals remain pending.",
+  "foundations": [
+    {
+      "id": "F01",
+      "title": "One account-scoped preview store",
+      "proposal": "One top-level memory store keyed by account plus stable object IDs; saved records separate from per-form/per-record drafts. Device theme/language preferences stay separate. No new backend persistence is implied.",
+      "acceptance": "Switching preview account cannot expose previous private records; refreshing a memory-only preview is labelled honestly.",
+      "status": "Implemented foundation · Review 45",
+      "implementation": "Shared host memory, frame leases, draft/context capture and origin navigation are connected in the workflow preview. Dependent feature-specific gaps remain pending."
+    },
+    {
+      "id": "F02",
+      "title": "Shared navigation context",
+      "proposal": "Carry origin screen, record ID, filter/search/scroll snapshot and draft key through existing destinations. Keep approved owner/helper navigation and modal dismissal patterns.",
+      "acceptance": "Back restores the real origin and its draft rather than a hard-coded unrelated destination.",
+      "status": "Implemented foundation · Review 45",
+      "implementation": "Shared host memory, frame leases, draft/context capture and origin navigation are connected in the workflow preview. Dependent feature-specific gaps remain pending."
+    }
+  ],
+  "groups": [
+    {
+      "name": "Account and preferences",
+      "count": 7
+    },
+    {
+      "name": "Cities and maps",
+      "count": 4
+    },
+    {
+      "name": "Applications and filters",
+      "count": 5
+    },
+    {
+      "name": "Pets and requests",
+      "count": 4
+    },
+    {
+      "name": "Shared conversations and navigation",
+      "count": 15
+    },
+    {
+      "name": "Communities",
+      "count": 3
+    },
+    {
+      "name": "Walking lifecycle and reputation",
+      "count": 6
+    },
+    {
+      "name": "Reports and activity targets",
+      "count": 5
+    }
+  ],
+  "proposals": [
+    {
+      "group": "Account and preferences",
+      "priority": "P1",
+      "proposedFix": "Continue only after the current account’s email-confirmation state is verified. Reuse the existing email screen for pending/resend recovery; review any new expired-link presentation separately.",
+      "expected": "An unconfirmed account stays on Email confirmation; confirmation resumes its own onboarding draft.",
+      "acceptance": [
+        "Unconfirmed, confirmed and expired-link cases do not skip the gate.",
+        "Resend stays generic and does not reveal whether another account exists."
+      ],
+      "dependencies": [
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A007",
+      "screen": "email",
+      "action": "Continue after confirmation",
+      "current": "Fixture proceeds without real provider confirmation.",
+      "sourceTitle": "Email confirmation",
+      "currentTarget": "profile-start",
+      "targetTitle": "First profile",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Cities and maps",
+      "priority": "P1",
+      "proposedFix": "Connect the shared Nearby city picker to the bundled GeoNames directory and aliases. Keep the current picker layout and canonical city identity.",
+      "expected": "Searching a Polish alias finds the same city ID as its local name, with country and region visible.",
+      "acceptance": [
+        "No match offers the existing manual entry flow.",
+        "City selection remains separate from device location."
+      ],
+      "dependencies": [
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A008",
+      "screen": "onboard-city",
+      "action": "Search alias",
+      "current": "Filters four fixture cities; full GeoNames directory not connected.",
+      "sourceTitle": "Profile city selector",
+      "currentTarget": "onboard-city",
+      "targetTitle": "Profile city selector",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Cities and maps",
+      "priority": "P1",
+      "proposedFix": "Retain a country-qualified manual settlement key; never fabricate coordinates. Ask for a valid IANA zone only when the originating scheduling context requires it.",
+      "expected": "A small settlement can be saved without pretending that its centre or time zone was resolved.",
+      "acceptance": [
+        "Country is retained with the settlement name.",
+        "Meeting/helper scheduling cannot proceed with an invalid required zone."
+      ],
+      "dependencies": [
+        "A008",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A014",
+      "screen": "onboard-manual",
+      "action": "Confirm settlement",
+      "current": "Requires name and country; coordinate/zone lookup remains incomplete.",
+      "sourceTitle": "Manual settlement",
+      "currentTarget": "profile-start",
+      "targetTitle": "First profile",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Applications and filters",
+      "priority": "P2",
+      "proposedFix": "Product decision required: keep the cat-sitting preference informational without accepting cat-sitting bookings, or review a complete cat-sitting journey separately. Do not reuse walking completion semantics silently.",
+      "expected": "The preference does not imply an operational cat-sitting service.",
+      "acceptance": [
+        "No cat-sitting booking or completion path is introduced by this proposal.",
+        "A chosen scope is documented before its dependent flow is implemented."
+      ],
+      "dependencies": [],
+      "disposition": "Product decision needed",
+      "id": "A022",
+      "screen": "helper",
+      "action": "Select walking / cat sitting",
+      "current": "Local service preference; cat-sitting lifecycle is not connected.",
+      "sourceTitle": "Public helping preferences",
+      "currentTarget": "helper",
+      "targetTitle": "Public helping preferences",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Account and preferences",
+      "priority": "P1",
+      "proposedFix": "Use the existing unsaved-change confirmation. Proposed semantics: Continue editing retains the working draft; Discard returns to the origin with saved preferences unchanged. Do not add a third Keep draft action without separate review.",
+      "expected": "Back from edited helper preferences does not silently save or lose changes.",
+      "acceptance": [
+        "Continue editing restores every edited value.",
+        "Discard leaves saved preferences unchanged and returns to the initiating request/list."
+      ],
+      "dependencies": [
+        "F01",
+        "F02"
+      ],
+      "disposition": "Review exit semantics",
+      "id": "A029",
+      "screen": "helper",
+      "action": "Back with edited preferences",
+      "current": "Needs approved draft/exit behavior.",
+      "sourceTitle": "Public helping preferences",
+      "currentTarget": "dirty-exit",
+      "targetTitle": "Выйти без сохранения?",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Applications and filters",
+      "priority": "P1",
+      "proposedFix": "On explicit confirmation, create one application keyed by account and request. Return to the same request with the existing sent toast/pending context; no agreement chat yet.",
+      "expected": "Confirming once makes that request show the actor’s pending application.",
+      "acceptance": [
+        "Double confirmation cannot create duplicates.",
+        "The application stays separate from upcoming assigned agreements."
+      ],
+      "dependencies": [
+        "F01",
+        "A029"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A033",
+      "screen": "apply-confirm",
+      "action": "Confirm application",
+      "current": "Closes compact confirmation and shows status toast on the request; application record still missing.",
+      "sourceTitle": "Application confirmation · compact sheet",
+      "currentTarget": "apply-sent",
+      "targetTitle": "Application sent · status toast",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Account and preferences",
+      "priority": "P1",
+      "proposedFix": "Use the same reviewed exit policy as helper preferences: closing an unchanged editor returns directly; a dirty editor asks Continue editing or Discard. Keep working and saved identity separate.",
+      "expected": "Cancel never replaces saved profile values with partial edits.",
+      "acceptance": [
+        "Continue editing retains name, photo and city draft.",
+        "Discard restores saved identity across profile and other previews."
+      ],
+      "dependencies": [
+        "F01",
+        "A029"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A048",
+      "screen": "profile-edit",
+      "action": "Cancel / close",
+      "current": "Returns to profile; cross-frame draft safety needs verification.",
+      "sourceTitle": "Edit profile",
+      "currentTarget": "profile",
+      "targetTitle": "Personal profile",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Pets and requests",
+      "priority": "P1",
+      "proposedFix": "Store pets by account and stable pet ID. Add appends; Edit updates only the selected pet. Keep the existing pet form and origin-specific return destination.",
+      "expected": "Adding a second pet preserves the first; editing its habits changes only that pet.",
+      "acceptance": [
+        "Add and Edit use distinct record operations.",
+        "Cancel creates no pet and leaves saved photos/fields unchanged."
+      ],
+      "dependencies": [
+        "F01",
+        "A048"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A050",
+      "screen": "pet-edit",
+      "action": "Save",
+      "current": "Replaces one pet fixture rather than maintaining a collection.",
+      "sourceTitle": "Add / edit pet",
+      "currentTarget": "profile",
+      "targetTitle": "Personal profile",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Pets and requests",
+      "priority": "P2",
+      "proposedFix": "Open the existing pet editor with the selected pet ID and habits section context; save back to that pet’s detail view. Preserve the existing detail/editor layouts.",
+      "expected": "Edit habits from Персик never edits another pet or an unrelated default fixture.",
+      "acceptance": [
+        "Back/cancel returns to the same pet.",
+        "Save updates the selected pet’s habits in detail and profile."
+      ],
+      "dependencies": [
+        "A050",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A053",
+      "screen": "pet-detail",
+      "action": "Edit habits",
+      "current": "Existing habits editor; full pet form route needs consolidation.",
+      "sourceTitle": "Pet details",
+      "currentTarget": "pet-edit",
+      "targetTitle": "Add / edit pet",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Cities and maps",
+      "priority": "P2",
+      "proposedFix": "Keep the browser permission/unavailable preview honest. Native verification is separate: request location explicitly, preserve a manual city until the user chooses Nearby, and publish no GPS.",
+      "expected": "Denying location keeps city selection usable; selecting Nearby is an explicit mode change.",
+      "acceptance": [
+        "Denied and unavailable location retain manual selection.",
+        "No background tracking or silent GPS publication."
+      ],
+      "dependencies": [
+        "A008"
+      ],
+      "disposition": "Native/configuration verification",
+      "id": "A061",
+      "screen": "nearby-city",
+      "action": "Nearby location",
+      "current": "Permission preview; real service not configured.",
+      "sourceTitle": "Nearby city picker",
+      "currentTarget": "nearby",
+      "targetTitle": "Nearby map and greeting",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Cities and maps",
+      "priority": "P2",
+      "proposedFix": "Retain the unavailable-map fallback until a configured renderer is verified. Verify gestures in inline/fullscreen and zoom/location controls only in fullscreen, after free-tier account controls are checked.",
+      "expected": "The mock never pretends that sample points are a functioning map renderer.",
+      "acceptance": [
+        "Fallback list remains reachable when the renderer fails.",
+        "No paid usage or new token/account connection is authorized by approving this proposal."
+      ],
+      "dependencies": [
+        "A061"
+      ],
+      "disposition": "Native/configuration verification",
+      "id": "A066",
+      "screen": "map",
+      "action": "Map gestures / zoom / locate",
+      "current": "No configured renderer; native verification required.",
+      "sourceTitle": "Fullscreen map fallback",
+      "currentTarget": "map",
+      "targetTitle": "Fullscreen map fallback",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Account and preferences",
+      "priority": "P2",
+      "proposedFix": "Use one account-scoped favorite-ID set for place list, detail and personal profile; retain existing favorite controls and profile rows.",
+      "expected": "Favoriting a place makes the same place appear inline in the profile.",
+      "acceptance": [
+        "Unfavorite updates all three surfaces.",
+        "Account switching does not leak another account’s favorite set."
+      ],
+      "dependencies": [
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A073",
+      "screen": "place-detail",
+      "action": "Favorite / unfavorite",
+      "current": "Local reference memory; profile favorites are not synchronized.",
+      "sourceTitle": "Place details and reviews",
+      "currentTarget": "place-detail",
+      "targetTitle": "Place details and reviews",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Open or reuse a direct thread keyed by both account IDs, using the approved direct-chat design and shared inbox. Carry the People origin for Back.",
+      "expected": "Chat from a person card opens that person, and the thread appears once in Chats.",
+      "acceptance": [
+        "Two people with the same display name remain distinct.",
+        "Draft and back-to-People context survive a round trip."
+      ],
+      "dependencies": [
+        "F01",
+        "F02",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A089",
+      "screen": "people",
+      "action": "Chat with person",
+      "current": "Opens reference conversation, separate from shell inbox.",
+      "sourceTitle": "People list",
+      "currentTarget": "chat-direct-design",
+      "targetTitle": "Direct chat design",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Communities",
+      "priority": "P1",
+      "proposedFix": "Connect the community’s exact conversation ID and membership to the shared inbox. Nonmembers use the existing voluntary Join action; opening a public community never joins it automatically.",
+      "expected": "A joined member sees the same community thread from details and Chats.",
+      "acceptance": [
+        "Nonmember entry does not grant chat access.",
+        "Leaving invalidates participant access while public details remain discoverable."
+      ],
+      "dependencies": [
+        "F01",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A095",
+      "screen": "community",
+      "action": "Community chat",
+      "current": "Reference chat exists; shell inbox membership is not shared.",
+      "sourceTitle": "Community details",
+      "currentTarget": "chat-group-design",
+      "targetTitle": "Community chat design",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Communities",
+      "priority": "P1",
+      "proposedFix": "Copy a stable public community link and resolve it visibly to the existing invitation/community preview. Unknown links use the approved unavailable view; no automatic membership.",
+      "expected": "A fresh recipient opens the named community and explicitly chooses Join.",
+      "acceptance": [
+        "Copied link resolves the same community ID in a fresh context.",
+        "Missing links never fall back to a different community."
+      ],
+      "dependencies": [
+        "F01",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A104",
+      "screen": "invite",
+      "action": "Copy invitation link",
+      "current": "Copies fixture URL; fresh link resolution targets a hidden preview.",
+      "sourceTitle": "Community invitation",
+      "currentTarget": "invite",
+      "targetTitle": "Community invitation",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Communities",
+      "priority": "P1",
+      "proposedFix": "Create a group with stable ID, creator ownership and membership in the account-scoped preview store; show it in community list/details and its shared conversation. Keep browser lifetime memory-only.",
+      "expected": "A created group stays consistent while navigating in the same preview session.",
+      "acceptance": [
+        "Owner capability is checked; product role is not an admin role.",
+        "Reload/reset does not claim server persistence; a different account has no creator privileges."
+      ],
+      "dependencies": [
+        "F01",
+        "A095"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A107",
+      "screen": "create-community",
+      "action": "Create",
+      "current": "Adds local fixture group; owner/refresh/account isolation incomplete.",
+      "sourceTitle": "Create community",
+      "currentTarget": "community",
+      "targetTitle": "Community details",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Pets and requests",
+      "priority": "P1",
+      "proposedFix": "Make all New request entry points check owner capability and the owned-pet collection. No pet uses the existing inline notice and pet form, then resumes the unsent request draft.",
+      "expected": "An owner with no pet adds one and returns to the same request form.",
+      "acceptance": [
+        "Cancel pet creation returns without publishing a request.",
+        "An owner with pets selects by pet ID; helper-only mode cannot create."
+      ],
+      "dependencies": [
+        "A050",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A117",
+      "screen": "walks",
+      "action": "New request (+)",
+      "current": "Existing direct form bypasses no-pet prerequisite.",
+      "sourceTitle": "Current walks and requests",
+      "currentTarget": "walk-create",
+      "targetTitle": "Create request",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Open the selected agreement’s participant conversation in the approved walking chat. Use the same record in the shell inbox; retain list filters and scroll origin.",
+      "expected": "Agreement chat from Current opens the assigned owner/helper and correct pet.",
+      "acceptance": [
+        "Unassigned applications cannot open this chat.",
+        "Opening another agreement does not reuse the first agreement’s status or messages."
+      ],
+      "dependencies": [
+        "A164",
+        "F01",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A119",
+      "screen": "walks",
+      "action": "Agreement chat",
+      "current": "Frozen conversation preview; not shared with shell inbox.",
+      "sourceTitle": "Current walks and requests",
+      "currentTarget": "chat-walk-design",
+      "targetTitle": "Walking chat · agreement controls",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Route each bottom-navigation item to its selected approved destination rather than a fixture notice. Preserve owner/helper destination sets and each section’s search/filter/scroll snapshot.",
+      "expected": "Selecting Chats opens Chats; returning to Walking restores the prior list state.",
+      "acceptance": [
+        "All five owner and four helper destinations route by key, not translated label.",
+        "The current marker matches the visible section after Back and mode change."
+      ],
+      "dependencies": [
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A124",
+      "screen": "walks",
+      "action": "Bottom navigation",
+      "current": "Frozen walking navigation still displays notices instead of routing.",
+      "sourceTitle": "Current walks and requests",
+      "currentTarget": "nearby",
+      "targetTitle": "Nearby map and greeting",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Applications and filters",
+      "priority": "P1",
+      "proposedFix": "Apply the existing date-filter draft only on Apply, evaluating each walking record in that walk city’s IANA zone. Keep the current filter presentation.",
+      "expected": "A walk near midnight is included according to its own city date, not the device date.",
+      "acceptance": [
+        "Today/range boundaries are verified across two venue zones and a DST boundary.",
+        "Close discards changes; Reset edits only the working filter."
+      ],
+      "dependencies": [
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A126",
+      "screen": "walk-filters",
+      "action": "Date selection",
+      "current": "Fixture date range; city-zone semantics need verification.",
+      "sourceTitle": "Current tab filters",
+      "currentTarget": "walk-filters",
+      "targetTitle": "Current tab filters",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Open the selected scheduled/completed agreement’s same participant thread, carrying the detail origin for Back. Completion does not create a second thread.",
+      "expected": "Chat from either agreement detail shows that agreement’s history and returns to the same record.",
+      "acceptance": [
+        "Scheduled and completed views resolve by agreement ID.",
+        "Private handover details remain restricted to agreement participants."
+      ],
+      "dependencies": [
+        "A119",
+        "A164",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A134",
+      "screen": "walk-detail",
+      "action": "Chat",
+      "current": "Opens isolated walking chat preview.",
+      "sourceTitle": "Agreement details · scheduled",
+      "currentTarget": "chat-walk-design",
+      "targetTitle": "Walking chat · agreement controls",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Walking lifecycle and reputation",
+      "priority": "P1",
+      "proposedFix": "Supersede the older direct-detail advancement proposal. Details stay informational; lifecycle actions open the existing fixed status entry and compact controls in the participant chat. Store state by agreement and actor.",
+      "expected": "Only the assigned helper starts/finishes; only the owner confirms that selected agreement.",
+      "acceptance": [
+        "Advancing one agreement leaves all others unchanged.",
+        "No automatic completion, tracking or elapsed-time-triggered transition."
+      ],
+      "dependencies": [
+        "F01",
+        "A119",
+        "A146"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A135",
+      "screen": "walk-detail",
+      "action": "Advance / confirm completion",
+      "current": "Changes shared view status; not agreement-scoped.",
+      "sourceTitle": "Agreement details · scheduled",
+      "currentTarget": "walk-detail",
+      "targetTitle": "Agreement details · scheduled",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Walking lifecycle and reputation",
+      "priority": "P1",
+      "proposedFix": "Do not offer a review for a scheduled agreement. Only owner-confirmed completion enables the existing direction-specific review action in chat/history.",
+      "expected": "A scheduled record cannot reach a writable review form through a direct link.",
+      "acceptance": [
+        "Eligibility is checked from agreement, actor and completion state.",
+        "Helper and owner review directions remain independent."
+      ],
+      "dependencies": [
+        "A135"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A136",
+      "screen": "walk-detail",
+      "action": "Review eligibility · unavailable while scheduled",
+      "current": "A scheduled agreement is not reviewable. Owner-confirmed completion must establish eligibility before opening the review form.",
+      "sourceTitle": "Agreement details · scheduled",
+      "currentTarget": "walk-review-form",
+      "targetTitle": "Review an agreement",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Open the selected scheduled/completed agreement’s same participant thread, carrying the detail origin for Back. Completion does not create a second thread.",
+      "expected": "Chat from either agreement detail shows that agreement’s history and returns to the same record.",
+      "acceptance": [
+        "Scheduled and completed views resolve by agreement ID.",
+        "Private handover details remain restricted to agreement participants."
+      ],
+      "dependencies": [
+        "A119",
+        "A164",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A139",
+      "screen": "walk-history-detail",
+      "action": "Chat",
+      "current": "Opens isolated walking chat preview.",
+      "sourceTitle": "Agreement details · completed",
+      "currentTarget": "chat-walk-design",
+      "targetTitle": "Walking chat · agreement controls",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Walking lifecycle and reputation",
+      "priority": "P1",
+      "proposedFix": "Supersede the stale completed-to-scheduled target: completed details must not advance or restart an agreement. Link only to its existing completed chat/status/review context, subject to eligibility.",
+      "expected": "Opening a completed agreement cannot move it back to Scheduled.",
+      "acceptance": [
+        "No Start/Finish/Confirm mutation is offered after completion.",
+        "Duplicate completion requests do not create a second history entry."
+      ],
+      "dependencies": [
+        "A135",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A140",
+      "screen": "walk-history-detail",
+      "action": "Advance / confirm completion",
+      "current": "Changes shared view status; not agreement-scoped.",
+      "sourceTitle": "Agreement details · completed",
+      "currentTarget": "walk-detail",
+      "targetTitle": "Agreement details · scheduled",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Walking lifecycle and reputation",
+      "priority": "P1",
+      "proposedFix": "Compute Leave review eligibility from completed agreement ID, author ID and owner/helper direction; route to the matching existing review design.",
+      "expected": "Owner and helper each see only their own eligible review action.",
+      "acceptance": [
+        "Existing review opens in edit/read context instead of adding a duplicate.",
+        "Role switching does not erase earned eligibility."
+      ],
+      "dependencies": [
+        "A136",
+        "A158"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A141",
+      "screen": "walk-history-detail",
+      "action": "Leave review",
+      "current": "Eligibility uses fixture-wide flags rather than agreement/direction.",
+      "sourceTitle": "Agreement details · completed",
+      "currentTarget": "walk-review-form",
+      "targetTitle": "Review an agreement",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Applications and filters",
+      "priority": "P1",
+      "proposedFix": "Confirm the selected applicant for one request and assign atomically in the eventual authoritative implementation. The local preview must reject conflicting assignment and create one participant agreement.",
+      "expected": "Choosing Ульяна assigns her to the selected request and opens that agreement’s chat.",
+      "acceptance": [
+        "Double selection or two competing applicants cannot create two assignments.",
+        "Other requests and unassigned applications remain unchanged."
+      ],
+      "dependencies": [
+        "F01",
+        "A033",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A146",
+      "screen": "walk-candidates",
+      "action": "Choose helper",
+      "current": "Three selectable local applicants; selected identity follows the conversation preview. Atomic assignment remains missing. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Applications",
+      "currentTarget": "helper-select-confirm",
+      "targetTitle": "Выбрать Ульяну?",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Applications and filters",
+      "priority": "P1",
+      "proposedFix": "Reuse the existing withdrawal confirmation for the actor’s exact unassigned application. Cancel retains it; confirm withdraws only that application and restores request/list context.",
+      "expected": "Withdrawing from request A does not remove an application to request B.",
+      "acceptance": [
+        "Already assigned requests do not use this withdrawal path.",
+        "Pending context and filtered lists update together after confirmation."
+      ],
+      "dependencies": [
+        "F01",
+        "A033",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A152",
+      "screen": "request-shell",
+      "action": "Withdraw application",
+      "current": "Missing approved connected action/confirmation. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Nearby request details",
+      "currentTarget": "application-withdraw",
+      "targetTitle": "Отозвать отклик?",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Reports and activity targets",
+      "priority": "P1",
+      "proposedFix": "Reuse the isolated report design with selected review ID and report reason. Acknowledgment confirms receipt only; reporting does not auto-delete or invent a moderator workflow.",
+      "expected": "Report from a walking review stays associated with that review and returns to its list.",
+      "acceptance": [
+        "Private addresses/instructions are not copied into public report text.",
+        "Removal thresholds and handling policy remain separate unresolved work."
+      ],
+      "dependencies": [
+        "F01",
+        "A158"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A156",
+      "screen": "walk-reviews",
+      "action": "Report review",
+      "current": "No complete active report flow. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Walking reviews",
+      "currentTarget": "report",
+      "targetTitle": "Пожаловаться",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Walking lifecycle and reputation",
+      "priority": "P1",
+      "proposedFix": "Submit one eligible review per agreement/direction; derive role-specific preview aggregates from eligible published review records. Production totals remain server-controlled.",
+      "expected": "A completed owner review updates the helper’s rating/count, not place or owner reputation.",
+      "acceptance": [
+        "Duplicate submit is idempotent; no self-review or unrelated account review.",
+        "Zero eligible reviews shows No reviews yet; role changes preserve eligibility."
+      ],
+      "dependencies": [
+        "F01",
+        "A135"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A158",
+      "screen": "walk-review-form",
+      "action": "Submit",
+      "current": "Fixture-wide reviewed flag; counts and per-agreement uniqueness incomplete.",
+      "sourceTitle": "Review an agreement",
+      "currentTarget": "walk-reviews",
+      "targetTitle": "Walking reviews",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Walking lifecycle and reputation",
+      "priority": "P2",
+      "proposedFix": "Attach the reply to the selected review ID and entitled recipient role. Persist it in the shared memory record and return to that review without changing its rating.",
+      "expected": "Replying to one helper review appears under that review only.",
+      "acceptance": [
+        "Other reviews and role aggregates remain unchanged.",
+        "Account/role changes cannot grant arbitrary reply permission."
+      ],
+      "dependencies": [
+        "A158",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A160",
+      "screen": "walk-reply",
+      "action": "Enter reply / save",
+      "current": "Local reply flag; review-specific thread not shared.",
+      "sourceTitle": "Reply to walking review",
+      "currentTarget": "walk-reviews",
+      "targetTitle": "Walking reviews",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Replace the generic notice route with a resolver for the selected conversation type and stable ID: direct, community, meeting or walking. Reuse existing chat designs; retain a recovery view for unknown/inaccessible threads.",
+      "expected": "An inbox row opens its own participants, messages and context.",
+      "acceptance": [
+        "Unknown IDs never fall back to a default person/thread.",
+        "A draft and scroll position belong to the correct thread and account."
+      ],
+      "dependencies": [
+        "F01",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A164",
+      "screen": "chats",
+      "action": "Open conversation",
+      "current": "Shows generic conversation notice.",
+      "sourceTitle": "Chats inbox",
+      "currentTarget": "chat-notice",
+      "targetTitle": "Conversation placeholder · wiring gap",
+      "reviewStatus": "Implemented in Review 46 · browser preview only",
+      "implementedAtReview": 46,
+      "implementation": "Stable conversation IDs select existing chat layouts; account-scoped composer drafts and inbox origin context survive Back. Unknown or inaccessible IDs open recovery."
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P2",
+      "proposedFix": "Wire person search to the existing picker results using public account IDs, with the existing no-match presentation. Keep search local in the preview.",
+      "expected": "Typing a name filters the selectable public-person list.",
+      "acceptance": [
+        "Clearing search restores results.",
+        "No matches does not substitute another person or reveal private profile fields."
+      ],
+      "dependencies": [
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A166",
+      "screen": "new-chat",
+      "action": "Search person",
+      "current": "Search input is not wired to results.",
+      "sourceTitle": "New chat",
+      "currentTarget": "new-chat",
+      "targetTitle": "New chat",
+      "reviewStatus": "Implemented in Review 52 · browser preview only",
+      "implementedAtReview": 52,
+      "implementation": "The existing picker input filters the public name fixture using normalized partial-name matching. Results retain stable public account IDs for A167 selection. Clearing restores the row; no matches show the existing shared empty-state pattern without substituting a person. Search/query restoration does not touch composer drafts or send/create messages."
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Select a person by stable account ID and open/reuse the approved direct thread in the shared inbox. Do not send a message until explicit Send.",
+      "expected": "Selecting a person opens a composer for that person without sending or duplicating a thread.",
+      "acceptance": [
+        "Cancel keeps the inbox unchanged.",
+        "A matching existing direct thread is reused."
+      ],
+      "dependencies": [
+        "A166",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A167",
+      "screen": "new-chat",
+      "action": "Select person",
+      "current": "Shows shell notice instead of approved conversation.",
+      "sourceTitle": "New chat",
+      "currentTarget": "chat-direct-design",
+      "targetTitle": "Direct chat design",
+      "reviewStatus": "Implemented in Review 51 · browser preview only",
+      "implementedAtReview": 51,
+      "implementation": "A165 now opens the approved picker through F02. A167 resolves the selected stable public person ID into one direct participant pair, reusing all existing messages/drafts or creating an empty inbox record once. Selection never sends. Close/Escape and Back preserve picker input, thread drafts and inbox context. A166 search is unchanged and pending."
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Append a sent message to the selected direct conversation and shared inbox record, with sender/time and a per-thread draft. Send remains explicit; preserve photos-only constraints.",
+      "expected": "A message sent in direct chat appears in that same inbox conversation preview.",
+      "acceptance": [
+        "Switching threads keeps unsent drafts separate.",
+        "No send occurs from merely opening a thread or attaching a photo."
+      ],
+      "dependencies": [
+        "A164",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A169",
+      "screen": "chat-direct-design",
+      "action": "Type / send message",
+      "current": "Approved isolated reference composer; messages do not share account inbox.",
+      "sourceTitle": "Direct chat design",
+      "currentTarget": "chat-direct-design",
+      "targetTitle": "Direct chat design",
+      "reviewStatus": "Implemented in Review 47 · browser preview only",
+      "implementedAtReview": 47,
+      "implementation": "Explicit direct text Send resolves account membership/access again, appends once, updates the inbox last-message/time/order and clears only the sent thread draft. Blank/oversized sends do not mutate state. Other thread and form drafts, inbox context and origin navigation remain intact."
+    },
+    {
+      "group": "Reports and activity targets",
+      "priority": "P1",
+      "proposedFix": "Reuse the existing report sheet for the exact conversation/message and author account. Receipt acknowledgment is separate from blocking; do not infer blocked access, auto-removal or a moderation threshold.",
+      "expected": "Reporting from the current chat returns to that same conversation; its target cannot change during sheet navigation.",
+      "acceptance": [
+        "Report target, reason and return context survive a round trip.",
+        "Reporting alone does not block the person or erase the thread."
+      ],
+      "dependencies": [
+        "A164",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A173",
+      "screen": "chat-direct-design",
+      "action": "Report",
+      "current": "Design reference exists; candidate submission/blocked access not connected. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Direct chat design",
+      "currentTarget": "report-chat",
+      "targetTitle": "Пожаловаться",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Use an origin-aware Back stack: return to the initiating person/community/agreement detail when applicable, otherwise Chats. Preserve the thread draft and initiating list state.",
+      "expected": "Back from a chat opened in People returns to People; an inbox-opened chat returns to Chats.",
+      "acceptance": [
+        "Do not implement Back as a hard-coded redirect to an unrelated list.",
+        "Current module marker, search, filters and scroll are restored."
+      ],
+      "dependencies": [
+        "F02",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A174",
+      "screen": "chat-direct-design",
+      "action": "Back",
+      "current": "Needs shared conversation/inbox routing.",
+      "sourceTitle": "Direct chat design",
+      "currentTarget": "chats",
+      "targetTitle": "Chats inbox",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Append messages to the exact community thread only for an active member; update the same inbox record. Keep the approved group conversation layout.",
+      "expected": "Sending in one community updates that community’s preview without crossing into a direct thread.",
+      "acceptance": [
+        "Membership loss prevents new sends.",
+        "Sender/time, drafts and photo limits stay intact."
+      ],
+      "dependencies": [
+        "A095",
+        "A164",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A175",
+      "screen": "chat-group-design",
+      "action": "Type / send message",
+      "current": "Approved isolated reference composer; messages do not share account inbox.",
+      "sourceTitle": "Community chat design",
+      "currentTarget": "chat-group-design",
+      "targetTitle": "Community chat design",
+      "reviewStatus": "Implemented in Review 48 · browser preview only",
+      "implementedAtReview": 48,
+      "implementation": "Community text Send resolves the exact conversation and current active membership again before writing. Sender/time and last-message/order update on that inbox row only. Failed/revoked sends preserve the draft; successful sends clear only that thread draft. F01/F02 retain other drafts and inbox origin context. Existing local member fixtures are used; A095 join/lifecycle wiring remains separately pending."
+    },
+    {
+      "group": "Reports and activity targets",
+      "priority": "P1",
+      "proposedFix": "Reuse the existing report sheet for the exact conversation/message and author account. Receipt acknowledgment is separate from blocking; do not infer blocked access, auto-removal or a moderation threshold.",
+      "expected": "Reporting from the current chat returns to that same conversation; its target cannot change during sheet navigation.",
+      "acceptance": [
+        "Report target, reason and return context survive a round trip.",
+        "Reporting alone does not block the person or erase the thread."
+      ],
+      "dependencies": [
+        "A164",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A179",
+      "screen": "chat-group-design",
+      "action": "Report",
+      "current": "Design reference exists; candidate submission/blocked access not connected. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Community chat design",
+      "currentTarget": "report-chat",
+      "targetTitle": "Пожаловаться",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Use an origin-aware Back stack: return to the initiating person/community/agreement detail when applicable, otherwise Chats. Preserve the thread draft and initiating list state.",
+      "expected": "Back from a chat opened in People returns to People; an inbox-opened chat returns to Chats.",
+      "acceptance": [
+        "Do not implement Back as a hard-coded redirect to an unrelated list.",
+        "Current module marker, search, filters and scroll are restored."
+      ],
+      "dependencies": [
+        "F02",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A180",
+      "screen": "chat-group-design",
+      "action": "Back",
+      "current": "Needs shared conversation/inbox routing.",
+      "sourceTitle": "Community chat design",
+      "currentTarget": "chats",
+      "targetTitle": "Chats inbox",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Append messages to the selected agreement’s participant-only thread and shared inbox; preserve the pet/status context. Do not expose it to applicants who were not selected.",
+      "expected": "Owner/helper see the same agreement conversation across entry points.",
+      "acceptance": [
+        "Only the two authorized participants can send/read private handover context.",
+        "Message sending does not change agreement lifecycle state."
+      ],
+      "dependencies": [
+        "A119",
+        "A164",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A187",
+      "screen": "chat-walk-design",
+      "action": "Type / send message",
+      "current": "Approved isolated reference composer; messages do not share account inbox.",
+      "sourceTitle": "Walking chat · agreement controls",
+      "currentTarget": "chat-walk-design",
+      "targetTitle": "Walking chat · agreement controls",
+      "reviewStatus": "Implemented in Review 50 · browser preview only",
+      "implementedAtReview": 50,
+      "implementation": "Shared walking text Send requires exact agreement/conversation IDs, current active access, and owner or assigned-helper identity. Unselected applicants cannot resolve/read/send the thread. Success updates only its messages/inbox projection and clears only its draft. Pet/status, lifecycle, other drafts and F01/F02 Back context remain intact. A119 assignment/lifecycle integration remains separate."
+    },
+    {
+      "group": "Reports and activity targets",
+      "priority": "P1",
+      "proposedFix": "Reuse the existing report sheet for the exact conversation/message and author account. Receipt acknowledgment is separate from blocking; do not infer blocked access, auto-removal or a moderation threshold.",
+      "expected": "Reporting from the current chat returns to that same conversation; its target cannot change during sheet navigation.",
+      "acceptance": [
+        "Report target, reason and return context survive a round trip.",
+        "Reporting alone does not block the person or erase the thread."
+      ],
+      "dependencies": [
+        "A164",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A191",
+      "screen": "chat-walk-design",
+      "action": "Report",
+      "current": "Design reference exists; candidate submission/blocked access not connected. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Walking chat · agreement controls",
+      "currentTarget": "report-chat",
+      "targetTitle": "Пожаловаться",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "proposedFix": "Use an origin-aware Back stack: return to the initiating person/community/agreement detail when applicable, otherwise Chats. Preserve the thread draft and initiating list state.",
+      "expected": "Back from a chat opened in People returns to People; an inbox-opened chat returns to Chats.",
+      "acceptance": [
+        "Do not implement Back as a hard-coded redirect to an unrelated list.",
+        "Current module marker, search, filters and scroll are restored."
+      ],
+      "dependencies": [
+        "F02",
+        "A164"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A192",
+      "screen": "chat-walk-design",
+      "action": "Back",
+      "current": "Needs shared conversation/inbox routing.",
+      "sourceTitle": "Walking chat · agreement controls",
+      "currentTarget": "chats",
+      "targetTitle": "Chats inbox",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Account and preferences",
+      "priority": "P2",
+      "proposedFix": "Share System/Light/Dark preference across shell, maps, overlays and child references. Persist the explicit device-local choice, resolving System from current device appearance.",
+      "expected": "Changing theme updates all active surfaces without resetting the current form draft.",
+      "acceptance": [
+        "A nested picker uses the same theme as its parent.",
+        "System reacts to appearance changes; explicit Light/Dark remains stable."
+      ],
+      "dependencies": [
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A200",
+      "screen": "theme",
+      "action": "System / light / dark",
+      "current": "Changes local fixture theme; cross-frame propagation needs verification.",
+      "sourceTitle": "Theme choices",
+      "currentTarget": "settings",
+      "targetTitle": "Settings",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Account and preferences",
+      "priority": "P1",
+      "proposedFix": "Connect Device/RU/EN/BE/PL to shared application-copy localization and locale formatting across frames. Preserve user content, canonical IDs and venue zones; persist only the device-local choice.",
+      "expected": "Language changes update controls and dates without translating a person’s name/message.",
+      "acceptance": [
+        "Device fallback is Russian when unsupported.",
+        "Long Polish/Cyrillic labels and 200% text wrap without losing selected values."
+      ],
+      "dependencies": [
+        "F01",
+        "A200"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A202",
+      "screen": "language",
+      "action": "Device / RU / EN / BE / PL",
+      "current": "Selection label only; shell remains untranslated.",
+      "sourceTitle": "Language choices",
+      "currentTarget": "settings",
+      "targetTitle": "Settings",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Account and preferences",
+      "priority": "P1",
+      "proposedFix": "After the existing sign-out confirmation, tear down account-scoped private preview state, drafts and subscriptions, then show the approved sign-in screen. Retain only agreed device preferences.",
+      "expected": "The next test account cannot read the previous account’s chat or private draft.",
+      "acceptance": [
+        "Cancel does not sign out.",
+        "Back cannot resurrect an authenticated private preview; production session revocation needs separate native/server verification."
+      ],
+      "dependencies": [
+        "F01",
+        "F02"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A209",
+      "screen": "logout",
+      "action": "Sign out",
+      "current": "Current fixture only closes sheet; no session/draft teardown. Review 26 supplies the destination design; runtime object/state wiring remains a gap.",
+      "sourceTitle": "Sign out confirmation",
+      "currentTarget": "account-entry",
+      "targetTitle": "Войти в PetFriendly",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Reports and activity targets",
+      "priority": "P1",
+      "proposedFix": "Resolve each activity item by object type and stable object ID to the existing meeting, chat or request design. Unknown/inaccessible targets use the existing recovery view.",
+      "expected": "A chat notification opens its thread; a meeting activity opens that meeting, not a default lake fixture.",
+      "acceptance": [
+        "Deleted/inaccessible targets do not fall back to a different object.",
+        "Return restores activity scroll/context without joining an event."
+      ],
+      "dependencies": [
+        "A164",
+        "F02",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A212",
+      "screen": "activity",
+      "action": "Open event",
+      "current": "Context-specific notices/details; not every target connected.",
+      "sourceTitle": "Activity",
+      "currentTarget": "meeting",
+      "targetTitle": "Public meeting details",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "group": "Pets and requests",
+      "priority": "P1",
+      "proposedFix": "Validate the existing form and create one owner/request record in the account-scoped preview store. Preserve selected pet ID, venue-zone time and private handover fields; show its card on return.",
+      "expected": "Publish adds the owner’s new request to Current rather than just closing the form.",
+      "acceptance": [
+        "Invalid/failed save retains the complete unsent draft.",
+        "Repeated confirmation creates one request; private care text stays participant-only."
+      ],
+      "dependencies": [
+        "A117",
+        "F01"
+      ],
+      "disposition": "Proposed wiring",
+      "id": "A217",
+      "screen": "walk-create",
+      "action": "Create request",
+      "current": "Acknowledges local form without adding a persistent request to the list.",
+      "sourceTitle": "Create request",
+      "currentTarget": "walks",
+      "targetTitle": "Current walks and requests",
+      "reviewStatus": "Awaiting user review — not implemented"
+    },
+    {
+      "id": "A181",
+      "group": "Shared conversations and navigation",
+      "priority": "P1",
+      "screen": "meeting-chat",
+      "action": "Type / send message",
+      "current": "Historical A181 used the isolated chat-meeting-design. Review 28 replaced it with meeting-chat and removed the old action. Shared inbox meeting threads remained without shared Send.",
+      "sourceTitle": "Meeting chat",
+      "currentTarget": "meeting-chat",
+      "targetTitle": "Meeting chat",
+      "proposedFix": "Use the current approved meeting chat with the shared account-scoped conversation store. Keep event ID, active membership, per-thread drafts and origin navigation intact.",
+      "expected": "A meeting message updates only its exact shared conversation and inbox preview.",
+      "acceptance": [
+        "Membership/access loss blocks sending and preserves the draft.",
+        "Meeting ID, other thread/form drafts and origin-aware Back remain intact.",
+        "No implicit meeting join or conversation change on Send."
+      ],
+      "dependencies": [
+        "A164",
+        "F01",
+        "F02"
+      ],
+      "disposition": "Restored historical wiring",
+      "implementedAtReview": 49,
+      "reviewStatus": "Implemented in Review 49 · browser preview only",
+      "implementation": "Explicit Send appends sender/time and text to the exact shared meeting conversation and updates its inbox preview/order. Rechecks local active membership, preserves other drafts and Back context, and never joins the meeting. Open a shared thread from the inbox first."
+    }
+  ],
+  "foundationImplementationReview": 45
+}

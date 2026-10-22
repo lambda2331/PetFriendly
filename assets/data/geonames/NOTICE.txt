@@ -1,0 +1,2 @@
+Cities: GeoNames, https://www.geonames.org/ — Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Source: https://download.geonames.org/export/dump/cities15000.zip. Snapshot 2026-10-10. Selected fields, population sorting and country/region-qualified keys derived by PetFriendly. Covers cities with population > 15000 or capitals; smaller settlements may be entered manually. Data provided as is.
+Country labels: Unicode CLDR, https://github.com/unicode-org/cldr-json. See UNICODE-LICENSE.txt.

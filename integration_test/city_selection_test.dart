@@ -10,6 +10,7 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({
+      'language': 'ru',
       'locationPrompted': 'yes',
       'manualCity': 'true',
       'city': 'Минск',
@@ -17,15 +18,21 @@ void main() {
     });
     await app.main();
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Минск · выбрать'));
+    await tester.tap(find.byKey(const Key('choose-city')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('city-input')), 'hrod');
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('city-suggestion-Гродно')));
     await tester.pumpAndSettle();
-    expect(find.text('Гродно · выбрать'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('choose-city')),
+        matching: find.text('Гродно'),
+      ),
+      findsOneWidget,
+    );
     expect(tester.takeException(), isNull);
-    await tester.tap(find.text('Гродно · выбрать'));
+    await tester.tap(find.byKey(const Key('choose-city')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('city-input')), 'Гр');
     await tester.pumpAndSettle();

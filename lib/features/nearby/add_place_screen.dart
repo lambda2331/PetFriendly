@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' hide Size;
@@ -32,8 +33,10 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
   Future<void> choosePoint() async {
     final next = await Navigator.of(context).push<(double, double)>(
       MaterialPageRoute(
-        builder: (_) =>
-            PlacePositionPicker(city: ref.read(prototypeProvider).city),
+        builder: (_) => PlacePositionPicker(
+          city: ref.read(prototypeProvider).city,
+          initialPoint: point,
+        ),
       ),
     );
     if (mounted && next != null) setState(() => point = next);
@@ -42,7 +45,7 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
   Future<void> save() async {
     if (!form.currentState!.validate()) return;
     if (point == null) {
-      notice(context, 'Отметьте место на карте');
+      notice(context, "Отметьте место на карте".tr(context));
       return;
     }
     setState(() => saving = true);
@@ -63,15 +66,18 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
         notice(
           context,
           AppConfig.backendEnabled
-              ? 'Место отправлено на проверку. Отметка пока видна только вам.'
-              : 'Место добавлено в демо-карту до перезапуска.',
+              ? "Место отправлено на проверку. Отметка пока видна только вам."
+                    .tr(context)
+              : "Место добавлено в демо-карту до перезапуска.".tr(context),
         );
       }
     } catch (_) {
       if (mounted) {
         notice(
           context,
-          'Не удалось добавить место. Проверьте данные и соединение.',
+          "Не удалось добавить место. Проверьте данные и соединение.".tr(
+            context,
+          ),
         );
       }
     } finally {
@@ -81,18 +87,19 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Добавить место')),
+    appBar: AppBar(title: Text("Добавить место".tr(context))),
     body: Form(
       key: form,
       child: PageBody(
         children: [
           Text(
-            'Ваше открытие для других',
+            "Ваше открытие для других".tr(context),
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 8),
           Text(
-            'Добавляйте публичные места. Не отмечайте свой дом, частный адрес или положение другого человека.',
+            "Добавляйте публичные места. Не отмечайте свой дом, частный адрес или положение другого человека."
+                .tr(context),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 24),
@@ -101,16 +108,17 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
             key: const Key('new-place-name'),
             controller: name,
             maxLength: 120,
-            decoration: const InputDecoration(
-              labelText: 'Название',
+            decoration: InputDecoration(
+              labelText: "Название".tr(context),
               counterText: '',
             ),
-            validator: (v) =>
-                (v ?? '').trim().isEmpty ? 'Введите название' : null,
+            validator: (v) => (v ?? '').trim().isEmpty
+                ? "Введите название".tr(context)
+                : null,
           ),
           const SizedBox(height: 16),
           PlaceSelect<String>(
-            label: 'Категория',
+            label: "Категория".tr(context),
             value: category,
             choices: const {
               'Парк': 'Парк',
@@ -126,7 +134,11 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.add_location_alt_outlined),
-            title: Text(point == null ? 'Отметить на карте' : 'Точка выбрана'),
+            title: Text(
+              point == null
+                  ? "Отметить на карте".tr(context)
+                  : "Точка выбрана".tr(context),
+            ),
             subtitle: Text(
               point == null
                   ? ref.watch(prototypeProvider).city
@@ -141,20 +153,21 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
             controller: description,
             maxLength: 1000,
             maxLines: 3,
-            decoration: const InputDecoration(
-              labelText: 'Что здесь интересного?',
-              hintText: 'Публичное описание, без личных сведений',
+            decoration: InputDecoration(
+              labelText: "Что здесь интересного?".tr(context),
+              hintText: "Публичное описание, без личных сведений".tr(context),
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            'Допуск питомцев пока не уточнён. После проверки место появится в общем каталоге.',
+            "Допуск питомцев пока не уточнён. После проверки место появится в общем каталоге."
+                .tr(context),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 24),
           if (point == null) ...[
             Text(
-              'Перед отправкой отметьте место на карте.',
+              "Перед отправкой отметьте место на карте.".tr(context),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
@@ -162,8 +175,8 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
           FilledButton(
             onPressed: saving ? null : save,
             child: saving
-                ? const _PlaceBusyLabel('Отправляем место…')
-                : const Text('Добавить место'),
+                ? _PlaceBusyLabel("Отправляем место…".tr(context))
+                : Text("Добавить место".tr(context)),
           ),
           if (!AppConfig.backendEnabled) const DemoCaption(),
         ],
@@ -173,8 +186,16 @@ class _AddPlaceState extends ConsumerState<AddPlaceScreen> {
 }
 
 class PlacePositionPicker extends ConsumerStatefulWidget {
-  const PlacePositionPicker({required this.city, super.key});
+  const PlacePositionPicker({
+    required this.city,
+    this.initialPoint,
+    this.title = 'Положение места',
+    this.instructions = 'Переместите карту: метка в центре — ваше место.',
+    super.key,
+  });
   final String city;
+  final (double, double)? initialPoint;
+  final String title, instructions;
   @override
   ConsumerState<PlacePositionPicker> createState() => _PositionState();
 }
@@ -182,9 +203,10 @@ class PlacePositionPicker extends ConsumerStatefulWidget {
 class _PositionState extends ConsumerState<PlacePositionPicker> {
   MapboxMap? map;
   bool busy = false;
+  int mapRevision = 0;
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Положение места')),
+    appBar: AppBar(title: Text(widget.title.tr(context))),
     body: Stack(
       children: [
         Positioned.fill(
@@ -192,9 +214,34 @@ class _PositionState extends ConsumerState<PlacePositionPicker> {
             places: const [],
             fullscreen: true,
             onPlace: (_) {},
+            onCreated: (_) {
+              mapRevision++;
+              if (mounted) setState(() => map = null);
+            },
             onReady: (value) async {
-              if (mounted) setState(() => map = value);
-              if (widget.city != 'Минск') {
+              final readyRevision = mapRevision;
+              if (widget.initialPoint case final point?) {
+                try {
+                  await value.setCamera(
+                    CameraOptions(
+                      center: Point(coordinates: Position(point.$2, point.$1)),
+                      zoom: 16,
+                    ),
+                  );
+                } catch (_) {
+                  if (mounted &&
+                      context.mounted &&
+                      readyRevision == mapRevision) {
+                    notice(
+                      context,
+                      "Карта недоступна. Попробуйте открыть её снова.".tr(
+                        context,
+                      ),
+                    );
+                  }
+                  return;
+                }
+              } else if (widget.city != 'Минск') {
                 try {
                   final center = await ref
                       .read(locationServiceProvider)
@@ -216,10 +263,13 @@ class _PositionState extends ConsumerState<PlacePositionPicker> {
                   if (mounted && context.mounted) {
                     notice(
                       context,
-                      'Город не найден. Переместите карту вручную.',
+                      "Город не найден. Переместите карту вручную.".tr(context),
                     );
                   }
                 }
+              }
+              if (mounted && readyRevision == mapRevision) {
+                setState(() => map = value);
               }
             },
           ),
@@ -237,7 +287,7 @@ class _PositionState extends ConsumerState<PlacePositionPicker> {
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Text(
-                      'Переместите карту: метка в центре — ваше место.',
+                      widget.instructions.tr(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -248,8 +298,11 @@ class _PositionState extends ConsumerState<PlacePositionPicker> {
                     liveRegion: true,
                     child: Text(
                       AppConfig.mapboxToken.isEmpty
-                          ? 'Карта не настроена. Выбор точки недоступен.'
-                          : 'Выбор точки станет доступен после загрузки карты.',
+                          ? "Карта не настроена. Выбор точки недоступен.".tr(
+                              context,
+                            )
+                          : "Выбор точки станет доступен после загрузки карты."
+                                .tr(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -272,7 +325,9 @@ class _PositionState extends ConsumerState<PlacePositionPicker> {
                             if (mounted && context.mounted) {
                               notice(
                                 context,
-                                'Карта недоступна. Попробуйте ещё раз.',
+                                "Карта недоступна. Попробуйте ещё раз.".tr(
+                                  context,
+                                ),
                               );
                             }
                           } finally {
@@ -280,8 +335,8 @@ class _PositionState extends ConsumerState<PlacePositionPicker> {
                           }
                         },
                   child: busy
-                      ? const _PlaceBusyLabel('Выбираем точку…')
-                      : const Text('Выбрать эту точку'),
+                      ? _PlaceBusyLabel("Выбираем точку…".tr(context))
+                      : Text("Выбрать эту точку".tr(context)),
                 ),
               ],
             ),
@@ -296,7 +351,7 @@ class SelectedPlacePin extends StatelessWidget {
   const SelectedPlacePin({super.key});
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Выбранная точка места',
+    label: "Выбранная точка места".tr(context),
     child: Transform.translate(
       offset: const Offset(0, -20),
       child: CustomPaint(

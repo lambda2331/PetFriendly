@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -75,6 +76,8 @@ class _LiveMapState extends State<LiveMap> {
   bool failed = false;
   Brightness? loadedBrightness;
   int mapGeneration = 0;
+  bool styleReady = false;
+  Future<void> userUpdates = Future<void>.value();
   Future<void> markers() async {
     final current = map;
     final generation = mapGeneration;
@@ -189,10 +192,12 @@ class _LiveMapState extends State<LiveMap> {
           if (mounted && group != null) openGroup(group);
         },
       );
-      await userMarker();
       setState(() {});
     } catch (_) {
       if (mounted && generation == mapGeneration) setState(() => failed = true);
+    } finally {
+      // Location rendering is independent of place loading/clustering.
+      if (mounted && generation == mapGeneration) await userMarker();
     }
   }
 
@@ -219,7 +224,7 @@ class _LiveMapState extends State<LiveMap> {
                     .map(
                       (p) => ListTile(
                         title: Text(p.name),
-                        subtitle: Text(p.category),
+                        subtitle: Text(p.category.tr(context)),
                         onTap: () => Navigator.pop(ctx, p),
                       ),
                     )
@@ -248,7 +253,18 @@ class _LiveMapState extends State<LiveMap> {
     } catch (_) {}
   }
 
-  Future<void> userMarker() async {
+  Future<void> userMarker() {
+    // Position updates and place redraws can arrive together. Serialize native
+    // mutations so one deleteAll cannot erase a newer location annotation.
+    final generation = mapGeneration;
+    return userUpdates = userUpdates.then((_) async {
+      if (mounted && styleReady && generation == mapGeneration) {
+        await updateUserMarker();
+      }
+    });
+  }
+
+  Future<void> updateUserMarker() async {
     final current = map;
     final generation = mapGeneration;
     if (current == null) return;
@@ -287,6 +303,29 @@ class _LiveMapState extends State<LiveMap> {
     }
   }
 
+  String? labelsLanguage;
+  Future<void> labelsWork = Future.value();
+  void localizeLabels() {
+    final language = context.languageCode;
+    if (!styleReady || map == null || labelsLanguage == language) return;
+    labelsLanguage = language;
+    final current = map!;
+    labelsWork = labelsWork.then((_) async {
+      if (!mounted || current != map || labelsLanguage != language) return;
+      try {
+        await current.localizeLabels(language, null);
+      } catch (_) {
+        /* Retain original map labels. */
+      }
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    localizeLabels();
+  }
+
   @override
   void didUpdateWidget(LiveMap old) {
     super.didUpdateWidget(old);
@@ -305,9 +344,40 @@ class _LiveMapState extends State<LiveMap> {
   @override
   Widget build(BuildContext context) {
     if (AppConfig.mapboxToken.isEmpty || failed) {
-      return Align(
-        alignment: Alignment.topCenter,
-        child: MapUnavailableState(onOpenList: widget.onOpenList),
+      return LayoutBuilder(
+        builder: (context, bounds) {
+          if (bounds.hasBoundedHeight && bounds.maxHeight < 200) {
+            return Container(
+              key: const Key('compact-map-unavailable'),
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              padding: const EdgeInsets.all(16),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.map_outlined, size: 22),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      (failed
+                              ? 'Не удалось загрузить карту.'
+                              : 'Карта пока недоступна')
+                          .tr(context),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return Align(
+            alignment: Alignment.topCenter,
+            child: MapUnavailableState(
+              onOpenList: widget.onOpenList,
+              failed: failed,
+            ),
+          );
+        },
       );
     }
     final dark = Theme.of(context).brightness == Brightness.dark;
@@ -327,10 +397,13 @@ class _LiveMapState extends State<LiveMap> {
                           widget.places.isEmpty)
                   ? (dark ? 'map-ready-dark' : 'map-ready-light')
                   : 'map-loading',
-              label: 'Карта мест рядом',
+              label: "Карта мест рядом".tr(context),
               value: loadedBrightness == Theme.of(context).brightness
-                  ? 'Мест на карте: ${widget.places.length}'
-                  : 'Загрузка карты',
+                  ? "Мест на карте: {p0}".tr(
+                      context,
+                      arguments: {'p0': widget.places.length},
+                    )
+                  : "Загрузка карты".tr(context),
               child: MapWidget(
                 key: ValueKey(dark),
                 gestureRecognizers: widget.fullscreen
@@ -345,6 +418,7 @@ class _LiveMapState extends State<LiveMap> {
                 onMapCreated: (value) {
                   map = value;
                   mapGeneration++;
+                  styleReady = false;
                   taps?.cancel();
                   manager = null;
                   userManager = null;
@@ -366,16 +440,30 @@ class _LiveMapState extends State<LiveMap> {
                     );
                   }
                 },
-                onStyleLoadedListener: (_) => markers(),
+                onStyleLoadedListener: (_) {
+                  styleReady = true;
+                  labelsLanguage = null;
+                  localizeLabels();
+                  // Style readiness suffices for positioning, even while
+                  // visible tiles are still loading.
+                  final current = map;
+                  if (current != null) widget.onReady?.call(current);
+                  markers();
+                },
                 onMapLoadedListener: (_) {
                   if (mounted) {
+                    final firstLoad = loadedBrightness == null;
                     setState(
                       () => loadedBrightness = dark
                           ? Brightness.dark
                           : Brightness.light,
                     );
+                    // Native initial viewport setup may finish after the
+                    // style callback. Reconcile the camera once more then.
                     final current = map;
-                    if (current != null) widget.onReady?.call(current);
+                    if (firstLoad && current != null) {
+                      widget.onReady?.call(current);
+                    }
                   }
                 },
                 onMapLoadErrorListener: (_) {
@@ -389,7 +477,7 @@ class _LiveMapState extends State<LiveMap> {
                 top: 12,
                 child: Semantics(
                   key: ValueKey('user-location-visible'),
-                  label: 'Ваше положение отмечено синим',
+                  label: "Ваше положение отмечено синим".tr(context),
                   child: SizedBox.shrink(),
                 ),
               ),
@@ -398,7 +486,7 @@ class _LiveMapState extends State<LiveMap> {
                 right: 12,
                 top: 12,
                 child: IconButton.filledTonal(
-                  tooltip: 'На весь экран',
+                  tooltip: "На весь экран".tr(context),
                   onPressed: () async {
                     CameraState? camera;
                     try {
@@ -417,15 +505,46 @@ class _LiveMapState extends State<LiveMap> {
 }
 
 class MapUnavailableState extends StatelessWidget {
-  const MapUnavailableState({this.onOpenList, this.compact = false, super.key});
-  final bool compact;
+  const MapUnavailableState({
+    this.onOpenList,
+    this.compact = false,
+    this.failed = false,
+    super.key,
+  });
+  final bool compact, failed;
   final VoidCallback? onOpenList;
 
   @override
   Widget build(BuildContext context) => compact
-      ? Text(
-          'Карта пока недоступна',
-          style: Theme.of(context).textTheme.bodySmall,
+      ? Container(
+          constraints: const BoxConstraints(minHeight: 240),
+          width: double.infinity,
+          padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondaryContainer,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.map_outlined, size: 28),
+              const SizedBox(height: 16),
+              Text(
+                (failed
+                        ? 'Не удалось загрузить карту.'
+                        : 'Карта пока недоступна')
+                    .tr(context),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Места можно посмотреть списком.'.tr(context),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
         )
       : StudioCard(
           padding: 20,
@@ -443,7 +562,10 @@ class MapUnavailableState extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Карта пока недоступна',
+                      (failed
+                              ? "Не удалось загрузить карту."
+                              : "Карта пока недоступна")
+                          .tr(context),
                       style: Theme.of(
                         context,
                       ).textTheme.titleLarge?.copyWith(fontSize: 16),
@@ -453,7 +575,7 @@ class MapUnavailableState extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Места можно посмотреть списком.',
+                "Перейдите к списку мест.".tr(context),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -461,11 +583,11 @@ class MapUnavailableState extends StatelessWidget {
               if (onOpenList != null) ...[
                 const SizedBox(height: 12),
                 Tooltip(
-                  message: 'Список мест',
-                  child: OutlinedButton.icon(
+                  message: "Список мест".tr(context),
+                  child: TextButton.icon(
                     onPressed: onOpenList,
                     icon: const Icon(Icons.view_list_outlined, size: 18),
-                    label: const Text('Открыть список мест'),
+                    label: Text("Открыть список мест".tr(context)),
                   ),
                 ),
               ],

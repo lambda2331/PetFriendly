@@ -22,9 +22,9 @@ def fixture():
  email='media-'+secrets.token_hex(6)+'@example.test';password=secrets.token_urlsafe(24)
  status,user,_=call('/auth/v1/admin/users',{'email':email,'password':password,'email_confirm':True},admin=True);check(status in (200,201),'synthetic account created');users.append(user['id'])
  _,session,_=call('/auth/v1/token?grant_type=password',{'email':email,'password':password});return user['id'],session['access_token']
-def upload(kind,data,token,nonce=None):
+def upload(kind,data,token,nonce=None,caption=''):
  query=urllib.parse.urlencode({'conversation':cid,'client_id':nonce or str(uuid.uuid4()),'kind':kind})
- metadata=json.dumps({'caption':'','mime':'image/png' if kind=='image' else 'video/mp4'}).encode()
+ metadata=json.dumps({'caption':caption,'mime':'image/png' if kind=='image' else 'video/mp4'}).encode()
  return call('/functions/v1/chat-media?'+query,struct.pack('>I',len(metadata))+metadata+data,token,mime='application/octet-stream')
 def read(mid,token):return call('/functions/v1/chat-media?mode=read&message='+mid,b'',token,binary=True)
 def chunk(kind,data):return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data)&0xffffffff)
@@ -37,8 +37,10 @@ try:
  check(upload('image',png,tc)[0]==403,'outsider upload rejected')
  check(call('/rest/v1/rpc/publish_chat_media',{},ta)[0]>=400,'client cannot invoke privileged publish')
  check(call('/storage/v1/object/petfriendly-chat/'+a+'/forged.jpg',png,ta,mime='image/jpeg')[0]>=400,'direct Storage upload rejected')
- nonce=str(uuid.uuid4());status,result,_=upload('image',png,ta,nonce);check(status==200,'member sends reencoded photo');mid=result['id']
- status,retry,_=upload('image',png,ta,nonce);check(status==200 and retry['id']==mid,'retry creates one message')
+ nonce=str(uuid.uuid4());status,result,_=upload('image',png,ta,nonce,caption='🐕'*501);check(status==200,'member sends reencoded photo with 501 Unicode characters');mid=result['id']
+ check(call('/rest/v1/messages?id=eq.'+mid,token=ta)[1][0]['body']=='🐕'*501,'Unicode caption is preserved exactly')
+ check(upload('image',png,ta,caption='🐕'*1001)[0]==400,'caption above 1000 Unicode characters is rejected')
+ status,retry,_=upload('image',png,ta,nonce,caption='🐕'*501);check(status==200 and retry['id']==mid,'retry creates one message')
  status,rows,_=call('/rest/v1/chat_attachments?message_id=eq.'+mid,token=ta);check(status==200 and len(rows)==1,'one private attachment reference');objects.extend(x['object_path'] for x in rows)
  path=rows[0]['object_path']
  check(read(mid,tc)[0]==404,'outsider cannot download')

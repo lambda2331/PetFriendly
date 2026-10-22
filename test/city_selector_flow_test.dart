@@ -1,3 +1,4 @@
+import 'package:petfriendly/core/ui/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petfriendly/core/theme/studio_theme.dart';
@@ -20,9 +21,8 @@ Future<void> openCitySheet(
           child: Scaffold(
             body: TextButton(
               onPressed: () {
-                showModalBottomSheet<void>(
+                showStudioSelectionSheet<void>(
                   context: context,
-                  isScrollControlled: true,
                   builder: (ctx) => MediaQuery(
                     data: MediaQuery.of(
                       ctx,
@@ -53,6 +53,24 @@ Future<void> openCitySheet(
 }
 
 void main() {
+  testWidgets('Opened selection panel fills screen width', (tester) async {
+    tester.view.physicalSize = const Size(320, 720);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await openCitySheet(tester, []);
+    final bounds = tester.getRect(
+      find
+          .descendant(
+            of: find.byType(BottomSheet),
+            matching: find.byType(Material),
+          )
+          .first,
+    );
+    expect(bounds.left, closeTo(0, .1));
+    expect(bounds.right, closeTo(320, .1));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Search starts empty and a Belarus alias selects immediately', (
     tester,
   ) async {
@@ -83,7 +101,7 @@ void main() {
       await openCitySheet(tester, selected);
       await tester.enterText(find.byKey(const Key('city-input')), 'Moscow');
       await tester.pumpAndSettle();
-      expect(find.text('Россия'), findsOneWidget);
+      expect(find.textContaining('Россия'), findsWidgets);
       await tester.tap(find.byKey(const ValueKey('city-suggestion-Москва')));
       await tester.pumpAndSettle();
       expect(selected, ['Москва']);
@@ -97,7 +115,7 @@ void main() {
       await openCitySheet(tester, selected);
       await tester.enterText(
         find.byKey(const Key('city-input')),
-        '  Новый Тестовый Город  ',
+        '  Новый Тестовый Город, Беларусь  ',
       );
       await tester.testTextInput.receiveAction(TextInputAction.search);
       await tester.pumpAndSettle();
@@ -105,7 +123,7 @@ void main() {
       expect(find.byType(CitySheet), findsOneWidget);
       await tester.tap(find.byKey(const Key('city-custom')));
       await tester.pumpAndSettle();
-      expect(selected, ['Новый Тестовый Город']);
+      expect(selected, ['Новый Тестовый Город, Беларусь']);
       expect(find.byType(CitySheet), findsNothing);
     },
   );

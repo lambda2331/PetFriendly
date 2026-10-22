@@ -1,0 +1,12 @@
+/* Review 41: keep approved title alignment, root headings and chat identity layouts. */
+:is(.phone,.places-page) .studio-page-head{flex-shrink:0;min-height:64px;box-sizing:border-box;gap:8px;border-bottom:1px solid var(--ds-border);color:var(--ds-textPrimary)}
+:is(.phone,.places-page) .studio-page-head>h2{font:700 var(--ds-sheet-title)/1.35 Manrope,sans-serif!important;margin:0;min-width:0;overflow-wrap:anywhere}
+:is(.phone,.places-page) :is(.studio-page-head,.studio-chat-head)>.icon-button{margin:0!important;min-width:48px;width:48px;min-height:48px;height:48px}
+:is(.phone,.places-page) :is(.studio-page-head,.studio-chat-head)>.icon-button>.icon{width:20px;height:20px;flex:none}
+:is(.phone,.places-page) .places-header.studio-page-head{padding:8px 12px}
+:is(.phone,.places-page) .nav{padding:8px 12px max(12px,env(safe-area-inset-bottom));gap:4px;flex-shrink:0;align-items:center;justify-content:space-between;background:var(--ds-background);border-top:1px solid var(--ds-border)}
+:is(.phone,.places-page) .nav button{min-width:48px;min-height:48px;color:var(--ds-textSecondary)}
+:is(.phone,.places-page) .nav button[aria-current=page]{background:var(--ds-accent);color:var(--ds-onAccent);font:700 12px/20px Golos,sans-serif;white-space:nowrap}
+:is(.phone,.places-page) .nav button .icon{width:22px;height:22px;flex:none}
+:is(.phone,.places-page) :is(.nav,.tabs) button:focus-visible{outline:2px solid var(--ds-textPrimary);outline-offset:-2px}
+:is(.phone,.places-page) .tabs{scroll-padding-inline:12px}

@@ -1,3 +1,12 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../notifications/notifications_screen.dart';
+import '../../core/ui/studio_review.dart';
+import '../../core/theme/studio_theme.dart';
+import '../community/presentation/forms.dart';
+import '../nearby/fullscreen_map_screen.dart';
+import '../nearby/pet_access_widgets.dart';
+import '../../l10n/language_picker.dart';
+import '../../l10n/localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../../core/diagnostics/crash_reporting.dart';
 import '../security/moderation_screen.dart';
@@ -10,9 +19,8 @@ import '../../core/media/preview_photos.dart';
 import '../nearby/city_catalog.dart';
 import '../nearby/place_repository.dart';
 import '../nearby/place_contributions.dart';
-import '../nearby/place_row.dart';
 import '../community/data/community_repository.dart';
-import '../walks/helper_reputation.dart';
+import '../walks/account_mode.dart';
 import '../../core/backend/backend.dart';
 import '../auth/account_actions.dart';
 
@@ -25,34 +33,29 @@ String themeLabel(ThemeMode mode) => switch (mode) {
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
   void chooseTheme(BuildContext context, WidgetRef ref, ThemeMode selected) {
-    showModalBottomSheet<void>(
+    showStudioSelectionSheet<void>(
       context: context,
-      useRootNavigator: true,
-      sheetAnimationStyle: studioSheetAnimation(context),
-      builder: (ctx) => SafeArea(
+      builder: (ctx) => StudioReviewSheet(
+        title: 'Тема'.tr(context),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: StudioSheetHeader(title: 'Оформление'),
-            ),
-            ...ThemeMode.values.map(
-              (mode) => ListTile(
-                title: Text(themeLabel(mode)),
+            for (final mode in ThemeMode.values)
+              StudioReviewRow(
+                title: themeLabel(mode).tr(context),
                 leading: Icon(switch (mode) {
-                  ThemeMode.system => Icons.brightness_auto_outlined,
-                  ThemeMode.light => Icons.light_mode_outlined,
-                  ThemeMode.dark => Icons.dark_mode_outlined,
+                  ThemeMode.system => LucideIcons.sunMoon,
+                  ThemeMode.light => LucideIcons.sun,
+                  ThemeMode.dark => LucideIcons.moon,
                 }),
-                trailing: mode == selected ? const Icon(Icons.check) : null,
+                trailing: mode == selected
+                    ? const Icon(Icons.check)
+                    : const SizedBox.shrink(),
                 onTap: () {
                   ref.read(prototypeProvider.notifier).setTheme(mode);
                   Navigator.pop(ctx);
                 },
               ),
-            ),
-            const SizedBox(height: 8),
           ],
         ),
       ),
@@ -62,416 +65,525 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(prototypeProvider);
-    final favoriteCatalog = ref.watch(favoriteCatalogProvider);
+    final catalog = ref.watch(favoriteCatalogProvider);
     final saved = <String, Place>{
       for (final p in [
-        ...favoriteCatalog.value ?? [],
+        ...catalog.value ?? [],
         ...ref.watch(placeContributionsProvider).value ?? [],
       ])
         if (state.favorites.contains(p.id)) p.id: p,
     }.values.toList();
-    return ref
-        .watch(communityProvider)
-        .when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (_, _) => Center(
-            child: TextButton(
+    final community = ref.watch(communityProvider);
+    final theme = Theme.of(context);
+    final helper = ref.watch(accountModeProvider).value?.isHelper == true;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+      children: [
+        Text('Профиль'.tr(context), style: theme.textTheme.headlineLarge),
+        const SizedBox(height: 20),
+        if (community.isLoading)
+          StudioReviewState(
+            title: 'Загружаем профиль…'.tr(context),
+            loading: true,
+          )
+        else if (community.hasError)
+          StudioReviewState(
+            title: 'Не удалось загрузить'.tr(context),
+            message: 'Проверьте соединение и попробуйте снова.'.tr(context),
+            icon: LucideIcons.cloudOff,
+            action: OutlinedButton(
               onPressed: () => ref.invalidate(communityProvider),
-              child: const Text('Повторить загрузку профиля'),
+              child: Text('Повторить'.tr(context)),
+            ),
+          )
+        else
+          ..._content(
+            context,
+            ref,
+            community.value ?? {},
+            saved,
+            catalog,
+            helper,
+          ),
+      ],
+    );
+  }
+
+  List<Widget> _content(
+    BuildContext context,
+    WidgetRef ref,
+    CommunityData data,
+    List<Place> saved,
+    AsyncValue<List<Place>> catalog,
+    bool helper,
+  ) {
+    final uid = ref.read(communityRepositoryProvider).userId;
+    final profile = findRow(data, 'profiles', uid) ?? {};
+    final pets = rows(data, 'pets').where((p) => p['owner_id'] == uid).toList();
+    final theme = Theme.of(context);
+    final city = ref.watch(prototypeProvider).city;
+    final district = (profile['district'] ?? '').toString().trim();
+    Widget section(String title, {Widget? action}) => Padding(
+      padding: const EdgeInsets.only(top: 16, bottom: 4),
+      child: Row(
+        children: [
+          Expanded(child: Text(title, style: studioIdentityText)),
+          ?action,
+        ],
+      ),
+    );
+    return [
+      Container(
+        key: const Key('profile-identity-card'),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.all(color: StudioColors.of(context).line),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          key: const Key('profile-identity'),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IdentityPicture(
+              id: 'profile:$uid',
+              name: profile['display_name'] as String?,
+              icon: LucideIcons.user,
+              size: 64,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    (profile['display_name'] ?? 'Ваш профиль'.tr(context))
+                        .toString(),
+                    style: studioIdentityText,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    [city, if (district.isNotEmpty) district].join(' · '),
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              tooltip: 'Редактировать профиль'.tr(context),
+              onPressed: () => showStudioEditSheet(context, kind: 'profile'),
+              icon: const Icon(LucideIcons.pencil, size: 22),
+            ),
+          ],
+        ),
+      ),
+      if ((profile['about'] ?? '').toString().trim().isNotEmpty) ...[
+        const SizedBox(height: 16),
+        Text(profile['about'], style: theme.textTheme.bodyMedium),
+      ],
+      const SizedBox(height: 16),
+      StudioReviewRow(
+        key: const Key('profile-walking-help'),
+        leading: const Icon(LucideIcons.footprints),
+        title: 'Помощь с питомцами'.tr(context),
+        subtitle: 'Выгул и присмотр за кошками'.tr(context),
+        onTap: () => context.push('/helper/onboarding'),
+      ),
+      if (!helper) ...[
+        const SizedBox(height: 16),
+        const Divider(height: 1),
+        section(
+          'Мои питомцы'.tr(context),
+          action: IconButton(
+            tooltip: 'Добавить питомца'.tr(context),
+            onPressed: () => showStudioEditSheet(context, kind: 'pet'),
+            icon: const Icon(LucideIcons.plus),
+          ),
+        ),
+        if (pets.isEmpty)
+          StudioReviewState(
+            title: 'Добавьте своего питомца'.tr(context),
+            message: 'Фото и несколько слов помогут соседям познакомиться.'.tr(
+              context,
+            ),
+            icon: LucideIcons.pawPrint,
+            action: OutlinedButton(
+              onPressed: () => showStudioEditSheet(context, kind: 'pet'),
+              child: Text('Добавить питомца'.tr(context)),
             ),
           ),
-          data: (data) {
-            final uid = ref.read(communityRepositoryProvider).userId;
-            final profile = findRow(data, 'profiles', uid) ?? {};
-            final pets = rows(data, 'pets').where((p) => p['owner_id'] == uid);
-            Future<void> photo(String id) async {
-              try {
-                final bytes = await pickPreviewPhoto();
-                if (bytes != null && context.mounted) {
-                  final persistent = await savePhoto(ref, id, bytes);
-                  if (!context.mounted) return;
-                  notice(
-                    context,
-                    persistent
-                        ? 'Фото сохранено'
-                        : 'Фото для просмотра · до перезапуска',
-                  );
-                }
-              } catch (_) {
-                if (context.mounted) {
-                  notice(
-                    context,
-                    'Не удалось сохранить фото. Проверьте соединение и выберите изображение до 8 МБ.',
-                  );
-                }
-              }
-            }
+        for (final p in pets)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Material(
+              color: StudioColors.of(context).tint,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: StudioColors.of(context).line),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () => showPetDetails(context, p),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      IdentityPicture(
+                        id: 'pet:${p['id']}',
+                        icon: LucideIcons.pawPrint,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(p['name'], style: studioIdentityText),
+                            Text(
+                              [
+                                    p['kind'],
+                                    if ((p['breed'] ?? '')
+                                        .toString()
+                                        .isNotEmpty)
+                                      p['breed']
+                                    else
+                                      ageYears(
+                                        p['age'],
+                                        locale: context.languageCode,
+                                      ),
+                                  ]
+                                  .where(
+                                    (v) => v != null && v.toString().isNotEmpty,
+                                  )
+                                  .join(' · '),
+                              style: theme.textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(LucideIcons.chevronRight, size: 18),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
+      const SizedBox(height: 16),
+      const Divider(height: 1),
+      section('Избранные места'.tr(context)),
+      if (catalog.isLoading && ref.read(prototypeProvider).favorites.isNotEmpty)
+        StudioReviewState(
+          title: 'Загружаем сохранённые места…'.tr(context),
+          loading: true,
+        )
+      else if (catalog.hasError &&
+          saved.isEmpty &&
+          ref.read(prototypeProvider).favorites.isNotEmpty)
+        StudioReviewState(
+          title: 'Избранные места не загрузились.'.tr(context),
+          icon: LucideIcons.cloudOff,
+          action: OutlinedButton(
+            onPressed: () => ref.invalidate(favoriteCatalogProvider),
+            child: Text('Повторить'.tr(context)),
+          ),
+        )
+      else if (saved.isEmpty)
+        StudioReviewState(
+          title: 'Пока нет избранных мест'.tr(context),
+          message: 'Сохраняйте места на странице «Рядом».'.tr(context),
+          icon: LucideIcons.heart,
+        )
+      else
+        for (final p in saved)
+          StudioReviewRow(
+            title: p.name,
+            subtitle: '${p.city} · ${p.category.tr(context)}',
+            leading: InitialAvatar('', icon: p.icon),
+            onTap: () => showFavoritePlace(context, ref, p),
+          ),
+    ];
+  }
+}
 
-            final about = (profile['about'] ?? '').toString().trim();
-            final interests = (profile['interests'] ?? '').toString().trim();
-            return PageBody(
+void showPetDetails(BuildContext context, Json pet) =>
+    showStudioSelectionSheet<void>(
+      context: context,
+      builder: (ctx) => StudioReviewSheet(
+        title: 'Питомец'.tr(context),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
               children: [
-                StudioCard(
-                  key: const Key('profile-identity'),
-                  padding: 16,
+                IdentityPicture(
+                  id: 'pet:${pet['id']}',
+                  icon: LucideIcons.pawPrint,
+                  size: 64,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Tooltip(
-                            message: 'Изменить фото профиля',
-                            excludeFromSemantics: true,
-                            child: Semantics(
-                              label: 'Фото профиля',
-                              button: true,
-                              container: true,
-                              excludeSemantics: true,
-                              onTap: () => photo('profile:$uid'),
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(32),
-                                onTap: () => photo('profile:$uid'),
-                                child: SizedBox.square(
-                                  dimension: 64,
-                                  child: Stack(
-                                    children: [
-                                      IdentityPicture(
-                                        id: 'profile:$uid',
-                                        name: profile['display_name'],
-                                        icon: Icons.person_outline,
-                                        size: 64,
-                                      ),
-                                      Positioned(
-                                        right: 0,
-                                        bottom: 0,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(
-                                              context,
-                                            ).colorScheme.surface,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(
-                                            Icons.camera_alt_outlined,
-                                            size: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                      Text(pet['name'], style: studioIdentityText),
+                      Text(
+                        [
+                              pet['kind'],
+                              ageYears(
+                                pet['age'],
+                                locale: context.languageCode,
                               ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  (profile['display_name'] ?? '')
-                                          .toString()
-                                          .trim()
-                                          .isEmpty
-                                      ? 'Ваш профиль'
-                                      : profile['display_name'],
-                                  style: Theme.of(context).textTheme.titleLarge
-                                      ?.copyWith(fontSize: 20),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  (profile['district'] ?? '')
-                                          .toString()
-                                          .trim()
-                                          .isEmpty
-                                      ? 'Район не указан'
-                                      : profile['district'],
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (about.isNotEmpty) ...[
-                        const SizedBox(height: 12),
-                        Text(about),
-                      ],
-                      if (interests.isNotEmpty) ...[
-                        const SizedBox(height: 8),
-                        Text(
-                          interests,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                      const SizedBox(height: 12),
-                      Tooltip(
-                        message: 'Редактировать профиль',
-                        excludeFromSemantics: true,
-                        child: OutlinedButton.icon(
-                          onPressed: () => context.push('/edit/profile'),
-                          icon: const Icon(Icons.edit_outlined, size: 18),
-                          label: const Text('Редактировать профиль'),
-                        ),
+                            ]
+                            .where((v) => v != null && v.toString().isNotEmpty)
+                            .join(' · '),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'В публичном профиле виден только район.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                SectionTitle(
-                  'Мои питомцы',
-                  compact: true,
-                  trailing: pets.isEmpty
-                      ? null
-                      : IconButton(
-                          tooltip: 'Добавить питомца',
-                          onPressed: () => context.push('/edit/pet'),
-                          icon: const Icon(Icons.add),
-                        ),
-                ),
-                if (pets.isEmpty) ...[
-                  Text(
-                    'Добавьте питомца — знакомиться будет проще.',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: OutlinedButton.icon(
-                      onPressed: () => context.push('/edit/pet'),
-                      icon: const Icon(Icons.add, size: 18),
-                      label: const Text('Добавить питомца'),
-                    ),
-                  ),
-                ],
-                ...pets.map(
-                  (p) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: StudioCard(
-                      padding: 14,
-                      child: Row(
-                        children: [
-                          Semantics(
-                            label: 'Фото питомца ${p['name']}',
-                            button: true,
-                            child: InkWell(
-                              onTap: () => photo('pet:${p['id']}'),
-                              child: IdentityPicture(
-                                id: 'pet:${p['id']}',
-                                icon: Icons.pets_outlined,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  p['name'],
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium,
-                                ),
-                                MetadataLine(
-                                  items: [p['kind'], ageYears(p['age'])],
-                                ),
-                                if ((p['temperament'] ?? '')
-                                    .toString()
-                                    .trim()
-                                    .isNotEmpty) ...[
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    p['temperament'],
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall,
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                          IconButton(
-                            tooltip: 'Редактировать питомца',
-                            onPressed: () =>
-                                context.push('/edit/pet?id=${p['id']}'),
-                            icon: const Icon(Icons.edit_outlined, size: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SectionTitle('Мой опыт выгула', compact: true),
-                Builder(
-                  builder: (context) {
-                    final reputation = HelperReputation.fromData(
-                      data,
-                      uid ?? '',
-                      demo: ref.read(communityRepositoryProvider).isDemo,
-                    );
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(reputation.reviewLabel),
-                      subtitle: Text(reputation.completedLabel),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: uid == null
-                          ? null
-                          : () => context.push('/helper/$uid'),
-                    );
-                  },
-                ),
-                if (saved.isNotEmpty)
-                  SectionTitle(
-                    'Избранные места',
-                    compact: true,
-                    trailing: Text(
-                      '${saved.length}',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                if (saved.isEmpty &&
-                    state.favorites.isNotEmpty &&
-                    favoriteCatalog.isLoading) ...[
-                  const SectionTitle('Избранные места', compact: true),
-                  const LinearProgressIndicator(),
-                  const SizedBox(height: 8),
-                  const Text('Загружаем сохранённые места…'),
-                ] else if (saved.isEmpty &&
-                    state.favorites.isNotEmpty &&
-                    favoriteCatalog.hasError) ...[
-                  const SectionTitle('Избранные места', compact: true),
-                  const Text('Избранные места не загрузились.'),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      onPressed: () => ref.invalidate(favoriteCatalogProvider),
-                      child: const Text('Повторить загрузку мест'),
-                    ),
-                  ),
-                ] else if (saved.isEmpty) ...[
-                  const SizedBox(height: 16),
-                  const Divider(height: 1),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.favorite_border, size: 20),
-                    title: const Text('Избранные места'),
-                    subtitle: Text(
-                      state.favorites.isEmpty
-                          ? 'Сохраняйте места на карте — они появятся здесь.'
-                          : 'Сохранённые места сейчас недоступны.',
-                    ),
-                    trailing: const Icon(Icons.chevron_right, size: 20),
-                    onTap: () => context.push('/places'),
-                  ),
-                ],
-                ...saved.map((p) => PlaceRow(place: p)),
               ],
-            );
-          },
-        );
-  }
-}
+            ),
+            const SizedBox(height: 16),
+            const Divider(height: 1),
+            const SizedBox(height: 16),
+            Text('Характер и привычки'.tr(context), style: studioIdentityText),
+            const SizedBox(height: 10),
+            Text((pet['temperament'] ?? '').toString()),
+            const SizedBox(height: 20),
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.pop(ctx);
+                showStudioEditSheet(context, kind: 'pet', id: pet['id']);
+              },
+              icon: const Icon(LucideIcons.pencil),
+              label: Text('Редактировать питомца'.tr(context)),
+            ),
+          ],
+        ),
+      ),
+    );
+
+void showFavoritePlace(BuildContext context, WidgetRef ref, Place place) =>
+    showStudioSelectionSheet<void>(
+      context: context,
+      builder: (ctx) => StudioReviewSheet(
+        title: place.name,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '${place.city} · ${place.category.tr(context)}',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 16),
+            PetAccessStatus(evidence: place.accessEvidence),
+            const SizedBox(height: 20),
+            FilledButton.icon(
+              onPressed: () {
+                final router = GoRouter.of(context);
+                Navigator.pop(ctx);
+                router.push(
+                  '/map',
+                  extra: FullscreenMapArgs(
+                    places: [place],
+                    city: place.city,
+                    focusPlace: place,
+                  ),
+                );
+              },
+              icon: const Icon(LucideIcons.mapPin),
+              label: Text('Показать на карте'.tr(context)),
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton(
+              onPressed: () {
+                ref.read(prototypeProvider.notifier).favorite(place.id);
+                Navigator.pop(ctx);
+              },
+              child: Text('Убрать из избранного'.tr(context)),
+            ),
+          ],
+        ),
+      ),
+    );
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(prototypeProvider);
-    return Scaffold(
-      appBar: AppBar(title: const Text('Настройки')),
-      body: PageBody(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.palette_outlined),
-            title: const Text('Тема приложения'),
-            subtitle: Text(themeLabel(state.theme)),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () =>
-                const ProfileScreen().chooseTheme(context, ref, state.theme),
-          ),
-          ListTile(
-            leading: const Icon(Icons.notifications_outlined),
-            title: const Text('Уведомления'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/notifications'),
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.shield_outlined),
-            title: const Text('Безопасность и приватность'),
-            subtitle: const Text('Аккаунт, сессии и личные данные'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/security'),
-          ),
-          if (Firebase.apps.isNotEmpty)
-            SwitchListTile(
-              secondary: const Icon(Icons.bug_report_outlined),
-              title: const Text('Отчёты об ошибках'),
-              subtitle: const Text('Отправлять технические отчёты в Firebase'),
-              value: ref.watch(crashReportingProvider),
-              onChanged: (enabled) async {
-                try {
-                  await ref
-                      .read(crashReportingProvider.notifier)
-                      .setEnabled(enabled);
-                } catch (_) {
-                  if (context.mounted) {
-                    notice(context, 'Не удалось изменить настройку');
-                  }
-                }
-              },
-            ),
-          if (ref.watch(moderationAvailableProvider).value == true)
-            ListTile(
-              leading: const Icon(Icons.fact_check_outlined),
-              title: const Text('Модерация'),
-              onTap: () => context.push('/moderation'),
-            ),
-          ListTile(
-            leading: const Icon(Icons.info_outline),
-            title: const Text('О приложении и данных'),
-            onTap: () => showAboutDialog(
-              context: context,
-              applicationName: 'PetFriendly',
-              applicationVersion: '0.1',
+    final actions = ref.watch(accountActionsProvider);
+    final items = <Widget>[
+      StudioReviewRow(
+        title: 'Тема'.tr(context),
+        subtitle: themeLabel(state.theme).tr(context),
+        leading: const Icon(LucideIcons.sunMoon),
+        onTap: () =>
+            const ProfileScreen().chooseTheme(context, ref, state.theme),
+      ),
+      StudioReviewRow(
+        key: const Key('settings-language'),
+        title: 'Язык'.tr(context),
+        subtitle:
+            appLanguages[ref.watch(languageProvider)?.languageCode] ??
+            'Как на устройстве'.tr(context),
+        leading: const Icon(LucideIcons.languages),
+        onTap: () => chooseAppLanguage(context, ref),
+      ),
+      StudioReviewRow(
+        title: 'Режим приложения'.tr(context),
+        subtitle:
+            (ref.watch(accountModeProvider).value?.isHelper == true
+                    ? 'Помощник'
+                    : 'Владелец')
+                .tr(context),
+        leading: const Icon(LucideIcons.user),
+        onTap: () => context.push('/roles'),
+      ),
+      StudioReviewRow(
+        title: 'Уведомления'.tr(context),
+        subtitle: 'Текст сообщений скрыт в уведомлениях.'.tr(context),
+        leading: const Icon(LucideIcons.bell),
+        onTap: () => showStudioSelectionSheet<void>(
+          context: context,
+          builder: (ctx) => const NotificationSettingsSheet(),
+        ),
+      ),
+      StudioReviewRow(
+        title: 'О приложении и данных'.tr(context),
+        leading: const Icon(LucideIcons.info),
+        onTap: () => showStudioSelectionSheet<void>(
+          context: context,
+          builder: (ctx) => StudioReviewSheet(
+            title: 'О приложении и данных'.tr(context),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('PetFriendly', style: studioIdentityText),
+                StudioReviewRow(
+                  title: 'Безопасность и приватность'.tr(context),
+                  subtitle: 'Аккаунт, сессии и личные данные'.tr(context),
+                  leading: const Icon(Icons.shield_outlined),
+                  onTap: () {
+                    final router = GoRouter.of(context);
+                    Navigator.pop(ctx);
+                    router.push('/security');
+                  },
+                ),
+                if (Firebase.apps.isNotEmpty)
+                  Consumer(
+                    builder: (context, sheetRef, _) => SwitchListTile(
+                      title: Text('Отчёты об ошибках'.tr(context)),
+                      value: sheetRef.watch(crashReportingProvider),
+                      onChanged: (enabled) async {
+                        try {
+                          await sheetRef
+                              .read(crashReportingProvider.notifier)
+                              .setEnabled(enabled);
+                        } catch (_) {
+                          if (context.mounted) {
+                            notice(
+                              context,
+                              'Не удалось изменить настройку'.tr(context),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+
+                const SizedBox(height: 12),
                 const SelectableText(
-                  'Каталог: © OpenStreetMap contributors · ODbL\nhttps://www.openstreetmap.org/copyright\n\nДопуск питомцев уточняется по данным сообщества.',
+                  'Cities: © GeoNames · CC BY 4.0\nhttps://www.geonames.org/\nCountry names: Unicode CLDR · Unicode License V3',
+                ),
+                const SizedBox(height: 12),
+                SelectableText(
+                  'Каталог: © OpenStreetMap contributors · ODbL\nhttps://www.openstreetmap.org/copyright\n\nДопуск питомцев уточняется по данным сообщества.'
+                      .tr(context),
                 ),
               ],
             ),
           ),
-          if (ref.watch(backendProvider) != null) ...[
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: Text(
-                ref.watch(accountActionsProvider).isLoading
-                    ? 'Выходим…'
-                    : 'Выйти из аккаунта',
+        ),
+      ),
+    ];
+    return Scaffold(
+      appBar: const StudioReviewBrand(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+        children: [
+          Row(
+            children: [
+              IconButton(
+                tooltip: 'Назад'.tr(context),
+                onPressed: () => context.pop(),
+                icon: const Icon(LucideIcons.arrowLeft),
               ),
-              subtitle: const Text('На этом устройстве'),
-              enabled: !ref.watch(accountActionsProvider).isLoading,
-              onTap: () async {
-                try {
-                  await ref.read(accountActionsProvider.notifier).signOut();
-                  if (context.mounted) context.go('/login');
-                } catch (_) {
-                  if (context.mounted) {
-                    notice(context, 'Не удалось выйти. Повторите попытку.');
-                  }
-                }
-              },
-            ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Настройки'.tr(context),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineSmall?.copyWith(fontSize: 28),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          for (final (i, item) in items.indexed) ...[
+            if (i > 0)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: Divider(height: 1),
+              ),
+            item,
           ],
-          if (ref.read(communityRepositoryProvider).isDemo) const DemoCaption(),
+          const SizedBox(height: 12),
+          if (ref.watch(moderationAvailableProvider).value == true)
+            StudioReviewRow(
+              title: 'Модерация'.tr(context),
+              leading: const Icon(Icons.fact_check_outlined),
+              onTap: () => context.push('/moderation'),
+            ),
+          if (ref.watch(backendProvider) != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: OutlinedButton(
+                  onPressed: actions.isLoading
+                      ? null
+                      : () => showStudioConfirmation(
+                          context,
+                          title: 'Выйти из аккаунта'.tr(context),
+                          onConfirm: () async {
+                            try {
+                              await ref
+                                  .read(accountActionsProvider.notifier)
+                                  .signOut();
+                              if (context.mounted) context.go('/login');
+                            } catch (_) {
+                              if (context.mounted) {
+                                notice(
+                                  context,
+                                  'Не удалось выйти. Повторите попытку.'.tr(
+                                    context,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                  child: Text(
+                    (actions.isLoading ? 'Выходим…' : 'Выйти из аккаунта').tr(
+                      context,
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

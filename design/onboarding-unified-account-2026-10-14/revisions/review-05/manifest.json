@@ -1,0 +1,14 @@
+{
+  "index.html": "f106a2a5920fdc7a229061682eb79a0b128f8ac83a5719c4d4cd1fa66face0df",
+  "styles.css": "e5ce327f8c7743a29aece91f7e4c7b98b9e986aebd6b4b359d37426d0c4fdafc",
+  "app.js": "b7316d48272e00f8daba0b27a3087c6add968c6b32ab659ca0ab15d5b25cc3aa",
+  "endpoint.html": "5a438b15d231a3411e77614d460a5ef955f0d445cba1798aa3dafa7401859c23",
+  "endpoint-adapter.js": "0defe7d5600065867f814977017b62bb0b672691d1a289bef7cff311579df56c",
+  "people-reference.html": "4c9394cd640f41aaab88a82dd7b51b9199018e2c7db5ebfa1b27914bbc94b8bd",
+  "nearby-reference.html": "12e376a214d45c403f929145bdd538201c1c2ca68c0bd9a159d0c18ae8ee1ab3",
+  "nearby-city-picker.js": "9dbb9bf698e02064552513cb4384f85f9de21e6ff274348a65ff53e57c741fb9",
+  "places-reference.html": "278269822649d2214cefa5bca22f3593ac7a3d561ca5891d558691877263b8fc",
+  "profile-edit-reference.html": "8fcaad9cbbe2904a11f339360ace18f656232228140630cbb4572019b606c926",
+  "pet-edit-reference.html": "f56a0651d624145131862e52ba7bd8f630ca2341b88083c82a2d29bf5a772bbd",
+  "handoff.md": "24b5caaed5bb0c6c3cb192453aae53a64e9ca446a21f0c5c12f01e6640eb3ee7"
+}

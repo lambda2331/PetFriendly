@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:petfriendly/app/app.dart';
+import 'package:petfriendly/core/storage/prototype_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +19,7 @@ void main() {
   ) async {
     expect(AppConfig.mapboxToken.isNotEmpty, isTrue);
     SharedPreferences.setMockInitialValues({
+      'language': 'ru',
       'locationPrompted': 'yes',
       'manualCity': 'true',
       'city': 'Минск',
@@ -30,7 +34,10 @@ void main() {
       ),
     );
     expect(find.text('Карта пока недоступна'), findsNothing);
-    await tester.tap(find.byTooltip('Тёмная тема'));
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(PetFriendlyApp)),
+    );
+    await container.read(prototypeProvider.notifier).setTheme(ThemeMode.dark);
     await waitFor(
       tester,
       find.byWidgetPredicate(
@@ -38,8 +45,8 @@ void main() {
       ),
     );
     expect(find.text('Карта пока недоступна'), findsNothing);
-    await tester.ensureVisible(find.byTooltip('На весь экран'));
-    await tester.tap(find.byTooltip('На весь экран'));
+    await tester.ensureVisible(find.byKey(const Key('nearby-fullscreen-map')));
+    await tester.tap(find.byKey(const Key('nearby-fullscreen-map')));
     await waitFor(tester, find.byTooltip('Закрыть карту'));
     final fullMap = find.descendant(
       of: find.byWidgetPredicate(
@@ -66,8 +73,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     await tester.tap(find.byTooltip('Закрыть карту'));
     await tester.pumpAndSettle();
-    expect(find.byTooltip('На весь экран'), findsOneWidget);
-    await tester.tap(find.byTooltip('Список мест'));
+    expect(find.byKey(const Key('nearby-fullscreen-map')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('nearby-places-list')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('places-search')), findsOneWidget);
     await tester.enterText(
@@ -130,7 +137,7 @@ void main() {
 
     await tester.tap(find.byType(BackButton).hitTestable());
     await tester.pumpAndSettle();
-    expect(find.byTooltip('Список мест'), findsOneWidget);
+    expect(find.byKey(const Key('nearby-places-list')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

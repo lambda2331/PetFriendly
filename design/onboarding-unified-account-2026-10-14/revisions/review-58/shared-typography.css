@@ -1,0 +1,16 @@
+/* Review 42: semantic text roles; approved page/row composition and insets stay screen-owned. */
+:is(.phone,.places-page){--ds-space-1:4px;--ds-space-2:8px;--ds-space-3:12px;--ds-space-4:16px;--ds-space-5:20px;--ds-space-6:24px}
+/* Root titles use the shared screen role; Nearby's authored greeting remains an exception. */
+:is(.phone,.places-page) :is(.toolbar,.meeting-list-heading)>h2{font:700 var(--ds-screen-title)/1.12 Manrope,sans-serif!important;min-width:0;overflow-wrap:anywhere}
+/* Introductions and user-authored descriptions are body copy, not supporting labels. */
+:is(.phone,.places-page) :is(p.lead,p.page-lead,p.about-intro,p.bio,p.candidate-experience,.detail-block>p:not(.meta)),:is(.phone,.places-page) .scroll-content>p.plain-hint{font:400 var(--ds-body)/1.4 Golos,sans-serif!important;overflow-wrap:anywhere}
+:is(.phone,.places-page) :is(p.plain-hint,p.public-note,p.zone-caption,p.origin){font:400 var(--ds-meta)/1.45 Golos,sans-serif;color:var(--ds-textSecondary)}
+/* Retain paragraph ownership and section spacing; bring the remaining off-scale gaps onto the grid. */
+:is(.phone,.places-page) .row-copy>.meta{margin-top:var(--ds-space-1)}
+:is(.phone,.places-page) .meeting-open-card>.meta{margin-top:var(--ds-space-1)}
+:is(.phone,.places-page) .helper-page-body>p.lead{margin-bottom:var(--ds-space-6)}
+:is(.phone,.places-page) p.about-intro{margin-top:var(--ds-space-4)}
+/* Long names/descriptions grow inside their existing columns instead of shifting adjacent actions. */
+:is(.phone,.places-page) :is(.identity-copy,.row-copy,.copy){min-width:0}
+:is(.phone,.places-page) :is(.name,.identity-copy>strong,.row-copy>strong){overflow-wrap:anywhere}
+:is(.phone,.places-page) :is(.identity-copy,.row-copy)>.meta{display:block}

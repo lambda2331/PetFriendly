@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'place_contributions.dart';
@@ -67,274 +68,336 @@ class _PlacesListState extends ConsumerState<PlacesListScreen> {
     final server =
         ref.watch(backendProvider) != null && filter.sort == PlaceSort.name;
     final pages = server ? ref.watch(placePagesProvider) : null;
-    final places = server
+    final publicPlaces = server
         ? (pages?.value?.items ?? [])
         : ref.watch(filteredPlacesProvider);
+    final contributions = ref.watch(placeContributionsProvider);
+    final state = ref.watch(prototypeProvider);
+    final pending = server
+        ? filterPlaces(
+            (contributions.value ?? <Place>[])
+                .where((p) => p.pending && p.city == state.city)
+                .toList(),
+            filter,
+            state.favorites,
+            ref.read(locationServiceProvider).lastPosition,
+          )
+        : <Place>[];
+    final places = server
+        ? mergeCityPlaces(publicPlaces, pending, state.city)
+        : publicPlaces;
+    if (server && pending.isNotEmpty) {
+      places.sort((a, b) => a.name.compareTo(b.name));
+    }
     final catalog = ref.watch(selectedCityCatalogProvider);
     final loading = server ? pages?.isLoading == true : catalog.isLoading;
     final unavailable = server ? pages?.hasError == true : catalog.hasError;
     final hasResult = server ? pages?.hasValue == true : catalog.hasValue;
-    final total = server ? (pages?.value?.total ?? 0) : places.length;
+    final total = server
+        ? (pages?.value?.total ?? 0) + pending.length
+        : places.length;
     final more = server
         ? (pages?.value?.hasMore ?? false)
         : visibleCount < places.length;
     final city = ref.watch(prototypeProvider).city;
     final shown = server ? places.length : visibleCount.clamp(0, places.length);
-    final contributions = ref.watch(placeContributionsProvider);
     void update(PlaceFilter value) =>
         ref.read(placeFiltersProvider.notifier).update(value);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Места · $city'),
+        title: Text("Места · {p0}".tr(context, arguments: {'p0': city})),
         actions: [
           IconButton(
-            tooltip: 'Добавить место',
+            tooltip: "Добавить место".tr(context),
             onPressed: () => context.push('/add-place'),
             icon: const Icon(Icons.add_location_alt_outlined),
           ),
           if (activePlaceFilterCount(filter) > 0 || filter.query.isNotEmpty)
-            TextButton(onPressed: reset, child: const Text('Сбросить')),
+            TextButton(onPressed: reset, child: Text("Сбросить".tr(context))),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 12),
-            child: TextField(
-              textAlignVertical: TextAlignVertical.top,
-              key: const Key('places-search'),
-              controller: search,
-              onChanged: (value) => update(filter.copy(query: value)),
-              decoration: InputDecoration(
-                hintText: 'Название или категория',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: search.text.isEmpty
-                    ? null
-                    : IconButton(
-                        tooltip: 'Очистить поиск',
-                        onPressed: () {
-                          search.clear();
-                          update(filter.copy(query: ''));
-                        },
-                        icon: const Icon(Icons.close),
-                      ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final category = PlaceSelect<String>(
-                  label: 'Категория',
-                  value: filter.category,
-                  choices: placeCategoryChoices,
-                  onChanged: (v) => update(filter.copy(category: v)),
-                );
-                final count = activePlaceFilterCount(filter);
-                final filters = OutlinedButton.icon(
-                  key: const Key('place-more-filters'),
-                  icon: const Icon(Icons.tune, size: 18),
-                  label: Text(
-                    count == 0 ? 'Фильтры мест' : 'Фильтры мест · $count',
+      body: LayoutBuilder(
+        builder: (context, bounds) {
+          final content = Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 8, 24, 12),
+                child: TextField(
+                  textAlignVertical: TextAlignVertical.top,
+                  key: const Key('places-search'),
+                  controller: search,
+                  onChanged: (value) => update(filter.copy(query: value)),
+                  decoration: InputDecoration(
+                    hintText: "Название или категория".tr(context),
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: search.text.isEmpty
+                        ? null
+                        : IconButton(
+                            tooltip: "Очистить поиск".tr(context),
+                            onPressed: () {
+                              search.clear();
+                              update(filter.copy(query: ''));
+                            },
+                            icon: const Icon(Icons.close),
+                          ),
                   ),
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    showModalBottomSheet<void>(
-                      context: context,
-                      sheetAnimationStyle: studioSheetAnimation(context),
-                      useRootNavigator: true,
-                      isScrollControlled: true,
-                      builder: (context) => Consumer(
-                        builder: (context, ref, _) => SafeArea(
-                          child: SizedBox(
-                            height: MediaQuery.sizeOf(context).height * .8,
-                            child: SingleChildScrollView(
-                              padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const StudioSheetHeader(
-                                    title: 'Фильтры мест',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final category = PlaceSelect<String>(
+                      label: "Категория".tr(context),
+                      value: filter.category,
+                      choices: placeCategoryChoices,
+                      onChanged: (v) => update(filter.copy(category: v)),
+                    );
+                    final filters = IconButton.outlined(
+                      tooltip: "Фильтры мест".tr(context),
+                      key: const Key('place-more-filters'),
+                      icon: const Icon(Icons.tune, size: 18),
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        var draft = filter;
+                        showStudioSelectionSheet<void>(
+                          context: context,
+                          builder: (context) => Consumer(
+                            builder: (context, ref, _) => StatefulBuilder(
+                              builder: (context, change) => SafeArea(
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    maxHeight:
+                                        MediaQuery.sizeOf(context).height * .8,
                                   ),
-                                  const SizedBox(height: 16),
-                                  PlaceFilterControls(
-                                    filter: ref.watch(placeFiltersProvider),
-                                    onChanged: update,
-                                    singleColumn: true,
-                                    includeCategory: false,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  if (activePlaceFilterCount(
-                                            ref.watch(placeFiltersProvider),
-                                          ) >
-                                          0 ||
-                                      ref
-                                          .watch(placeFiltersProvider)
-                                          .query
-                                          .isNotEmpty)
-                                    TextButton(
-                                      onPressed: reset,
-                                      child: const Text('Сбросить фильтры'),
+                                  child: SingleChildScrollView(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      24,
+                                      0,
+                                      24,
+                                      12,
                                     ),
-                                  FilledButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const Text('Показать места'),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        StudioSheetHeader(
+                                          title: "Фильтры мест".tr(context),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        PlaceFilterControls(
+                                          filter: draft,
+                                          onChanged: (value) =>
+                                              change(() => draft = value),
+                                          singleColumn: true,
+                                          includeCategory: false,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        TextButton(
+                                          onPressed: () => change(
+                                            () => draft = const PlaceFilter(),
+                                          ),
+                                          child: Text(
+                                            'Сбросить фильтры'.tr(context),
+                                          ),
+                                        ),
+                                        FilledButton(
+                                          onPressed: () {
+                                            search.text = draft.query;
+                                            update(draft);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            "Показать места".tr(context),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
+                    );
+                    final favorites = FilterChip(
+                      label: Text('Избранные'.tr(context)),
+                      selected: filter.favoritesOnly,
+                      onSelected: (value) =>
+                          update(filter.copy(favoritesOnly: value)),
+                      avatar: const Icon(Icons.favorite_border, size: 18),
+                    );
+                    if (constraints.maxWidth < 320 ||
+                        MediaQuery.textScalerOf(context).scale(1) > 1.3) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          category,
+                          const SizedBox(height: 10),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [favorites, filters],
+                          ),
+                        ],
+                      );
+                    }
+                    return Row(
+                      children: [
+                        Expanded(child: category),
+                        const SizedBox(width: 12),
+                        Flexible(child: favorites),
+                        const SizedBox(width: 8),
+                        filters,
+                      ],
                     );
                   },
-                );
-                if (constraints.maxWidth < 320 ||
-                    MediaQuery.textScalerOf(context).scale(1) > 1.3) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [category, const SizedBox(height: 10), filters],
-                  );
-                }
-                return Row(
-                  children: [
-                    Expanded(child: category),
-                    const SizedBox(width: 12),
-                    filters,
-                  ],
-                );
-              },
-            ),
-          ),
-          if (filter.access != AccessFilter.all ||
-              filter.favoritesOnly ||
-              filter.sort != PlaceSort.name)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-              child: Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  if (filter.access != AccessFilter.all)
-                    InputChip(
-                      label: Text(accessLabel(filter.access)),
-                      deleteButtonTooltipMessage: 'Убрать фильтр допуска',
-                      onDeleted: () =>
-                          update(filter.copy(access: AccessFilter.all)),
-                    ),
-                  if (filter.favoritesOnly)
-                    InputChip(
-                      label: const Text('Избранное'),
-                      deleteButtonTooltipMessage: 'Убрать избранное',
-                      onDeleted: () =>
-                          update(filter.copy(favoritesOnly: false)),
-                    ),
-                  if (filter.sort != PlaceSort.name)
-                    InputChip(
-                      label: const Text('Ближе ко мне'),
-                      deleteButtonTooltipMessage: 'Сортировать по названию',
-                      onDeleted: () =>
-                          update(filter.copy(sort: PlaceSort.name)),
-                    ),
-                ],
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                !hasResult && loading
-                    ? 'Загружаем места…'
-                    : !hasResult && unavailable
-                    ? 'Количество мест недоступно'
-                    : '$total мест',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-          ),
-          if (!server) const CityCatalogStatus(),
-          if (pages?.isLoading == true) const LinearProgressIndicator(),
-          if (pages?.hasError == true)
-            TextButton(
-              onPressed: () {
-                ref.invalidate(catalogReadyProvider(city));
-                ref.invalidate(placePagesProvider);
-              },
-              child: const Text('Места не загрузились · повторить'),
-            ),
-          if (server)
-            for (final pending in contributions.value ?? <Place>[])
-              if (pending.pending && pending.city == city)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: PlaceRow(place: pending),
                 ),
-          if (contributions.hasError)
-            TextButton(
-              onPressed: () => ref.invalidate(placeContributionsProvider),
-              child: const Text('Мои места не загрузились · повторить'),
-            ),
-          Expanded(
-            child: places.isEmpty
-                ? Center(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.search_off, size: 36),
-                          const SizedBox(height: 12),
-                          Text(
-                            loading
-                                ? 'Загружаем места'
-                                : unavailable
-                                ? 'Попробуйте загрузить места ещё раз'
-                                : filter.active
-                                ? 'Ничего не нашлось'
-                                : 'Пока нет мест — добавьте первое',
+              ),
+              if (filter.access != AccessFilter.all ||
+                  filter.favoritesOnly ||
+                  filter.sort != PlaceSort.name)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      if (filter.access != AccessFilter.all)
+                        InputChip(
+                          label: Text(accessLabel(filter.access)),
+                          deleteButtonTooltipMessage: "Убрать фильтр допуска"
+                              .tr(context),
+                          onDeleted: () =>
+                              update(filter.copy(access: AccessFilter.all)),
+                        ),
+                      if (filter.favoritesOnly)
+                        InputChip(
+                          label: Text("Избранное".tr(context)),
+                          deleteButtonTooltipMessage: "Убрать избранное".tr(
+                            context,
                           ),
-                          if (filter.active)
-                            TextButton(
-                              onPressed: reset,
-                              child: const Text('Сбросить фильтры'),
-                            ),
-                        ],
-                      ),
-                    ),
-                  )
-                : ListView.builder(
-                    key: const Key('places-paged-list'),
-                    controller: scroll,
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    itemCount: shown + 1,
-                    itemBuilder: (_, i) => i == shown
-                        ? more
-                              ? TextButton(
-                                  onPressed: () {
-                                    if (server) {
-                                      ref
-                                          .read(placePagesProvider.notifier)
-                                          .nextPage();
-                                    } else {
-                                      setState(() => visibleCount += 40);
-                                    }
-                                  },
-                                  child: const Text('Показать ещё'),
-                                )
-                              : const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  child: Text(
-                                    '© OpenStreetMap contributors · ODbL. Отметки допуска из OSM требуют уточнения перед визитом.',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                )
-                        : PlaceRow(place: places[i]),
+                          onDeleted: () =>
+                              update(filter.copy(favoritesOnly: false)),
+                        ),
+                      if (filter.sort != PlaceSort.name)
+                        InputChip(
+                          label: Text("Ближе ко мне".tr(context)),
+                          deleteButtonTooltipMessage: "Сортировать по названию"
+                              .tr(context),
+                          onDeleted: () =>
+                              update(filter.copy(sort: PlaceSort.name)),
+                        ),
+                    ],
                   ),
-          ),
-        ],
+                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    !hasResult && loading
+                        ? "Загружаем места…".tr(context)
+                        : !hasResult && unavailable
+                        ? "Количество мест недоступно".tr(context)
+                        : "{p0} мест".tr(context, arguments: {'p0': total}),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              ),
+              if (!server) const CityCatalogStatus(),
+              if (pages?.isLoading == true) const LinearProgressIndicator(),
+              if (pages?.hasError == true)
+                TextButton(
+                  onPressed: () {
+                    ref.invalidate(catalogReadyProvider(city));
+                    ref.invalidate(placePagesProvider);
+                  },
+                  child: Text("Места не загрузились · повторить".tr(context)),
+                ),
+              if (contributions.hasError)
+                TextButton(
+                  onPressed: () => ref.invalidate(placeContributionsProvider),
+                  child: Text(
+                    "Мои места не загрузились · повторить".tr(context),
+                  ),
+                ),
+              Expanded(
+                child: places.isEmpty
+                    ? Center(
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.search_off, size: 36),
+                              const SizedBox(height: 12),
+                              Text(
+                                loading
+                                    ? "Загружаем места".tr(context)
+                                    : unavailable
+                                    ? "Попробуйте загрузить места ещё раз".tr(
+                                        context,
+                                      )
+                                    : filter.active
+                                    ? "Ничего не нашлось".tr(context)
+                                    : "Пока нет мест — добавьте первое".tr(
+                                        context,
+                                      ),
+                              ),
+                              if (filter.active)
+                                TextButton(
+                                  onPressed: reset,
+                                  child: Text("Сбросить фильтры".tr(context)),
+                                ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        key: const Key('places-paged-list'),
+                        controller: scroll,
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        itemCount: shown + 1,
+                        itemBuilder: (_, i) => i == shown
+                            ? more
+                                  ? TextButton(
+                                      onPressed: () {
+                                        if (server) {
+                                          ref
+                                              .read(placePagesProvider.notifier)
+                                              .nextPage();
+                                        } else {
+                                          setState(() => visibleCount += 40);
+                                        }
+                                      },
+                                      child: Text("Показать ещё".tr(context)),
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 20,
+                                      ),
+                                      child: Text(
+                                        "© OpenStreetMap contributors · ODbL. Отметки допуска из OSM требуют уточнения перед визитом."
+                                            .tr(context),
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    )
+                            : PlaceRow(place: places[i]),
+                      ),
+              ),
+            ],
+          );
+          return bounds.maxHeight < 360 ||
+                  MediaQuery.textScalerOf(context).scale(16) > 24
+              ? SingleChildScrollView(
+                  child: SizedBox(height: 1000, child: content),
+                )
+              : content;
+        },
       ),
     );
   }
@@ -382,74 +445,108 @@ class PlaceSelect<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final radius = BorderRadius.circular(16);
-    Text choiceLabel(MapEntry<T, String> entry) => Text(
-      entry.value,
-      maxLines: 2,
-      style: disabled.contains(entry.key)
-          ? TextStyle(color: theme.disabledColor)
-          : null,
-    );
-    return DropdownButtonFormField<T>(
-      key: ValueKey('$label:$value'),
-      initialValue: value,
-      isExpanded: true,
-      menuMaxHeight: 420,
-      itemHeight: null,
-      borderRadius: radius,
-      dropdownColor: theme.colorScheme.surface,
-      icon: const Icon(Icons.expand_more, size: 18),
-      style: theme.textTheme.bodyMedium,
-      decoration: InputDecoration(
-        labelText: label,
-        filled: true,
-        fillColor: theme.colorScheme.secondaryContainer,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 14,
-          vertical: 12,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: radius,
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: radius,
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: radius,
-          borderSide: BorderSide(color: theme.colorScheme.onSurface),
-        ),
-      ),
-      selectedItemBuilder: (_) => choices.entries
-          .map(
-            (entry) => Align(
-              alignment: Alignment.centerLeft,
-              child: choiceLabel(entry),
+    final radius = BorderRadius.circular(14);
+    final caption = label.tr(context);
+    return StudioFieldLabel(
+      label: caption,
+      child: LayoutBuilder(
+        builder: (context, bounds) {
+          final viewportWidth = MediaQuery.sizeOf(context).width;
+          final availableWidth =
+              (viewportWidth > 40 ? viewportWidth - 40 : bounds.maxWidth).clamp(
+                0.0,
+                420.0,
+              );
+          final menuWidth = (bounds.maxWidth < 240 ? 240.0 : bounds.maxWidth)
+              .clamp(0.0, availableWidth)
+              .toDouble();
+          return PopupMenuButton<T>(
+            key: ValueKey('$label:$value'),
+            tooltip: caption,
+            position: PopupMenuPosition.under,
+            color: theme.colorScheme.surface,
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            constraints: BoxConstraints(
+              minWidth: menuWidth,
+              maxWidth: menuWidth,
+              maxHeight: 420,
             ),
-          )
-          .toList(),
-      items: choices.entries
-          .map(
-            (entry) => DropdownMenuItem<T>(
-              value: entry.key,
-              enabled: !disabled.contains(entry.key),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: 48),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: choiceLabel(entry),
+            shape: RoundedRectangleBorder(
+              borderRadius: radius,
+              side: BorderSide(color: theme.colorScheme.outlineVariant),
+            ),
+            onSelected: onChanged,
+            // Do not set initialValue: Material paints a persistent selected
+            // background. Current selection is conveyed by check and weight;
+            // the native menu retains keyboard focus and Escape handling.
+            itemBuilder: (_) => [
+              for (final entry in choices.entries)
+                PopupMenuItem<T>(
+                  value: entry.key,
+                  enabled: !disabled.contains(entry.key),
+                  height: 48,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            entry.value.tr(context),
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: entry.key == value
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
+                              color: disabled.contains(entry.key)
+                                  ? theme.disabledColor
+                                  : theme.colorScheme.onSurface,
+                            ),
+                          ),
+                        ),
+                        if (entry.key == value) ...[
+                          const SizedBox(width: 8),
+                          const Icon(Icons.check, size: 20),
+                        ],
+                      ],
+                    ),
                   ),
+                ),
+            ],
+            child: Builder(
+              builder: (context) => InputDecorator(
+                isFocused: Focus.of(context).hasFocus,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: theme.colorScheme.secondaryContainer,
+                  contentPadding: const EdgeInsets.all(12),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: radius,
+                    borderSide: BorderSide(
+                      color: theme.colorScheme.outlineVariant,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: radius,
+                    borderSide: BorderSide(color: theme.colorScheme.onSurface),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        (choices[value] ?? '').tr(context),
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.expand_more, size: 18),
+                  ],
                 ),
               ),
             ),
-          )
-          .toList(),
-      onChanged: (next) {
-        if (next != null) onChanged(next);
-      },
+          );
+        },
+      ),
     );
   }
 }
@@ -470,29 +567,32 @@ class PlaceFilterControls extends ConsumerWidget {
     final controls = <Widget>[
       if (includeCategory)
         PlaceSelect<String>(
-          label: 'Категория',
+          label: "Категория".tr(context),
           value: filter.category,
           choices: placeCategoryChoices,
           onChanged: (v) => onChanged(filter.copy(category: v)),
         ),
       PlaceSelect<AccessFilter>(
-        label: 'С питомцем',
+        label: "С питомцем".tr(context),
         value: filter.access,
         choices: {for (final v in AccessFilter.values) v: accessLabel(v)},
         onChanged: (v) => onChanged(filter.copy(access: v)),
       ),
       PlaceSelect<bool>(
-        label: 'Подборка',
+        label: "Подборка".tr(context),
         value: filter.favoritesOnly,
-        choices: const {false: 'Все места', true: 'Избранное'},
+        choices: {
+          false: "Все места".tr(context),
+          true: "Избранное".tr(context),
+        },
         onChanged: (v) => onChanged(filter.copy(favoritesOnly: v)),
       ),
       PlaceSelect<PlaceSort>(
-        label: 'Сортировка',
+        label: "Сортировка".tr(context),
         value: filter.sort,
-        choices: const {
-          PlaceSort.name: 'По названию',
-          PlaceSort.nearby: 'Ближе ко мне',
+        choices: {
+          PlaceSort.name: "По названию".tr(context),
+          PlaceSort.nearby: "Ближе ко мне".tr(context),
         },
         disabled: ref.watch(locationServiceProvider).lastPosition == null
             ? const {PlaceSort.nearby}

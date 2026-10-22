@@ -1,0 +1,184 @@
+{
+  "files": [
+    {
+      "path": "workflow-driver.js",
+      "sha256": "1a88f54d369ceb91b9f96d97259073f06c4e89849bd17c2e1a73f5bd8731a526"
+    },
+    {
+      "path": "workflow-data.json",
+      "sha256": "40fa7d3fe7415a440c3a16a4997b949f032e1f8ec32ac6494203feebf575a14d"
+    },
+    {
+      "path": "prior-versions-manifest.json",
+      "sha256": "fa4ad28b946d2070c146b53d4ac92b9f41c4050dcbcd80b9d400105fe1b5be57"
+    },
+    {
+      "path": "index.html",
+      "sha256": "9e965a3f8e0bc320bc06c610ddd6e037cafe18e913b72cac00c49c437ddd26d7"
+    },
+    {
+      "path": "people-business.js",
+      "sha256": "a07daabb46124dda295b47d4ee63ec761b2b64b1ca153522314c4cc743a9461b"
+    },
+    {
+      "path": "places-business.js",
+      "sha256": "991a0de2a9d53ecbcb9b387fcc51e0eccdce59a221af35ac3f1e4d2d367e0d89"
+    },
+    {
+      "path": "mock-ui.js",
+      "sha256": "6b30cad3fdeb4eae6fc702fb41f386ea214e1925ddbf86889af6e2bbe6e9a468"
+    },
+    {
+      "path": "styles.css",
+      "sha256": "a8608ad2a387c1a5aec63afdee6963b0e7c79739c1a905a24ce4da08a687fa83"
+    },
+    {
+      "path": "mock-labels.js",
+      "sha256": "5423b65f644779d33b025c32419f069fc059ade49490d13ac45d7e27c3a0e618"
+    },
+    {
+      "path": "profile-edit-reference.html",
+      "sha256": "81dae18cf6695956ed581556ce572418a1d2e9e291eb8ddc596cf052cf590a34"
+    },
+    {
+      "path": "nearby-city-picker.js",
+      "sha256": "9dbb9bf698e02064552513cb4384f85f9de21e6ff274348a65ff53e57c741fb9"
+    },
+    {
+      "path": "endpoint-business.js",
+      "sha256": "7f73195aaa2644d057617d85f5c14b91686c000b5128b4a74d6f1e8ee7e37ba7"
+    },
+    {
+      "path": "editor-business.js",
+      "sha256": "c204094b04a5a7bdc9b5674fb5ff720442fed761f0e85991bf7cb4824f732c16"
+    },
+    {
+      "path": "nearby-business.js",
+      "sha256": "56f53ccb7c7671422769b6d9b461f1248178bb5453b206c3cf15f6ba27d03382"
+    },
+    {
+      "path": "frozen-manifest.json",
+      "sha256": "c41d9c7422569bca2c54ba396af069e6377762eaf0f09b29ea33b42245b883d5"
+    },
+    {
+      "path": "mock-state.js",
+      "sha256": "819ef8caa3d86268036a94fb8cb35e82323ac03253e9d14891dfde95c5c66a12"
+    },
+    {
+      "path": "nearby-reference.html",
+      "sha256": "16587f8672d43b94b223480e64cccfb4a5b72a146efdde243c69830b307ace39"
+    },
+    {
+      "path": "pet-edit-reference.html",
+      "sha256": "a790c4fde99480a4221ab7a1594c56f0570b21bcc515e7c93f105903aac7de63"
+    },
+    {
+      "path": "walking-reference.html",
+      "sha256": "8c71764e9e946e9c21f6c0210ff80e7f5c566f0f59144da4bf29b48163996858"
+    },
+    {
+      "path": "endpoint-adapter.js",
+      "sha256": "5693f05139225106ac8a8f932505ada22f15884238cd64ba7072e8a331298147"
+    },
+    {
+      "path": "places-reference.html",
+      "sha256": "aa9d0e5b1626f97d3087977548489a1cf93c41c070c8f49e58cfa89713b4d22f"
+    },
+    {
+      "path": "versions.html",
+      "sha256": "6b5025a5dfeb71f8e4c527a6dfd789220c295ba57aec3f231e6d7aebcd4abac7"
+    },
+    {
+      "path": "endpoint.html",
+      "sha256": "c360a63675d6b6908b05c69b43c62e2790e0ff4ee4671d5a8aab47051cdf3c77"
+    },
+    {
+      "path": "people-reference.html",
+      "sha256": "ff2cd6601dea98fdebe214cac7d0a4556d3a3c0b53875807938a072d6ccbef8b"
+    },
+    {
+      "path": "workflow-verification.md",
+      "sha256": "1b9b73fabe6a395aec33b183a07e95c2bcbe6f6d9bd7d6c203873fc8945292a3"
+    },
+    {
+      "path": "business-requirements-audit.md",
+      "sha256": "003b78aa805566026dc90fd4b9b057f589dba593a3aa7f0efa96b92a2aca0d26"
+    },
+    {
+      "path": "navigation-refinement.js",
+      "sha256": "4e0b9af8ae7b08fd356114fb982b5e98bb1a094eea9a402134c09499559187cb"
+    },
+    {
+      "path": "workflow-map.html",
+      "sha256": "58b2c8585499e10e38d4405d42f378748da66fed0d3e15139b47307755423273"
+    },
+    {
+      "path": "walking-business.js",
+      "sha256": "eb0f9698c502f75e1d5dea7a4d9dbbb386837192fcaa6a42286f7c8aa7f5dc6c"
+    },
+    {
+      "path": "root-business.js",
+      "sha256": "f228d39928e7eac0e505b8e86078df0406b8fa41e120556cb54a7c7c3f3a1b0e"
+    },
+    {
+      "path": "handoff.md",
+      "sha256": "bf589b8573134af4199c9d0ddc3ba0e58fa57ccd4aff444cb28765c63b8049b2"
+    },
+    {
+      "path": "app.js",
+      "sha256": "a228200af08992488e40892332a2af91c61a888ea42caac627438628a38102ce"
+    },
+    {
+      "path": "moderation-reference.html",
+      "sha256": "bd22a5580b682ff34a2234b864f4dec6a921654eb3a6d66e0b3593bfa1b56cda"
+    },
+    {
+      "path": "shared-refinements.css",
+      "sha256": "15adc7d6f2ecefd7804f74a6021d7f09b9a8dc19583f5d90d6b741d336cec413"
+    },
+    {
+      "path": "checks/workflow-preview-check.html",
+      "sha256": "3ac7f084d989d8b8e6bb6dfc6d9dee10fcf1a9c58cbeb71084e7a70d7060065b"
+    },
+    {
+      "path": "checks/business-state.test.cjs",
+      "sha256": "d6ddbc50b044abe865b8da39075ef502ca4cb4e4a89fef9b41a99c60c6bcf318"
+    },
+    {
+      "path": "workflow-designs/index.html",
+      "sha256": "47c9f5a78d5e856552475cde95a71a954ad6416b5aba54ec1ce407c4e635349b"
+    },
+    {
+      "path": "workflow-designs/profile-edit-reference.html",
+      "sha256": "6af64278cf654b6e9151af1aa464946d8f934f088744757f6c94aafd9ddbaac7"
+    },
+    {
+      "path": "workflow-designs/nearby-reference.html",
+      "sha256": "a157d58ecfeed53f05c903f4e04c44778169d83e4f25af5a02d8afee554e5e51"
+    },
+    {
+      "path": "workflow-designs/pet-edit-reference.html",
+      "sha256": "c6a7e97e0aded33abc73b10b756ecaf50c44df37e770d32a588b6d9e2d28de31"
+    },
+    {
+      "path": "workflow-designs/README.md",
+      "sha256": "90724baafe0767f68ea02116af6fbd019f0c57ffd615990eaa0e2908435170f5"
+    },
+    {
+      "path": "workflow-designs/walking-reference.html",
+      "sha256": "769ef9a5b1048feae8f09adf54e4aa70ac38637c672a57c83027321fc28198aa"
+    },
+    {
+      "path": "workflow-designs/places-reference.html",
+      "sha256": "75af6f93587b6e1aa67313d62b349629c89c451892f94a8f4274b858ae9c5833"
+    },
+    {
+      "path": "workflow-designs/endpoint.html",
+      "sha256": "9e2614decbe8edc07b65d1909cb0bdb85b5dc028277c902305a465a8ce826703"
+    },
+    {
+      "path": "workflow-designs/people-reference.html",
+      "sha256": "7c371d1b72d3864d57d76f2da4cb1467421fd775a81a7d825d6032b8b14ce837"
+    }
+  ]
+}

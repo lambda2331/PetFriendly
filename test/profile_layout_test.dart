@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,8 +8,8 @@ import 'package:petfriendly/core/theme/studio_theme.dart';
 import 'package:petfriendly/features/community/data/community_repository.dart';
 import 'package:petfriendly/features/nearby/city_catalog.dart';
 import 'package:petfriendly/features/nearby/place_repository.dart';
-import 'package:petfriendly/features/nearby/place_row.dart';
 import 'package:petfriendly/features/profiles/profile_screen.dart';
+import 'package:petfriendly/features/walks/account_mode.dart';
 import 'widget_test.dart' show MemoryPreferences;
 
 const favorite = Place(
@@ -77,6 +78,29 @@ DemoCommunityRepository fixture({
       'completed': populated ? 18 : 0,
     },
   ];
+  if (populated) {
+    repo.data['profiles']!.add({'id': demoAnna, 'display_name': 'Анна'});
+    repo.data['walk_reviews'] = [
+      {
+        'id': 'latest',
+        'helper_id': demoAlex,
+        'author_id': demoAnna,
+        'rating': 5,
+        'published': true,
+        'body': 'Луна вернулась довольной. Спасибо за прогулку!',
+        'created_at': '2026-10-10T10:00:00Z',
+      },
+      {
+        'id': 'hidden',
+        'helper_id': demoAlex,
+        'author_id': demoAnna,
+        'rating': 1,
+        'published': false,
+        'body': 'Скрытый отзыв',
+        'created_at': '2026-10-11T10:00:00Z',
+      },
+    ];
+  }
   return repo;
 }
 
@@ -85,9 +109,13 @@ Future<GoRouter> mount(
   Brightness brightness, {
   required bool populated,
   bool whitespace = false,
+  String mode = 'owner',
+  Future<List<Place>> Function()? loadFavorites,
+  bool savedFavorite = false,
+  bool settle = true,
 }) async {
   final preferences = MemoryPreferences();
-  if (populated) preferences.values['favorites'] = favorite.id;
+  if (populated || savedFavorite) preferences.values['favorites'] = favorite.id;
   final router = GoRouter(
     initialLocation: '/profile',
     routes: [
@@ -105,8 +133,21 @@ Future<GoRouter> mount(
         ),
       ),
       GoRoute(
-        path: '/helper/:id',
-        builder: (_, _) => const Scaffold(body: Text('Опыт помощника')),
+        path: '/walks',
+        builder: (_, _) => const Scaffold(body: Text('Запросы на выгул')),
+      ),
+      GoRoute(
+        path: '/my-walks',
+        builder: (_, _) => const Scaffold(body: Text('Мои выгулы')),
+      ),
+      GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
+      GoRoute(
+        path: '/roles',
+        builder: (_, _) => const Scaffold(body: Text('Управление ролями')),
+      ),
+      GoRoute(
+        path: '/places',
+        builder: (_, _) => const Scaffold(body: Text('Список мест')),
       ),
     ],
   );
@@ -118,8 +159,14 @@ Future<GoRouter> mount(
           fixture(populated: populated, whitespace: whitespace),
         ),
         preferencesProvider.overrideWithValue(preferences),
+        accountModeRepositoryProvider.overrideWithValue(
+          DemoAccountModeRepository()
+            ..current = AccountMode(mode: mode, needsRoleSelection: false),
+        ),
         favoriteCatalogProvider.overrideWith(
-          (ref) async => populated ? [favorite] : [],
+          (ref) => loadFavorites != null
+              ? loadFavorites()
+              : Future.value(populated ? [favorite] : <Place>[]),
         ),
       ],
       child: MaterialApp.router(
@@ -134,136 +181,144 @@ Future<GoRouter> mount(
       ),
     ),
   );
-  await tester.pumpAndSettle();
+  if (settle) {
+    await tester.pumpAndSettle();
+  } else {
+    await tester.pump();
+  }
   return router;
+}
+
+Future<void> tapProfileEntry(WidgetTester tester, String label) async {
+  final target = find.text(label);
+  await tester.scrollUntilVisible(
+    target,
+    180,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(target);
+  await tester.tap(target);
+  await tester.pumpAndSettle();
 }
 
 void main() {
   for (final brightness in Brightness.values) {
     testWidgets(
-      'Sparse profile has no empty optional text or reserved gaps at 320px/2x: $brightness',
+      'Approved profile empty states stay scrollable at 320px/2x: $brightness',
       (tester) async {
         tester.view.physicalSize = const Size(320, 1000);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.reset);
-        final absentRouter = await mount(tester, brightness, populated: false);
-        final absentPosition = tester.getTopLeft(find.text('Добавить питомца'));
+        final router = await mount(tester, brightness, populated: false);
+        addTearDown(router.dispose);
+        expect(find.text('Опыт и отзывы'), findsNothing);
         await tester.scrollUntilVisible(
-          find.text('Пока нет отзывов'),
+          find.text('Добавьте своего питомца'),
           180,
-          scrollable: find.byType(Scrollable).last,
+          scrollable: find.byType(Scrollable).first,
         );
-        expect(find.text('Пока нет отзывов'), findsOneWidget);
+        expect(find.text('Добавьте своего питомца'), findsOneWidget);
         await tester.scrollUntilVisible(
-          find.text('Избранные места'),
+          find.text('Пока нет избранных мест'),
           180,
-          scrollable: find.byType(Scrollable).last,
+          scrollable: find.byType(Scrollable).first,
         );
-        expect(find.text('Избранные места'), findsOneWidget);
-        expect(find.byType(PlaceRow), findsNothing);
-        expect(tester.takeException(), isNull);
-        final blankRouter = await mount(
-          tester,
-          brightness,
-          populated: false,
-          whitespace: true,
-        );
-        addTearDown(absentRouter.dispose);
-        addTearDown(blankRouter.dispose);
-        expect(
-          tester.getTopLeft(find.text('Добавить питомца')),
-          absentPosition,
-        );
-        expect(
-          find.text('В публичном профиле виден только район.'),
-          findsOneWidget,
-        );
-        final blankTexts = tester
-            .widgetList<Text>(find.byType(Text))
-            .where((text) => text.data != null && text.data!.trim().isEmpty);
-        expect(blankTexts, isEmpty);
-        await tester.scrollUntilVisible(
-          find.text('Пока нет отзывов'),
-          180,
-          scrollable: find.byType(Scrollable).last,
-        );
-        expect(find.text('Пока нет отзывов'), findsOneWidget);
-        expect(find.textContaining('★ 0'), findsNothing);
-        expect(find.text('0 завершённых выгулов'), findsOneWidget);
-        expect(
-          find.text('Демонстрационные данные · PetFriendly 0.1'),
-          findsNothing,
-        );
+        expect(find.text('Пока нет избранных мест'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },
     );
     testWidgets(
-      'Populated profile keeps identities, reputation and inline favorites at 320px/2x: $brightness',
+      'Approved profile keeps bio, pets, inline favorites without duplicate reputation: $brightness',
       (tester) async {
         tester.view.physicalSize = const Size(320, 1000);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.reset);
         final router = await mount(tester, brightness, populated: true);
         addTearDown(router.dispose);
-        expect(find.text('Александра с питомцами'), findsOneWidget);
         expect(find.text('Люблю тихие прогулки.'), findsOneWidget);
-        expect(find.text('Походы, спокойные прогулки'), findsOneWidget);
+        expect(find.text('Опыт и отзывы'), findsNothing);
         await tester.scrollUntilVisible(
           find.text('Луна'),
           180,
-          scrollable: find.byType(Scrollable).last,
+          scrollable: find.byType(Scrollable).first,
         );
-        expect(find.text('Луна'), findsOneWidget);
+        await tester.tap(find.text('Луна'));
+        await tester.pumpAndSettle();
+        expect(find.text('Знакомится постепенно'), findsOneWidget);
+        expect(find.text('Редактировать питомца'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+        Navigator.of(tester.element(find.text('Знакомится постепенно'))).pop();
+        await tester.pumpAndSettle();
         await tester.scrollUntilVisible(
-          find.text('Мур'),
+          find.text(favorite.name),
           180,
-          scrollable: find.byType(Scrollable).last,
-        );
-        expect(find.text('Мур'), findsOneWidget);
-        await tester.scrollUntilVisible(
-          find.text('★ 4,8 · 12 отзывов'),
-          180,
-          scrollable: find.byType(Scrollable).last,
-        );
-        expect(find.text('★ 4,8 · 12 отзывов'), findsOneWidget);
-        expect(find.text('18 завершённых выгулов'), findsOneWidget);
-        await tester.scrollUntilVisible(
-          find.byType(PlaceRow),
-          200,
-          scrollable: find.byType(Scrollable).last,
+          scrollable: find.byType(Scrollable).first,
         );
         expect(find.text(favorite.name), findsOneWidget);
-        expect(find.text('Избранные места'), findsOneWidget);
-        expect(find.text(' '), findsNothing);
-        expect(find.text('  '), findsNothing);
         expect(tester.takeException(), isNull);
       },
     );
   }
-  testWidgets('Profile and pet edit/add controls retain their route targets', (
+  testWidgets('Helper profile has no requirement to add a pet', (tester) async {
+    final router = await mount(
+      tester,
+      Brightness.light,
+      populated: false,
+      mode: 'helper',
+    );
+    addTearDown(router.dispose);
+    expect(find.text('Мои питомцы'), findsNothing);
+    expect(find.text('Добавьте своего питомца'), findsNothing);
+  });
+  testWidgets('Profile edit is a fixed-header sheet, not a route change', (
     tester,
   ) async {
-    tester.view.physicalSize = const Size(320, 1000);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
     final router = await mount(tester, Brightness.light, populated: true);
     addTearDown(router.dispose);
-    await tester.ensureVisible(find.byTooltip('Редактировать профиль'));
     await tester.tap(find.byTooltip('Редактировать профиль'));
     await tester.pumpAndSettle();
-    expect(find.text('kind=profile;id='), findsOneWidget);
-    router.pop();
+    expect(router.state.uri.path, '/profile');
+    expect(find.text('Редактировать профиль'), findsOneWidget);
+    expect(find.byKey(const ValueKey('field.display_name')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('Settings retains roles and security management', (tester) async {
+    final router = await mount(tester, Brightness.light, populated: false);
+    addTearDown(router.dispose);
+    router.push('/settings');
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byTooltip('Добавить питомца'));
-    await tester.tap(find.byTooltip('Добавить питомца'));
+    await tapProfileEntry(tester, 'Режим приложения');
+    expect(find.text('Управление ролями'), findsOneWidget);
+  });
+  testWidgets('Favorites load, fail and retry inline without claiming empty', (
+    tester,
+  ) async {
+    final result = Completer<List<Place>>();
+    var attempts = 0;
+    final router = await mount(
+      tester,
+      Brightness.light,
+      populated: false,
+      savedFavorite: true,
+      settle: false,
+      loadFavorites: () =>
+          ++attempts == 1 ? result.future : Future.value([favorite]),
+    );
+    addTearDown(router.dispose);
+    await tester.scrollUntilVisible(
+      find.text('Загружаем сохранённые места…'),
+      180,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    result.completeError(StateError('offline'));
     await tester.pumpAndSettle();
-    expect(find.text('kind=pet;id='), findsOneWidget);
-    router.pop();
+    expect(find.text('Избранные места не загрузились.'), findsOneWidget);
+    await tester.ensureVisible(find.text('Повторить'));
+    await tester.tap(find.text('Повторить'));
     await tester.pumpAndSettle();
-    final editPet = find.byTooltip('Редактировать питомца').first;
-    await tester.ensureVisible(editPet);
-    await tester.tap(editPet);
-    await tester.pumpAndSettle();
-    expect(find.text('kind=pet;id=profile-pet'), findsOneWidget);
+    expect(find.text(favorite.name), findsOneWidget);
+    expect(attempts, 2);
+    expect(tester.takeException(), isNull);
   });
 }

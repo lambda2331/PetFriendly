@@ -36,6 +36,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Помощники'), findsNothing);
     expect(find.text('Запросы на прогулку'), findsNothing);
+    await tester.scrollUntilVisible(
+      find.text('Пока нет запросов на прогулку.'),
+      160,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
     expect(find.text('Пока нет запросов на прогулку.'), findsOneWidget);
     expect(
       find.text('Демонстрационные данные · PetFriendly 0.1'),

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="360" viewBox="0 0 1440 360" role="img" aria-labelledby="title desc">
+<title id="title">PetFriendly</title><desc id="desc">Local connections for people and their pets. Flutter for iOS and Android.</desc>
+<rect width="1440" height="360" rx="28" fill="#171C14"/>
+<rect x="64" y="60" width="74" height="7" rx="3.5" fill="#D6ED8A"/>
+<text x="64" y="157" fill="#F8F9F3" font-family="Manrope,Arial,sans-serif" font-size="76" font-weight="750" letter-spacing="-3">petfriendly<tspan fill="#D6ED8A">.</tspan></text>
+<text x="66" y="212" fill="#DDE3D4" font-family="Golos Text,Arial,sans-serif" font-size="27">Local connections for people and their pets.</text>
+<text x="66" y="291" fill="#D6ED8A" font-family="Golos Text,Arial,sans-serif" font-size="17" letter-spacing="2">FLUTTER  /  iOS + ANDROID  /  FOUR UI LANGUAGES</text>
+<circle cx="1214" cy="180" r="112" fill="#D6ED8A"/>
+<g fill="#171C14" transform="translate(1214 182)"><ellipse cx="-50" cy="-27" rx="19" ry="25" transform="rotate(-24 -50 -27)"/><ellipse cx="-18" cy="-61" rx="19" ry="26" transform="rotate(-8 -18 -61)"/><ellipse cx="22" cy="-61" rx="19" ry="26" transform="rotate(8 22 -61)"/><ellipse cx="53" cy="-27" rx="19" ry="25" transform="rotate(24 53 -27)"/><path d="M-54 42C-54 23-34 11-24-5C-11-25 11-25 24-5C34 11 54 23 54 42C54 65 32 70 12 60C4 56-4 56-12 60C-32 70-54 65-54 42Z"/></g>
+</svg>

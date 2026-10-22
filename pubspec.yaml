@@ -23,10 +23,13 @@ dependencies:
   uuid: ^4.6.0
   image_picker: ^1.2.4
   http: ^1.6.0
+  intl: ^0.20.3
   timezone: 0.11.1
   video_player: ^2.14.1
   path_provider: ^2.1.6
   firebase_crashlytics: ^5.4.0
+  lucide_icons_flutter: ^3.1.25
+  flutter_svg: ^2.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -34,10 +37,13 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 flutter:
+  generate: true
   config:
     enable-swift-package-manager: false
   uses-material-design: true
   assets:
+    - assets/icons/providers/
+    - assets/data/geonames/
     - assets/data/minsk_places.json
   fonts:
     - family: Manrope

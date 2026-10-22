@@ -47,13 +47,19 @@ void main() {
         });
         final key = GlobalKey();
         final service = FixtureMedia();
+        final repository = DemoCommunityRepository(seedSamples: false);
+        repository.data['conversations'] = [
+          {'id': 'fixture', 'kind': 'direct', 'target': demoAnna},
+        ];
+        repository.data['conversation_members'] = [
+          {'conversation_id': 'fixture', 'user_id': repository.userId},
+          {'conversation_id': 'fixture', 'user_id': demoAnna},
+        ];
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
               preferencesProvider.overrideWithValue(MemoryPreferences()),
-              communityRepositoryProvider.overrideWithValue(
-                DemoCommunityRepository(seedSamples: false),
-              ),
+              communityRepositoryProvider.overrideWithValue(repository),
               chatMediaServiceProvider.overrideWithValue(service),
             ],
             child: RepaintBoundary(

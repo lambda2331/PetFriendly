@@ -1,0 +1,17 @@
+/* Review 39: preserve approved field shapes and layout; share presentation and support text. */
+:is(.phone,.places-page) .studio-field-label{display:block;font:400 var(--ds-body)/1.4 Golos,sans-serif;color:var(--ds-textPrimary);min-width:0}
+:is(.phone,.places-page) .studio-field-caption{display:block;margin:0 0 8px;font:400 var(--ds-body)/1.4 Golos,sans-serif}
+:is(.phone,.places-page) .studio-field-control{min-width:0;max-width:100%;min-height:48px;padding:12px;font:400 var(--ds-body)/1.4 Golos,sans-serif!important;color:var(--ds-textPrimary);background:var(--ds-subtle);border:1px solid var(--ds-border)!important;box-shadow:none!important}
+:is(.phone,.places-page) .studio-field-control:not(button){width:100%}
+:is(.phone,.places-page) .studio-field-caption~.studio-field-control{margin-top:0}
+:is(.phone,.places-page) .studio-field-control.studio-field-rounded{border-radius:12px}
+:is(.phone,.places-page) .studio-field-control::placeholder{color:var(--ds-textSecondary);opacity:1}
+:is(.phone,.places-page) .studio-field-control:focus{outline:none!important;border-color:var(--ds-textPrimary)!important;box-shadow:none!important}
+:is(.phone,.places-page) .studio-field-control[aria-invalid=true],:is(.phone,.places-page) .studio-field-control[aria-invalid=true]:focus{border-color:var(--ds-error)!important}
+:is(.phone,.places-page) .studio-field-support{display:block;font:400 var(--ds-meta)/1.45 Golos,sans-serif!important;color:var(--ds-textSecondary);overflow-wrap:anywhere;max-width:100%}
+:is(.phone,.places-page) .studio-field-support:empty{display:none}
+:is(.phone,.places-page) .studio-field-support.studio-field-error{color:var(--ds-error)!important}
+:is(.phone,.places-page) .studio-field-support>.icon{width:16px;height:16px;vertical-align:text-bottom;flex:none}
+:is(.phone,.places-page) .studio-field-label>.studio-field-support{margin:8px 0}
+:is(.phone,.places-page) .studio-field-label+.studio-field-support{margin-top:8px}
+:is(.phone,.places-page) .studio-field-control:disabled{opacity:.6;cursor:default}

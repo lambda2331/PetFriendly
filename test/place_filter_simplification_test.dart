@@ -47,6 +47,18 @@ void main() {
     expect(find.text('С питомцем'), findsOneWidget);
     expect(find.text('Подборка'), findsOneWidget);
     expect(find.text('Сортировка'), findsOneWidget);
+    final panel = tester.getRect(
+      find
+          .descendant(
+            of: find.byType(BottomSheet),
+            matching: find.byType(Material),
+          )
+          .first,
+    );
+    final action = tester.getRect(
+      find.widgetWithText(FilledButton, 'Показать места'),
+    );
+    expect(panel.bottom - action.bottom, lessThanOrEqualTo(32));
     await tester.ensureVisible(find.text('Показать места'));
     await tester.tap(find.text('Показать места'));
     await tester.pumpAndSettle();
@@ -86,7 +98,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Фильтры мест · 2'), findsOneWidget);
+      expect(find.byKey(const Key('place-more-filters')), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.tap(find.byTooltip('Убрать фильтр допуска'));
       await tester.pumpAndSettle();
@@ -94,8 +106,57 @@ void main() {
       expect(filter.access, AccessFilter.all);
       expect(filter.query, 'Зелёный');
       expect(filter.category, 'Парк');
-      expect(find.text('Фильтры мест · 1'), findsOneWidget);
+      expect(find.byKey(const Key('place-more-filters')), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
+  for (final brightness in Brightness.values) {
+    testWidgets('Filters scroll on short screens at 2x text: $brightness', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(320, 640);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            preferencesProvider.overrideWithValue(MemoryPreferences()),
+          ],
+          child: MaterialApp(
+            theme: studioTheme(brightness),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(2)),
+              child: child!,
+            ),
+            home: const PlacesListScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        tester.takeException(),
+        isNull,
+        reason: 'Catalog before opening filters',
+      );
+      await tester.tap(find.byKey(const Key('place-more-filters')));
+      await tester.pumpAndSettle();
+      final scrolling = find
+          .descendant(
+            of: find.byType(BottomSheet),
+            matching: find.byType(Scrollable),
+          )
+          .first;
+      await tester.scrollUntilVisible(
+        find.text('Показать места'),
+        160,
+        scrollable: scrolling,
+      );
+      await tester.tap(find.text('Показать места'));
+      await tester.pumpAndSettle();
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+  }
 }

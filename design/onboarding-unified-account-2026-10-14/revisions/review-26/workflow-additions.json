@@ -1,0 +1,1095 @@
+[
+  {
+    "id": "dirty-exit",
+    "title": "Выйти из редактора?",
+    "module": "Account & helping",
+    "body": "<p>Изменения ещё не сохранены. Можно продолжить редактирование или оставить черновик.</p>",
+    "actions": [
+      {
+        "label": "Продолжить",
+        "target": "helper",
+        "variant": "primary"
+      },
+      {
+        "label": "Оставить черновик",
+        "target": "walks",
+        "variant": "outline"
+      },
+      {
+        "label": "Не сохранять",
+        "target": "walks",
+        "variant": "tertiary"
+      }
+    ],
+    "parent": "helper",
+    "layout": "sheet",
+    "note": "Design for the unsaved helper form. Saved preferences are unchanged; account-scoped draft storage is a separate behavior gap.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "account-entry",
+    "title": "С возвращением",
+    "module": "Account & helping",
+    "body": "<span class=\"wordmark\">petfriendly<span>.</span></span><h2 class=\"screen-title\">Рядом с вами.</h2><p>Места, люди и помощь с прогулками — в одном аккаунте.</p><div class=\"provider-actions\"><button type=\"button\" class=\"outline\" data-go=\"profile-start\">Google</button><button type=\"button\" class=\"outline\" data-go=\"profile-start\">Apple</button><button type=\"button\" class=\"outline\" data-go=\"profile-start\">Telegram</button></div><p class=\"meta\">Продолжая, вы переходите к выбранному способу входа.</p>",
+    "actions": [
+      {
+        "label": "Войти по почте",
+        "target": "email-login",
+        "variant": "primary"
+      },
+      {
+        "label": "Создать аккаунт",
+        "target": "email-register",
+        "variant": "outline"
+      }
+    ],
+    "parent": "",
+    "layout": "page",
+    "note": "Signed-out design. Provider buttons illustrate an external provider handoff, not provider authentication. Apple/Telegram staging availability is still separate.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "email-login",
+    "title": "Вход по почте",
+    "module": "Account & helping",
+    "body": "<label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label><label class=\"field\">Пароль<input name=\"Пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"current-password\"></label><button type=\"button\" class=\"text-link\" data-go=\"account-recovery\">Забыли пароль?</button>",
+    "actions": [
+      {
+        "label": "Войти",
+        "target": "profile-start",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-entry",
+    "layout": "page",
+    "note": "Password sign-in design; confirmed email and any enabled MFA are checked by Auth, not this preview.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "email-register",
+    "title": "Создать аккаунт",
+    "module": "Account & helping",
+    "body": "<label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label><label class=\"field\">Пароль<input name=\"Пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"new-password\"></label><p class=\"hint\">После регистрации нужно подтвердить почту.</p>",
+    "actions": [
+      {
+        "label": "Продолжить",
+        "target": "email",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-entry",
+    "layout": "page",
+    "note": "Email registration UI. Password policy and provider confirmation use the configured Auth contract; no new password policy is invented.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "account-recovery",
+    "title": "Восстановить доступ",
+    "module": "Account & helping",
+    "body": "<p>Укажите почту аккаунта. Мы пришлём инструкции для восстановления доступа.</p><label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "password-reset-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "email-login",
+    "layout": "page",
+    "note": "Password recovery; an email link alone never bypasses an enabled MFA factor.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "password-reset-sent",
+    "title": "Восстановить доступ",
+    "module": "Account & helping",
+    "body": "<p>Укажите почту аккаунта. Мы пришлём инструкции для восстановления доступа.</p><label class=\"field\">Почта<input name=\"Почта\" type=\"email\" required placeholder=\"name@example.com\" autocomplete=\"email\"></label><p class=\"meta\">Если аккаунт с такой почтой существует, инструкции придут на неё.</p>",
+    "actions": [
+      {
+        "label": "Открыть вход",
+        "target": "email-login",
+        "variant": "outline"
+      }
+    ],
+    "parent": "account-recovery",
+    "layout": "page",
+    "note": "Same originating recovery form with a generic acknowledgment, without revealing whether the account exists.",
+    "toast": "Инструкции запрошены",
+    "form": false
+  },
+  {
+    "id": "password-new",
+    "title": "Новый пароль",
+    "module": "Account & helping",
+    "body": "<p>Задайте новый пароль для этого аккаунта.</p><label class=\"field\">Новый пароль<input name=\"Новый пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"new-password\"></label><label class=\"field\">Повторите пароль<input name=\"Повторите пароль\" type=\"password\" required placeholder=\"\" autocomplete=\"new-password\"></label>",
+    "actions": [
+      {
+        "label": "Сохранить",
+        "target": "email-login",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-recovery",
+    "layout": "page",
+    "note": "Opened only from a verified recovery flow; enabled MFA remains required. The preview does not validate recovery tokens.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "account-reauth",
+    "title": "Подтвердите вход",
+    "module": "Account & helping",
+    "body": "<p>Это действие требует повторного подтверждения аккаунта.</p><div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"shield-check\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Текущий аккаунт</strong><span class=\"meta\">Используйте подключённый способ входа</span></div></div><button type=\"button\" class=\"outline full-width\" data-go=\"security-mfa-verify\">Подтвердить через Google</button><label class=\"field\">Пароль<input name=\"Пароль\" type=\"password\" placeholder=\"\" autocomplete=\"off\"></label><p class=\"hint\">Если включена двухфакторная защита, понадобится её код.</p>",
+    "actions": [
+      {
+        "label": "Подтвердить",
+        "target": "security-mfa-verify",
+        "variant": "primary"
+      },
+      {
+        "label": "Отмена",
+        "target": "security",
+        "variant": "outline"
+      }
+    ],
+    "parent": "security",
+    "layout": "page",
+    "note": "Shared recent-auth step. Return intent must be carried to linking, sessions, export or deletion. Provider proof and MFA are not implemented by UI navigation.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-methods",
+    "title": "Способы входа",
+    "module": "Account & helping",
+    "body": "<p>Все способы входа относятся к одному аккаунту.</p><button class=\"supplemental-row\" type=\"button\" data-go=\"provider-link-confirm\"><span class=\"context-avatar\"><i data-lucide=\"log-in\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Google</strong><span class=\"meta\">Подключён</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button class=\"supplemental-row\" type=\"button\" data-go=\"provider-link-confirm\"><span class=\"context-avatar\"><i data-lucide=\"mail\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Почта</strong><span class=\"meta\">Не подключена</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button class=\"supplemental-row\" type=\"button\" data-go=\"provider-link-confirm\"><span class=\"context-avatar\"><i data-lucide=\"log-in\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Apple</strong><span class=\"meta\">Не подключён</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button class=\"supplemental-row\" type=\"button\" data-go=\"provider-link-confirm\"><span class=\"context-avatar\"><i data-lucide=\"log-in\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Telegram</strong><span class=\"meta\">Не подключён</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "account-recovery",
+    "layout": "page",
+    "note": "Connection status is illustrative. Linking needs proof of both identities; do not merge by display name or matching email text.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "provider-link-confirm",
+    "title": "Подключить способ входа?",
+    "module": "Account & helping",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"mail\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Почта</strong><span class=\"meta\">К текущему аккаунту</span></div></div><p>Сначала подтвердите текущий аккаунт, затем новый способ входа. Профиль и переписки останутся в этом аккаунте.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "security-methods",
+        "variant": "outline"
+      },
+      {
+        "label": "Продолжить",
+        "target": "account-reauth",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security-methods",
+    "layout": "sheet",
+    "note": "Selected provider and return intent are object-specific. No automatic account merging or replacement of manually saved profile data.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-mfa",
+    "title": "Двухфакторная защита",
+    "module": "Account & helping",
+    "body": "<p>Дополнительное подтверждение входа защищает доступ к аккаунту.</p><p class=\"meta\">Сейчас не подключено.</p>",
+    "actions": [
+      {
+        "label": "Подключить",
+        "target": "account-reauth",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security",
+    "layout": "page",
+    "note": "QR area is a design placeholder, not a usable secret. Enrollment requires fresh reauthentication and a server-generated private factor.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-mfa-verify",
+    "title": "Код аутентификатора",
+    "module": "Account & helping",
+    "body": "<p>Откройте приложение-аутентификатор и введите код для PetFriendly.</p><label class=\"field\">Код<input required inputmode=\"numeric\" autocomplete=\"one-time-code\" pattern=\"[0-9]{6}\" maxlength=\"6\" name=\"Код\"></label><button type=\"button\" class=\"text-link\" data-go=\"security-mfa-recovery\">Нет доступа к приложению?</button>",
+    "actions": [
+      {
+        "label": "Подтвердить",
+        "target": "security",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-reauth",
+    "layout": "page",
+    "note": "Reusable verification step for the enabled or enrolling factor. The return destination depends on the verified intent; no default-code bypass exists.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "security-mfa-recovery",
+    "title": "Нет доступа к коду?",
+    "module": "Account & helping",
+    "body": "<p>Восстановление пароля по почте не отключает двухфакторную защиту.</p><div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"shield-check\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Резервный фактор</strong><span class=\"meta\">Используйте ранее подключённый способ подтверждения</span></div></div><p class=\"meta\">Если резервного фактора нет, доступ остаётся закрыт до проверки восстановления.</p>",
+    "actions": [
+      {
+        "label": "Использовать резервный фактор",
+        "target": "security-mfa-verify",
+        "variant": "primary"
+      },
+      {
+        "label": "Назад",
+        "target": "account-entry",
+        "variant": "outline"
+      }
+    ],
+    "parent": "security-mfa-verify",
+    "layout": "page",
+    "note": "No invented support channel, SLA or email-only bypass. The no-backup recovery procedure remains a pre-launch security decision.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-sessions",
+    "title": "Устройства и сессии",
+    "module": "Account & helping",
+    "body": "<div class=\"supplemental-row\"><span class=\"context-avatar\"><i data-lucide=\"smartphone\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Этот телефон</strong><span class=\"meta\">Текущая сессия</span></span></div><button class=\"supplemental-row\" type=\"button\" data-go=\"session-revoke\"><span class=\"context-avatar\"><i data-lucide=\"smartphone\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Другой телефон</strong><span class=\"meta\">Вход 12 октября</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"outline full-width\" data-go=\"session-revoke\">Выйти на других устройствах</button>",
+    "actions": [],
+    "parent": "security",
+    "layout": "page",
+    "note": "Example sessions only; revocation must invalidate existing JWT/private access and realtime server-side after reauthentication.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "session-revoke",
+    "title": "Завершить сессию?",
+    "module": "Account & helping",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"smartphone\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Другой телефон</strong><span class=\"meta\">Выход на выбранном устройстве</span></div></div><p>На этом устройстве потребуется войти заново.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "security-sessions",
+        "variant": "outline"
+      },
+      {
+        "label": "Подтвердить вход",
+        "target": "account-reauth",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security-sessions",
+    "layout": "sheet",
+    "note": "Selected-session and all-other-sessions commands are distinct intents; source session IDs are not inferred from labels.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-export",
+    "title": "Копия ваших данных",
+    "module": "Account & helping",
+    "body": "<p>Перед подготовкой копии подтвердите вход в аккаунт.</p><ul class=\"plain-list\"><li>Данные профиля и питомцев</li><li>Ваши публикации и отзывы</li><li>Данные участия и переписок</li></ul><p class=\"meta\">Получить копию может только владелец аккаунта.</p>",
+    "actions": [
+      {
+        "label": "Подтвердить вход",
+        "target": "account-reauth",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security",
+    "layout": "page",
+    "note": "Export requires recent authentication and MFA when enabled. Delivery, archive protection and retention details are not invented.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-delete",
+    "title": "Удаление аккаунта",
+    "module": "Account & helping",
+    "body": "<p>Перед удалением можно сохранить копию ваших данных.</p><button class=\"supplemental-row\" type=\"button\" data-go=\"security-export\"><span class=\"context-avatar\"><i data-lucide=\"download\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Копия данных</strong><span class=\"meta\">Получить перед удалением</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><p>Для продолжения подтвердите вход в аккаунт.</p>",
+    "actions": [
+      {
+        "label": "Подтвердить вход",
+        "target": "account-reauth",
+        "variant": "primary"
+      },
+      {
+        "label": "Отмена",
+        "target": "security",
+        "variant": "outline"
+      }
+    ],
+    "parent": "security",
+    "layout": "page",
+    "note": "Deletion consequences, retention and backup deletion handling must be finalized before release; no arbitrary grace period is presented.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-delete-confirm",
+    "title": "Удалить аккаунт?",
+    "module": "Account & helping",
+    "body": "<p>Вы потеряете доступ к этому аккаунту. Убедитесь, что сохранили нужные данные.</p><p class=\"meta\">Действие доступно после подтверждения входа.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "security",
+        "variant": "outline"
+      },
+      {
+        "label": "Удалить",
+        "target": "account-entry",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security-delete",
+    "layout": "sheet",
+    "note": "Final confirmation design, reached only after server-verified recent authentication/MFA. UI preview never deletes an account. Retention rules remain deferred.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "community-members",
+    "title": "Участники",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">5 участников</span></div></div><label class=\"search\"><i data-lucide=\"search\" class=\"icon\" aria-hidden=\"true\"></i><input placeholder=\"Найти участника\" aria-label=\"Найти участника\"></label><div class=\"supplemental-row\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Анна</strong><span class=\"meta\">Организатор</span></span></div><div class=\"supplemental-row\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Ульяна</strong><span class=\"meta\">Советский район</span></span></div><div class=\"supplemental-row\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Екатерина Александровская-Лисовская</strong><span class=\"meta\">Центральный район</span></span></div><div class=\"supplemental-row\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Максим</strong><span class=\"meta\">Советский район</span></span></div><div class=\"supplemental-row\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Михаил</strong><span class=\"meta\">Центральный район</span></span></div><p class=\"empty-members\" hidden>Никого не нашли. Попробуйте другое имя.</p>",
+    "actions": [],
+    "parent": "community",
+    "layout": "page",
+    "note": "Full public member list; no addresses, user GPS or private role permissions. Member-search works locally in the review file.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "community-rules",
+    "title": "Правила сообщества",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">Минск · Центральный район</span></div></div><ol class=\"rules-list\"><li><strong>Уважайте друг друга</strong><p>Обсуждайте вопросы спокойно, без оскорблений.</p></li><li><strong>Берегите личные данные</strong><p>Не публикуйте чужие адреса и контакты без согласия.</p></li><li><strong>Учитывайте питомцев</strong><p>Уточняйте условия встреч и не навязывайте общение.</p></li></ol>",
+    "actions": [],
+    "parent": "community",
+    "layout": "page",
+    "note": "Example community-authored content, not a new platform moderation policy. No rejected rules button is inserted into the approved community layout.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "community-meetings",
+    "title": "Встречи сообщества",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">Ближайшие встречи</span></div></div><button class=\"supplemental-row\" type=\"button\" data-go=\"meeting\"><span class=\"context-avatar\"><i data-lucide=\"calendar-days\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Прогулка в парке</strong><span class=\"meta\">18 октября · 11:00 · Парк Победы</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button class=\"supplemental-row\" type=\"button\" data-go=\"meeting\"><span class=\"context-avatar\"><i data-lucide=\"calendar-days\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Встреча у озера</strong><span class=\"meta\">20 октября · 12:00 · Комсомольское озеро</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "community",
+    "layout": "page",
+    "note": "Listing design. Each row must resolve its own event ID; public venue points are not users’ live positions. Existing meeting detail is retained.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "invitation-preview",
+    "title": "Приглашение в сообщество",
+    "module": "People & communities",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"users\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Соседи с питомцами</strong><span class=\"meta\">Минск · Центральный район</span></div></div><p>Знакомимся, гуляем и делимся местами рядом.</p><p class=\"meta\">Присоединение добровольное. Можно сначала посмотреть сообщество.</p>",
+    "actions": [
+      {
+        "label": "Вступить",
+        "target": "community",
+        "variant": "primary"
+      },
+      {
+        "label": "Посмотреть",
+        "target": "community",
+        "variant": "outline"
+      }
+    ],
+    "parent": "communities",
+    "layout": "page",
+    "note": "Invitation resolves a community ID before joining. Removed/private/no-access targets use the unavailable view; joining is never implied by opening the link.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "moderation",
+    "title": "Подтвердите доступ",
+    "module": "Nearby & places",
+    "body": "<p>Для проверки предложений мест нужен аккаунт модератора и двухфакторное подтверждение.</p><label class=\"field\">Код аутентификатора<input required inputmode=\"numeric\" pattern=\"[0-9]{6}\" maxlength=\"6\" autocomplete=\"one-time-code\" name=\"Код\"></label>",
+    "actions": [
+      {
+        "label": "Подтвердить",
+        "target": "moderation-queue",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security",
+    "layout": "page",
+    "note": "Staff-only MFA gate design. Server-controlled role and verified assurance level are mandatory; no UI code assigns moderator privileges.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "moderation-queue",
+    "title": "Предложения мест",
+    "module": "Nearby & places",
+    "body": "<p class=\"meta\">Ожидают проверки</p><button class=\"supplemental-row\" type=\"button\" data-go=\"moderation-detail\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Сквер у библиотеки</strong><span class=\"meta\">Минск · парк · на проверке</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button class=\"supplemental-row\" type=\"button\" data-go=\"moderation-detail\"><span class=\"context-avatar\"><i data-lucide=\"map-pin\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Кафе «У дома»</strong><span class=\"meta\">Минск · кафе · на проверке</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "moderation",
+    "layout": "page",
+    "note": "Two example submissions; selected proposal IDs must be preserved through the decision flow. Staff access is not established by this preview.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "moderation-detail",
+    "title": "Проверка места",
+    "module": "Nearby & places",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сквер у библиотеки</strong><span class=\"meta\">Минск · парк</span></div></div><span class=\"status-chip\"><i data-lucide=\"circle-help\" class=\"icon\" aria-hidden=\"true\"></i>Допуск не подтверждён</span><div class=\"detail-block\"><h3>Публичная точка</h3><p>У входа в сквер.</p><button type=\"button\" class=\"outline full-width\" data-go=\"map\">На карте</button></div><div class=\"detail-block\"><h3>Предложение</h3><p>Небольшой сквер для прогулок рядом с библиотекой.</p></div>",
+    "actions": [
+      {
+        "label": "Отклонить",
+        "target": "moderation-reject",
+        "variant": "outline"
+      },
+      {
+        "label": "Опубликовать",
+        "target": "moderation-publish",
+        "variant": "primary"
+      }
+    ],
+    "parent": "moderation-queue",
+    "layout": "page",
+    "note": "Publication never confirms pet access automatically. Source, deduplication and independently verified edits remain moderation requirements.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "moderation-reject",
+    "title": "Причина отклонения",
+    "module": "Nearby & places",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сквер у библиотеки</strong><span class=\"meta\">Предложение места</span></div></div><label class=\"field\">Что нужно исправить<textarea name=\"Что нужно исправить\" required rows=\"4\"></textarea></label><p class=\"hint\">Причину увидит автор предложения.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "moderation-detail",
+        "variant": "outline"
+      },
+      {
+        "label": "Отклонить",
+        "target": "moderation-queue",
+        "variant": "primary"
+      }
+    ],
+    "parent": "moderation-detail",
+    "layout": "sheet",
+    "note": "Reason is visible only to the author and authorized moderation. No new appeal or retention policy is invented.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "moderation-publish",
+    "title": "Опубликовать место?",
+    "module": "Nearby & places",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сквер у библиотеки</strong><span class=\"meta\">Минск · парк</span></div></div><p>Место появится в каталоге. Допуск с питомцами останется неподтверждённым.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "moderation-detail",
+        "variant": "outline"
+      },
+      {
+        "label": "Опубликовать",
+        "target": "moderation-published",
+        "variant": "primary"
+      }
+    ],
+    "parent": "moderation-detail",
+    "layout": "sheet",
+    "note": "Explicit publication decision; needs MFA-bound server authorization, deduplication and atomic write.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "moderation-published",
+    "title": "Предложения мест",
+    "module": "Nearby & places",
+    "body": "<button class=\"supplemental-row\" type=\"button\" data-go=\"moderation-detail\"><span class=\"context-avatar\"><i data-lucide=\"map-pin\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Кафе «У дома»</strong><span class=\"meta\">Минск · кафе · на проверке</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "moderation-queue",
+    "layout": "page",
+    "note": "Queue acknowledgment state illustration. It does not publish to a real catalog.",
+    "toast": "Место опубликовано",
+    "form": false
+  },
+  {
+    "id": "proposal-pending",
+    "title": "Ваши предложения",
+    "module": "Nearby & places",
+    "body": "<button class=\"supplemental-row\" type=\"button\" data-go=\"proposal-pending-detail\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Сквер у библиотеки</strong><span class=\"meta\">Минск · парк</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><span class=\"status-chip\"><i data-lucide=\"clock\" class=\"icon\" aria-hidden=\"true\"></i>На проверке</span><p class=\"meta\">Предложения видите вы и модераторы.</p>",
+    "actions": [
+      {
+        "label": "Предложить место",
+        "target": "place-point",
+        "variant": "outline"
+      }
+    ],
+    "parent": "places",
+    "layout": "page",
+    "note": "Author-only pending collection design; multiple records and account-scoped persistence remain a behavior gap.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "proposal-pending-detail",
+    "title": "Предложение места",
+    "module": "Nearby & places",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"trees\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сквер у библиотеки</strong><span class=\"meta\">Минск · парк</span></div></div><span class=\"status-chip\"><i data-lucide=\"circle-help\" class=\"icon\" aria-hidden=\"true\"></i>Допуск не подтверждён</span><div class=\"detail-block\"><h3>Публичная точка</h3><p>У входа в сквер.</p><button type=\"button\" class=\"outline full-width\" data-go=\"map\">На карте</button></div><div class=\"detail-block\"><h3>Предложение</h3><p>Небольшой сквер для прогулок рядом с библиотекой.</p></div><span class=\"status-chip\"><i data-lucide=\"clock\" class=\"icon\" aria-hidden=\"true\"></i>На проверке</span><p class=\"meta\">После проверки место может появиться в каталоге.</p>",
+    "actions": [],
+    "parent": "proposal-pending",
+    "layout": "page",
+    "note": "Own pending record, not a public catalog card. No pending-edit/withdrawal policy is invented.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "report",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Отзыв об Ульяне</strong><span class=\"meta\">Персик · 11 октября</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "report-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-reviews",
+    "layout": "page",
+    "note": "Context-specific report with selected object ID. Reporting does not automatically block a person or expose private handover content.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "report-sent",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Отзыв об Ульяне</strong><span class=\"meta\">Персик · 11 октября</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Вернуться",
+        "target": "walk-reviews",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-reviews",
+    "layout": "page",
+    "note": "Acknowledgment on the originating form; server submission and moderation remain separate from the review fixture.",
+    "toast": "Жалоба отправлена",
+    "form": false
+  },
+  {
+    "id": "report-chat",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сообщение Ульяны</strong><span class=\"meta\">Личная переписка</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Отправить",
+        "target": "report-chat-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "chat-direct-design",
+    "layout": "page",
+    "note": "Context-specific report with selected object ID. Reporting does not automatically block a person or expose private handover content.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "report-chat-sent",
+    "title": "Пожаловаться",
+    "module": "App shell",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"message-square\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Сообщение Ульяны</strong><span class=\"meta\">Личная переписка</span></div></div><fieldset class=\"reasons\"><legend>Причина</legend><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"0\">Спам</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"1\">Оскорбления</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"2\">Личные данные</label><label class=\"current-filter-option\"><input type=\"radio\" required name=\"reason\" value=\"3\">Другое</label></fieldset><label class=\"field\">Комментарий<textarea name=\"Комментарий\"  rows=\"4\"></textarea></label><p class=\"hint\">Необязательно. Не добавляйте адреса и другие личные данные.</p>",
+    "actions": [
+      {
+        "label": "Вернуться",
+        "target": "chat-direct-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "chat-direct-design",
+    "layout": "page",
+    "note": "Acknowledgment on the originating form; server submission and moderation remain separate from the review fixture.",
+    "toast": "Жалоба отправлена",
+    "form": false
+  },
+  {
+    "id": "application-pending",
+    "title": "Ваш отклик",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"dog\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Боня</strong><span class=\"meta\">Сегодня · 18:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район</p><span class=\"status-chip\"><i data-lucide=\"clock\" class=\"icon\" aria-hidden=\"true\"></i>Ожидает ответа</span><div class=\"detail-block\"><h3>Что дальше</h3><p>Владелец рассмотрит отклик. Чат прогулки и инструкции будут доступны после выбора помощника.</p></div>",
+    "actions": [
+      {
+        "label": "Отозвать отклик",
+        "target": "application-withdraw",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walks",
+    "layout": "page",
+    "note": "Application and agreement are different records. There is no agreement chat or private care information at this stage.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "application-withdraw",
+    "title": "Отозвать отклик?",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"dog\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Боня</strong><span class=\"meta\">Сегодня · 18:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район</p><p>Владелец больше не сможет выбрать этот отклик.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "application-pending",
+        "variant": "outline"
+      },
+      {
+        "label": "Отозвать",
+        "target": "walks",
+        "variant": "primary"
+      }
+    ],
+    "parent": "application-pending",
+    "layout": "sheet",
+    "note": "Pending application withdrawal only. This is not an agreement-cancellation policy; request and applicant IDs must remain scoped.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "helper-profile",
+    "title": "Ульяна",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Минск · Советский район</span></div></div><p class=\"meta\">4,5 · 2 отзыва · 8 завершённых прогулок</p><div class=\"detail-block\"><h3>Опыт</h3><p>Опыт с собаками и кошками.</p></div><div class=\"detail-block\"><h3>Помощь с прогулками</h3><p>Небольшие и средние собаки. Центральный и Советский районы.</p></div>",
+    "actions": [
+      {
+        "label": "Выбрать",
+        "target": "helper-select-confirm",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-candidates",
+    "layout": "page",
+    "note": "Public helper profile for the selected applicant. Reputation comes from eligible published server reviews, never client-written totals or a safety guarantee.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "helper-select-confirm",
+    "title": "Выбрать Ульяну?",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">4,5 · 2 отзыва · 8 прогулок</span></div></div><p>Прогулка будет назначена Ульяне. Остальные отклики перестанут быть доступными для выбора.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "walk-candidates",
+        "variant": "outline"
+      },
+      {
+        "label": "Выбрать",
+        "target": "walk-assigned",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-candidates",
+    "layout": "sheet",
+    "note": "Explicit object-specific assignment confirmation; production assignment must be atomic and handle an already-assigned conflict.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-assigned",
+    "title": "Назначенная прогулка",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><span class=\"status-chip\"><i data-lucide=\"circle-check\" class=\"icon\" aria-hidden=\"true\"></i>Запланирована</span><div class=\"participants\"><div class=\"participant\"><strong>Анна</strong><span class=\"meta\">Владелец</span></div><div class=\"participant\"><strong>Ульяна</strong><span class=\"meta\">Помощник</span></div></div><div class=\"detail-block\"><h3>Передача питомца</h3><span class=\"meta\">Только участникам прогулки</span><p>Встречаемся у входа со стороны двора.</p></div>",
+    "actions": [
+      {
+        "label": "Начать",
+        "target": "walk-active",
+        "variant": "primary"
+      },
+      {
+        "label": "Чат",
+        "target": "chat-walk-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walks",
+    "layout": "page",
+    "note": "Assigned helper view. Only participants can access the agreement chat and private handover details; active account must match the relationship.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-active",
+    "title": "Прогулка идёт",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><span class=\"status-chip\"><i data-lucide=\"footprints\" class=\"icon\" aria-hidden=\"true\"></i>В процессе</span><div class=\"participants\"><div class=\"participant\"><strong>Анна</strong><span class=\"meta\">Владелец</span></div><div class=\"participant\"><strong>Ульяна</strong><span class=\"meta\">Помощник</span></div></div>",
+    "actions": [
+      {
+        "label": "Закончить",
+        "target": "walk-finish-confirm",
+        "variant": "primary"
+      },
+      {
+        "label": "Чат",
+        "target": "chat-walk-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walks",
+    "layout": "page",
+    "note": "Helper-started stage without live tracking. Commands are scoped to the selected agreement; no GPS/timer safety claim.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-finish-confirm",
+    "title": "Закончить прогулку?",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><p>После этого владелец сможет подтвердить завершение.</p>",
+    "actions": [
+      {
+        "label": "Отмена",
+        "target": "walk-active",
+        "variant": "outline"
+      },
+      {
+        "label": "Закончить",
+        "target": "walk-awaiting-confirmation",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-active",
+    "layout": "sheet",
+    "note": "Assigned helper submits completion, distinct from owner confirmation.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-awaiting-confirmation",
+    "title": "Ожидаем подтверждения",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><span class=\"status-chip\"><i data-lucide=\"clock\" class=\"icon\" aria-hidden=\"true\"></i>Ждём владельца</span><div class=\"participants\"><div class=\"participant\"><strong>Анна</strong><span class=\"meta\">Владелец</span></div><div class=\"participant\"><strong>Ульяна</strong><span class=\"meta\">Помощник</span></div></div><p>Вы отметили окончание прогулки. После подтверждения владельцем можно оставить отзыв.</p>",
+    "actions": [
+      {
+        "label": "Чат",
+        "target": "chat-walk-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walks",
+    "layout": "page",
+    "note": "Helper view: no review action until owner-confirmed completion; retain participant-only chat.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-confirm-completion",
+    "title": "Подтвердить завершение?",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Отметила окончание прогулки</span></div></div><p>Подтвердите, что прогулка завершена. После этого она попадёт в историю и можно будет оставить отзыв.</p>",
+    "actions": [
+      {
+        "label": "Назад",
+        "target": "walk-detail",
+        "variant": "outline"
+      },
+      {
+        "label": "Подтвердить",
+        "target": "walk-completed",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walks",
+    "layout": "sheet",
+    "note": "Owner-only confirmation. Dispute/cancellation procedures remain explicitly deferred; no new policy is added.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-completed",
+    "title": "Прогулка завершена",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><span class=\"status-chip\"><i data-lucide=\"circle-check\" class=\"icon\" aria-hidden=\"true\"></i>Завершена</span><div class=\"participants\"><div class=\"participant\"><strong>Анна</strong><span class=\"meta\">Владелец</span></div><div class=\"participant\"><strong>Ульяна</strong><span class=\"meta\">Помощник</span></div></div>",
+    "actions": [
+      {
+        "label": "Оставить отзыв",
+        "target": "walk-helper-review",
+        "variant": "primary"
+      },
+      {
+        "label": "Чат",
+        "target": "chat-walk-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-history",
+    "layout": "page",
+    "note": "Owner reviews assigned helper. One eligible review per completed agreement and direction; never self-review.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-completed-helper",
+    "title": "Прогулка завершена",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"paw-print\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Персик</strong><span class=\"meta\">18 октября · 10:00 · 45 минут</span></div></div><p class=\"meta\">Минск · Центральный район · UTC+3</p><span class=\"status-chip\"><i data-lucide=\"circle-check\" class=\"icon\" aria-hidden=\"true\"></i>Завершена</span><div class=\"participants\"><div class=\"participant\"><strong>Анна</strong><span class=\"meta\">Владелец</span></div><div class=\"participant\"><strong>Ульяна</strong><span class=\"meta\">Помощник</span></div></div>",
+    "actions": [
+      {
+        "label": "Оставить отзыв",
+        "target": "walk-owner-review",
+        "variant": "primary"
+      },
+      {
+        "label": "Чат",
+        "target": "chat-walk-design",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-history",
+    "layout": "page",
+    "note": "Assigned helper reviews owner. One eligible review per completed agreement and direction; never self-review.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "walk-helper-review",
+    "title": "Отзыв о помощнике",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "Сохранить",
+        "target": "walk-helper-review-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-completed",
+    "layout": "page",
+    "note": "Only after owner-confirmed completion. Helper and owner reputation are separate; a new rating starts unset.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "walk-helper-review-sent",
+    "title": "Отзыв о помощнике",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Ульяна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "К истории",
+        "target": "walk-history",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-history",
+    "layout": "page",
+    "note": "Same form with acknowledgment; prevents a duplicate direction-specific review in production. No aggregate total is written by this preview.",
+    "toast": "Отзыв сохранён",
+    "form": false
+  },
+  {
+    "id": "walk-owner-review",
+    "title": "Отзыв о владельце",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Анна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "Сохранить",
+        "target": "walk-owner-review-sent",
+        "variant": "primary"
+      }
+    ],
+    "parent": "walk-completed-helper",
+    "layout": "page",
+    "note": "Only after owner-confirmed completion. Helper and owner reputation are separate; a new rating starts unset.",
+    "toast": "",
+    "form": true
+  },
+  {
+    "id": "walk-owner-review-sent",
+    "title": "Отзыв о владельце",
+    "module": "Walking assistance",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Анна</strong><span class=\"meta\">Персик · 18 октября</span></div></div><fieldset class=\"place-star-field\"><legend>Ваша оценка</legend><div class=\"rating-choices\" role=\"radiogroup\" aria-label=\"Оценка\"><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"1 из 5\" data-rating=\"1\" tabindex=\"0\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"2 из 5\" data-rating=\"2\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"3 из 5\" data-rating=\"3\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"4 из 5\" data-rating=\"4\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"5 из 5\" data-rating=\"5\" tabindex=\"-1\"><i data-lucide=\"star\" class=\"icon\" aria-hidden=\"true\"></i></button></div><input class=\"rating-value\" type=\"hidden\" name=\"rating\"></fieldset><label class=\"field\">Ваш отзыв<textarea name=\"Ваш отзыв\"  rows=\"4\"></textarea></label><p class=\"hint\">Не добавляйте адреса и частные инструкции.</p>",
+    "actions": [
+      {
+        "label": "К истории",
+        "target": "walk-history",
+        "variant": "outline"
+      }
+    ],
+    "parent": "walk-history",
+    "layout": "page",
+    "note": "Same form with acknowledgment; prevents a duplicate direction-specific review in production. No aggregate total is written by this preview.",
+    "toast": "Отзыв сохранён",
+    "form": false
+  },
+  {
+    "id": "target-unavailable",
+    "title": "Страница недоступна",
+    "module": "App shell",
+    "body": "<div class=\"empty-state\"><i data-lucide=\"circle-help\" class=\"icon\" aria-hidden=\"true\"></i><h3>Не удалось открыть</h3><p>Объект удалён или доступ к нему изменился.</p></div>",
+    "actions": [
+      {
+        "label": "Вернуться",
+        "target": "chats",
+        "variant": "outline"
+      }
+    ],
+    "parent": "chats",
+    "layout": "page",
+    "note": "Unavailable/deleted/no-access target. Actual return context must preserve its initiating list/filter/scroll; no private object content is shown.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "photo-error",
+    "title": "Фото профиля",
+    "module": "Account & helping",
+    "body": "<div class=\"photo-preview\"><i data-lucide=\"image\" class=\"icon\" aria-hidden=\"true\"></i></div><p class=\"field-error\">Не удалось открыть фото.</p><p>Выберите JPEG, PNG или WebP до 5 МБ. Ранее сохранённое фото не изменилось.</p>",
+    "actions": [
+      {
+        "label": "Выбрать другое",
+        "target": "profile-edit",
+        "variant": "primary"
+      },
+      {
+        "label": "Назад",
+        "target": "profile",
+        "variant": "outline"
+      }
+    ],
+    "parent": "profile-edit",
+    "layout": "page",
+    "note": "Type/size/decode recovery design. Actual gallery action uses the existing re-encoding pipeline, never claims production upload/storage.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "save-error",
+    "title": "Изменения не сохранены",
+    "module": "Account & helping",
+    "body": "<div class=\"context-summary\"><span class=\"context-avatar\"><i data-lucide=\"user-round\" class=\"icon\" aria-hidden=\"true\"></i></span><div><strong>Публичные сведения</strong><span class=\"meta\">Ваш черновик сохранён в редакторе</span></div></div><p class=\"field-error\">Не удалось сохранить изменения.</p><p>Попробуйте ещё раз. Можно вернуться к редактированию.</p>",
+    "actions": [
+      {
+        "label": "Повторить",
+        "target": "helper",
+        "variant": "primary"
+      },
+      {
+        "label": "Редактировать",
+        "target": "helper",
+        "variant": "outline"
+      }
+    ],
+    "parent": "helper",
+    "layout": "page",
+    "note": "Failure feedback design. Account-scoped draft continuity and retry command idempotency remain behavior requirements, not claimed by navigation.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "account-security-actions",
+    "title": "Безопасность аккаунта",
+    "module": "Account & helping",
+    "body": "<button type=\"button\" class=\"supplemental-row\" data-go=\"security-methods\"><span class=\"context-avatar\"><i data-lucide=\"log-in\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Способы входа</strong><span class=\"meta\">Подключение к текущему аккаунту</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"security-mfa\"><span class=\"context-avatar\"><i data-lucide=\"shield-check\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Двухфакторная защита</strong><span class=\"meta\">Приложение-аутентификатор</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"security-sessions\"><span class=\"context-avatar\"><i data-lucide=\"smartphone\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Устройства и сессии</strong><span class=\"meta\">Где выполнен вход</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"account-recovery\"><span class=\"context-avatar\"><i data-lucide=\"key-round\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Восстановление доступа</strong><span class=\"meta\">Пароль и резервный фактор</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"security-export\"><span class=\"context-avatar\"><i data-lucide=\"download\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Копия данных</strong><span class=\"meta\">Доступна владельцу аккаунта</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"security-delete\"><span class=\"context-avatar\"><i data-lucide=\"trash-2\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Удаление аккаунта</strong><span class=\"meta\">С подтверждением входа</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "security",
+    "layout": "page",
+    "note": "Separate actionable destination for the approved informational security shell. Sensitive commands require a carried intent and verified reauthentication/MFA.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-mfa-setup",
+    "title": "Подключить аутентификатор",
+    "module": "Account & helping",
+    "body": "<p>Добавьте PetFriendly в приложение-аутентификатор с помощью QR-кода.</p><div class=\"authenticator-placeholder\" aria-label=\"Область QR-кода\"><i data-lucide=\"qr-code\" class=\"icon\" aria-hidden=\"true\"></i></div><p class=\"meta\">Затем введите код из приложения.</p>",
+    "actions": [
+      {
+        "label": "Ввести код",
+        "target": "security-mfa-verify",
+        "variant": "primary"
+      }
+    ],
+    "parent": "security-mfa",
+    "layout": "page",
+    "note": "Shown only after fresh account proof. The QR area is a non-usable design placeholder; no actual TOTP secret is rendered or stored.",
+    "toast": "",
+    "form": false
+  },
+  {
+    "id": "security-mfa-enabled",
+    "title": "Двухфакторная защита",
+    "module": "Account & helping",
+    "body": "<p>При входе потребуется код из приложения-аутентификатора.</p><p class=\"meta\">Подключено.</p>",
+    "actions": [
+      {
+        "label": "К безопасности",
+        "target": "account-security-actions",
+        "variant": "outline"
+      }
+    ],
+    "parent": "account-security-actions",
+    "layout": "page",
+    "note": "Verified-enrollment result design. Actual server assurance and factor ownership are not established by preview navigation. Staff MFA cannot be disabled by an ordinary role choice.",
+    "toast": "Защита подключена",
+    "form": false
+  },
+  {
+    "id": "provider-link-verified",
+    "title": "Способы входа",
+    "module": "Account & helping",
+    "body": "<button type=\"button\" class=\"supplemental-row\" data-go=\"security-methods\"><span class=\"context-avatar\"><i data-lucide=\"log-in\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Google</strong><span class=\"meta\">Подключён</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"supplemental-row\" data-go=\"security-methods\"><span class=\"context-avatar\"><i data-lucide=\"mail\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Почта</strong><span class=\"meta\">Подключена</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "account-security-actions",
+    "layout": "page",
+    "note": "Requires proof of current account and incoming identity; no automatic merge by matching email or display name.",
+    "toast": "Способ входа подключён",
+    "form": false
+  },
+  {
+    "id": "session-revoked",
+    "title": "Устройства и сессии",
+    "module": "Account & helping",
+    "body": "<button type=\"button\" class=\"supplemental-row\" data-go=\"security-sessions\"><span class=\"context-avatar\"><i data-lucide=\"smartphone\" class=\"icon\" aria-hidden=\"true\"></i></span><span class=\"row-copy\"><strong class=\"name\">Этот телефон</strong><span class=\"meta\">Текущая сессия</span></span><i data-lucide=\"chevron-right\" class=\"icon\" aria-hidden=\"true\"></i></button>",
+    "actions": [],
+    "parent": "account-security-actions",
+    "layout": "page",
+    "note": "A verified server revocation result, including existing JWT and realtime. Preview does not revoke a real session.",
+    "toast": "Сессия завершена",
+    "form": false
+  },
+  {
+    "id": "security-export-ready",
+    "title": "Копия ваших данных",
+    "module": "Account & helping",
+    "body": "<p>Копия данных готова.</p><p class=\"meta\">Получите её на своём устройстве и храните в безопасном месте.</p>",
+    "actions": [
+      {
+        "label": "Получить копию",
+        "target": "security-export",
+        "variant": "primary"
+      }
+    ],
+    "parent": "account-security-actions",
+    "layout": "page",
+    "note": "Protected-download result after verified export. No actual file, delivery channel, expiration or retention duration is fabricated.",
+    "toast": "",
+    "form": false
+  }
+]

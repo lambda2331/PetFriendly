@@ -17,21 +17,37 @@ final communityRepositoryProvider = Provider<CommunityRepository>(
 );
 
 class CommunityController extends AsyncNotifier<CommunityData> {
+  bool refreshing = false;
   @override
   Future<CommunityData> build() =>
       ref.watch(communityRepositoryProvider).load();
   Future<String?> command(String action, Json values) async {
-    final result = await ref
-        .read(communityRepositoryProvider)
-        .command(action, values);
-    state = AsyncData(await ref.read(communityRepositoryProvider).load());
+    final repository = ref.read(communityRepositoryProvider);
+    final result = await repository.command(action, values);
+    if (!ref.mounted || ref.read(communityRepositoryProvider) != repository) {
+      throw StateError('Account changed');
+    }
+    final snapshot = await repository.load();
+    if (!ref.mounted || ref.read(communityRepositoryProvider) != repository) {
+      throw StateError('Account changed');
+    }
+    state = AsyncData(snapshot);
     return result;
   }
 
   Future<void> refresh() async {
-    state = await AsyncValue.guard(
-      () => ref.read(communityRepositoryProvider).load(),
-    );
+    final repository = ref.read(communityRepositoryProvider);
+    if (refreshing) return;
+    refreshing = true;
+    state = const AsyncLoading<CommunityData>();
+    try {
+      final next = await AsyncValue.guard(repository.load);
+      if (ref.mounted && ref.read(communityRepositoryProvider) == repository) {
+        state = next;
+      }
+    } finally {
+      refreshing = false;
+    }
   }
 }
 
@@ -224,7 +240,9 @@ class DemoCommunityRepository implements CommunityRepository {
       case 'pet':
         final existing = v['id'];
         if (existing == null) {
-          data['pets']!.add({...v, 'id': id(), 'owner_id': userId});
+          final petId = id();
+          data['pets']!.add({...v, 'id': petId, 'owner_id': userId});
+          return petId;
         } else {
           final pet = data['pets']!.firstWhere(
             (p) => p['id'] == existing && p['owner_id'] == userId,
@@ -242,10 +260,25 @@ class DemoCommunityRepository implements CommunityRepository {
           'time_zone': v['timezone_in'],
           'starts_at': v['starts_in'],
           'capacity': v['capacity_in'],
+          'duration': v['duration_in'] ?? 60,
+          'group_id': v['group_in'],
           'description': v['description_in'],
           'cancelled': false,
+          'latitude': v['latitude_in'],
+          'longitude': v['longitude_in'],
+          'location_label': v['location_label_in'] ?? '',
         });
         data['event_members']!.add({'event_id': eid, 'user_id': userId});
+        final cid = id();
+        data['conversations']!.add({
+          'id': cid,
+          'kind': 'event',
+          'context_id': eid,
+        });
+        data.putIfAbsent('conversation_members', () => []).add({
+          'conversation_id': cid,
+          'user_id': userId,
+        });
         return eid;
       case 'join_event':
         final eid = v['event_in'];
@@ -254,10 +287,23 @@ class DemoCommunityRepository implements CommunityRepository {
           (m) => m['event_id'] == eid,
         );
         if (members.any((m) => m['user_id'] == userId)) return null;
-        if (members.length >= event['capacity']) {
+        if (event['capacity'] != null && members.length >= event['capacity']) {
           throw StateError('Нет свободных мест');
         }
         data['event_members']!.add({'event_id': eid, 'user_id': userId});
+        var chat = data['conversations']!
+            .where((c) => c['kind'] == 'event' && c['context_id'] == eid)
+            .firstOrNull;
+        if (chat == null) {
+          chat = {'id': id(), 'kind': 'event', 'context_id': eid};
+          data['conversations']!.add(chat);
+        }
+        final memberships = data.putIfAbsent('conversation_members', () => []);
+        if (!memberships.any(
+          (m) => m['conversation_id'] == chat!['id'] && m['user_id'] == userId,
+        )) {
+          memberships.add({'conversation_id': chat['id'], 'user_id': userId});
+        }
         break;
       case 'leave_event':
         data['event_members']!.removeWhere(
@@ -279,6 +325,7 @@ class DemoCommunityRepository implements CommunityRepository {
           'time_zone': v['timezone_in'],
           'starts_at': v['starts_in'],
           'duration': v['duration_in'],
+          'district': v['district_in'] ?? '',
           'description': v['description_in'],
           'status': 'open',
         });
@@ -339,11 +386,18 @@ class DemoCommunityRepository implements CommunityRepository {
           'request_id': request['id'],
           'helper_id': v['helper_in'],
         });
+        final conversationId = id();
         data['conversations']!.add({
-          'id': id(),
+          'id': conversationId,
           'kind': 'walk',
           'context_id': request['id'],
         });
+        for (final participant in [userId, v['helper_in']]) {
+          data['conversation_members']!.add({
+            'conversation_id': conversationId,
+            'user_id': participant,
+          });
+        }
         return aid;
       case 'advance_walk':
         final request = data['walk_requests']!.firstWhere(
@@ -359,6 +413,12 @@ class DemoCommunityRepository implements CommunityRepository {
         };
         if (transitions[request['status']] != next) {
           throw StateError('Переход недоступен');
+        }
+        if (next == 'in_progress') {
+          request['started_at'] = DateTime.now().toUtc().toIso8601String();
+        }
+        if (next == 'awaiting_confirmation') {
+          request['finished_at'] = DateTime.now().toUtc().toIso8601String();
         }
         request['status'] = next;
         break;
@@ -384,6 +444,73 @@ class DemoCommunityRepository implements CommunityRepository {
           'body': v['body_in'],
           'published': true,
           'created_at': DateTime.now().toUtc().toIso8601String(),
+        });
+        break;
+      case 'review_walk_owner':
+        final request = findRow(data, 'walk_requests', v['request_in']);
+        final agreement = rows(data, 'walk_agreements')
+            .where(
+              (a) =>
+                  a['request_id'] == v['request_in'] &&
+                  a['helper_id'] == userId,
+            )
+            .firstOrNull;
+        final rating = v['rating_in'];
+        final body = '${v['body_in'] ?? ''}'.trim();
+        if (request == null ||
+            request['status'] != 'completed' ||
+            request['owner_id'] == userId ||
+            agreement == null ||
+            rating is! int ||
+            rating < 1 ||
+            rating > 5 ||
+            body.length > 1000 ||
+            rows(
+              data,
+              'walk_owner_reviews',
+            ).any((r) => r['request_id'] == v['request_in'])) {
+          throw StateError('Отзыв недоступен');
+        }
+        (data['walk_owner_reviews'] ??= []).add({
+          'id': id(),
+          'request_id': request['id'],
+          'author_id': userId,
+          'owner_id': request['owner_id'],
+          'rating': rating,
+          'body': body,
+          'published': true,
+          'created_at': DateTime.now().toUtc().toIso8601String(),
+        });
+        break;
+      case 'reply_walk_owner_review':
+        final review = rows(data, 'walk_owner_reviews')
+            .where(
+              (r) =>
+                  r['id'] == v['review_in'] &&
+                  r['owner_id'] == userId &&
+                  r['published'] == true,
+            )
+            .firstOrNull;
+        final body = '${v['body_in'] ?? ''}'.trim();
+        final request = findRow(data, 'walk_requests', review?['request_id']);
+        final agreement = rows(data, 'walk_agreements')
+            .where(
+              (a) =>
+                  a['request_id'] == request?['id'] &&
+                  a['helper_id'] == review?['author_id'],
+            )
+            .firstOrNull;
+        if (review == null ||
+            request?['owner_id'] != userId ||
+            request?['status'] != 'completed' ||
+            agreement == null ||
+            body.isEmpty ||
+            body.length > 1000) {
+          throw StateError('Ответ недоступен');
+        }
+        review.addAll({
+          'owner_reply': body,
+          'replied_at': DateTime.now().toUtc().toIso8601String(),
         });
         break;
       case 'reply_walk_review':
@@ -519,7 +646,12 @@ class SupabaseCommunityRepository implements CommunityRepository {
         final copy = {...values};
         final existing = copy.remove('id');
         if (existing == null) {
-          await client.from('pets').insert({...copy, 'owner_id': userId});
+          final created = await client
+              .from('pets')
+              .insert({...copy, 'owner_id': userId})
+              .select('id')
+              .single();
+          return created['id'] as String;
         } else {
           await client
               .from('pets')
@@ -555,9 +687,17 @@ class SupabaseCommunityRepository implements CommunityRepository {
         return await client.rpc('open_direct', params: values) as String;
       default:
         final rpc = switch (action) {
-          'event' => 'create_event_at_zone',
+          'event' =>
+            values.containsKey('duration_in')
+                ? 'create_review60_event'
+                : values.containsKey('latitude_in')
+                ? 'create_event_at_location'
+                : 'create_event_at_zone',
           'group' => 'create_group',
-          'walk' => 'create_walk_at_zone',
+          'walk' =>
+            values.containsKey('district_in')
+                ? 'create_walk_request'
+                : 'create_walk_at_zone',
           _ => action,
         };
         final result = await client.rpc(rpc, params: values);

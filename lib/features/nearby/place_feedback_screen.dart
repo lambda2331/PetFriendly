@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui/components.dart';
@@ -29,22 +30,24 @@ class _FeedbackState extends ConsumerState<PlaceFeedbackScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: Text(
-        widget.correction ? 'Предложить исправление' : 'Отзыв о месте',
+        widget.correction
+            ? "Предложить исправление".tr(context)
+            : "Отзыв о месте".tr(context),
       ),
     ),
     body: PageBody(
       children: [
         ScreenIntro(
           widget.correction
-              ? 'Что стоит\nуточнить?'
-              : 'Поделитесь\nвпечатлением.',
+              ? "Что стоит\nуточнить?".tr(context)
+              : "Поделитесь\nвпечатлением.".tr(context),
           compact: true,
         ),
         const SizedBox(height: 20),
         if (!widget.correction) ...[
           DropdownButtonFormField<int>(
             initialValue: rating,
-            decoration: const InputDecoration(labelText: 'Оценка'),
+            decoration: InputDecoration(labelText: "Оценка".tr(context)),
             items: [1, 2, 3, 4, 5]
                 .map((i) => DropdownMenuItem(value: i, child: Text('$i ★')))
                 .toList(),
@@ -60,21 +63,22 @@ class _FeedbackState extends ConsumerState<PlaceFeedbackScreen> {
           maxLength: 1000,
           decoration: InputDecoration(
             labelText: widget.correction
-                ? 'Например, правила входа с собакой'
-                : 'Ваш отзыв',
+                ? "Например, правила входа с собакой".tr(context)
+                : "Ваш отзыв".tr(context),
           ),
         ),
         const SizedBox(height: 16),
         Text(
           widget.correction
-              ? 'Исправление будет проверено.'
-              : 'Комментарий будет публичным. Не указывайте личные сведения.',
+              ? "Исправление будет проверено.".tr(context)
+              : "Комментарий будет публичным. Не указывайте личные сведения."
+                    .tr(context),
         ),
         const SizedBox(height: 20),
         if (busy) ...[
           Semantics(
             liveRegion: true,
-            child: Text('Отправляем. Поля временно недоступны.'),
+            child: Text("Отправляем. Поля временно недоступны.".tr(context)),
           ),
           const SizedBox(height: 8),
           const LinearProgressIndicator(),
@@ -85,7 +89,7 @@ class _FeedbackState extends ConsumerState<PlaceFeedbackScreen> {
               ? null
               : () async {
                   if (widget.correction && input.text.trim().isEmpty) {
-                    notice(context, 'Опишите исправление');
+                    notice(context, "Опишите исправление".tr(context));
                     return;
                   }
                   setState(() => busy = true);
@@ -100,20 +104,23 @@ class _FeedbackState extends ConsumerState<PlaceFeedbackScreen> {
                     );
                     if (context.mounted) {
                       Navigator.pop(context);
-                      notice(context, 'Отправлено');
+                      notice(context, "Отправлено".tr(context));
                     }
                   } catch (_) {
                     if (context.mounted) {
                       notice(
                         context,
-                        'Не удалось отправить. Возможно, отзыв уже опубликован.',
+                        "Не удалось отправить. Возможно, отзыв уже опубликован."
+                            .tr(context),
                       );
                     }
                   } finally {
                     if (mounted) setState(() => busy = false);
                   }
                 },
-          child: Text(busy ? 'Отправляем…' : 'Отправить'),
+          child: Text(
+            busy ? "Отправляем…".tr(context) : "Отправить".tr(context),
+          ),
         ),
       ],
     ),

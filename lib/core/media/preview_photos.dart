@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:typed_data';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
@@ -176,7 +177,7 @@ class CommunityCover extends ConsumerWidget {
     final bytes =
         previewBytes ?? ref.watch(previewPhotosProvider)[id] ?? saved.value;
     final heading = Text(
-      title ?? 'Фото сообщества не добавлено',
+      title ?? "Фото сообщества не добавлено".tr(context),
       style: prominent
           ? Theme.of(context).textTheme.headlineSmall
           : Theme.of(context).textTheme.titleMedium,

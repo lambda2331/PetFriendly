@@ -62,8 +62,72 @@ ThemeData studioTheme(Brightness brightness) {
         onSecondaryContainer: ink,
         error: Color(dark ? 0xFFFFB4AB : 0xFFB3261E),
       );
+  final actionButtonStyle = ButtonStyle(
+    minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+    padding: const WidgetStatePropertyAll(
+      EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    ),
+    shape: const WidgetStatePropertyAll(StadiumBorder()),
+    textStyle: const WidgetStatePropertyAll(
+      TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        height: 1.4,
+      ),
+    ),
+    iconSize: const WidgetStatePropertyAll(20),
+    elevation: const WidgetStatePropertyAll(0),
+    surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+    overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+    visualDensity: VisualDensity.standard,
+    tapTargetSize: MaterialTapTargetSize.padded,
+    animationDuration: const Duration(milliseconds: 100),
+  );
+  final primaryButtonStyle = actionButtonStyle.copyWith(
+    foregroundColor: WidgetStateProperty.resolveWith(
+      (states) =>
+          states.contains(WidgetState.disabled) ? muted : StudioColors.onLime,
+    ),
+    backgroundColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) return colors.tint;
+      if (states.contains(WidgetState.pressed) ||
+          states.contains(WidgetState.hovered)) {
+        return const Color(0xFFCBE578);
+      }
+      return StudioColors.lime;
+    }),
+    side: WidgetStateProperty.resolveWith(
+      (states) =>
+          states.contains(WidgetState.focused) &&
+              !states.contains(WidgetState.disabled)
+          ? const BorderSide(color: StudioColors.onLime, width: 2)
+          : BorderSide.none,
+    ),
+  );
+  final secondaryButtonStyle = actionButtonStyle.copyWith(
+    foregroundColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.disabled) ? muted : ink,
+    ),
+    backgroundColor: WidgetStateProperty.resolveWith(
+      (states) =>
+          !states.contains(WidgetState.disabled) &&
+              (states.contains(WidgetState.pressed) ||
+                  states.contains(WidgetState.hovered))
+          ? colors.tint
+          : Colors.transparent,
+    ),
+    side: WidgetStateProperty.resolveWith(
+      (states) =>
+          states.contains(WidgetState.focused) &&
+              !states.contains(WidgetState.disabled)
+          ? BorderSide(color: ink, width: 2)
+          : BorderSide(color: colors.line),
+    ),
+  );
   return ThemeData(
     useMaterial3: true,
+    buttonTheme: const ButtonThemeData(alignedDropdown: true),
     brightness: brightness,
     scaffoldBackgroundColor: bg,
     colorScheme: scheme,
@@ -90,7 +154,7 @@ ThemeData studioTheme(Brightness brightness) {
         fontFamily: 'Manrope',
         fontSize: 18,
         height: 1.3,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         color: ink,
       ),
       headlineSmall: TextStyle(
@@ -104,17 +168,95 @@ ThemeData studioTheme(Brightness brightness) {
         fontFamily: 'Manrope',
         fontSize: 18,
         height: 1.3,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         color: ink,
       ),
-      bodyLarge: TextStyle(fontSize: 15, height: 1.5, color: ink),
-      bodyMedium: TextStyle(fontSize: 15, height: 1.5, color: ink),
-      bodySmall: TextStyle(fontSize: 12, height: 1.4, color: muted),
+      displayLarge: TextStyle(
+        fontFamily: 'Manrope',
+        fontSize: 48,
+        fontWeight: FontWeight.w700,
+        height: 1.15,
+        letterSpacing: -1.2,
+        color: ink,
+      ),
+      displayMedium: TextStyle(
+        fontFamily: 'Manrope',
+        fontSize: 40,
+        fontWeight: FontWeight.w700,
+        height: 1.2,
+        letterSpacing: -1,
+        color: ink,
+      ),
+      displaySmall: TextStyle(
+        fontFamily: 'Manrope',
+        fontSize: 36,
+        fontWeight: FontWeight.w700,
+        height: 1.2,
+        letterSpacing: -.9,
+        color: ink,
+      ),
+      titleSmall: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+        color: ink,
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        height: 1.4,
+        color: ink,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        height: 1.4,
+        color: ink,
+      ),
+      bodySmall: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        height: 1.45,
+        color: muted,
+      ),
+      labelLarge: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+        color: ink,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+        color: ink,
+      ),
+      labelSmall: TextStyle(
+        fontFamily: 'Golos Text',
+        fontSize: 11,
+        fontWeight: FontWeight.w500,
+        height: 1.4,
+        color: muted,
+      ),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: bg,
       foregroundColor: ink,
       surfaceTintColor: Colors.transparent,
+      titleTextStyle: TextStyle(
+        fontFamily: 'Manrope',
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        letterSpacing: -.5,
+        height: 1.35,
+        color: ink,
+      ),
     ),
     datePickerTheme: DatePickerThemeData(
       backgroundColor: surface,
@@ -194,37 +336,9 @@ ThemeData studioTheme(Brightness brightness) {
         ),
       ),
     ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: ink,
-        backgroundColor: colors.tint,
-        disabledBackgroundColor: colors.tint.withValues(alpha: .5),
-        minimumSize: const Size(48, 48),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        shape: const StadiumBorder(),
-        side: BorderSide.none,
-        textStyle: const TextStyle(
-          inherit: false,
-          fontFamily: 'Golos Text',
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    ),
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        minimumSize: const Size(48, 48),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-        shape: const StadiumBorder(),
-        elevation: 0,
-        textStyle: const TextStyle(
-          inherit: false,
-          fontFamily: 'Golos Text',
-          fontWeight: FontWeight.w600,
-          fontSize: 14,
-        ),
-      ),
-    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonStyle),
+    filledButtonTheme: FilledButtonThemeData(style: primaryButtonStyle),
+    elevatedButtonTheme: ElevatedButtonThemeData(style: primaryButtonStyle),
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(color: muted),
       floatingLabelStyle: TextStyle(color: muted),

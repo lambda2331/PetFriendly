@@ -1,0 +1,105 @@
+/* Component colors generated from design/tokens.json; map/card surface colors stay screen-owned. */
+:where(.phone,.places-page){--ds-background:#F9F9F6;--ds-surface:#FFFFFF;--ds-textPrimary:#20251E;--ds-textSecondary:#62695C;--ds-border:#E4E7DD;--ds-subtle:#EEF1E7;--ds-hero:#E7EDDA;--ds-accent:#D6ED8A;--ds-onAccent:#253314;--ds-error:#B3261E;--ds-sheet:#FFFFFF;}
+:where(.phone.dark,.places-page.dark){--ds-background:#141614;--ds-surface:#20231F;--ds-textPrimary:#F4F5EF;--ds-textSecondary:#BBC2B4;--ds-border:#41483C;--ds-subtle:#292F25;--ds-hero:#293121;--ds-accent:#D6ED8A;--ds-onAccent:#253314;--ds-error:#FFB4AB;--ds-sheet:#272C25;}
+/* Review 25 — role-based component alignment. Existing layouts and routes stay owned by their screens. */
+@font-face{font-family:Manrope;src:url('/assets/fonts/Manrope.ttf');font-weight:200 800;font-display:swap}
+@font-face{font-family:Golos;src:url('/assets/fonts/GolosText.ttf');font-weight:400 900;font-display:swap}
+:where(.phone,.places-page){--ds-body:16px;--ds-meta:14px;--ds-small:12px;--ds-action:16px;--ds-identity:18px;--ds-sheet-title:20px;--ds-screen-title:32px;font-family:Golos,sans-serif;font-size:var(--ds-body);line-height:1.4}
+:where(.phone.large,.places-page.large){--ds-body:32px;--ds-meta:28px;--ds-small:24px;--ds-action:32px;--ds-identity:36px;--ds-sheet-title:40px;--ds-screen-title:64px}
+:where(.phone,.places-page) :is(button,input,textarea,select,label){font-family:Golos,sans-serif}
+:where(.phone,.places-page) :is(h1,h2,h3,h4,.wordmark){font-family:Manrope,sans-serif}
+/* Identity and metadata are explicit roles, rather than inherited fractions of a button's font. */
+:is(.phone,.places-page) .name,:is(.phone,.places-page) .context-summary strong,:is(.phone,.places-page) .candidate-option .name{font:700 var(--ds-identity)/1.35 Manrope,sans-serif!important}
+:is(.phone,.places-page) .meta,:is(.phone,.places-page) .context-summary .meta{font:400 var(--ds-meta)/1.45 Golos,sans-serif!important}
+:is(.phone,.places-page) :is(.hint,.field-message,.field-error,.provider-note,.photo-label){font:500 var(--ds-small)/1.4 Golos,sans-serif!important}
+:is(.phone,.places-page) :is(.sheet-head,.full-head,.places-header) h2{font:700 var(--ds-sheet-title)/1.35 Manrope,sans-serif!important;overflow-wrap:anywhere}
+:is(.phone,.places-page) :is(.screen-title,.phone-heading){font:700 var(--ds-screen-title)/1.12 Manrope,sans-serif!important}
+/* Nearby's approved greeting and existing hero headings retain their authored scale. */
+:is(.phone,.places-page) :is(.primary,.outline){font:600 var(--ds-action)/1.4 Golos,sans-serif!important;min-height:48px;white-space:normal}
+:is(.phone,.places-page) .primary{background:var(--ds-accent);color:var(--ds-onAccent);border:1px solid transparent}
+:is(.phone,.places-page) .outline{background:var(--ds-background);color:var(--ds-textPrimary);border:1px solid var(--ds-border)}
+:is(.phone,.places-page) :is(.subtle-button,.filter-reset){font:600 var(--ds-meta)/1.4 Golos,sans-serif!important;min-height:48px}
+:is(.phone,.places-page) .list-control{font:600 var(--ds-action)/1.4 Golos,sans-serif!important;min-height:48px}
+:is(.phone,.places-page) .icon-button{width:48px;min-width:48px;height:48px;min-height:48px;flex-shrink:0}
+:is(.phone,.places-page) .icon-button>.icon{width:20px;height:20px}
+:is(.phone,.places-page) :is(.action-pair,.application-actions,.place-actions,.row-actions){gap:12px}
+:is(.phone,.places-page) :is(.action-pair,.application-actions,.place-actions,.row-actions)>:is(.primary,.outline){flex:1;min-width:0;padding:12px 8px;margin-top:0}
+/* A search's wrapper is the field boundary and hit target; it keeps the existing inline icon layout. */
+:is(.phone,.places-page) .search{min-height:48px;border:1px solid var(--ds-border)}
+:is(.phone,.places-page) .search input{font:400 var(--ds-body)/1.4 Golos,sans-serif!important;outline:none;box-shadow:none;border:0;background:transparent}
+:is(.phone,.places-page) .search:focus-within{outline:none;border-color:var(--ds-textPrimary)}
+:is(.phone,.places-page) .field{font:400 var(--ds-body)/1.4 Golos,sans-serif!important}
+:is(.phone,.places-page) .field :is(input:not([type=checkbox]):not([type=radio]):not([type=file]),textarea,select){font:400 var(--ds-body)/1.4 Golos,sans-serif!important;min-height:48px;padding:12px;background:var(--ds-subtle);border:1px solid var(--ds-border);outline:none;box-shadow:none}
+:is(.phone,.places-page) .field :is(input,textarea,select):focus{border-width:1px!important;border-color:var(--ds-textPrimary);outline:none;box-shadow:none}
+:is(.phone,.places-page) .field :is(input,textarea,select)[aria-invalid=true],:is(.phone,.places-page) .field.invalid :is(input,textarea,select){border-color:var(--ds-error,#b3261e)!important}
+:is(.phone,.places-page) :is(.city-select,.helper-select,.time-trigger,.category-select){font:400 var(--ds-body)/1.4 Golos,sans-serif!important;min-height:48px}
+:is(.phone,.places-page) :is(.filter-menu,.helper-menu) button{font:400 var(--ds-body)/1.4 Golos,sans-serif!important;background:transparent;white-space:normal;min-height:48px}
+:is(.phone,.places-page) :is(.filter-menu,.helper-menu) button:is([aria-checked=true],[aria-selected=true]){background:transparent;font-weight:600}
+:is(.phone,.places-page) :is(.filter-menu,.helper-menu) button:hover{background:var(--ds-subtle)}
+:is(.phone,.places-page) :is(.record-type,.status-chip,.agreement-state){font:400 var(--ds-meta)/1.4 Golos,sans-serif!important;min-height:32px;padding:6px 10px;border-radius:8px}
+:is(.phone,.places-page) .record-type{background:transparent;color:var(--ds-textPrimary)}
+:is(.phone,.places-page) :is(.status-chip,.agreement-state){background:var(--ds-subtle);color:var(--ds-textSecondary)}
+:is(.phone,.places-page) .bubble{font:400 var(--ds-body)/1.45 Golos,sans-serif!important}
+:is(.phone,.places-page) .bubble strong{font:600 var(--ds-meta)/1.4 Golos,sans-serif!important}
+:is(.phone,.places-page) .bubble :is(.stamp,small){font:400 var(--ds-small)/1.4 Golos,sans-serif!important}
+:is(.phone.large,.places-page.large) :is(.action-pair,.application-actions,.place-actions,.row-actions){flex-direction:column;align-items:stretch}
+:is(.phone.large,.places-page.large) :is(.action-pair,.application-actions,.place-actions,.row-actions)>button{width:100%}
+:is(.phone.large,.places-page.large) :is(.record-type,.status-chip,.agreement-state){white-space:normal;overflow-wrap:anywhere}
+:is(.phone.large,.places-page.large) :is(.primary,.outline){min-height:56px}
+
+/* The same identities and control labels also appear in compact catalog/chat rows. */
+:is(.phone,.places-page) .place-row strong{font:700 var(--ds-identity)/1.35 Manrope,sans-serif!important}
+:is(.phone,.places-page) h3:not(.meeting-title):not(.place-heading),:is(.phone,.places-page) .section-heading{font:700 var(--ds-identity)/1.35 Manrope,sans-serif!important}
+:is(.phone,.places-page) .content>h2{font:700 var(--ds-screen-title)/1.12 Manrope,sans-serif!important}
+:is(.phone,.places-page) :is(.tabs,.role-tabs) button{font:400 var(--ds-body)/1.4 Golos,sans-serif!important}
+:is(.phone,.places-page) :is(.tabs,.role-tabs) button[aria-selected=true]{font-weight:600!important}
+:is(.phone,.places-page) :is(.tabs,.role-tabs){min-width:0;max-width:100%;overflow-x:auto}
+:is(.phone,.places-page) :is(.photo-import,.photo-remove,.community-photo-remove){min-height:48px}
+:is(.phone,.places-page) .calendar-grid{gap:4px}
+:is(.phone,.places-page) .calendar-grid button{font:400 var(--ds-body)/1.4 Golos,sans-serif!important;min-width:44px;min-height:48px}
+:is(.phone,.places-page) .calendar-grid button[aria-pressed=true]{font-weight:600!important}
+:is(.phone,.places-page) .pill-row{gap:4px}
+:is(.phone,.places-page) .pill-row button{font:400 var(--ds-body)/1.4 Golos,sans-serif!important;min-width:44px;min-height:48px}
+:is(.phone,.places-page) .pill-row button[aria-pressed=true]{font-weight:600!important}
+:is(.phone,.places-page) .radio{position:relative;width:24px;height:24px;border:1.5px solid var(--ds-textSecondary);background:var(--ds-background);margin-top:0}
+:is(.phone,.places-page) .role-card[aria-checked=true] .radio{border:1.5px solid var(--ds-onAccent);background:var(--ds-accent)}
+:is(.phone,.places-page) .role-card[aria-checked=true] .radio::after{content:'';position:absolute;top:50%;left:50%;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);background:var(--ds-onAccent)}
+/* Keep the approved 48 × 28 toggle track inside a full-height button target. */
+:is(.phone,.places-page) .switch{position:relative;width:48px;height:48px;min-height:48px;background:transparent!important}
+:is(.phone,.places-page) .switch::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:48px;height:28px;border-radius:20px;background:var(--ds-border)}
+:is(.phone,.places-page) .switch[aria-checked=true]::before{background:var(--ds-accent)}
+:is(.phone,.places-page) .switch span{position:relative;z-index:1}
+:is(.phone.large,.places-page.large) :is(.sheet-body,.full-body){font-size:var(--ds-body)}
+:is(.phone.large,.places-page.large) :is(.primary,.outline){font-size:var(--ds-action)!important}
+
+:is(.phone,.places-page) .meta{color:var(--ds-textSecondary)}
+:is(.phone,.places-page) :is(.application-toast,.place-status-toast,.notice-live,.toast){background:var(--ds-accent);color:var(--ds-onAccent);border-color:transparent;font:500 var(--ds-meta)/1.4 Golos,sans-serif!important}
+:is(.phone,.places-page) .outline[aria-pressed=true]{background:var(--ds-accent);color:var(--ds-onAccent)}
+:is(.phone,.places-page) .current-filter-option input{border-color:var(--ds-textSecondary)}
+:is(.phone,.places-page) :is(.current-filter-option input,.check-option input[type=checkbox]):checked{background:var(--ds-accent);border-color:var(--ds-onAccent)}
+:is(.phone,.places-page) :is(.current-filter-option input,.check-option input[type=checkbox]):checked::after{background:var(--ds-onAccent)}
+:is(.phone,.places-page) :is(.place-star-choices button.selected,.rating-choices button.active,.calendar-grid button[aria-pressed=true],.pill-row button[aria-pressed=true]){background:var(--ds-accent);color:var(--ds-onAccent)}
+
+:is(.phone,.places-page) :is(.primary,.outline){border-radius:999px}
+/* Legacy community forms use bare labels and an inline field color; match the same field contract. */
+:is(.phone,.places-page) .create-name,:is(.phone,.places-page) .sheet-body form label>textarea,:is(.phone,.places-page) .composer textarea{font:400 var(--ds-body)/1.4 Golos,sans-serif!important;min-height:48px;background:var(--ds-subtle)!important;border:1px solid var(--ds-border);border-color:var(--ds-border)!important;outline:none;box-shadow:none}
+:is(.phone,.places-page) .create-name:focus,:is(.phone,.places-page) .sheet-body form label>textarea:focus,:is(.phone,.places-page) .composer textarea:focus{border-color:var(--ds-textPrimary)!important;outline:none}
+:is(.phone,.places-page) .create-name[aria-invalid=true],:is(.phone,.places-page) .sheet-body form label>textarea[aria-invalid=true],:is(.phone,.places-page) .composer textarea[aria-invalid=true]{border-color:var(--ds-error)!important}
+:is(.phone,.places-page) .calendar-time input{font-size:18px!important}
+:is(.phone.large,.places-page.large) .calendar-time input{font-size:36px!important}
+/* Select triggers and numeric time fields use the same single-boundary focus treatment. */
+:is(.phone,.places-page) :is(.city-select,.helper-select,.time-trigger,.category-select){background:var(--ds-subtle);border:1px solid var(--ds-border)}
+:is(.phone,.places-page) :is(.city-select,.helper-select,.time-trigger,.category-select):focus-visible{outline:none;box-shadow:none;border-color:var(--ds-textPrimary)}
+:is(.phone,.places-page) .time-input-pair input{background:var(--ds-subtle);color:var(--ds-textPrimary);border-color:var(--ds-border)}
+:is(.phone,.places-page) :is(.time-input-pair,.calendar-time) input:focus{outline:none;box-shadow:none;border-width:1px;border-color:var(--ds-textPrimary)}
+:is(.phone,.places-page) :is(.city-select,.helper-select,.time-trigger,.category-select):focus-visible{border-width:1px!important}
+
+:is(.phone,.places-page) :is(.participant,.identity-copy) strong{font:700 var(--ds-identity)/1.35 Manrope,sans-serif!important}
+:is(.phone.large,.places-page.large){font-size:var(--ds-body)}
+
+/* Shared five-target rating and primary place-map action. */
+:is(.phone,.places-page) .rating-choices button{background:var(--ds-subtle);color:var(--ds-textSecondary)}
+:is(.phone,.places-page) .rating-choices button.active{background:var(--ds-accent);color:var(--ds-onAccent)}
+:is(.phone,.places-page) .map-action{background:var(--ds-accent);color:var(--ds-onAccent);border-color:transparent}
+
+:is(.phone,.places-page) .optional-hint{display:block;color:var(--ds-textSecondary);font:400 var(--ds-meta)/1.4 Golos,sans-serif;margin:0 0 6px}

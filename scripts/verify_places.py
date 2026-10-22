@@ -62,7 +62,7 @@ try:
  check(rpc('review_place_submission',{'submission_in':sid,'approve_in':True},m2)==(200,pid),'moderation retry is idempotent')
  _,public=call('/rest/v1/places?id=eq.'+pid)
  check(len(public)==1 and public[0]['pet_access']=='unknown' and 'author_id' not in public[0],'published venue preserves unknown access and hides author')
- code,export=rpc('export_my_data',{},a);check(code==200 and export['place_submissions'][0]['id']==sid,'account export includes own submissions')
+ code,export=rpc('export_my_data',{},a);check(code==200 and sum(row['id']==sid for row in export['place_submissions'])==1,'account export includes own submission exactly once regardless of order')
  check(rpc('revoke_my_sessions',{},a)[0]==204,'owner revokes sessions')
  _,own=call('/rest/v1/place_submissions?id=eq.'+sid,token=a);check(own==[],'revoked JWT cannot read submission')
 finally:

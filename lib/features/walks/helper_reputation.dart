@@ -1,3 +1,5 @@
+import '../../l10n/localization.dart';
+import 'package:intl/intl.dart';
 import '../community/data/community_repository.dart';
 
 /// Production values come exclusively from helper_stats; demo uses fixture data.
@@ -44,14 +46,16 @@ class HelperReputation {
       completed,
     );
   }
-  String get reviewLabel => reviewCount == null
-      ? 'Отзывы сейчас недоступны'
+  String get reviewLabel => localizedReviewLabel('ru');
+  String get completedLabel => localizedCompletedLabel('ru');
+  String localizedReviewLabel(String locale) => reviewCount == null
+      ? translateForLanguage('Отзывы сейчас недоступны', locale: locale)
       : rating == null
-      ? 'Пока нет отзывов'
-      : '★ ${rating!.toStringAsFixed(1).replaceAll('.', ',')} · $reviewCount отзывов';
-  String get completedLabel => completed == null
-      ? 'Опыт сейчас недоступен'
-      : '$completed завершённых выгулов';
+      ? translateForLanguage('Пока нет отзывов', locale: locale)
+      : '★ ${NumberFormat('0.0', locale).format(rating)} · ${stringsFor(locale).reviewCount(reviewCount!)}';
+  String localizedCompletedLabel(String locale) => completed == null
+      ? translateForLanguage('Опыт сейчас недоступен', locale: locale)
+      : stringsFor(locale).completedWalkCount(completed!);
 }
 
 bool isMyActiveWalk(CommunityData data, Json request, String? uid) =>

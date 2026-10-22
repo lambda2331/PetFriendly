@@ -1,11 +1,19 @@
+import '../../l10n/localization.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../location/city_directory.dart';
-import 'package:timezone/data/latest.dart' as data;
+// GeoNames includes IANA links such as Africa/Kinshasa. The default trimmed
+// database omits these valid identifiers and blocks scheduling in those cities.
+import 'package:timezone/data/latest_all.dart' as data;
 import 'package:timezone/timezone.dart' as tz;
 
 bool _ready = false;
 void _initialize() {
-  if (_ready) return;
+  if (_ready) {
+    return;
+  }
   data.initializeTimeZones();
+  initializeDateFormatting();
   _ready = true;
 }
 
@@ -87,7 +95,9 @@ String? cityTimeZone(String? city) => city == null
               : null);
 
 bool validTimeZone(String? zone) {
-  if (zone == null || zone.isEmpty) return false;
+  if (zone == null || zone.isEmpty) {
+    return false;
+  }
   _initialize();
   return tz.timeZoneDatabase.locations.containsKey(zone);
 }
@@ -145,24 +155,12 @@ DateTime venueWallTimeToUtc(DateTime wall, String zone) {
 String _clock(DateTime date) =>
     '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
 
-String _date(DateTime date) =>
-    '${date.day} ${_months[date.month - 1]} ${date.year}';
-const _months = [
-  'января',
-  'февраля',
-  'марта',
-  'апреля',
-  'мая',
-  'июня',
-  'июля',
-  'августа',
-  'сентября',
-  'октября',
-  'ноября',
-  'декабря',
-];
+String _date(DateTime date, String locale) {
+  _initialize();
+  return DateFormat.yMMMMd(locale).format(date);
+}
 
-String timeZoneLabel(String zone, {DateTime? at}) {
+String timeZoneLabel(String zone, {DateTime? at, String locale = 'ru'}) {
   final date = venueDateTime(at ?? DateTime.now(), zone);
   final minutes = date.timeZoneOffset.inMinutes;
   final hours = minutes.abs() ~/ 60;
@@ -178,36 +176,54 @@ String timeZoneLabel(String zone, {DateTime? at}) {
     'Europe/Kyiv' => 'Киев',
     _ => zone.split('/').last.replaceAll('_', ' '),
   };
-  return '$place · $offset';
+  return '${translateForLanguage(place, locale: locale)} · $offset';
 }
 
-String venueTime(dynamic value, {String? city, String? timeZone}) {
+String venueTime(
+  dynamic value, {
+  String? city,
+  String? timeZone,
+  String locale = 'ru',
+}) {
   final parsed = DateTime.tryParse('$value');
-  if (parsed == null) return 'Время не задано';
+  if (parsed == null) {
+    return translateForLanguage('Время не задано', locale: locale);
+  }
   final zone = timeZone ?? cityTimeZone(city);
   if (!validTimeZone(zone)) {
-    return '${_date(parsed.toUtc())} · ${_clock(parsed.toUtc())} UTC · часовой пояс места не указан';
+    return translateForLanguage(
+      '{p0} · {p1} UTC · часовой пояс места не указан',
+      locale: locale,
+      arguments: {
+        'p0': _date(parsed.toUtc(), locale),
+        'p1': _clock(parsed.toUtc()),
+      },
+    );
   }
   final date = venueDateTime(parsed, zone!);
-  return '${_date(date)} · ${_clock(date)} · ${timeZoneLabel(zone, at: parsed)}';
+  return '${_date(date, locale)} · ${_clock(date)} · ${timeZoneLabel(zone, at: parsed, locale: locale)}';
 }
 
-String readableLocalDateTime(dynamic value) {
+String readableLocalDateTime(dynamic value, {String locale = 'ru'}) {
   final parsed = DateTime.tryParse('$value')?.toLocal();
   return parsed == null
-      ? 'Дата не указана'
-      : '${_date(parsed)} · ${_clock(parsed)}';
+      ? translateForLanguage('Дата не указана', locale: locale)
+      : '${_date(parsed, locale)} · ${_clock(parsed)}';
 }
 
-String readableDate(dynamic value) {
+String readableDate(dynamic value, {String locale = 'ru'}) {
   final parsed = DateTime.tryParse('$value')?.toLocal();
-  return parsed == null ? 'Дата не указана' : _date(parsed);
+  return parsed == null
+      ? translateForLanguage('Дата не указана', locale: locale)
+      : _date(parsed, locale);
 }
 
 /// Compact local-time labels for the inbox. Threads retain full timestamps.
-String compactChatTime(dynamic value, {DateTime? now}) {
+String compactChatTime(dynamic value, {DateTime? now, String locale = 'ru'}) {
   final parsed = value is DateTime ? value : DateTime.tryParse('$value');
-  if (parsed == null) return '';
+  if (parsed == null) {
+    return '';
+  }
   final date = parsed.toLocal();
   final today = (now ?? DateTime.now()).toLocal();
   if (date.year == today.year &&
@@ -215,19 +231,12 @@ String compactChatTime(dynamic value, {DateTime? now}) {
       date.day == today.day) {
     return _clock(date);
   }
-  const months = [
-    'янв.',
-    'фев.',
-    'мар.',
-    'апр.',
-    'мая',
-    'июн.',
-    'июл.',
-    'авг.',
-    'сен.',
-    'окт.',
-    'ноя.',
-    'дек.',
-  ];
-  return '${date.day} ${months[date.month - 1]}${date.year == today.year ? '' : ' ${date.year}'}';
+  _initialize();
+  if (locale == 'ru' || locale == 'be') {
+    return '${DateFormat.MMMd(locale).format(date)}${date.year == today.year ? '' : ' ${date.year}'}';
+  }
+  return (date.year == today.year
+          ? DateFormat.MMMd(locale)
+          : DateFormat.yMMMd(locale))
+      .format(date);
 }

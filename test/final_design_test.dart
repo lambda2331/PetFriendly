@@ -21,22 +21,22 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(
-      find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('Выгул'),
-      ),
+    await tester.tap(find.byKey(const ValueKey('nav-2')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Попросить о выгуле'));
+    await tester.pumpAndSettle();
+    final field = find.byKey(const ValueKey('walking-date-trigger'));
+    await tester.scrollUntilVisible(
+      field,
+      200,
+      scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Попросить о выгуле'));
+    await tester.tap(field);
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Дата и время в месте прогулки'));
-    await tester.tap(find.text('Дата и время в месте прогулки'));
-    await tester.pumpAndSettle();
-    final ctx = tester.element(find.byType(DatePickerDialog));
+    final ctx = tester.element(find.byType(CalendarDatePicker));
     expect(MaterialLocalizations.of(ctx).firstDayOfWeekIndex, 1);
-    expect(find.text('Дата прогулки'), findsOneWidget);
-    expect(find.text('Выбрать'), findsOneWidget);
+    expect(find.text('Готово'), findsOneWidget);
     expect(find.text('Select date'), findsNothing);
     expect(tester.takeException(), isNull);
   });

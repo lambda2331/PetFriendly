@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "a1c02095ba9bebfb8fb86204722e3475985ae50d51f11b63a5b161b5a7e35352"
+    },
+    {
+      "path": "catalog.css",
+      "sha256": "8432a78c89a32f6c23e523a1c71d1f3a9154b7f9465522e2ad02aba33d25a2c6"
+    },
+    {
+      "path": "catalog.js",
+      "sha256": "94da6f8176b0a735c620d5796ace75baa9b2b0900eb0c93ee4deb33cd972c598"
+    },
+    {
+      "path": "components.json",
+      "sha256": "90ac27e84ee85b2f43f6e2dc0b891a5127c7c80ef3b3c0e0ae377b429b070e8d"
+    },
+    {
+      "path": "instructions.md",
+      "sha256": "13a2199187ff0558707ebbd2c979b1141bfb0efc339b641b5b799a0f40d8bbfc"
+    }
+  ]
+}
