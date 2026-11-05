@@ -28,12 +28,14 @@ Walking help proceeds through request, offers, assignment and completion. Review
 
 ## Interactive evidence
 
-The English HTML study offers five tabs, theme switching, place details and favorites, people/community search, local message composition and simulated walking actions. It labels fictional data and distinguishes simulation from real service behavior. Keyboard focus, dialog dismissal and reduced motion are part of the interaction work.
+The English demo compiles the current Flutter screens, repositories and scenario logic. A thin HTML host frames the app without recreating its UI. A reviewed build catalog provides English text; a literal scanner preserves nested Dart interpolation, and missing translations fail the build.
 
-The browser adaptation follows current Flutter screen structure, including the separate places list and compact profile. It shows the unavailable-map fallback. Native authentication, maps, private media and service behavior remain separate; this is not a Flutter web build.
+The user chose a mocked map. The Flutter map adapter supports pan/zoom, category markers, fullscreen, simulated position and selecting a point for a new place. Place details, favorites, reviews and list navigation use the existing app widgets. People/community search, meetups, chat composition, walking requests and profile/pet editing also use the shared implementation.
+
+All demo data is fictional and stays in memory except theme, manual city and favorite preferences. Portfolio mode disconnects live account, backend, catalog and Firebase services. The demonstration exercises interaction and state logic, not production delivery or security guarantees.
 
 ## Outcome and next steps
 
 The deliverable is an inspectable design system, interactive study and native/backend source. Adoption, conversion, research findings and production readiness have not been established.
 
-Next steps: test the discovery-to-conversation journey with pet owners, validate pet-access terminology, compare the study against the native app and complete release checks for live services. The native UI remains primarily Russian; full English localization is separate from this portfolio adaptation.
+Next steps: test the discovery-to-conversation journey with pet owners, validate pet-access terminology, compare the study against the native app and complete release checks for live services. Native builds keep their existing default language; the portfolio is a reproducible English compile-time adaptation, not a runtime language switch.

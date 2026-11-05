@@ -1,3 +1,4 @@
+import 'portfolio_map.dart';
 import 'dart:async';
 import 'package:go_router/go_router.dart';
 import '../../core/backend/backend.dart';
@@ -44,7 +45,10 @@ class FullscreenMapScreen extends ConsumerStatefulWidget {
   final Future<void> Function()? onList;
   final Future<void> Function(CameraState?)? onExpand;
   @override
-  ConsumerState<FullscreenMapScreen> createState() => _FullscreenMapState();
+  // Select the offline adapter before native map lifecycle subscriptions start.
+  ConsumerState<FullscreenMapScreen> createState() =>
+      // ignore: no_logic_in_create_state
+      AppConfig.portfolio ? PortfolioMapState() : _FullscreenMapState();
 }
 
 class _FullscreenMapState extends ConsumerState<FullscreenMapScreen>

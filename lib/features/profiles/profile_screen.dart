@@ -443,7 +443,9 @@ class SettingsScreen extends ConsumerWidget {
               applicationVersion: '0.1',
               children: [
                 const SelectableText(
-                  'Каталог: © OpenStreetMap contributors · ODbL\nhttps://www.openstreetmap.org/copyright\n\nДопуск питомцев уточняется по данным сообщества.',
+                  AppConfig.portfolio
+                      ? 'Portfolio demo: the map and places are fictional. No live map tiles, location tracking or backend services are connected. The native application uses Mapbox and an attributed OpenStreetMap catalog.'
+                      : 'Каталог: © OpenStreetMap contributors · ODbL\nhttps://www.openstreetmap.org/copyright\n\nДопуск питомцев уточняется по данным сообщества.',
                 ),
               ],
             ),

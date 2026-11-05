@@ -1,25 +1,35 @@
-# Portfolio surface brief
+# PetFriendly portfolio surface brief
 
-Mode: Experience, supported by Read.
+Mode: Experience for the app demonstration, supported by Read for the case study.
 
-Audience: reviewers assessing Design Engineering capability. User confirmed a balance of design and implementation.
+## Confirmed direction
 
-Direction: extend the established Studio world. Artifact-first split introduction, a working embedded prototype, three scenario links, paired decision/evidence sections, an architecture strip and explicit implementation limits. Preserve the current native design language rather than introducing a new identity.
+The user is preparing an English Design Engineer portfolio with equal emphasis on design and implementation. The user explicitly requires the web demo to match current application screens and main scenarios, and chose a mocked map. The former HTML recreation has been removed.
 
-Visual sources: AGENTS.md, design/tokens.json, docs/DESIGN.md, design/prototype.fragment.html. Fonts: local Manrope and Golos Text. Colors: canvas #F9F9F6, ink #20251E, muted #62695C, lime #D6ED8A, on-lime #253314, tint #EEF1E7. Wide grid with generous spacing, responsive single-column content, filled rounded actions.
+## Implementation authority
 
-Interaction contract: try the design without sign-in; tabs and themes respond; details trap focus and dismiss; favorites persist; search changes visible people; messages remain in memory; walking actions give labeled demo feedback; reset clears only prototype state. English reviewer-facing copy throughout.
+Product UI comes from canonical `lib/` Flutter screens, theme, routes and repositories. `scripts/build-web-demo.py` applies a reviewed English literal catalog in an ignored build tree and compiles the same implementation. Unknown copy fails the build. There is no maintained second product UI.
 
-Evidence boundaries: the HTML study follows current Flutter main-screen layout but does not implement native services, native UI primarily Russian, research and business outcomes unverified. Do not invent contributor history or validation.
+The static case study keeps its established Studio identity: local Manrope and Golos Text, #F9F9F6 canvas, #20251E ink, #62695C muted text and restrained #D6ED8A actions. The artifact-first split introduction, scenario links, paired decisions/evidence and implementation/status sections are retained. It collapses to one column on mobile. The thin demo host frames Flutter at a mobile width; it owns no product state.
 
-## Shipped extension evidence
+## Demo boundary
 
-The portfolio extends Studio; `docs/DESIGN.md`, `design/tokens.json` and the incumbent design sidecar remain unchanged. Source evidence is `portfolio/assets/site.css`, `portfolio/assets/prototype.css` and `portfolio/assets/prototype.js`, checked against `lib/core/theme/studio_theme.dart:32–259` and the current screen refinements in `docs/DESIGN.md`.
+The portfolio flag selects seeded in-memory data, an interactive Flutter mock map and English Material localization; it isolates live backend, Firebase, catalog and location services. The native app-switcher privacy cover is retained for normal builds and omitted for the embedded fictional demo, which must remain visible when focus moves to the case study.
 
-- Palette and type: the case study reuses the light Studio palette and bundled Manrope/Golos Text. Its editorial display grows from 44 to 72 px, with 16 px body text; the embedded app retains 32 px screen headings, 18 px card titles and 15 px body text. Its light/dark/system colors follow the current native theme for canvas, text, borders, tint and lime.
-- Layout and shape: the case-study container caps at 1200 px, changes at 1000 px and stacks at 760 px. The app frame caps at 402 px, uses 24 px content insets and contracts insets to 18 px below 370 px. App cards use 24 px corners, sheets 28 px upper corners and capsule actions with 48 px targets. The surrounding editorial page uses 14 px action corners and a restrained frame shadow; these are portfolio treatments, not new native rules.
-- Motion: the app body enters in 180 ms, theme colors transition in 220 ms and sheets enter in 250 ms. Reduced-motion CSS removes animation and transitions; the case study also disables smooth scrolling. The browser does not reproduce every native motion or haptic behavior.
-- Behavior: five main tabs, theme choice, manual city, people search, place favorites, in-memory chats and labeled demo actions are implemented. Sheets make background regions inert, trap Tab, dismiss with Escape and restore focus using the triggering action/ID when rendering replaces the original element. Community rows carry stable IDs. Directional icons render as SVG.
-- Preview limits: no live map or native service connection, full native-flow parity, production security verification or research outcomes are implied. The browser additionally persists the selected tab alongside theme, city and favorite IDs; this is portfolio navigation behavior, not a change to native persistence scope.
+Map geometry is explicitly synthetic. Pan/zoom, category markers, fullscreen, simulated position and new-place point selection work locally. Place sheets, favorites, reviews, list filters, people/community search, meetups, chats, walking requests/agreements and profile/pet forms use the shared application implementation.
 
-Pre-existing documentation drift is not canonized: the early `docs/DESIGN.md` table still names older dark muted/border colors and rectangular controls, while its later refinements, `design/tokens.json` and the current Flutter theme establish updated contrast colors and capsules. The browser also uses the dark surface color for sheets rather than the native dark sheet token. Preserve these distinctions when extending the portfolio; baseline reconciliation and native parity are outside this pass.
+Only theme, city and favorite IDs persist. All other public demo changes remain in memory. No live delivery, authentication, moderation, safety guarantee, research result or production-readiness claim is invented.
+
+## Verification
+
+Native analysis and widget/unit tests protect the default application. Focused portfolio-map tests verify zoom, simulated position and English number formatting. Python scanner tests cover nested interpolation, comments, escaping and fail-closed translation coverage. The release web artifact is checked through browser scenarios at desktop and phone widths. The native baseline and design sidecar remain unchanged.
+
+## Extension evidence
+
+`portfolio/assets/site.css` retains the Studio palette and bundled fonts: Manrope display (44–72 px), Golos Text body (16 px), a 1200 px maximum container, layout adjustments at 1000 px and single-column composition at 760 px. Editorial actions use 14 px corners and a 180 ms color transition; reduced-motion CSS removes transitions and smooth scrolling. These case-study treatments do not redefine native components.
+
+The embedded product inherits canonical `studioTheme` typography, semantic light/dark surfaces, capsule controls and 28 px sheet corners. `PetFriendlyApp` retains the shared 220 ms theme transition and its accessibility disable-animation branch. `portfolio_map.dart` uses theme colors for controls, a 24 px embedded clip and fullscreen-only zoom/position controls. Its labeled synthetic geometry is a portfolio adapter, not an OSM map or location service.
+
+`scripts/build-web-demo.py` translates copied Dart literals through `tooling/portfolio/en.json`, fails on unknown copy and compiles with `PORTFOLIO_DEMO`; `demo-host.js` supplies routes and restart only. Restart reloads in-memory demo activity while retaining preferences. Previous HTML-specific focus, persistence and sheet-color observations no longer describe this Flutter artifact. Review captures are under `.impeccable/review/flutter-web/`.
+
+Pre-existing baseline drift remains unmodified: the early `docs/DESIGN.md` table retains older dark muted/border colors and control radii, while later refinements, `design/tokens.json` and the current Flutter theme establish updated contrast colors and capsules. This extension records the shared implementation; it does not certify complete native parity, browser assistive-technology behavior or production services.

@@ -180,6 +180,7 @@ final cityCatalogProvider = FutureProvider.family<List<Place>, String>((
 ) async {
   final client = ref.watch(backendProvider);
   ref.watch(authStateProvider);
+  if (AppConfig.portfolio) return ref.watch(placesProvider).all();
   if (client == null) {
     final bundled = ref
         .watch(placesProvider)

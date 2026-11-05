@@ -50,6 +50,8 @@ class DemoPlaceRepository implements PlaceRepository {
       'Тихие дорожки, много тени и место для долгой прогулки. Встречаемся у главного входа.',
       'Допуск питомцев не уточнён',
       Icons.park_outlined,
+      latitude: 53.9104,
+      longitude: 27.5542,
     ),
     Place(
       'cafe',
@@ -61,6 +63,8 @@ class DemoPlaceRepository implements PlaceRepository {
       'Небольшое кафе с уютным двориком и мисками с водой. Хорошее место, чтобы познакомиться после прогулки.',
       'Можно с собаками · демо',
       Icons.local_cafe_outlined,
+      latitude: 53.9068,
+      longitude: 27.5625,
     ),
     Place(
       'play',
@@ -72,6 +76,8 @@ class DemoPlaceRepository implements PlaceRepository {
       'Огороженная площадка для игр. Подойдёт для знакомства активных собак.',
       'Для собак · демо',
       Icons.pets_outlined,
+      latitude: 53.9021,
+      longitude: 27.5491,
     ),
   ];
   @override

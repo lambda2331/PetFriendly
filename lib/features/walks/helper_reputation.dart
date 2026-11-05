@@ -1,3 +1,4 @@
+import '../../core/display_numbers.dart';
 import '../community/data/community_repository.dart';
 
 /// Production values come exclusively from helper_stats; demo uses fixture data.
@@ -48,7 +49,7 @@ class HelperReputation {
       ? 'Отзывы сейчас недоступны'
       : rating == null
       ? 'Пока нет отзывов'
-      : '★ ${rating!.toStringAsFixed(1).replaceAll('.', ',')} · $reviewCount отзывов';
+      : '★ ${displayDecimal(rating!)} · $reviewCount отзывов';
   String get completedLabel => completed == null
       ? 'Опыт сейчас недоступен'
       : '$completed завершённых выгулов';

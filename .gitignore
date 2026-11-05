@@ -82,3 +82,6 @@ docs/screenshots/
 
 # Local portfolio review evidence
 .impeccable/review/
+
+# Rebuilt from canonical Flutter source by scripts/build-web-demo.py
+/portfolio/app/

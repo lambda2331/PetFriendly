@@ -327,7 +327,9 @@ class _PlacesListState extends ConsumerState<PlacesListScreen> {
                               : const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 20),
                                   child: Text(
-                                    '© OpenStreetMap contributors · ODbL. Отметки допуска из OSM требуют уточнения перед визитом.',
+                                    AppConfig.portfolio
+                                        ? 'Fictional demo places · no live catalog or map service.'
+                                        : '© OpenStreetMap contributors · ODbL. Отметки допуска из OSM требуют уточнения перед визитом.',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 )

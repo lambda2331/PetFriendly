@@ -108,3 +108,11 @@ re-read whole files.
 After big code changes, refresh the graph with `graft build` (deterministic,
 no API key, $0).
 <!-- graft:end -->
+
+## English portfolio web demo
+
+- The public portfolio demo must compile the current Flutter screens and scenario logic from `lib/`; do not maintain a separate HTML recreation of product UI.
+- The user explicitly chose a mocked map. `PORTFOLIO_DEMO=true` selects the local Flutter map adapter with pan/zoom, category markers, fullscreen, simulated position and place-point selection. No Mapbox token, paid usage or real geolocation is needed in this mode.
+- Portfolio mode is isolated from live backend/Firebase/catalog services and uses seeded in-memory repositories. Normal native builds keep their existing language, Mapbox and service behavior.
+- English visible text is provided by the reviewed build catalog in `tooling/portfolio/en.json`; new untranslated source text fails `scripts/build-web-demo.py`. Preserve Dart interpolation and internal search aliases. The generated source tree and `portfolio/app/` are build outputs, never a maintained UI fork.
+- `portfolio/prototype.html` is a thin host for the compiled app; `design/prototype.html` redirects to it. Publish through the Pages workflow after building the Flutter artifact.

@@ -26,7 +26,8 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final prefs = ref.read(preferencesProvider);
-      if (!ref.read(prototypeProvider).manualCity &&
+      if (!AppConfig.portfolio &&
+          !ref.read(prototypeProvider).manualCity &&
           prefs.read('locationPrompted') != 'yes') {
         prefs.write('locationPrompted', 'yes');
         locate();
@@ -138,7 +139,8 @@ class _NearbyScreenState extends ConsumerState<NearbyScreen> {
         ),
       ),
     );
-    final mapConfigured = AppConfig.mapboxToken.isNotEmpty;
+    final mapConfigured =
+        AppConfig.portfolio || AppConfig.mapboxToken.isNotEmpty;
     if (compact || !mapConfigured) {
       return LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(

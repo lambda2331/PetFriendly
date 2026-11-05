@@ -4,17 +4,28 @@ on:
     branches: [master]
     paths:
       - portfolio/**
-      - design/prototype.fragment.html
+      - lib/**
+      - assets/**
+      - web/**
+      - pubspec.yaml
+      - pubspec.lock
+      - tooling/portfolio/**
       - design/prototype.html
       - scripts/build-portfolio.py
+      - scripts/build-web-demo.py
       - scripts/check-portfolio.py
       - .github/workflows/pages.yml
   pull_request:
     paths:
       - portfolio/**
-      - design/prototype.fragment.html
-      - design/prototype.html
+      - lib/**
+      - assets/**
+      - web/**
+      - pubspec.yaml
+      - pubspec.lock
+      - tooling/portfolio/**
       - scripts/build-portfolio.py
+      - scripts/build-web-demo.py
       - scripts/check-portfolio.py
       - .github/workflows/pages.yml
   workflow_dispatch:
@@ -24,15 +35,28 @@ concurrency:
   group: portfolio-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
       - run: python3 scripts/build-portfolio.py --check
+      - run: python3 tooling/portfolio/test_localization.py
+      - run: flutter pub get --enforce-lockfile
+      - run: flutter test --no-pub --dart-define=PORTFOLIO_DEMO=true test/portfolio_map_test.dart
+      - run: python3 scripts/build-web-demo.py
       - run: python3 scripts/check-portfolio.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio
   deploy:
     if: github.event_name != 'pull_request'
-    needs: validate
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -41,11 +65,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: portfolio
       - name: Deploy portfolio
         id: deployment
         uses: actions/deploy-pages@v4

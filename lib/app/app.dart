@@ -218,10 +218,12 @@ class PetFriendlyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => MaterialApp.router(
     title: 'PetFriendly',
-    locale: const Locale('ru'),
+    locale: AppConfig.portfolio ? const Locale('en') : const Locale('ru'),
     supportedLocales: const [Locale('ru'), Locale('en')],
     localizationsDelegates: GlobalMaterialLocalizations.delegates,
-    builder: (context, child) => PrivacyShield(child: child!),
+    // The native app-switcher cover is not appropriate for an embedded fictional demo.
+    builder: (context, child) =>
+        AppConfig.portfolio ? child! : PrivacyShield(child: child!),
     debugShowCheckedModeBanner: false,
     theme: studioTheme(Brightness.light),
     darkTheme: studioTheme(Brightness.dark),

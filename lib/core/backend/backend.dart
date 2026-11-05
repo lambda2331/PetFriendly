@@ -5,6 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppConfig {
+  // The public portfolio is isolated from all configured live services.
+  static const portfolio = bool.fromEnvironment('PORTFOLIO_DEMO');
   static const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
   static const supabaseKey = String.fromEnvironment('SUPABASE_PUBLISHABLE_KEY');
   static const mapboxToken = String.fromEnvironment('MAPBOX_ACCESS_TOKEN');
@@ -14,7 +16,7 @@ class AppConfig {
   static const telegramEnabled = bool.fromEnvironment('AUTH_TELEGRAM_ENABLED');
   static const callback = 'petfriendly://auth/callback';
   static bool get backendEnabled =>
-      !demo && supabaseUrl.isNotEmpty && supabaseKey.isNotEmpty;
+      !portfolio && !demo && supabaseUrl.isNotEmpty && supabaseKey.isNotEmpty;
   static void validate() {
     if (!demo && !backendEnabled) {
       throw StateError('Supabase configuration is missing');

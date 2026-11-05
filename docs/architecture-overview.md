@@ -1,35 +1,31 @@
 # Architecture overview
 
-PetFriendly has two separate presentation runtimes. The static portfolio explains the work and hosts an interaction study. The native Flutter application implements product behavior with optional Supabase services.
+PetFriendly uses the same Flutter screens and scenario logic for mobile and the English portfolio demo. A static case study and thin iframe host introduce the application; there is no second handwritten product UI.
 
-## Static portfolio
-
-`portfolio/index.html` is a semantic, responsive case study using the existing Studio identity. It works without JavaScript. An iframe embeds the interactive prototype; a normal link opens the same prototype independently.
-
-`design/prototype.fragment.html` is the single source for the English interaction study. `scripts/build-portfolio.py` wraps it into `portfolio/prototype.html` and `design/prototype.html`. CI detects stale generated files before publication. Fonts and Lucide icons are self-hosted, so the study has no runtime CDN dependency.
-
-The study stores only theme, city, selected tab and favorite IDs in its own browser-storage key. Demo messages remain in memory. It does not request location, send messages, authenticate users or connect to production services.
-
-## Native application
-
-The Flutter implementation is organized by feature. UI components use shared theme primitives; application state uses Riverpod; go_router owns routing. Repositories separate interface behavior from demo or backend data sources.
+## Shared application
 
 | Layer | Location | Responsibility |
 | --- | --- | --- |
-| App composition | `lib/app/` | Routing, application theme, shell and lifecycle |
-| Shared infrastructure | `lib/core/` | Backend configuration, storage, location, media and reusable UI |
-| Product features | `lib/features/` | Auth, nearby places, profiles, community, chat, walks and settings |
-| Server data rules | `supabase/migrations/` | Schema, RLS, privileged operations and derived aggregates |
-| Server operations | `supabase/functions/` | Private photo/media access, account deletion, catalog and notifications |
+| App composition | `lib/app/` | Routing, theme, shell and lifecycle |
+| Shared infrastructure | `lib/core/` | Configuration, preferences, location, media and components |
+| Product features | `lib/features/` | Places, profiles, community, chats, walking and account flows |
+| Server rules | `supabase/migrations/` | RLS, privileged operations and aggregates |
+| Server operations | `supabase/functions/` | Private media, account deletion, catalogs and notifications |
 
-Mapbox renders native maps. OpenStreetMap supplies catalog data with provenance; missing evidence of pet access remains unknown. Manual city choice and location availability are different states.
+Riverpod owns state and repository selection; go_router owns routes. Native maps use Mapbox. The portfolio flag selects a Flutter-only interactive map with synthetic geometry and markers. Place sheets, reviews, list filters, profile favorites and navigation remain the application’s existing widgets.
 
-## Rules behind interaction states
+## Public demo boundary
 
-Walking assignment must be atomic. Reviews require an eligible completed agreement; clients do not write reputation totals. Private chat and media access depend on current membership. Tokens use an explicitly configured secure-storage path. These are implementation responsibilities, not guarantees inferred from a design mockup.
+`AppConfig.portfolio` is a compile-time flag, disabled for normal builds. It prevents backend activation and Firebase initialization, selects seeded demo data, suppresses real geolocation and avoids external catalog import. The map adapter also supports fullscreen controls and choosing a point for a new place. It never requests live tiles.
 
-## Verification boundaries
+In-memory changes reset on reload. Only theme, manual city and favorite IDs persist. Native production authorization is not simulated as a security guarantee: the serverless demo shows interaction and state transitions, not live service behavior.
 
-Flutter analysis, widget/unit tests, device integration flows and backend checks exercise different layers. A successful static-site build proves none of the native service behavior. Historical staging notes record work at that time; they are not a current service-health report. See [portfolio status](portfolio-status.md).
+## English build
 
-The detailed original specification is retained in [architecture.md](architecture.md) (Russian).
+`scripts/build-web-demo.py` copies canonical source into ignored `build/portfolio-source/`. A reviewed catalog translates Dart literal text segments, retaining nested interpolation expressions. Scanner tests cover comments, nested strings, escaped text and missing translations. New untranslated copy fails the build. Internal search aliases are separately allowlisted and stay unchanged.
+
+The build compiles that source with the portfolio flag and writes ignored `portfolio/app/`. A published manifest records the canonical source digest, file count and sandbox mode. Native source remains Russian by default; runtime locale switching is outside this adaptation.
+
+## Verification
+
+Native analysis and tests protect shared behavior. Translation tests protect the build transformation. A release web build and browser scenario checks verify the actual English artifact. These checks do not establish production readiness, account-security certification or external service delivery.

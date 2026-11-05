@@ -103,3 +103,21 @@ final cityCenterProvider =
     FutureProvider.family<({double latitude, double longitude}), String>(
       (ref, city) => ref.read(locationServiceProvider).cityCenter(city),
     );
+
+/// No real device location is requested in the public portfolio sandbox.
+class PortfolioLocationService extends LocationService {
+  @override
+  Future<bool> hasPermission() async => false;
+  @override
+  Future<String> nearbyCity() async => 'Минск';
+  @override
+  Future<({double latitude, double longitude})> cityCenter(String city) async =>
+      (latitude: 53.906, longitude: 27.556);
+  @override
+  Future<Position> currentPosition({
+    LocationAccuracy accuracy = LocationAccuracy.high,
+  }) async =>
+      throw const LocationIssue('The portfolio uses a simulated location.');
+  @override
+  Stream<Position> positions() => const Stream.empty();
+}

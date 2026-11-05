@@ -1,3 +1,4 @@
+import '../../core/display_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/ui/components.dart';
@@ -80,9 +81,7 @@ class PlaceRow extends ConsumerWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        rating.average.toStringAsFixed(1).replaceAll('.', ','),
-                      ),
+                      Text(displayDecimal(rating.average)),
                       const SizedBox(width: 4),
                       const Icon(Icons.star_rounded, size: 16),
                     ],
@@ -102,4 +101,4 @@ String? distanceLabel(double? meters) => meters == null
     ? null
     : meters < 1000
     ? '~${(meters / 10).round() * 10} м по прямой'
-    : '~${(meters / 1000).toStringAsFixed(1).replaceAll('.', ',')} км по прямой';
+    : '~${displayDecimal(meters / 1000)} км по прямой';

@@ -1,3 +1,4 @@
+import '../../core/display_numbers.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -247,9 +248,7 @@ class _PlaceDetailsState extends ConsumerState<PlaceDetailsSheet> {
                       const SizedBox(width: 12),
                       const Icon(Icons.star_rounded, size: 16),
                       const SizedBox(width: 4),
-                      Text(
-                        rating.average.toStringAsFixed(1).replaceAll('.', ','),
-                      ),
+                      Text(displayDecimal(rating.average)),
                     ],
                   ],
                 ),

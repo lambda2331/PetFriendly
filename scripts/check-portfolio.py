@@ -31,6 +31,7 @@ class Document(HTMLParser):
 
 docs = {}
 for path in SITE.rglob('*.html'):
+    if path.is_relative_to(SITE / 'app'): continue
     source = path.read_text()
     doc = Document()
     doc.feed(source)
@@ -39,6 +40,7 @@ for path in SITE.rglob('*.html'):
         errors.append(f'{path.relative_to(ROOT)}: expected lang=en')
 
 for path in SITE.rglob('*'):
+    if path.is_relative_to(SITE / 'app'): continue
     if path.suffix in {'.html', '.css', '.js'} and re.search('[А-Яа-яЁё]', path.read_text()):
         errors.append(f'{path.relative_to(ROOT)}: untranslated Cyrillic content')
 
@@ -52,12 +54,15 @@ for path, doc in docs.items():
             target /= 'index.html'
         if not target.is_relative_to(SITE.resolve()):
             errors.append(f'{path.name}: link escapes deployment boundary: {link}')
+        elif target == (SITE / 'app/index.html').resolve() and not target.exists():
+            continue
         elif not target.is_file():
             errors.append(f'{path.name}: missing local resource: {link}')
         elif url.fragment and target in docs and unquote(url.fragment) not in docs[target].ids:
             errors.append(f'{path.name}: missing anchor: {link}')
 
 for path in SITE.rglob('*.css'):
+    if path.is_relative_to(SITE / 'app'): continue
     for asset in re.findall(r'url\([\'\"]?([^\)\'\"]+)', path.read_text()):
         if not urlsplit(asset).scheme and not (path.parent / asset).is_file():
             errors.append(f'{path.name}: missing CSS asset: {asset}')

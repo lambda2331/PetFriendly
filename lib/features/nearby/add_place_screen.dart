@@ -1,3 +1,4 @@
+import 'portfolio_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' hide Size;
@@ -176,7 +177,10 @@ class PlacePositionPicker extends ConsumerStatefulWidget {
   const PlacePositionPicker({required this.city, super.key});
   final String city;
   @override
-  ConsumerState<PlacePositionPicker> createState() => _PositionState();
+  // Select the offline adapter before native map lifecycle subscriptions start.
+  ConsumerState<PlacePositionPicker> createState() =>
+      // ignore: no_logic_in_create_state
+      AppConfig.portfolio ? PortfolioPositionState() : _PositionState();
 }
 
 class _PositionState extends ConsumerState<PlacePositionPicker> {

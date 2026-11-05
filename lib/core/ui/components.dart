@@ -282,6 +282,7 @@ class _PressButtonState extends State<PressButton> {
 String ageYears(dynamic value) {
   final age = int.tryParse('$value');
   if (age == null) return 'Возраст не указан';
+  if (AppConfig.portfolio) return '$age ${age == 1 ? 'year' : 'years'}';
   final suffix = age % 100 >= 11 && age % 100 <= 14
       ? 'лет'
       : age % 10 == 1
@@ -293,6 +294,7 @@ String ageYears(dynamic value) {
 }
 
 String memberCount(int count) {
+  if (AppConfig.portfolio) return '$count ${count == 1 ? 'member' : 'members'}';
   final word = count % 100 >= 11 && count % 100 <= 14
       ? 'участников'
       : count % 10 == 1
