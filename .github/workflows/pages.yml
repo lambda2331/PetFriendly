@@ -1,0 +1,51 @@
+name: Portfolio Pages
+on:
+  push:
+    branches: [master]
+    paths:
+      - portfolio/**
+      - design/prototype.fragment.html
+      - design/prototype.html
+      - scripts/build-portfolio.py
+      - scripts/check-portfolio.py
+      - .github/workflows/pages.yml
+  pull_request:
+    paths:
+      - portfolio/**
+      - design/prototype.fragment.html
+      - design/prototype.html
+      - scripts/build-portfolio.py
+      - scripts/check-portfolio.py
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: python3 scripts/build-portfolio.py --check
+      - run: python3 scripts/check-portfolio.py
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio
+      - name: Deploy portfolio
+        id: deployment
+        uses: actions/deploy-pages@v4

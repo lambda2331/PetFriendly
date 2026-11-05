@@ -79,3 +79,6 @@ config/ci/
 docs/screenshots/
 
 /android/build/
+
+# Local portfolio review evidence
+.impeccable/review/
